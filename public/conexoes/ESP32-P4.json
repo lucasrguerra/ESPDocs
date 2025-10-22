@@ -1,0 +1,1029 @@
+[
+    {
+        "numero": "GND",
+        "nome": "GND",
+        "tipo": "ground",
+        "funcoes": [
+            "Referência elétrica do sistema",
+            "Conexão externa de terra"
+        ],
+        "categorias": ["Ground"],
+        "cor": "#64748b",
+        "restricoes": ""
+    },
+    {
+        "numero": "VDDLP",
+        "nome": "VDDLP",
+        "tipo": "power",
+        "funcoes": [
+            "Alimentação do domínio LP (Low Power)"
+        ],
+        "categorias": ["Power"],
+        "cor": "#ef4444",
+        "restricoes": "Opera entre 3.0 V e 3.6 V (típico 3.3 V)"
+    },
+    {
+        "numero": "VDDIO",
+        "nome": "VDDIO",
+        "tipo": "power",
+        "funcoes": [
+            "Alimentação do domínio digital para HP IO"
+        ],
+        "categorias": ["Power"],
+        "cor": "#ef4444",
+        "restricoes": "Opera entre 3.0 V e 3.6 V (típico 3.3 V)"
+    },
+    {
+        "numero": "VDDHP",
+        "nome": "VDDHP",
+        "tipo": "power",
+        "funcoes": [
+            "Alimentação do domínio digital HP"
+        ],
+        "categorias": ["Power"],
+        "cor": "#ef4444",
+        "restricoes": "Opera entre 3.0 V e 3.6 V (típico 3.3 V)"
+    },
+    {
+        "numero": "VDDFLASHIO",
+        "nome": "VDDFLASHIO",
+        "tipo": "power",
+        "funcoes": [
+            "Alimentação para Flash IO"
+        ],
+        "categorias": ["Power"],
+        "cor": "#ef4444",
+        "restricoes": "Tensão ajustável conforme modelo de flash (1.8 V ou 3.3 V)"
+    },
+    {
+        "numero": "VDDMIPIDPHY",
+        "nome": "VDDMIPIDPHY",
+        "tipo": "power",
+        "funcoes": [
+            "Alimentação para MIPI PHY"
+        ],
+        "categorias": ["Power"],
+        "cor": "#ef4444",
+        "restricoes": "Opera entre 3.0 V e 3.6 V (típico 3.3 V)"
+    },
+    {
+        "numero": "VDDUSBPHY",
+        "nome": "VDDUSBPHY",
+        "tipo": "power",
+        "funcoes": [
+            "Alimentação para USB PHY"
+        ],
+        "categorias": ["Power"],
+        "cor": "#ef4444",
+        "restricoes": "Opera entre 2.97 V e 3.63 V (típico 3.3 V)"
+    },
+    {
+        "numero": "VDDPSRAM",
+        "nome": "VDDPSRAM",
+        "tipo": "power",
+        "funcoes": [
+            "Alimentação para PSRAM IO"
+        ],
+        "categorias": ["Power"],
+        "cor": "#ef4444",
+        "restricoes": "Opera entre 3.0 V e 3.6 V (típico 3.3 V)"
+    },
+    {
+        "numero": "VDDOFLASH",
+        "nome": "VDDOFLASH",
+        "tipo": "power",
+        "funcoes": [
+            "Saída de alimentação para flash off-package",
+            "Corrente máxima de saída: 50 mA"
+        ],
+        "categorias": ["Power"],
+        "cor": "#ef4444",
+        "restricoes": "Tensão configurável: 1.8 V ou 3.3 V via eFuse"
+    },
+    {
+        "numero": "VDDOPSRAM",
+        "nome": "VDDOPSRAM",
+        "tipo": "power",
+        "funcoes": [
+            "Saída de alimentação para PSRAM",
+            "Corrente máxima de saída: 50 mA"
+        ],
+        "categorias": ["Power"],
+        "cor": "#ef4444",
+        "restricoes": ""
+    },
+    {
+        "numero": "VDDLDO",
+        "nome": "VDDLDO",
+        "tipo": "power",
+        "funcoes": [
+            "Alimentação do domínio analógico",
+            "Fornece alimentação para LDOs internos"
+        ],
+        "categorias": ["Power"],
+        "cor": "#ef4444",
+        "restricoes": "Opera entre 3.0 V e 3.6 V (típico 3.3 V)"
+    },
+    {
+        "numero": "VDDDCDCC",
+        "nome": "VDDDCDCC",
+        "tipo": "power",
+        "funcoes": [
+            "Alimentação do domínio analógico",
+            "Fornece alimentação para DCDC interno"
+        ],
+        "categorias": ["Power"],
+        "cor": "#ef4444",
+        "restricoes": "Opera entre 3.0 V e 3.6 V (típico 3.3 V)"
+    },
+    {
+        "numero": "VDDANA",
+        "nome": "VDDANA",
+        "tipo": "power",
+        "funcoes": [
+            "Alimentação do domínio analógico"
+        ],
+        "categorias": ["Power"],
+        "cor": "#ef4444",
+        "restricoes": "Opera entre 3.0 V e 3.6 V (típico 3.3 V)"
+    },
+    {
+        "numero": "VDDBAT",
+        "nome": "VDDBAT",
+        "tipo": "power",
+        "funcoes": [
+            "Alimentação do domínio analógico",
+            "Conexão opcional a baterias externas"
+        ],
+        "categorias": ["Power"],
+        "cor": "#ef4444",
+        "restricoes": "Opera entre 3.0 V e 3.6 V (típico 3.3 V)"
+    },
+    {
+        "numero": "CHIP_PU",
+        "nome": "CHIP_PU (EN)",
+        "tipo": "power",
+        "funcoes": [
+            "Habilitar chip (nível alto)",
+            "Resetar o chip (nível baixo)"
+        ],
+        "categorias": ["Power", "Reset"],
+        "cor": "#f97316",
+        "restricoes": "Deve estar em nível alto para operação normal; não deixar flutuante"
+    },
+    {
+        "numero": 0,
+        "nome": "GPIO0",
+        "tipo": "gpio",
+        "funcoes": [
+            "GPIO0",
+            "LPGPIO0",
+            "XTAL_32K_N"
+        ],
+        "categorias": ["GPIO", "RTC", "Clock"],
+        "cor": "#3b82f6",
+        "restricoes": "Pode ser usado para cristal RTC de 32.768 kHz"
+    },
+    {
+        "numero": 1,
+        "nome": "GPIO1",
+        "tipo": "gpio",
+        "funcoes": [
+            "GPIO1",
+            "LPGPIO1",
+            "XTAL_32K_P"
+        ],
+        "categorias": ["GPIO", "RTC", "Clock"],
+        "cor": "#3b82f6",
+        "restricoes": "Pode ser usado para cristal RTC de 32.768 kHz"
+    },
+    {
+        "numero": 2,
+        "nome": "GPIO2",
+        "tipo": "gpio",
+        "funcoes": [
+            "GPIO2",
+            "LPGPIO2",
+            "MTCK",
+            "TOUCH_CHANNEL1"
+        ],
+        "categorias": ["GPIO", "RTC", "JTAG", "Touch"],
+        "cor": "#3b82f6",
+        "restricoes": "JTAG Test Clock; pull-up interno habilitado"
+    },
+    {
+        "numero": 3,
+        "nome": "GPIO3",
+        "tipo": "gpio",
+        "funcoes": [
+            "GPIO3",
+            "LPGPIO3",
+            "MTDI",
+            "TOUCH_CHANNEL2"
+        ],
+        "categorias": ["GPIO", "RTC", "JTAG", "Touch"],
+        "cor": "#3b82f6",
+        "restricoes": "JTAG Test Data In"
+    },
+    {
+        "numero": 4,
+        "nome": "GPIO4",
+        "tipo": "gpio",
+        "funcoes": [
+            "GPIO4",
+            "LPGPIO4",
+            "MTMS",
+            "TOUCH_CHANNEL3"
+        ],
+        "categorias": ["GPIO", "RTC", "JTAG", "Touch"],
+        "cor": "#3b82f6",
+        "restricoes": "JTAG Test Mode Select"
+    },
+    {
+        "numero": 5,
+        "nome": "GPIO5",
+        "tipo": "gpio",
+        "funcoes": [
+            "GPIO5",
+            "LPGPIO5",
+            "MTDO",
+            "TOUCH_CHANNEL4"
+        ],
+        "categorias": ["GPIO", "RTC", "JTAG", "Touch"],
+        "cor": "#3b82f6",
+        "restricoes": "JTAG Test Data Out"
+    },
+    {
+        "numero": 6,
+        "nome": "GPIO6",
+        "tipo": "gpio",
+        "funcoes": [
+            "GPIO6",
+            "LPGPIO6",
+            "SPI2_HOLD",
+            "TOUCH_CHANNEL5"
+        ],
+        "categorias": ["GPIO", "RTC", "SPI", "Touch"],
+        "cor": "#3b82f6",
+        "restricoes": ""
+    },
+    {
+        "numero": 7,
+        "nome": "GPIO7",
+        "tipo": "gpio",
+        "funcoes": [
+            "GPIO7",
+            "LPGPIO7",
+            "SPI2_CS",
+            "TOUCH_CHANNEL6"
+        ],
+        "categorias": ["GPIO", "RTC", "SPI", "Touch"],
+        "cor": "#3b82f6",
+        "restricoes": ""
+    },
+    {
+        "numero": 8,
+        "nome": "GPIO8",
+        "tipo": "gpio",
+        "funcoes": [
+            "GPIO8",
+            "LPGPIO8",
+            "SPI2_D",
+            "TOUCH_CHANNEL7"
+        ],
+        "categorias": ["GPIO", "RTC", "SPI", "Touch", "Strapping"],
+        "cor": "#3b82f6",
+        "restricoes": "Strapping pin para controle de modo de boot e impressão ROM"
+    },
+    {
+        "numero": 9,
+        "nome": "GPIO9",
+        "tipo": "gpio",
+        "funcoes": [
+            "GPIO9",
+            "LPGPIO9",
+            "SPI2_CLK",
+            "TOUCH_CHANNEL8"
+        ],
+        "categorias": ["GPIO", "RTC", "SPI", "Touch", "Strapping"],
+        "cor": "#3b82f6",
+        "restricoes": "Pull-up interno; strapping pin para modo boot"
+    },
+    {
+        "numero": 10,
+        "nome": "GPIO10",
+        "tipo": "gpio",
+        "funcoes": [
+            "GPIO10",
+            "LPGPIO10",
+            "SPI2_Q",
+            "TOUCH_CHANNEL9"
+        ],
+        "categorias": ["GPIO", "RTC", "SPI", "Touch"],
+        "cor": "#3b82f6",
+        "restricoes": ""
+    },
+    {
+        "numero": 11,
+        "nome": "GPIO11",
+        "tipo": "gpio",
+        "funcoes": [
+            "GPIO11",
+            "LPGPIO11",
+            "SPI2_WP",
+            "TOUCH_CHANNEL10"
+        ],
+        "categorias": ["GPIO", "RTC", "SPI", "Touch"],
+        "cor": "#3b82f6",
+        "restricoes": "Pode ser configurado como GPIO se flash for alimentado externamente"
+    },
+    {
+        "numero": 12,
+        "nome": "GPIO12",
+        "tipo": "gpio",
+        "funcoes": [
+            "GPIO12",
+            "LPGPIO12",
+            "TOUCH_CHANNEL11"
+        ],
+        "categorias": ["GPIO", "RTC", "Touch"],
+        "cor": "#3b82f6",
+        "restricoes": ""
+    },
+    {
+        "numero": 13,
+        "nome": "GPIO13",
+        "tipo": "gpio",
+        "funcoes": [
+            "GPIO13",
+            "LPGPIO13",
+            "TOUCH_CHANNEL12"
+        ],
+        "categorias": ["GPIO", "RTC", "Touch"],
+        "cor": "#3b82f6",
+        "restricoes": ""
+    },
+    {
+        "numero": 14,
+        "nome": "GPIO14",
+        "tipo": "gpio",
+        "funcoes": [
+            "GPIO14",
+            "LPGPIO14",
+            "LP_UART_TXD",
+            "TOUCH_CHANNEL13"
+        ],
+        "categorias": ["GPIO", "RTC", "UART", "Touch"],
+        "cor": "#3b82f6",
+        "restricoes": ""
+    },
+    {
+        "numero": 15,
+        "nome": "GPIO15",
+        "tipo": "gpio",
+        "funcoes": [
+            "GPIO15",
+            "LPGPIO15",
+            "LP_UART_RXD",
+            "TOUCH_CHANNEL14"
+        ],
+        "categorias": ["GPIO", "RTC", "UART", "Touch"],
+        "cor": "#3b82f6",
+        "restricoes": ""
+    },
+    {
+        "numero": 16,
+        "nome": "GPIO16",
+        "tipo": "gpio",
+        "funcoes": [
+            "GPIO16",
+            "ADC1_CH0"
+        ],
+        "categorias": ["GPIO", "ADC"],
+        "cor": "#3b82f6",
+        "restricoes": ""
+    },
+    {
+        "numero": 17,
+        "nome": "GPIO17",
+        "tipo": "gpio",
+        "funcoes": [
+            "GPIO17",
+            "ADC1_CH1"
+        ],
+        "categorias": ["GPIO", "ADC"],
+        "cor": "#3b82f6",
+        "restricoes": ""
+    },
+    {
+        "numero": 18,
+        "nome": "GPIO18",
+        "tipo": "gpio",
+        "funcoes": [
+            "GPIO18",
+            "ADC1_CH2"
+        ],
+        "categorias": ["GPIO", "ADC"],
+        "cor": "#3b82f6",
+        "restricoes": ""
+    },
+    {
+        "numero": 19,
+        "nome": "GPIO19",
+        "tipo": "gpio",
+        "funcoes": [
+            "GPIO19",
+            "ADC1_CH3"
+        ],
+        "categorias": ["GPIO", "ADC"],
+        "cor": "#3b82f6",
+        "restricoes": ""
+    },
+    {
+        "numero": 20,
+        "nome": "GPIO20",
+        "tipo": "gpio",
+        "funcoes": [
+            "GPIO20",
+            "ADC1_CH4"
+        ],
+        "categorias": ["GPIO", "ADC"],
+        "cor": "#3b82f6",
+        "restricoes": ""
+    },
+    {
+        "numero": 21,
+        "nome": "GPIO21",
+        "tipo": "gpio",
+        "funcoes": [
+            "GPIO21",
+            "ADC1_CH5"
+        ],
+        "categorias": ["GPIO", "ADC"],
+        "cor": "#3b82f6",
+        "restricoes": ""
+    },
+    {
+        "numero": 22,
+        "nome": "GPIO22",
+        "tipo": "gpio",
+        "funcoes": [
+            "GPIO22",
+            "ADC1_CH6"
+        ],
+        "categorias": ["GPIO", "ADC"],
+        "cor": "#3b82f6",
+        "restricoes": ""
+    },
+    {
+        "numero": 23,
+        "nome": "GPIO23",
+        "tipo": "gpio",
+        "funcoes": [
+            "GPIO23",
+            "ADC1_CH7",
+            "REF_50M_CLK"
+        ],
+        "categorias": ["GPIO", "ADC", "Clock"],
+        "cor": "#3b82f6",
+        "restricoes": ""
+    },
+    {
+        "numero": 24,
+        "nome": "GPIO24",
+        "tipo": "gpio",
+        "funcoes": [
+            "GPIO24",
+            "USB_D-"
+        ],
+        "categorias": ["GPIO", "USB"],
+        "cor": "#3b82f6",
+        "restricoes": "USB D- para USB SerialJTAG; drive padrão 40 mA"
+    },
+    {
+        "numero": 25,
+        "nome": "GPIO25",
+        "tipo": "gpio",
+        "funcoes": [
+            "GPIO25",
+            "USB_D+"
+        ],
+        "categorias": ["GPIO", "USB"],
+        "cor": "#3b82f6",
+        "restricoes": "USB D+ para USB SerialJTAG; drive padrão 40 mA"
+    },
+    {
+        "numero": 26,
+        "nome": "GPIO26",
+        "tipo": "gpio",
+        "funcoes": [
+            "GPIO26",
+            "USB_D-"
+        ],
+        "categorias": ["GPIO", "USB"],
+        "cor": "#3b82f6",
+        "restricoes": "USB D- para USB OTG"
+    },
+    {
+        "numero": 27,
+        "nome": "GPIO27",
+        "tipo": "gpio",
+        "funcoes": [
+            "GPIO27",
+            "USB_D+"
+        ],
+        "categorias": ["GPIO", "USB"],
+        "cor": "#3b82f6",
+        "restricoes": "USB D+ para USB OTG"
+    },
+    {
+        "numero": 28,
+        "nome": "GPIO28",
+        "tipo": "gpio",
+        "funcoes": [
+            "GPIO28",
+            "SPI2_CS",
+            "EMAC_RX_DV"
+        ],
+        "categorias": ["GPIO", "SPI", "Ethernet"],
+        "cor": "#3b82f6",
+        "restricoes": ""
+    },
+    {
+        "numero": 29,
+        "nome": "GPIO29",
+        "tipo": "gpio",
+        "funcoes": [
+            "GPIO29",
+            "SPI2_D",
+            "EMAC_RXD0"
+        ],
+        "categorias": ["GPIO", "SPI", "Ethernet"],
+        "cor": "#3b82f6",
+        "restricoes": ""
+    },
+    {
+        "numero": 30,
+        "nome": "GPIO30",
+        "tipo": "gpio",
+        "funcoes": [
+            "GPIO30",
+            "SPI2_CLK",
+            "EMAC_RXD1"
+        ],
+        "categorias": ["GPIO", "SPI", "Ethernet"],
+        "cor": "#3b82f6",
+        "restricoes": ""
+    },
+    {
+        "numero": 31,
+        "nome": "GPIO31",
+        "tipo": "gpio",
+        "funcoes": [
+            "GPIO31",
+            "SPI2_Q",
+            "EMAC_RX_ER"
+        ],
+        "categorias": ["GPIO", "SPI", "Ethernet"],
+        "cor": "#3b82f6",
+        "restricoes": ""
+    },
+    {
+        "numero": 32,
+        "nome": "GPIO32",
+        "tipo": "gpio",
+        "funcoes": [
+            "GPIO32",
+            "SPI2_HOLD",
+            "EMAC_RMII_CLK"
+        ],
+        "categorias": ["GPIO", "SPI", "Ethernet"],
+        "cor": "#3b82f6",
+        "restricoes": ""
+    },
+    {
+        "numero": 33,
+        "nome": "GPIO33",
+        "tipo": "gpio",
+        "funcoes": [
+            "GPIO33",
+            "SPI2_WP",
+            "EMAC_TX_EN"
+        ],
+        "categorias": ["GPIO", "SPI", "Ethernet"],
+        "cor": "#3b82f6",
+        "restricoes": ""
+    },
+    {
+        "numero": 34,
+        "nome": "GPIO34",
+        "tipo": "gpio",
+        "funcoes": [
+            "GPIO34",
+            "SPI2_IO4",
+            "EMAC_TXD0"
+        ],
+        "categorias": ["GPIO", "SPI", "Ethernet", "Strapping"],
+        "cor": "#3b82f6",
+        "restricoes": "Strapping pin para controle de fonte de sinal JTAG"
+    },
+    {
+        "numero": 35,
+        "nome": "GPIO35",
+        "tipo": "gpio",
+        "funcoes": [
+            "GPIO35",
+            "SPI2_IO5",
+            "EMAC_TXD1"
+        ],
+        "categorias": ["GPIO", "SPI", "Ethernet", "Strapping"],
+        "cor": "#3b82f6",
+        "restricoes": "Strapping pin para controle de modo de boot; pull-up interno"
+    },
+    {
+        "numero": 36,
+        "nome": "GPIO36",
+        "tipo": "gpio",
+        "funcoes": [
+            "GPIO36",
+            "SPI2_IO6",
+            "EMAC_TX_ER"
+        ],
+        "categorias": ["GPIO", "SPI", "Ethernet", "Strapping"],
+        "cor": "#3b82f6",
+        "restricoes": "Strapping pin para controle de impressão de mensagens ROM"
+    },
+    {
+        "numero": 37,
+        "nome": "GPIO37",
+        "tipo": "gpio",
+        "funcoes": [
+            "GPIO37",
+            "UART0_TXD",
+            "SPI2_IO7"
+        ],
+        "categorias": ["GPIO", "UART", "SPI", "Strapping"],
+        "cor": "#3b82f6",
+        "restricoes": "Strapping pin; UART0 TX para download de firmware"
+    },
+    {
+        "numero": 38,
+        "nome": "GPIO38",
+        "tipo": "gpio",
+        "funcoes": [
+            "GPIO38",
+            "UART0_RXD",
+            "SPI2_DQS"
+        ],
+        "categorias": ["GPIO", "UART", "SPI", "Strapping"],
+        "cor": "#3b82f6",
+        "restricoes": "Strapping pin; UART0 RX para download de firmware"
+    },
+    {
+        "numero": 39,
+        "nome": "GPIO39",
+        "tipo": "gpio",
+        "funcoes": [
+            "GPIO39",
+            "SD1_DATA0",
+            "REF_50M_CLK"
+        ],
+        "categorias": ["GPIO", "SDMMC", "Clock"],
+        "cor": "#3b82f6",
+        "restricoes": ""
+    },
+    {
+        "numero": 40,
+        "nome": "GPIO40",
+        "tipo": "gpio",
+        "funcoes": [
+            "GPIO40",
+            "SD1_DATA1",
+            "EMAC_TX_EN"
+        ],
+        "categorias": ["GPIO", "SDMMC", "Ethernet"],
+        "cor": "#3b82f6",
+        "restricoes": ""
+    },
+    {
+        "numero": 41,
+        "nome": "GPIO41",
+        "tipo": "gpio",
+        "funcoes": [
+            "GPIO41",
+            "SD1_DATA2",
+            "EMAC_TXD0"
+        ],
+        "categorias": ["GPIO", "SDMMC", "Ethernet"],
+        "cor": "#3b82f6",
+        "restricoes": ""
+    },
+    {
+        "numero": 42,
+        "nome": "GPIO42",
+        "tipo": "gpio",
+        "funcoes": [
+            "GPIO42",
+            "SD1_DATA3",
+            "EMAC_TXD1"
+        ],
+        "categorias": ["GPIO", "SDMMC", "Ethernet"],
+        "cor": "#3b82f6",
+        "restricoes": ""
+    },
+    {
+        "numero": 43,
+        "nome": "GPIO43",
+        "tipo": "gpio",
+        "funcoes": [
+            "GPIO43",
+            "SD1_CLK",
+            "EMAC_TX_ER"
+        ],
+        "categorias": ["GPIO", "SDMMC", "Ethernet"],
+        "cor": "#3b82f6",
+        "restricoes": ""
+    },
+    {
+        "numero": 44,
+        "nome": "GPIO44",
+        "tipo": "gpio",
+        "funcoes": [
+            "GPIO44",
+            "SD1_CMD",
+            "EMAC_RMII_CLK"
+        ],
+        "categorias": ["GPIO", "SDMMC", "Ethernet"],
+        "cor": "#3b82f6",
+        "restricoes": ""
+    },
+    {
+        "numero": 45,
+        "nome": "GPIO45",
+        "tipo": "gpio",
+        "funcoes": [
+            "GPIO45",
+            "SD1_DATA4",
+            "EMAC_RX_DV"
+        ],
+        "categorias": ["GPIO", "SDMMC", "Ethernet"],
+        "cor": "#3b82f6",
+        "restricoes": ""
+    },
+    {
+        "numero": 46,
+        "nome": "GPIO46",
+        "tipo": "gpio",
+        "funcoes": [
+            "GPIO46",
+            "SD1_DATA5",
+            "EMAC_RXD0"
+        ],
+        "categorias": ["GPIO", "SDMMC", "Ethernet"],
+        "cor": "#3b82f6",
+        "restricoes": ""
+    },
+    {
+        "numero": 47,
+        "nome": "GPIO47",
+        "tipo": "gpio",
+        "funcoes": [
+            "GPIO47",
+            "SD1_DATA6",
+            "EMAC_RXD1"
+        ],
+        "categorias": ["GPIO", "SDMMC", "Ethernet"],
+        "cor": "#3b82f6",
+        "restricoes": ""
+    },
+    {
+        "numero": 48,
+        "nome": "GPIO48",
+        "tipo": "gpio",
+        "funcoes": [
+            "GPIO48",
+            "SD1_DATA7",
+            "EMAC_RX_ER"
+        ],
+        "categorias": ["GPIO", "SDMMC", "Ethernet"],
+        "cor": "#3b82f6",
+        "restricoes": ""
+    },
+    {
+        "numero": 49,
+        "nome": "GPIO49",
+        "tipo": "gpio",
+        "funcoes": [
+            "GPIO49",
+            "ADC2_CH0",
+            "EMAC_TX_EN"
+        ],
+        "categorias": ["GPIO", "ADC", "Ethernet"],
+        "cor": "#3b82f6",
+        "restricoes": ""
+    },
+    {
+        "numero": 50,
+        "nome": "GPIO50",
+        "tipo": "gpio",
+        "funcoes": [
+            "GPIO50",
+            "ADC2_CH1",
+            "EMAC_RMII_CLK"
+        ],
+        "categorias": ["GPIO", "ADC", "Ethernet"],
+        "cor": "#3b82f6",
+        "restricoes": ""
+    },
+    {
+        "numero": 51,
+        "nome": "GPIO51",
+        "tipo": "gpio",
+        "funcoes": [
+            "GPIO51",
+            "ADC2_CH2",
+            "ANACOMP0_P",
+            "EMAC_RX_DV"
+        ],
+        "categorias": ["GPIO", "ADC", "Analog", "Ethernet"],
+        "cor": "#3b82f6",
+        "restricoes": ""
+    },
+    {
+        "numero": 52,
+        "nome": "GPIO52",
+        "tipo": "gpio",
+        "funcoes": [
+            "GPIO52",
+            "ADC2_CH3",
+            "ANACOMP0_N",
+            "EMAC_RXD0"
+        ],
+        "categorias": ["GPIO", "ADC", "Analog", "Ethernet"],
+        "cor": "#3b82f6",
+        "restricoes": ""
+    },
+    {
+        "numero": 53,
+        "nome": "GPIO53",
+        "tipo": "gpio",
+        "funcoes": [
+            "GPIO53",
+            "ADC2_CH4",
+            "ANACOMP1_P",
+            "EMAC_RXD1"
+        ],
+        "categorias": ["GPIO", "ADC", "Analog", "Ethernet"],
+        "cor": "#3b82f6",
+        "restricoes": ""
+    },
+    {
+        "numero": 54,
+        "nome": "GPIO54",
+        "tipo": "gpio",
+        "funcoes": [
+            "GPIO54",
+            "ADC2_CH5",
+            "ANACOMP1_N",
+            "EMAC_RX_ER"
+        ],
+        "categorias": ["GPIO", "ADC", "Analog", "Ethernet"],
+        "cor": "#3b82f6",
+        "restricoes": ""
+    },
+    {
+        "numero": "FLASHCS",
+        "nome": "FLASH_CS",
+        "tipo": "dedicated",
+        "funcoes": [
+            "Chip Select para Flash"
+        ],
+        "categorias": ["Flash"],
+        "cor": "#f97316",
+        "restricoes": "Pino dedicado para Flash; não usar como GPIO"
+    },
+    {
+        "numero": "FLASHQ",
+        "nome": "FLASH_Q",
+        "tipo": "dedicated",
+        "funcoes": [
+            "Data output do Flash (MISO)"
+        ],
+        "categorias": ["Flash"],
+        "cor": "#f97316",
+        "restricoes": "Pino dedicado para Flash; não usar como GPIO"
+    },
+    {
+        "numero": "FLASHD",
+        "nome": "FLASH_D",
+        "tipo": "dedicated",
+        "funcoes": [
+            "Data input do Flash (MOSI)"
+        ],
+        "categorias": ["Flash"],
+        "cor": "#f97316",
+        "restricoes": "Pino dedicado para Flash; não usar como GPIO"
+    },
+    {
+        "numero": "FLASHCK",
+        "nome": "FLASH_CLK",
+        "tipo": "dedicated",
+        "funcoes": [
+            "Clock do Flash"
+        ],
+        "categorias": ["Flash"],
+        "cor": "#f97316",
+        "restricoes": "Pino dedicado para Flash; não usar como GPIO"
+    },
+    {
+        "numero": "FLASHWP",
+        "nome": "FLASH_WP",
+        "tipo": "dedicated",
+        "funcoes": [
+            "Write Protect do Flash"
+        ],
+        "categorias": ["Flash"],
+        "cor": "#f97316",
+        "restricoes": "Pino dedicado para Flash; não usar como GPIO"
+    },
+    {
+        "numero": "FLASHHOLD",
+        "nome": "FLASH_HOLD",
+        "tipo": "dedicated",
+        "funcoes": [
+            "Hold do Flash"
+        ],
+        "categorias": ["Flash"],
+        "cor": "#f97316",
+        "restricoes": "Pino dedicado para Flash; não usar como GPIO"
+    },
+    {
+        "numero": "USBDM",
+        "nome": "USB_D-",
+        "tipo": "dedicated",
+        "funcoes": [
+            "USB D- para USB 2.0 OTG High-Speed"
+        ],
+        "categorias": ["USB"],
+        "cor": "#a855f7",
+        "restricoes": "Pino dedicado para USB OTG"
+    },
+    {
+        "numero": "USBDP",
+        "nome": "USB_D+",
+        "tipo": "dedicated",
+        "funcoes": [
+            "USB D+ para USB 2.0 OTG High-Speed"
+        ],
+        "categorias": ["USB"],
+        "cor": "#a855f7",
+        "restricoes": "Pino dedicado para USB OTG"
+    },
+    {
+        "numero": "XTAL_N",
+        "nome": "XTAL_N",
+        "tipo": "analog",
+        "funcoes": [
+            "Entrada/saída de clock externo",
+            "Conexão ao cristal ou oscilador do chip"
+        ],
+        "categorias": ["Analog", "Clock"],
+        "cor": "#a855f7",
+        "restricoes": "Clock diferencial negativo"
+    },
+    {
+        "numero": "XTAL_P",
+        "nome": "XTAL_P",
+        "tipo": "analog",
+        "funcoes": [
+            "Entrada/saída de clock externo",
+            "Conexão ao cristal ou oscilador do chip"
+        ],
+        "categorias": ["Analog", "Clock"],
+        "cor": "#a855f7",
+        "restricoes": "Clock diferencial positivo"
+    },
+    {
+        "numero": "FBDCDC",
+        "nome": "FB_DCDC",
+        "tipo": "analog",
+        "funcoes": [
+            "Feedback de alimentação para DCDC externo",
+            "Regula tensão de VDDHP0/2/3"
+        ],
+        "categorias": ["Analog", "Power"],
+        "cor": "#a855f7",
+        "restricoes": ""
+    },
+    {
+        "numero": "ENDCDC",
+        "nome": "EN_DCDC",
+        "tipo": "analog",
+        "funcoes": [
+            "Enable pin para DCDC externo"
+        ],
+        "categorias": ["Analog", "Power"],
+        "cor": "#a855f7",
+        "restricoes": ""
+    }
+]

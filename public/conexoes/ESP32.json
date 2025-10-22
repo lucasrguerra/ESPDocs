@@ -1,0 +1,362 @@
+[
+	{
+		"numero": "GND",
+		"nome": "GND",
+		"tipo": "ground",
+		"funcoes": ["Referência elétrica do sistema", "Referência para nível lógico baixo"],
+		"categorias": ["Ground"],
+		"cor": "#64748b",
+		"restricoes": ""
+	},
+	{
+		"numero": "CPU",
+		"nome": "VDD3P3_CPU",
+		"tipo": "power",
+		"funcoes": ["Alimentação digital principal"],
+		"categorias": ["Power"],
+		"cor": "#ef4444",
+		"restricoes": "Opera entre 1.8 V e 3.6 V"
+	},
+	{
+		"numero": "RTC",
+		"nome": "VDD3P3_RTC",
+		"tipo": "power",
+		"funcoes": ["Alimentação para o domínio RTC", "Alimentação de referência para o LDO interno"],
+		"categorias": ["Power"],
+		"cor": "#ef4444",
+		"restricoes": "Opera entre 3.0 V e 3.6 V em chips com flash; entre 2.3 V e 3.6 V sem flash"
+	},
+	{
+		"numero": "SDIO",
+		"nome": "VDD_SDIO",
+		"tipo": "power",
+		"funcoes": ["Alimentação dos barramentos de Flash e PSRAM"],
+		"categorias": ["Power"],
+		"cor": "#ef4444",
+		"restricoes": "Tensão definida pela GPIO12 na inicialização"
+	},
+	{
+		"numero": "VDDA",
+		"nome": "VDDA",
+		"tipo": "power",
+		"funcoes": ["Alimentação analógica do chip", "Alimentação de referência para o ADC"],
+		"categorias": ["Power", "Analog"],
+		"cor": "#ef4444",
+		"restricoes": "Opera entre 3.0 V e 3.6 V com flash; entre 2.3 V e 3.6 V sem flash"
+	},
+	{
+		"numero": "CHIP_PU",
+		"nome": "CHIP_PU (EN)",
+		"tipo": "power",
+		"funcoes": ["Habilitar chip (nível alto)", "Reseta a placa (nível baixo)"],
+		"categorias": ["Power"],
+		"cor": "#f97316",
+		"restricoes": "Deve estar em nível alto para operação normal; usar resistor pull-up para evitar reset acidental"
+	},
+	{
+		"numero": 0,
+		"nome": "GPIO0",
+		"tipo": "gpio",
+		"funcoes": ["GPIO0", "ADC2_CH1", "RTC_GPIO11", "TOUCH1", "HSPIWP", "I2C_SDA_RTC", "CLK_OUT1", "PWM"],
+		"categorias": ["GPIO", "ADC", "RTC", "Touch", "SPI", "I2C", "Clock", "PWM", "Strapping"],
+		"cor": "#3b82f6",
+		"restricoes": "Resistor pull-up interno; uso como strapping durante boot; modo download firmware em nível baixo"
+	},
+	{
+		"numero": 1,
+		"nome": "GPIO1",
+		"tipo": "gpio",
+		"funcoes": ["GPIO1", "UART0_TXD", "CLK_OUT3", "PWM"],
+		"categorias": ["GPIO", "UART", "Clock", "PWM"],
+		"cor": "#3b82f6",
+		"restricoes": "Resistor pull-up interno; usado para download de firmware"
+	},
+	{
+		"numero": 2,
+		"nome": "GPIO2",
+		"tipo": "gpio",
+		"funcoes": ["GPIO2", "ADC2_CH2", "RTC_GPIO12", "TOUCH2", "I2C_SCL_RTC", "HSPIWP", "PWM"],
+		"categorias": ["GPIO", "ADC", "RTC", "Touch", "I2C", "PWM", "Strapping"],
+		"cor": "#3b82f6",
+		"restricoes": "Resistor pull-down interno; habilita download firmware junto com GPIO0 em nível baixo"
+	},
+	{
+		"numero": 3,
+		"nome": "GPIO3",
+		"tipo": "gpio",
+		"funcoes": ["GPIO3", "UART0_RXD", "CLK_OUT2", "PWM"],
+		"categorias": ["GPIO", "UART", "Clock", "PWM"],
+		"cor": "#3b82f6",
+		"restricoes": "Resistor pull-up interno; usado para download de firmware"
+	},
+	{
+		"numero": 4,
+		"nome": "GPIO4",
+		"tipo": "gpio",
+		"funcoes": ["GPIO4", "ADC2_CH0", "RTC_GPIO10", "TOUCH0", "HSPIHD", "I2C_SCL_RTC", "PWM"],
+		"categorias": ["GPIO", "ADC", "RTC", "Touch", "SPI", "I2C", "PWM"],
+		"cor": "#3b82f6",
+		"restricoes": ""
+	},
+	{
+		"numero": 5,
+		"nome": "GPIO5",
+		"tipo": "gpio",
+		"funcoes": ["GPIO5", "VSPICS0", "PWM"],
+		"categorias": ["GPIO", "SPI", "PWM", "Strapping"],
+		"cor": "#3b82f6",
+		"restricoes": "Resistor pull-up interno; leitura em bordas para strapping"
+	},
+	{
+		"numero": 6,
+		"nome": "GPIO6",
+		"tipo": "gpio",
+		"funcoes": ["GPIO6", "SPICLK", "UART1_CTS", "PWM"],
+		"categorias": ["GPIO", "SPI", "UART", "PWM"],
+		"cor": "#f97316",
+		"restricoes": "Compartilhado com memória flash externa; não usar como GPIO normal"
+	},
+	{
+		"numero": 7,
+		"nome": "GPIO7",
+		"tipo": "gpio",
+		"funcoes": ["GPIO7", "SPIQ", "UART2_RTS", "PWM"],
+		"categorias": ["GPIO", "SPI", "UART", "PWM"],
+		"cor": "#f97316",
+		"restricoes": "Compartilhado com memória flash externa; não usar como GPIO normal"
+	},
+	{
+		"numero": 8,
+		"nome": "GPIO8",
+		"tipo": "gpio",
+		"funcoes": ["GPIO8", "SPID", "UART2_CTS", "PWM"],
+		"categorias": ["GPIO", "SPI", "UART", "PWM"],
+		"cor": "#f97316",
+		"restricoes": "Compartilhado com memória flash externa; não usar como GPIO normal"
+	},
+	{
+		"numero": 9,
+		"nome": "GPIO9",
+		"tipo": "gpio",
+		"funcoes": ["GPIO9", "SPIHD", "UART1_RXD", "PWM"],
+		"categorias": ["GPIO", "SPI", "UART", "PWM"],
+		"cor": "#f97316",
+		"restricoes": "Compartilhado com memória flash externa; não usar como GPIO normal"
+	},
+	{
+		"numero": 10,
+		"nome": "GPIO10",
+		"tipo": "gpio",
+		"funcoes": ["GPIO10", "SPIWP", "UART1_TXD", "PWM"],
+		"categorias": ["GPIO", "SPI", "UART", "PWM"],
+		"cor": "#f97316",
+		"restricoes": "Compartilhado com memória flash externa; não usar como GPIO normal"
+	},
+	{
+		"numero": 11,
+		"nome": "GPIO11",
+		"tipo": "gpio",
+		"funcoes": ["GPIO11", "SPICS0", "UART1_RTS", "PWM"],
+		"categorias": ["GPIO", "SPI", "UART", "PWM"],
+		"cor": "#f97316",
+		"restricoes": "Compartilhado com memória flash externa; não usar como GPIO normal"
+	},
+	{
+		"numero": 12,
+		"nome": "GPIO12",
+		"tipo": "gpio",
+		"funcoes": ["GPIO12", "ADC2_CH5", "RTC_GPIO15", "TOUCH5", "HSPIQ", "JTAG_MTDI", "PWM"],
+		"categorias": ["GPIO", "ADC", "RTC", "Touch", "SPI", "JTAG", "Strapping", "PWM"],
+		"cor": "#3b82f6",
+		"restricoes": "Resistor pull-down interno; seleção nível tensão flash externa; VDD_SDIO definida na inicialização"
+	},
+	{
+		"numero": 13,
+		"nome": "GPIO13",
+		"tipo": "gpio",
+		"funcoes": ["GPIO13", "ADC2_CH4", "RTC_GPIO14", "TOUCH4", "HSPID", "JTAG_MTCK", "PWM"],
+		"categorias": ["GPIO", "ADC", "RTC", "Touch", "SPI", "JTAG", "PWM"],
+		"cor": "#3b82f6",
+		"restricoes": ""
+	},
+	{
+		"numero": 14,
+		"nome": "GPIO14",
+		"tipo": "gpio",
+		"funcoes": ["GPIO14", "ADC2_CH6", "RTC_GPIO16", "TOUCH6", "HSPICLK", "JTAG_MTMS", "PWM"],
+		"categorias": ["GPIO", "ADC", "RTC", "Touch", "SPI", "JTAG", "PWM"],
+		"cor": "#3b82f6",
+		"restricoes": ""
+	},
+	{
+		"numero": 15,
+		"nome": "GPIO15",
+		"tipo": "gpio",
+		"funcoes": ["GPIO15", "ADC2_CH3", "RTC_GPIO13", "TOUCH3", "HSPICS0", "I2C_SDA_RTC", "JTAG_MTDO", "PWM"],
+		"categorias": ["GPIO", "ADC", "RTC", "Touch", "SPI", "I2C", "JTAG", "Strapping", "PWM"],
+		"cor": "#3b82f6",
+		"restricoes": "Resistor pull-up interno; controla logs na UART 0; configurações strapping"
+	},
+	{
+		"numero": 16,
+		"nome": "GPIO16",
+		"tipo": "gpio",
+		"funcoes": ["GPIO16", "UART2_RXD", "PWM"],
+		"categorias": ["GPIO", "UART", "PWM"],
+		"cor": "#3b82f6",
+		"restricoes": ""
+	},
+	{
+		"numero": 17,
+		"nome": "GPIO17",
+		"tipo": "gpio",
+		"funcoes": ["GPIO17", "UART2_TXD", "PWM"],
+		"categorias": ["GPIO", "UART", "PWM"],
+		"cor": "#3b82f6",
+		"restricoes": ""
+	},
+	{
+		"numero": 18,
+		"nome": "GPIO18",
+		"tipo": "gpio",
+		"funcoes": ["GPIO18", "VSPICLK", "PWM"],
+		"categorias": ["GPIO", "SPI", "PWM"],
+		"cor": "#3b82f6",
+		"restricoes": ""
+	},
+	{
+		"numero": 19,
+		"nome": "GPIO19",
+		"tipo": "gpio",
+		"funcoes": ["GPIO19", "UART0_CTS", "VSPIQ", "PWM"],
+		"categorias": ["GPIO", "UART", "SPI", "PWM"],
+		"cor": "#3b82f6",
+		"restricoes": ""
+	},
+	{
+		"numero": 21,
+		"nome": "GPIO21",
+		"tipo": "gpio",
+		"funcoes": ["GPIO21", "VSPIHD", "PWM"],
+		"categorias": ["GPIO", "SPI", "PWM"],
+		"cor": "#3b82f6",
+		"restricoes": ""
+	},
+	{
+		"numero": 22,
+		"nome": "GPIO22",
+		"tipo": "gpio",
+		"funcoes": ["GPIO22", "UART0_RTS", "VSPIWP", "PWM"],
+		"categorias": ["GPIO", "UART", "SPI", "PWM"],
+		"cor": "#3b82f6",
+		"restricoes": ""
+	},
+	{
+		"numero": 23,
+		"nome": "GPIO23",
+		"tipo": "gpio",
+		"funcoes": ["GPIO23", "VSPID", "PWM"],
+		"categorias": ["GPIO", "SPI", "PWM"],
+		"cor": "#3b82f6",
+		"restricoes": ""
+	},
+	{
+		"numero": 25,
+		"nome": "GPIO25",
+		"tipo": "gpio",
+		"funcoes": ["GPIO25", "ADC2_CH8", "RTC_GPIO6", "DAC1", "PWM"],
+		"categorias": ["GPIO", "ADC", "RTC", "DAC", "PWM"],
+		"cor": "#3b82f6",
+		"restricoes": ""
+	},
+	{
+		"numero": 26,
+		"nome": "GPIO26",
+		"tipo": "gpio",
+		"funcoes": ["GPIO26", "ADC2_CH9", "RTC_GPIO7", "DAC2", "PWM"],
+		"categorias": ["GPIO", "ADC", "RTC", "DAC", "PWM"],
+		"cor": "#3b82f6",
+		"restricoes": ""
+	},
+	{
+		"numero": 27,
+		"nome": "GPIO27",
+		"tipo": "gpio",
+		"funcoes": ["GPIO27", "ADC2_CH7", "RTC_GPIO17", "TOUCH7", "PWM"],
+		"categorias": ["GPIO", "ADC", "RTC", "Touch", "PWM"],
+		"cor": "#3b82f6",
+		"restricoes": ""
+	},
+	{
+		"numero": 32,
+		"nome": "GPIO32",
+		"tipo": "gpio",
+		"funcoes": ["GPIO32", "ADC1_CH4", "RTC_GPIO9", "TOUCH9", "XTAL_32K_P", "PWM"],
+		"categorias": ["GPIO", "ADC", "RTC", "Touch", "Clock", "PWM"],
+		"cor": "#3b82f6",
+		"restricoes": "Cristal oscilador externo opcional para RTC; frequência 32.768 kHz"
+	},
+	{
+		"numero": 33,
+		"nome": "GPIO33",
+		"tipo": "gpio",
+		"funcoes": ["GPIO33", "ADC1_CH5", "RTC_GPIO8", "TOUCH8", "XTAL_32K_N", "PWM"],
+		"categorias": ["GPIO", "ADC", "RTC", "Touch", "Clock", "PWM"],
+		"cor": "#3b82f6",
+		"restricoes": "Cristal oscilador externo opcional para RTC; frequência 32.768 kHz"
+	},
+	{
+		"numero": 34,
+		"nome": "GPIO34",
+		"tipo": "gpio",
+		"funcoes": ["GPIO34", "ADC1_CH6", "RTC_GPIO4"],
+		"categorias": ["GPIO", "ADC", "RTC"],
+		"cor": "#22c55e",
+		"restricoes": "Somente entrada; não suporta saída"
+	},
+	{
+		"numero": 35,
+		"nome": "GPIO35",
+		"tipo": "gpio",
+		"funcoes": ["GPIO35", "ADC1_CH7", "RTC_GPIO5"],
+		"categorias": ["GPIO", "ADC", "RTC"],
+		"cor": "#22c55e",
+		"restricoes": "Somente entrada; não suporta saída"
+	},
+	{
+		"numero": 36,
+		"nome": "GPIO36",
+		"tipo": "gpio",
+		"funcoes": ["GPIO36", "ADC1_CH0", "RTC_GPIO0"],
+		"categorias": ["GPIO", "ADC", "RTC"],
+		"cor": "#22c55e",
+		"restricoes": "Somente entrada; não suporta saída"
+	},
+	{
+		"numero": 37,
+		"nome": "GPIO37",
+		"tipo": "gpio",
+		"funcoes": ["GPIO37", "ADC1_CH1", "RTC_GPIO1"],
+		"categorias": ["GPIO", "ADC", "RTC"],
+		"cor": "#22c55e",
+		"restricoes": "Somente entrada; não suporta saída"
+	},
+	{
+		"numero": 38,
+		"nome": "GPIO38",
+		"tipo": "gpio",
+		"funcoes": ["GPIO38", "ADC1_CH2", "RTC_GPIO2"],
+		"categorias": ["GPIO", "ADC", "RTC"],
+		"cor": "#22c55e",
+		"restricoes": "Somente entrada; não suporta saída"
+	},
+	{
+		"numero": 39,
+		"nome": "GPIO39",
+		"tipo": "gpio",
+		"funcoes": ["GPIO39", "ADC1_CH3", "RTC_GPIO3"],
+		"categorias": ["GPIO", "ADC", "RTC"],
+		"cor": "#22c55e",
+		"restricoes": "Somente entrada (input-only)"
+	}
+]

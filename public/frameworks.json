@@ -1,0 +1,241 @@
+{
+    "ESP-IDF": {
+        "nome": "ESP-IDF",
+        "icone": "⚙️",
+        "nome_completo": "Espressif IoT Development Framework",
+        "descricao": "Framework oficial de desenvolvimento da Espressif para ESP32, baseado em FreeRTOS",
+        "linguagem": "C/C++",
+        "tipo": "Framework Base",
+        "funcao_principal": "Desenvolvimento de aplicações IoT de propósito geral com acesso completo ao hardware",
+        "caracteristicas": [
+            "Sistema operacional em tempo real (FreeRTOS)",
+            "Pilha completa de Wi-Fi e Bluetooth",
+            "Suporte a todos os periféricos do ESP32",
+            "Ferramentas de build e debug integradas",
+            "Gerenciamento de energia avançado",
+            "Suporte OTA (Over-The-Air updates)",
+            "Biblioteca de componentes extensível"
+        ],
+        "casos_uso": [
+            "Dispositivos IoT conectados",
+            "Automação residencial e industrial",
+            "Wearables e dispositivos vestíveis",
+            "Gateways e hubs de comunicação",
+            "Sistemas embarcados em tempo real"
+        ],
+        "exemplo_codigo": "#include \"freertos/FreeRTOS.h\"\n#include \"freertos/task.h\"\n#include \"esp_wifi.h\"\n#include \"esp_log.h\"\n\nstatic const char *TAG = \"app_main\";\n\nvoid app_main(void)\n{\n    ESP_LOGI(TAG, \"Iniciando aplicação ESP32\");\n    \n    // Inicializar Wi-Fi\n    esp_netif_init();\n    esp_event_loop_create_default();\n    \n    // Configurar Wi-Fi em modo station\n    wifi_init_config_t cfg = WIFI_INIT_CONFIG_DEFAULT();\n    esp_wifi_init(&cfg);\n    \n    ESP_LOGI(TAG, \"Wi-Fi inicializado com sucesso\");\n}",
+        "documentacao": "https://docs.espressif.com/projects/esp-idf/",
+        "repositorio": "https://github.com/espressif/esp-idf",
+        "cor": "#E74C3C"
+    },
+    "ESP-ADF": {
+        "nome": "ESP-ADF",
+        "icone": "🎵",
+        "nome_completo": "ESP Audio Development Framework",
+        "descricao": "Framework especializado para aplicações de áudio no ESP32",
+        "linguagem": "C/C++",
+        "tipo": "Framework Especializado",
+        "funcao_principal": "Desenvolvimento de aplicações de áudio com suporte a codecs, streaming e processamento",
+        "caracteristicas": [
+            "Suporte a múltiplos codecs de áudio (MP3, AAC, FLAC, WAV, etc.)",
+            "Pipeline de áudio configurável",
+            "Streaming de áudio via HTTP, HTTPS, HLS",
+            "Integração com serviços de nuvem (AWS, Google, Baidu)",
+            "Reconhecimento de voz e wake word",
+            "Equalização e efeitos de áudio",
+            "Suporte a Bluetooth A2DP e HFP"
+        ],
+        "casos_uso": [
+            "Alto-falantes inteligentes",
+            "Assistentes de voz",
+            "Rádios de internet",
+            "Players de música",
+            "Interfones e intercomunicadores",
+            "Sistemas de PA (Public Address)"
+        ],
+        "exemplo_codigo": "#include \"audio_pipeline.h\"\n#include \"audio_element.h\"\n#include \"mp3_decoder.h\"\n#include \"i2s_stream.h\"\n\nvoid app_main(void)\n{\n    // Criar pipeline de áudio\n    audio_pipeline_handle_t pipeline = audio_pipeline_init(&pipeline_cfg);\n    \n    // Criar elementos: HTTP stream -> MP3 decoder -> I2S output\n    audio_element_handle_t http_stream = http_stream_init(&http_cfg);\n    audio_element_handle_t mp3_decoder = mp3_decoder_init(&mp3_cfg);\n    audio_element_handle_t i2s_stream = i2s_stream_init(&i2s_cfg);\n    \n    // Registrar elementos no pipeline\n    audio_pipeline_register(pipeline, http_stream, \"http\");\n    audio_pipeline_register(pipeline, mp3_decoder, \"mp3\");\n    audio_pipeline_register(pipeline, i2s_stream, \"i2s\");\n    \n    // Conectar elementos\n    audio_pipeline_link(pipeline, (const char *[]){\"http\", \"mp3\", \"i2s\"}, 3);\n    \n    // Iniciar reprodução\n    audio_pipeline_run(pipeline);\n}",
+        "documentacao": "https://docs.espressif.com/projects/esp-adf/",
+        "repositorio": "https://github.com/espressif/esp-adf",
+        "cor": "#3498DB"
+    },
+    "ESP-DSP": {
+        "nome": "ESP-DSP",
+        "icone": "📊",
+        "nome_completo": "ESP Digital Signal Processing Library",
+        "descricao": "Biblioteca otimizada para processamento digital de sinais no ESP32",
+        "linguagem": "C/C++",
+        "tipo": "Biblioteca Especializada",
+        "funcao_principal": "Processamento de sinais digitais com algoritmos otimizados para arquitetura ESP32",
+        "caracteristicas": [
+            "Operações matemáticas otimizadas (FFT, convolução, correlação)",
+            "Filtros digitais (FIR, IIR, Kalman)",
+            "Transformadas (FFT, DCT, DWT)",
+            "Operações de matriz e vetores",
+            "Suporte a ponto fixo e ponto flutuante",
+            "Otimizações específicas para Xtensa e RISC-V"
+        ],
+        "casos_uso": [
+            "Análise de sinais de áudio",
+            "Processamento de sinais de sensores",
+            "Filtros adaptativos",
+            "Análise espectral",
+            "Compressão de dados",
+            "Reconhecimento de padrões"
+        ],
+        "exemplo_codigo": "#include \"esp_dsp.h\"\n\n#define N_SAMPLES 1024\nfloat input[N_SAMPLES];\nfloat output[N_SAMPLES];\n\nvoid app_main(void)\n{\n    // Inicializar biblioteca DSP\n    dsps_fft2r_init_fc32(NULL, N_SAMPLES);\n    \n    // Gerar sinal de entrada (exemplo: onda senoidal)\n    for (int i = 0; i < N_SAMPLES; i++) {\n        input[i] = sinf(2 * M_PI * 50 * i / N_SAMPLES);\n    }\n    \n    // Aplicar FFT\n    dsps_fft2r_fc32(input, N_SAMPLES);\n    \n    // Calcular magnitude do espectro\n    for (int i = 0; i < N_SAMPLES / 2; i++) {\n        output[i] = sqrtf(input[i*2] * input[i*2] + \n                         input[i*2+1] * input[i*2+1]);\n    }\n}",
+        "documentacao": "https://docs.espressif.com/projects/esp-dsp/",
+        "repositorio": "https://github.com/espressif/esp-dsp",
+        "cor": "#9B59B6"
+    },
+    "ESP-WHO": {
+        "nome": "ESP-WHO",
+        "icone": "📷",
+        "nome_completo": "ESP Image Processing Framework",
+        "descricao": "Framework para processamento de imagens e visão computacional no ESP32",
+        "linguagem": "C/C++",
+        "tipo": "Framework Especializado",
+        "funcao_principal": "Detecção facial, reconhecimento facial e processamento de imagens",
+        "caracteristicas": [
+            "Detecção de faces em tempo real",
+            "Reconhecimento facial",
+            "Detecção de pontos faciais (landmarks)",
+            "Rastreamento de objetos",
+            "Otimizado para ESP32-S3 com aceleradores de IA",
+            "Suporte a câmeras via interface DVP",
+            "Modelos de rede neural otimizados"
+        ],
+        "casos_uso": [
+            "Sistemas de reconhecimento facial",
+            "Controle de acesso inteligente",
+            "Câmeras de segurança com IA",
+            "Detecção de presença",
+            "Análise de expressões faciais",
+            "Contagem de pessoas"
+        ],
+        "exemplo_codigo": "#include \"esp_camera.h\"\n#include \"fd_forward.h\"\n#include \"fr_forward.h\"\n\nvoid app_main(void)\n{\n    // Inicializar câmera\n    camera_config_t config = {\n        .pin_pwdn = -1,\n        .pin_reset = -1,\n        .pin_xclk = 21,\n        .pin_sscb_sda = 26,\n        .pin_sscb_scl = 27,\n        // ... outras configurações\n    };\n    esp_camera_init(&config);\n    \n    // Capturar frame\n    camera_fb_t *fb = esp_camera_fb_get();\n    \n    // Detectar faces\n    dl_matrix3du_t *image_matrix = dl_matrix3du_alloc(1, fb->width, fb->height, 3);\n    box_array_t *detected = face_detect(image_matrix, &mtmn_config);\n    \n    if (detected) {\n        printf(\"Detectadas %d faces\\n\", detected->len);\n        // Processar faces detectadas\n    }\n    \n    // Liberar recursos\n    esp_camera_fb_return(fb);\n}",
+        "documentacao": "https://github.com/espressif/esp-who",
+        "repositorio": "https://github.com/espressif/esp-who",
+        "cor": "#E67E22"
+    },
+    "ESP-NN": {
+        "nome": "ESP-NN",
+        "icone": "🧠",
+        "nome_completo": "ESP Neural Network Library",
+        "descricao": "Biblioteca de redes neurais otimizada para ESP32",
+        "linguagem": "C/C++",
+        "tipo": "Biblioteca Especializada",
+        "funcao_principal": "Inferência de redes neurais com otimizações específicas para ESP32",
+        "caracteristicas": [
+            "Operações de rede neural otimizadas",
+            "Suporte a convolução, pooling, fully connected",
+            "Quantização de 8 e 16 bits",
+            "Otimizações SIMD para Xtensa e RISC-V",
+            "Compatível com TensorFlow Lite",
+            "Baixo consumo de memória",
+            "Aceleração via instruções vetoriais"
+        ],
+        "casos_uso": [
+            "Classificação de imagens",
+            "Detecção de objetos",
+            "Reconhecimento de voz",
+            "Predição de séries temporais",
+            "Detecção de anomalias",
+            "IA na borda (Edge AI)"
+        ],
+        "exemplo_codigo": "#include \"esp_nn.h\"\n\n#define INPUT_SIZE 224*224*3\n#define OUTPUT_SIZE 1000\n\nint8_t input_data[INPUT_SIZE];\nint8_t output_data[OUTPUT_SIZE];\n\nvoid app_main(void)\n{\n    // Preparar dados de entrada (imagem pré-processada)\n    // ...\n    \n    // Executar camada de convolução\n    esp_nn_conv2d_s8(\n        input_data,      // entrada\n        output_data,     // saída\n        weights,         // pesos\n        bias,            // bias\n        input_height,    // altura entrada\n        input_width,     // largura entrada\n        input_channels,  // canais entrada\n        output_channels, // canais saída\n        kernel_size,     // tamanho kernel\n        stride,          // stride\n        padding          // padding\n    );\n    \n    // Processar saída\n    int predicted_class = get_max_index(output_data, OUTPUT_SIZE);\n    printf(\"Classe predita: %d\\n\", predicted_class);\n}",
+        "documentacao": "https://github.com/espressif/esp-nn",
+        "repositorio": "https://github.com/espressif/esp-nn",
+        "cor": "#1ABC9C"
+    },
+    "ESP-Matter": {
+        "nome": "ESP-Matter",
+        "icone": "🏠",
+        "nome_completo": "ESP Matter SDK",
+        "descricao": "SDK para desenvolvimento de dispositivos compatíveis com o padrão Matter",
+        "linguagem": "C/C++",
+        "tipo": "Framework Especializado",
+        "funcao_principal": "Criar dispositivos smart home interoperáveis usando o padrão Matter",
+        "caracteristicas": [
+            "Compatibilidade com padrão Matter (ex-Project CHIP)",
+            "Interoperabilidade entre ecossistemas (Apple, Google, Amazon)",
+            "Suporte a Thread e Wi-Fi",
+            "Comissionamento simplificado",
+            "Segurança robusta (PKI, criptografia)",
+            "Modelos de dispositivos pré-definidos",
+            "Integração com ESP-IDF"
+        ],
+        "casos_uso": [
+            "Lâmpadas inteligentes",
+            "Tomadas e interruptores smart",
+            "Sensores de temperatura e umidade",
+            "Fechaduras inteligentes",
+            "Termostatos",
+            "Dispositivos de controle de cortinas"
+        ],
+        "exemplo_codigo": "#include \"esp_matter.h\"\n#include \"esp_matter_console.h\"\n\nusing namespace esp_matter;\nusing namespace chip::app::Clusters;\n\nvoid app_main(void)\n{\n    // Criar nó Matter\n    node_t *node = node::create(&node_config, NULL, NULL);\n    \n    // Criar endpoint de lâmpada\n    endpoint_t *endpoint = on_off_light::create(\n        node, \n        &endpoint_config, \n        ENDPOINT_FLAG_NONE\n    );\n    \n    // Adicionar cluster On/Off\n    cluster_t *cluster = cluster::get(endpoint, OnOff::Id);\n    \n    // Iniciar Matter\n    esp_matter::start(NULL);\n    \n    // Aguardar comissionamento\n    printf(\"Dispositivo Matter pronto para comissionamento\\n\");\n}",
+        "documentacao": "https://docs.espressif.com/projects/esp-matter/",
+        "repositorio": "https://github.com/espressif/esp-matter",
+        "cor": "#F39C12"
+    },
+    "Arduino": {
+        "nome": "Arduino",
+        "icone": "🛠️",
+        "nome_completo": "Arduino Core for ESP32",
+        "descricao": "Implementação do framework Arduino para ESP32, facilitando o desenvolvimento",
+        "linguagem": "C++",
+        "tipo": "Framework Alternativo",
+        "funcao_principal": "Desenvolvimento rápido e simplificado usando a API familiar do Arduino",
+        "caracteristicas": [
+            "API simples e intuitiva",
+            "Grande comunidade e bibliotecas",
+            "IDE Arduino integrada",
+            "Suporte a Wi-Fi e Bluetooth",
+            "Compatibilidade com bibliotecas Arduino",
+            "Ideal para prototipagem rápida",
+            "Curva de aprendizado suave"
+        ],
+        "casos_uso": [
+            "Prototipagem rápida",
+            "Projetos educacionais",
+            "Makers e hobistas",
+            "IoT simples",
+            "Sensores e atuadores básicos",
+            "Projetos DIY"
+        ],
+        "exemplo_codigo": "#include <WiFi.h>\n\nconst char* ssid = \"Sua_Rede\";\nconst char* password = \"Sua_Senha\";\n\nvoid setup() {\n  Serial.begin(115200);\n  \n  // Conectar ao Wi-Fi\n  WiFi.begin(ssid, password);\n  \n  while (WiFi.status() != WL_CONNECTED) {\n    delay(500);\n    Serial.print(\".\");\n  }\n  \n  Serial.println(\"\");\n  Serial.println(\"WiFi conectado\");\n  Serial.print(\"Endereço IP: \");\n  Serial.println(WiFi.localIP());\n}\n\nvoid loop() {\n  // Seu código aqui\n  delay(1000);\n}",
+        "documentacao": "https://docs.espressif.com/projects/arduino-esp32/",
+        "repositorio": "https://github.com/espressif/arduino-esp32",
+        "cor": "#00979D"
+    },
+    "MicroPython": {
+        "nome": "MicroPython",
+        "icone": "🐍",
+        "nome_completo": "MicroPython for ESP32",
+        "descricao": "Implementação do Python 3 otimizada para microcontroladores ESP32",
+        "linguagem": "Python",
+        "tipo": "Framework Alternativo",
+        "funcao_principal": "Desenvolvimento em Python para prototipagem rápida e scripting",
+        "caracteristicas": [
+            "Sintaxe Python 3",
+            "REPL interativo",
+            "Desenvolvimento iterativo",
+            "Bibliotecas padrão Python",
+            "Suporte a Wi-Fi e Bluetooth",
+            "Sistema de arquivos integrado",
+            "Ideal para educação e prototipagem"
+        ],
+        "casos_uso": [
+            "Prototipagem rápida",
+            "Educação e ensino",
+            "Scripts de automação",
+            "IoT experimental",
+            "Projetos de ciência de dados embarcados",
+            "Testes e validação"
+        ],
+        "exemplo_codigo": "import network\nimport time\n\n# Conectar ao Wi-Fi\nwlan = network.WLAN(network.STA_IF)\nwlan.active(True)\nwlan.connect('Sua_Rede', 'Sua_Senha')\n\n# Aguardar conexão\nwhile not wlan.isconnected():\n    time.sleep(0.5)\n    print('.', end='')\n\nprint('\\nWi-Fi conectado')\nprint('IP:', wlan.ifconfig()[0])\n\n# Exemplo: Ler sensor e enviar dados\nwhile True:\n    # Ler sensor\n    temperatura = 25.5  # exemplo\n    \n    print(f'Temperatura: {temperatura}°C')\n    time.sleep(1)",
+        "documentacao": "https://docs.micropython.org/en/latest/esp32/",
+        "repositorio": "https://github.com/micropython/micropython",
+        "cor": "#2B2B2B"
+    }
+}
+
