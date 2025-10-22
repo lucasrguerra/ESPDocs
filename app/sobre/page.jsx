@@ -32,7 +32,8 @@ export default function Sobre() {
                         </h1>
 
                         <p className="text-lg md:text-xl opacity-90 max-w-3xl mb-6">
-                            Uma documentação não oficial, em português, feita por e para a comunidade — com foco em clareza, exemplos práticos e colaboração aberta.
+                            Uma documentação não oficial, em português, feita por um entusiasta e para
+                            a comunidade — com foco em clareza, exemplos práticos e colaboração aberta.
                         </p>
 
                         <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 items-start sm:items-center">
@@ -56,17 +57,21 @@ export default function Sobre() {
                 <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
                     <section className="md:col-span-2 space-y-6">
                         <article className="bg-white/70 backdrop-blur-sm rounded-2xl p-6 shadow-sm border border-gray-100">
-                            <h2 className="text-2xl font-bold mb-2">Nossa missão</h2>
+                            <h2 className="text-2xl font-bold mb-2">Missão</h2>
                             <p className="text-gray-700 leading-relaxed">
-                                Facilitar o aprendizado e acelerar projetos com ESP32 por meio de documentação clara, exemplos testados e comparativos práticos.
-                                Priorizamos traduções fiéis, explicações passo a passo e dicas baseadas em experiência real de desenvolvimento.
+                                Facilitar o aprendizado e acelerar projetos com ESP32 por meio de
+                                documentação clara, exemplos testados e comparativos práticos.
+                                Priorizei traduções fiéis, explicações passo a passo e dicas
+                                baseadas em experiência real de desenvolvimento.
                             </p>
                         </article>
 
                         <article className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
                             <h2 className="text-2xl font-bold mb-2">Por que o ESPDocs?</h2>
                             <p className="text-gray-700 leading-relaxed mb-4">
-                                Informações técnicas frequentemente estão dispersas entre datasheets, fóruns e repositórios. O ESPDocs centraliza esse conteúdo em português, com foco em aplicabilidade.
+                                Informações técnicas frequentemente estão dispersas entre datasheets,
+                                fóruns e repositórios. O ESPDocs centraliza esse conteúdo em português,
+                                com foco em aplicabilidade.
                             </p>
 
                             <ul role="list" className="grid sm:grid-cols-2 gap-4">
@@ -85,11 +90,13 @@ export default function Sobre() {
                         <article className="bg-white/70 backdrop-blur-sm rounded-2xl p-6 shadow-sm border border-gray-100">
                             <h2 className="text-2xl font-bold mb-2">Como contribuir</h2>
                             <p className="text-gray-700 leading-relaxed mb-3">
-                                Correções, traduções e novos exemplos são bem-vindos. Abra uma issue ou um pull request no repositório. Buscamos clareza nas descrições e exemplos testáveis.
+                                Correções, traduções e novos exemplos são bem-vindos. Abra uma
+                                issue ou um pull request no repositório. Busco por clareza nas
+                                descrições e exemplos testáveis.
                             </p>
                             <ol className="list-decimal list-inside text-gray-700 space-y-1">
                                 <li>Fork do repositório e crie uma branch clara.</li>
-                                <li>Adicione exemplos ou corrija o conteúdo com referências quando possível.</li>
+                                <li>Adicione exemplos ou corrija o conteúdo com referências quandopossível.</li>
                                 <li>Abra um PR e descreva o que foi alterado.</li>
                             </ol>
                         </article>
@@ -97,7 +104,8 @@ export default function Sobre() {
                         <article className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
                             <h2 className="text-2xl font-bold mb-2">Acessibilidade</h2>
                             <p className="text-gray-700 leading-relaxed">
-                                O site prioriza leitura, contraste legível e navegação por teclado. Se encontrar barreiras, por favor relate-nos para que possamos melhorar.
+                                O site prioriza leitura, contraste legível e navegação por teclado.
+                                Se encontrar barreiras, por favor relate para que eu possa melhorar.
                             </p>
                         </article>
                     </section>
@@ -109,7 +117,9 @@ export default function Sobre() {
                                 <span className="text-xs bg-green-100 text-green-800 px-2 py-1 rounded-full">Open Source</span>
                             </div>
 
-                            <p className="text-gray-700 mb-4">Ajude a melhorar o ESPDocs com exemplos, correções e traduções.</p>
+                            <p className="text-gray-700 mb-4">
+                                Ajude a melhorar o ESPDocs com exemplos, correções e traduções.
+                            </p>
 
                             <div className="flex flex-col gap-3">
                                 <a
@@ -128,7 +138,8 @@ export default function Sobre() {
                             </div>
 
                             <div className="mt-4 text-sm text-gray-500">
-                                <strong>Nota:</strong> Conteúdo não oficial. Consulte sempre datasheets e documentos oficiais para decisões críticas.
+                                <strong>Nota:</strong> Conteúdo não oficial. Consulte sempre datasheets
+                                e documentos oficiais para decisões críticas.
                             </div>
                         </div>
 

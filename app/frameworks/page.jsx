@@ -125,8 +125,11 @@ export default function Frameworks() {
                             🎓 Iniciante no ESP32?
                         </h3>
                         <p className="text-gray-600 mb-4">
-                            Se você está começando, recomendamos iniciar com <strong>Arduino</strong> ou <strong>MicroPython</strong> 
-                            para prototipagem rápida, ou <strong>ESP-IDF</strong> para projetos profissionais com controle total.
+                            Se você está começando, recomendo iniciar com&nbsp;
+                            <strong>Arduino</strong> ou&nbsp;
+                            <strong>MicroPython</strong>&nbsp;
+                            para prototipagem rápida, ou&nbsp;
+                            <strong>ESP-IDF</strong> para projetos profissionais com controle total.
                         </p>
                         <div className="flex flex-wrap gap-2">
                             <Link href="/frameworks/Arduino" className="px-4 py-2 bg-blue-100 text-blue-700 rounded-lg text-sm font-semibold hover:bg-blue-200 transition-colors">
@@ -146,8 +149,11 @@ export default function Frameworks() {
                             🚀 Aplicações Especializadas?
                         </h3>
                         <p className="text-gray-600 mb-4">
-                            Para projetos específicos, explore frameworks especializados como <strong>ESP-ADF</strong> (áudio), 
-                            <strong>ESP-WHO</strong> (visão), <strong>ESP-NN</strong> (IA) ou <strong>ESP-Matter</strong> (smart home).
+                            Para projetos específicos, explore frameworks especializados como&nbsp;
+                            <strong>ESP-ADF</strong> (áudio),&nbsp;
+                            <strong>ESP-WHO</strong> (visão),&nbsp;
+                            <strong>ESP-NN</strong> (IA) ou&nbsp;
+                            <strong>ESP-Matter</strong> (smart home).
                         </p>
                         <div className="flex flex-wrap gap-2">
                             <Link href="/frameworks/ESP-ADF" className="px-4 py-2 bg-blue-100 text-blue-700 rounded-lg text-sm font-semibold hover:bg-blue-200 transition-colors">
