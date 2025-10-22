@@ -294,7 +294,7 @@ export async function generateMetadata({ params }) {
     }
 
     return {
-        title: `${key} - ${serie.nome_completo}`,
+        title: `ESPDocs - ${serie.nome_completo}`,
         description: serie.descricao,
     };
 }
