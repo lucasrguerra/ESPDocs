@@ -21,8 +21,7 @@
             "Alimentação do domínio analógico"
         ],
         "categorias": [
-            "Power",
-            "Analog"
+            "Power"
         ],
         "cor": "#ef4444",
         "restricoes": "Opera entre 3.0 V e 3.6 V (típico 3.3 V)"
@@ -281,7 +280,6 @@
         "categorias": [
             "GPIO",
             "SDIO",
-            "Analog",
             "Strapping"
         ],
         "cor": "#3b82f6",
@@ -299,7 +297,6 @@
         "categorias": [
             "GPIO",
             "SDIO",
-            "Analog",
             "Strapping"
         ],
         "cor": "#3b82f6",
@@ -591,13 +588,12 @@
     {
         "numero": "XTAL_N",
         "nome": "XTAL_N",
-        "tipo": "analog",
+        "tipo": "analógico",
         "funcoes": [
             "Entrada/saída de clock externo",
             "Conexão ao cristal ou oscilador do chip"
         ],
         "categorias": [
-            "Analog",
             "Clock"
         ],
         "cor": "#a855f7",
@@ -606,13 +602,12 @@
     {
         "numero": "XTAL_P",
         "nome": "XTAL_P",
-        "tipo": "analog",
+        "tipo": "analógico",
         "funcoes": [
             "Entrada/saída de clock externo",
             "Conexão ao cristal ou oscilador do chip"
         ],
         "categorias": [
-            "Analog",
             "Clock"
         ],
         "cor": "#a855f7",
@@ -621,12 +616,11 @@
     {
         "numero": "ANT",
         "nome": "ANT_2G",
-        "tipo": "analog",
+        "tipo": "analógico",
         "funcoes": [
             "Entrada/saída de RF 2.4 GHz"
         ],
         "categorias": [
-            "Analog",
             "RF"
         ],
         "cor": "#a855f7",
@@ -635,12 +629,11 @@
     {
         "numero": "ANT",
         "nome": "ANT_5G",
-        "tipo": "analog",
+        "tipo": "analógico",
         "funcoes": [
             "Entrada/saída de RF 5 GHz"
         ],
         "categorias": [
-            "Analog",
             "RF"
         ],
         "cor": "#a855f7",

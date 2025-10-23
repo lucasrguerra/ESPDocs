@@ -40,7 +40,7 @@
 		"nome": "VDDA",
 		"tipo": "power",
 		"funcoes": ["Alimentação analógica do chip", "Alimentação de referência para o ADC"],
-		"categorias": ["Power", "Analog"],
+		"categorias": ["Power"],
 		"cor": "#ef4444",
 		"restricoes": "Opera entre 3.0 V e 3.6 V com flash; entre 2.3 V e 3.6 V sem flash"
 	},

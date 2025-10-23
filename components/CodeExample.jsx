@@ -86,7 +86,7 @@ export default function CodeExample({ framework }) {
 
                     <button
                         onClick={handleCopy}
-                        className="inline-flex items-center gap-2 bg-white text-gray-800 px-3 py-2 rounded-lg font-medium shadow border-2 border-gray-100 hover:shadow-lg transition"
+                        className="inline-flex items-center gap-2 bg-white text-gray-800 px-3 py-2 rounded-lg font-medium shadow border-2 border-gray-100 cursor-pointer hover:shadow-lg transition"
                         title="Copiar código"
                     >
                         {copied ? '✅ Copiado' : '📋 Copiar'}
@@ -111,7 +111,7 @@ export default function CodeExample({ framework }) {
 
             <div className="rounded-lg overflow-hidden border">
                 <div className="p-0">
-                    <div className="flex items-center justify-between bg-gradient-to-r from-gray-900 to-gray-800 p-3">
+                    <div className="flex items-center justify-between bg-linear-to-r from-gray-900 to-gray-800 p-3">
                         <div className="text-xs text-gray-300 font-medium">{framework?.nome}</div>
                         <div className="text-xs text-gray-400">
                             {loading ? 'Carregando exemplo...' : (framework?.exemplo ? 'Exemplo do framework' : 'Abrir no GitHub')}

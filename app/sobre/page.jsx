@@ -125,10 +125,6 @@ export default function Sobre() {
                                 >
                                     Ver repositório
                                 </a>
-
-                                <Link href="/contato" className="inline-flex items-center justify-center px-4 py-2 rounded-lg border border-gray-200 text-gray-700 hover:border-purple-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500" aria-label="Ir para a página de contato">
-                                    Entrar em contato
-                                </Link>
                             </div>
 
                             <div className="mt-4 text-sm text-gray-500">

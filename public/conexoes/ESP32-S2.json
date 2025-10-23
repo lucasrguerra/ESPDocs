@@ -21,8 +21,7 @@
             "Alimentação analógica do chip"
         ],
         "categorias": [
-            "Power",
-            "Analog"
+            "Power"
         ],
         "cor": "#ef4444",
         "restricoes": "Opera entre 2.8 V e 3.6 V"

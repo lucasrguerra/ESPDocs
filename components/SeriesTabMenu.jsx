@@ -15,7 +15,7 @@ export default function SeriesTabMenu({ tabs, color }) {
                     <button
                         key={tab.id}
                         onClick={() => setActiveTab(tab.id)}
-                        className={`flex-1 flex items-center justify-center gap-2 py-4 px-6 rounded-xl font-semibold transition-all duration-300 ${
+                        className={`flex-1 flex items-center justify-center gap-2 py-4 px-6 rounded-xl font-semibold transition-all duration-300 cursor-pointer ${
                             activeTab === tab.id
                                 ? 'text-white shadow-lg transform scale-105'
                                 : 'text-gray-600 hover:bg-gray-50'
