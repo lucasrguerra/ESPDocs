@@ -31,6 +31,7 @@
 		"temperatura_operacao": "-40°C a 125°C",
 		"temperatura_armazenamento": "-40°C a 150°C",
 		"datasheet": "https://documentation.espressif.com/esp32_datasheet_en.pdf",
+		"placa": "/placas/esp32.png",
 		"cor": "#007bff"
 	},
 	"ESP32-S2": {
@@ -64,6 +65,7 @@
 		"temperatura_operacao": "-40°C a 85°C",
 		"temperatura_armazenamento": "-40°C a 150°C",
 		"datasheet": "https://documentation.espressif.com/esp32-s2_datasheet_en.pdf",
+		"placa": "/placas/esp32-s2.png",
 		"cor": "#28a745"
 	},
 	"ESP32-S3": {
@@ -99,6 +101,7 @@
 		"temperatura_operacao": "-40°C a 85°C",
 		"temperatura_armazenamento": "-40°C a 150°C",
 		"datasheet": "https://documentation.espressif.com/esp32-s3_datasheet_en.pdf",
+		"placa": "/placas/esp32-s3.png",
 		"cor": "#fd7e14"
 	},
 	"ESP32-C3": {
@@ -129,6 +132,7 @@
 		"temperatura_operacao": "-40°C a 105°C",
 		"temperatura_armazenamento": "-40°C a 150°C",
 		"datasheet": "https://documentation.espressif.com/esp32-c3_datasheet_en.pdf",
+		"placa": "/placas/esp32-c3.png",
 		"cor": "#20c997"
 	},
 	"ESP32-C5": {
@@ -160,6 +164,7 @@
 		"temperatura_operacao": "-40°C a 85°C",
 		"temperatura_armazenamento": "-40°C a 150°C",
 		"datasheet": "https://documentation.espressif.com/esp32-c5_datasheet_en.pdf",
+		"placa": "/placas/esp32-c5.png",
 		"cor": "#6f42c1"
 	},
 	"ESP32-C6": {
@@ -193,6 +198,7 @@
 		"temperatura_operacao": "-40°C a 105°C",
 		"temperatura_armazenamento": "-40°C a 150°C",
 		"datasheet": "https://documentation.espressif.com/esp32-c6_datasheet_en.pdf",
+		"placa": "/placas/esp32-c6.png",
 		"cor": "#17a2b8"
 	},
 	"ESP32-P4": {
@@ -229,6 +235,7 @@
 		"temperatura_operacao": "-40°C a 85°C",
 		"temperatura_armazenamento": "-40°C a 150°C",
 		"datasheet": "https://documentation.espressif.com/esp32-p4_datasheet_en.pdf",
+		"placa": "/placas/esp32-p4.png",
 		"cor": "#ffc107"
 	},
 	"ESP32-H2": {
@@ -261,6 +268,7 @@
 		"temperatura_operacao": "-40°C a 85°C",
 		"temperatura_armazenamento": "-40°C a 150°C",
 		"datasheet": "https://documentation.espressif.com/esp32-h2_datasheet_en.pdf",
+		"placa": "/placas/esp32-h2.png",
 		"cor": "#6c757d"
 	}
 }

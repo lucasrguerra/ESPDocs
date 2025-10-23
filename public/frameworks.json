@@ -23,7 +23,8 @@
             "Gateways e hubs de comunicação",
             "Sistemas embarcados em tempo real"
         ],
-        "exemplo_codigo": "#include \"freertos/FreeRTOS.h\"\n#include \"freertos/task.h\"\n#include \"esp_wifi.h\"\n#include \"esp_log.h\"\n\nstatic const char *TAG = \"app_main\";\n\nvoid app_main(void)\n{\n    ESP_LOGI(TAG, \"Iniciando aplicação ESP32\");\n    \n    // Inicializar Wi-Fi\n    esp_netif_init();\n    esp_event_loop_create_default();\n    \n    // Configurar Wi-Fi em modo station\n    wifi_init_config_t cfg = WIFI_INIT_CONFIG_DEFAULT();\n    esp_wifi_init(&cfg);\n    \n    ESP_LOGI(TAG, \"Wi-Fi inicializado com sucesso\");\n}",
+        "exemplo": "/exemplos/esp-idf.c",
+        "exemplos": "https://github.com/espressif/esp-idf/tree/master/examples",
         "documentacao": "https://docs.espressif.com/projects/esp-idf/",
         "repositorio": "https://github.com/espressif/esp-idf",
         "cor": "#E74C3C"
@@ -53,7 +54,8 @@
             "Interfones e intercomunicadores",
             "Sistemas de PA (Public Address)"
         ],
-        "exemplo_codigo": "#include \"audio_pipeline.h\"\n#include \"audio_element.h\"\n#include \"mp3_decoder.h\"\n#include \"i2s_stream.h\"\n\nvoid app_main(void)\n{\n    // Criar pipeline de áudio\n    audio_pipeline_handle_t pipeline = audio_pipeline_init(&pipeline_cfg);\n    \n    // Criar elementos: HTTP stream -> MP3 decoder -> I2S output\n    audio_element_handle_t http_stream = http_stream_init(&http_cfg);\n    audio_element_handle_t mp3_decoder = mp3_decoder_init(&mp3_cfg);\n    audio_element_handle_t i2s_stream = i2s_stream_init(&i2s_cfg);\n    \n    // Registrar elementos no pipeline\n    audio_pipeline_register(pipeline, http_stream, \"http\");\n    audio_pipeline_register(pipeline, mp3_decoder, \"mp3\");\n    audio_pipeline_register(pipeline, i2s_stream, \"i2s\");\n    \n    // Conectar elementos\n    audio_pipeline_link(pipeline, (const char *[]){\"http\", \"mp3\", \"i2s\"}, 3);\n    \n    // Iniciar reprodução\n    audio_pipeline_run(pipeline);\n}",
+        "exemplo": "/exemplos/esp-adf.c",
+        "exemplos": "https://github.com/espressif/esp-adf/tree/master/examples",
         "documentacao": "https://docs.espressif.com/projects/esp-adf/",
         "repositorio": "https://github.com/espressif/esp-adf",
         "cor": "#3498DB"
@@ -82,7 +84,8 @@
             "Compressão de dados",
             "Reconhecimento de padrões"
         ],
-        "exemplo_codigo": "#include \"esp_dsp.h\"\n\n#define N_SAMPLES 1024\nfloat input[N_SAMPLES];\nfloat output[N_SAMPLES];\n\nvoid app_main(void)\n{\n    // Inicializar biblioteca DSP\n    dsps_fft2r_init_fc32(NULL, N_SAMPLES);\n    \n    // Gerar sinal de entrada (exemplo: onda senoidal)\n    for (int i = 0; i < N_SAMPLES; i++) {\n        input[i] = sinf(2 * M_PI * 50 * i / N_SAMPLES);\n    }\n    \n    // Aplicar FFT\n    dsps_fft2r_fc32(input, N_SAMPLES);\n    \n    // Calcular magnitude do espectro\n    for (int i = 0; i < N_SAMPLES / 2; i++) {\n        output[i] = sqrtf(input[i*2] * input[i*2] + \n                         input[i*2+1] * input[i*2+1]);\n    }\n}",
+        "exemplo": "/exemplos/esp-dsp.c",
+        "exemplos": "https://github.com/espressif/esp-dsp/tree/master/examples",
         "documentacao": "https://docs.espressif.com/projects/esp-dsp/",
         "repositorio": "https://github.com/espressif/esp-dsp",
         "cor": "#9B59B6"
@@ -112,7 +115,8 @@
             "Análise de expressões faciais",
             "Contagem de pessoas"
         ],
-        "exemplo_codigo": "#include \"esp_camera.h\"\n#include \"fd_forward.h\"\n#include \"fr_forward.h\"\n\nvoid app_main(void)\n{\n    // Inicializar câmera\n    camera_config_t config = {\n        .pin_pwdn = -1,\n        .pin_reset = -1,\n        .pin_xclk = 21,\n        .pin_sscb_sda = 26,\n        .pin_sscb_scl = 27,\n        // ... outras configurações\n    };\n    esp_camera_init(&config);\n    \n    // Capturar frame\n    camera_fb_t *fb = esp_camera_fb_get();\n    \n    // Detectar faces\n    dl_matrix3du_t *image_matrix = dl_matrix3du_alloc(1, fb->width, fb->height, 3);\n    box_array_t *detected = face_detect(image_matrix, &mtmn_config);\n    \n    if (detected) {\n        printf(\"Detectadas %d faces\\n\", detected->len);\n        // Processar faces detectadas\n    }\n    \n    // Liberar recursos\n    esp_camera_fb_return(fb);\n}",
+        "exemplo": "/exemplos/esp-who.c",
+        "exemplos": "https://github.com/espressif/esp-who/tree/master/examples",
         "documentacao": "https://github.com/espressif/esp-who",
         "repositorio": "https://github.com/espressif/esp-who",
         "cor": "#E67E22"
@@ -142,7 +146,8 @@
             "Detecção de anomalias",
             "IA na borda (Edge AI)"
         ],
-        "exemplo_codigo": "#include \"esp_nn.h\"\n\n#define INPUT_SIZE 224*224*3\n#define OUTPUT_SIZE 1000\n\nint8_t input_data[INPUT_SIZE];\nint8_t output_data[OUTPUT_SIZE];\n\nvoid app_main(void)\n{\n    // Preparar dados de entrada (imagem pré-processada)\n    // ...\n    \n    // Executar camada de convolução\n    esp_nn_conv2d_s8(\n        input_data,      // entrada\n        output_data,     // saída\n        weights,         // pesos\n        bias,            // bias\n        input_height,    // altura entrada\n        input_width,     // largura entrada\n        input_channels,  // canais entrada\n        output_channels, // canais saída\n        kernel_size,     // tamanho kernel\n        stride,          // stride\n        padding          // padding\n    );\n    \n    // Processar saída\n    int predicted_class = get_max_index(output_data, OUTPUT_SIZE);\n    printf(\"Classe predita: %d\\n\", predicted_class);\n}",
+        "exemplo": "/exemplos/esp-nn.c",
+        "exemplos": "https://github.com/espressif/esp-nn/tree/master/test_app",
         "documentacao": "https://github.com/espressif/esp-nn",
         "repositorio": "https://github.com/espressif/esp-nn",
         "cor": "#1ABC9C"
@@ -172,7 +177,8 @@
             "Termostatos",
             "Dispositivos de controle de cortinas"
         ],
-        "exemplo_codigo": "#include \"esp_matter.h\"\n#include \"esp_matter_console.h\"\n\nusing namespace esp_matter;\nusing namespace chip::app::Clusters;\n\nvoid app_main(void)\n{\n    // Criar nó Matter\n    node_t *node = node::create(&node_config, NULL, NULL);\n    \n    // Criar endpoint de lâmpada\n    endpoint_t *endpoint = on_off_light::create(\n        node, \n        &endpoint_config, \n        ENDPOINT_FLAG_NONE\n    );\n    \n    // Adicionar cluster On/Off\n    cluster_t *cluster = cluster::get(endpoint, OnOff::Id);\n    \n    // Iniciar Matter\n    esp_matter::start(NULL);\n    \n    // Aguardar comissionamento\n    printf(\"Dispositivo Matter pronto para comissionamento\\n\");\n}",
+        "exemplo": "/exemplos/esp-matter.c",
+        "exemplos": "https://github.com/espressif/esp-matter/tree/main/examples",
         "documentacao": "https://docs.espressif.com/projects/esp-matter/",
         "repositorio": "https://github.com/espressif/esp-matter",
         "cor": "#F39C12"
@@ -202,7 +208,8 @@
             "Sensores e atuadores básicos",
             "Projetos DIY"
         ],
-        "exemplo_codigo": "#include <WiFi.h>\n\nconst char* ssid = \"Sua_Rede\";\nconst char* password = \"Sua_Senha\";\n\nvoid setup() {\n  Serial.begin(115200);\n  \n  // Conectar ao Wi-Fi\n  WiFi.begin(ssid, password);\n  \n  while (WiFi.status() != WL_CONNECTED) {\n    delay(500);\n    Serial.print(\".\");\n  }\n  \n  Serial.println(\"\");\n  Serial.println(\"WiFi conectado\");\n  Serial.print(\"Endereço IP: \");\n  Serial.println(WiFi.localIP());\n}\n\nvoid loop() {\n  // Seu código aqui\n  delay(1000);\n}",
+        "exemplo": "/exemplos/arduino.ino",
+        "exemplos": "https://github.com/espressif/arduino-esp32/tree/master/docs/en/tutorials",
         "documentacao": "https://docs.espressif.com/projects/arduino-esp32/",
         "repositorio": "https://github.com/espressif/arduino-esp32",
         "cor": "#00979D"
@@ -232,7 +239,8 @@
             "Projetos de ciência de dados embarcados",
             "Testes e validação"
         ],
-        "exemplo_codigo": "import network\nimport time\n\n# Conectar ao Wi-Fi\nwlan = network.WLAN(network.STA_IF)\nwlan.active(True)\nwlan.connect('Sua_Rede', 'Sua_Senha')\n\n# Aguardar conexão\nwhile not wlan.isconnected():\n    time.sleep(0.5)\n    print('.', end='')\n\nprint('\\nWi-Fi conectado')\nprint('IP:', wlan.ifconfig()[0])\n\n# Exemplo: Ler sensor e enviar dados\nwhile True:\n    # Ler sensor\n    temperatura = 25.5  # exemplo\n    \n    print(f'Temperatura: {temperatura}°C')\n    time.sleep(1)",
+        "exemplo": "/exemplos/micropython.py",
+        "exemplos": "https://github.com/micropython/micropython/tree/master/examples",
         "documentacao": "https://docs.micropython.org/en/latest/esp32/",
         "repositorio": "https://github.com/micropython/micropython",
         "cor": "#2B2B2B"

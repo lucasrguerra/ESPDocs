@@ -29,7 +29,11 @@ export default function Header() {
     ];
 
     function isActive(href) {
-        return pathname === href;
+        if (href === "/") {
+            return pathname === "/";
+        }
+        
+        return String(pathname).includes(href) && href !== "/";
     }
 
     return (

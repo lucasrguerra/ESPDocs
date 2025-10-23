@@ -1,14 +1,14 @@
+import Link from "next/link";
+import Image from "next/image";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import Link from "next/link";
-import seriesData from "@/public/series.json";
 import { notFound } from "next/navigation";
+import seriesData from "@/public/series.json";
 import ConnectionsDiagram from "@/components/ConnectionsDiagram";
-import Image from "next/image";
 import SeriesTabMenu from "@/components/SeriesTabMenu";
 
-export default function SerieDetail({ params }) {
-    const { key } = params;
+export default async function SerieDetail({ params }) {
+    const { key } = await params;
     const serie = seriesData[key];
 
     if (!serie) {
@@ -21,19 +21,6 @@ export default function SerieDetail({ params }) {
     } catch (error) {
         console.log(`Arquivo de conexões não encontrado para ${key}`);
     }
-
-    // Development board image mapping
-    const devBoardImages = {
-        "ESP32": "/placas/esp32.png",
-        "ESP32-S2": "/placas/esp32-s2.png",
-        "ESP32-S3": "/placas/esp32-s3.png",
-        "ESP32-C3": "/placas/esp32-c3.png",
-        "ESP32-C5": "/placas/esp32-c5.png",
-        "ESP32-C6": "/placas/esp32-c6.png",
-        "ESP32-H2": "/placas/esp32-h2.png",
-        "ESP32-C2": "/placas/esp32-c2.png",
-        "ESP32-P4": "/placas/esp32-p4.png",
-    };
 
     const seriesKeys = Object.keys(seriesData);
     const currentIndex = seriesKeys.indexOf(key);
@@ -101,7 +88,7 @@ export default function SerieDetail({ params }) {
         {
             id: 'devboard',
             label: 'Placa de Desenvolvimento',
-            available: devBoardImages[key],
+            available: serie.placa,
             content: (
                 <div className="bg-white rounded-3xl shadow-xl p-8 border-2 border-gray-100">
                     <h2 className="text-2xl font-bold text-gray-800 mb-6 pb-3 border-b-2 flex items-center gap-3" style={{ borderColor: serie.cor }}>
@@ -111,7 +98,7 @@ export default function SerieDetail({ params }) {
                     <div className="flex justify-center">
                         <div className="relative w-full max-w-4xl">
                             <Image
-                                src={devBoardImages[key]}
+                                src={serie.placa}
                                 alt={`${key} DevKit - Placa de Desenvolvimento`}
                                 width={1200}
                                 height={800}
@@ -217,7 +204,7 @@ export default function SerieDetail({ params }) {
 
                 <SeriesTabMenu tabs={tabs} color={serie.cor} />
 
-                <div className="flex justify-between items-center gap-4 mt-12">
+                <div className="grid sm:flex sm:justify-between items-center gap-4 mt-12">
                     {previousKey ? (
                         <Link
                             href={`/series/${previousKey}`}
@@ -284,7 +271,7 @@ function SpecSection({ title, specs, cor }) {
 }
 
 export async function generateMetadata({ params }) {
-    const { key } = params;
+    const { key } = await params;
     const serie = seriesData[key];
 
     if (!serie) {

@@ -20,12 +20,6 @@ export default function Sobre() {
 
             <main id="conteudo" className="px-4 pt-16 pb-20 max-w-6xl mx-auto">
                 <header className="relative overflow-hidden rounded-2xl p-8 md:p-12 bg-linear-to-r from-blue-600 via-purple-600 to-pink-500 text-white shadow-lg">
-                    <div className="absolute right-0 top-0 -mr-40 -mt-24 opacity-20 pointer-events-none">
-                        <svg width="400" height="300" viewBox="0 0 600 400" fill="none" aria-hidden="true">
-                            <path d="M0 200 C150 100 350 300 600 200 L600 400 L0 400 Z" fill="white" />
-                        </svg>
-                    </div>
-
                     <div className="relative z-10 max-w-4xl mx-auto">
                         <h1 className="text-4xl md:text-5xl font-extrabold leading-tight bg-clip-text text-transparent bg-linear-to-r from-white to-purple-100 mb-3">
                             Sobre o ESPDocs

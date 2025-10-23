@@ -171,25 +171,6 @@ export default function Frameworks() {
                         </div>
                     </div>
                 </div>
-
-                <div className="mt-8 bg-linear-to-r from-blue-600 via-purple-600 to-pink-600 rounded-2xl shadow-lg p-8 text-white">
-                    <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-                        <div className="flex-1">
-                            <h3 className="text-2xl font-bold mb-2">
-                                💡 Precisa de Ajuda para Escolher?
-                            </h3>
-                            <p className="text-blue-100">
-                                Compare frameworks, veja exemplos de código e entenda qual se adequa melhor ao seu projeto.
-                            </p>
-                        </div>
-                        <Link
-                            href="/comparacao-frameworks"
-                            className="bg-white text-purple-600 px-6 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 whitespace-nowrap"
-                        >
-                            📊 Comparar Frameworks
-                        </Link>
-                    </div>
-                </div>
             </main>
 
             <Footer />

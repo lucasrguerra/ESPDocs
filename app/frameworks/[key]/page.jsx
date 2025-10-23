@@ -1,11 +1,12 @@
+import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import Link from "next/link";
-import frameworksData from "@/public/frameworks.json";
 import { notFound } from "next/navigation";
+import CodeExample from "@/components/CodeExample";
+import frameworksData from "@/public/frameworks.json";
 
-export default function FrameworkDetail({ params }) {
-    const { key } = params;
+export default async function FrameworkDetail({ params }) {
+    const { key } = await params;
     const framework = frameworksData[key];
 
     if (!framework) {
@@ -42,7 +43,7 @@ export default function FrameworkDetail({ params }) {
                                 </div>
                             </div>
 
-                            <div className="flex items-center gap-3">
+                            <div className="mx-auto sm:mx-0 grid items-center gap-3">
                                 {framework.documentacao && (
                                     <a
                                         href={framework.documentacao}
@@ -88,7 +89,7 @@ export default function FrameworkDetail({ params }) {
 
                     <div className="bg-white rounded-2xl shadow-lg p-6 border-l-4" style={{ borderColor: framework.cor }}>
                         <h3 className="text-sm font-semibold text-gray-600 mb-2">FUNÇÃO PRINCIPAL</h3>
-                        <p className="text-3xl font-bold text-gray-800">{framework.funcao_principal}</p>
+                        <p className="text-xl font-bold text-gray-800">{framework.funcao_principal}</p>
                     </div>
                 </div>
 
@@ -126,26 +127,17 @@ export default function FrameworkDetail({ params }) {
                     </div>
                 </div>
 
-                {framework.exemplo_codigo && (
-                    <div className="bg-white rounded-2xl shadow-lg p-6 border-2 border-gray-100 mb-8">
-                        <h3 className="text-lg font-semibold text-gray-800 mb-4" style={{ borderColor: framework.cor }}>
-                            Exemplo de Código
-                        </h3>
-                        <div className="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-auto text-sm" style={{ maxHeight: 480 }}>
-                            <pre className="whitespace-pre-wrap">
-                                <code>{framework.exemplo_codigo}</code>
-                            </pre>
-                        </div>
-                    </div>
+                {framework.exemplos && (
+                    <CodeExample framework={framework} />
                 )}
 
-                <div className="flex gap-4 mt-6">
+                <div className="text-center md:flex gap-4 mt-6">
                     {framework.documentacao && (
                         <a
                             href={framework.documentacao}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center gap-2 bg-linear-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-xl font-semibold shadow hover:shadow-xl transition"
+                            className="inline-flex items-center mb-4 gap-2 bg-linear-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-xl font-semibold shadow hover:shadow-xl transition"
                         >
                             📚 Documentação Oficial
                         </a>
@@ -156,7 +148,7 @@ export default function FrameworkDetail({ params }) {
                             href={framework.repositorio}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center gap-2 bg-white text-gray-800 px-6 py-3 rounded-xl font-semibold shadow border-2 border-gray-100 hover:border-purple-300 transition"
+                            className="inline-flex items-center mb-4 gap-2 bg-white text-gray-800 px-6 py-3 rounded-xl font-semibold shadow border-2 border-gray-100 hover:border-purple-300 transition"
                         >
                             💻 Repositório no GitHub
                         </a>
@@ -170,7 +162,7 @@ export default function FrameworkDetail({ params }) {
 }
 
 export async function generateMetadata({ params }) {
-    const { key } = params;
+    const { key } = await params;
     const framework = frameworksData[key];
 
     if (!framework) {
@@ -178,11 +170,13 @@ export async function generateMetadata({ params }) {
     }
 
     return {
-        title: `${framework.nome} - ${framework.nome_completo}`,
+        title: `ESPDocs - ${framework.nome_completo}`,
         description: framework.descricao,
     };
 }
 
 export async function generateStaticParams() {
-    return Object.keys(frameworksData).map((key) => ({ key }));
+    return Object.keys(frameworksData).map((key) => ({
+        key: key,
+    }));
 }
