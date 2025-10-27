@@ -1,362 +1,964 @@
 [
 	{
-		"numero": "GND",
-		"nome": "GND",
-		"tipo": "ground",
-		"funcoes": ["Referência elétrica do sistema", "Referência para nível lógico baixo"],
-		"categorias": ["Ground"],
-		"cor": "#64748b",
-		"restricoes": ""
-	},
+        "numero": "1",
+        "nome": "VDDA",
+        "tipo": "power",
+        "funcoes": ["Entrada de alimentação do domínio analógico"],
+        "categorias": ["Power"],
+        "avisos": [
+            "Tensão Recomendada: 3.3V",
+            "Tensão Mínima Recomendada: 2.3V ou 3.0V",
+            "Tensão Máxima Recomendada: 3.6V",
+            "Para chips com a flash ou PSRAM integrada, a tensão mínima recomendada é 3.0V",
+			"Para chips sem a flash ou PSRAM integrada, a tensão mínima recomendada é 2.3V",
+			"Consulte o item 2.5 do datasheet para mais detalhes sobre a alimentação do chip"
+        ]
+    },
 	{
-		"numero": "CPU",
-		"nome": "VDD3P3_CPU",
-		"tipo": "power",
-		"funcoes": ["Alimentação digital principal"],
-		"categorias": ["Power"],
-		"cor": "#ef4444",
-		"restricoes": "Opera entre 1.8 V e 3.6 V"
-	},
+        "numero": "2",
+        "nome": "LNA_IN",
+        "tipo": "analog",
+		"alimentação": ["VDD3P3"],
+        "funcoes": ["Entrada do amplificador de baixo ruído (LNA) para o receptor Wi-Fi e Bluetooth"],
+        "categorias": ["Antena"],
+        "avisos": ["Consulte o item 2.4 do datasheet para mais detalhes sobre pinos analógicos"]
+    },
 	{
-		"numero": "RTC",
-		"nome": "VDD3P3_RTC",
-		"tipo": "power",
-		"funcoes": ["Alimentação para o domínio RTC", "Alimentação de referência para o LDO interno"],
-		"categorias": ["Power"],
-		"cor": "#ef4444",
-		"restricoes": "Opera entre 3.0 V e 3.6 V em chips com flash; entre 2.3 V e 3.6 V sem flash"
-	},
+        "numero": "3",
+        "nome": "VDD3P3",
+        "tipo": "power",
+        "funcoes": ["Entrada de alimentação do domínio analógico"],
+        "categorias": ["Power"],
+        "avisos": [
+            "Tensão Recomendada: 3.3V",
+            "Tensão Mínima Recomendada: 2.3V ou 3.0V",
+            "Tensão Máxima Recomendada: 3.6V",
+            "Para chips com a flash ou PSRAM integrada, a tensão mínima recomendada é 3.0V",
+			"Para chips sem a flash ou PSRAM integrada, a tensão mínima recomendada é 2.3V",
+			"Consulte o item 2.5 do datasheet para mais detalhes sobre a alimentação do chip"
+        ]
+    },
 	{
-		"numero": "SDIO",
-		"nome": "VDD_SDIO",
-		"tipo": "power",
-		"funcoes": ["Alimentação dos barramentos de Flash e PSRAM"],
-		"categorias": ["Power"],
-		"cor": "#ef4444",
-		"restricoes": "Tensão definida pela GPIO12 na inicialização"
-	},
+        "numero": "4",
+        "nome": "VDD3P3",
+        "tipo": "power",
+        "funcoes": ["Entrada de alimentação do domínio analógico"],
+        "categorias": ["Power"],
+        "avisos": [
+            "Tensão Recomendada: 3.3V",
+            "Tensão Mínima Recomendada: 2.3V ou 3.0V",
+            "Tensão Máxima Recomendada: 3.6V",
+            "Para chips com a flash ou PSRAM integrada, a tensão mínima recomendada é 3.0V",
+			"Para chips sem a flash ou PSRAM integrada, a tensão mínima recomendada é 2.3V",
+			"Consulte o item 2.5 do datasheet para mais detalhes sobre a alimentação do chip"
+        ]
+    },
 	{
-		"numero": "VDDA",
-		"nome": "VDDA",
-		"tipo": "power",
-		"funcoes": ["Alimentação analógica do chip", "Alimentação de referência para o ADC"],
-		"categorias": ["Power"],
-		"cor": "#ef4444",
-		"restricoes": "Opera entre 3.0 V e 3.6 V com flash; entre 2.3 V e 3.6 V sem flash"
-	},
+        "numero": "5",
+        "nome": "SENSOR_VP",
+        "tipo": "analog",
+        "alimentacao": ["VDD3P3_RTC"],
+        "funcoes": [
+            "GPIO36",
+            "RTC_GPIO0",
+			"ADC1_CH0"
+        ],
+        "categorias": [
+            "GPIO",
+            "Low Power",
+			"ADC"
+        ],
+		"avisos": ["Este pino é de apenas de entrada (input only)"]
+    },
 	{
-		"numero": "CHIP_PU",
-		"nome": "CHIP_PU (EN)",
-		"tipo": "power",
-		"funcoes": ["Habilitar chip (nível alto)", "Reseta a placa (nível baixo)"],
-		"categorias": ["Power"],
-		"cor": "#f97316",
-		"restricoes": "Deve estar em nível alto para operação normal; usar resistor pull-up para evitar reset acidental"
-	},
+        "numero": "6",
+        "nome": "SENSOR_CAPP",
+        "tipo": "analog",
+        "alimentacao": ["VDD3P3_RTC"],
+        "funcoes": [
+            "GPIO37",
+            "RTC_GPIO1",
+			"ADC1_CH1"
+        ],
+        "categorias": [
+            "GPIO",
+            "Low Power",
+			"ADC"
+        ],
+		"avisos": ["Este pino é de apenas de entrada (input only)"]
+    },
 	{
-		"numero": 0,
-		"nome": "GPIO0",
-		"tipo": "gpio",
-		"funcoes": ["GPIO0", "ADC2_CH1", "RTC_GPIO11", "TOUCH1", "HSPIWP", "I2C_SDA_RTC", "CLK_OUT1", "PWM"],
-		"categorias": ["GPIO", "ADC", "RTC", "Touch", "SPI", "I2C", "Clock", "PWM", "Strapping"],
-		"cor": "#3b82f6",
-		"restricoes": "Resistor pull-up interno; uso como strapping durante boot; modo download firmware em nível baixo"
-	},
+        "numero": "7",
+        "nome": "SENSOR_CAPN",
+        "tipo": "analog",
+        "alimentacao": ["VDD3P3_RTC"],
+        "funcoes": [
+            "GPIO38",
+            "RTC_GPIO2",
+			"ADC1_CH2"
+        ],
+        "categorias": [
+            "GPIO",
+            "Low Power",
+			"ADC"
+        ],
+		"avisos": ["Este pino é de apenas de entrada (input only)"]
+    },
 	{
-		"numero": 1,
-		"nome": "GPIO1",
-		"tipo": "gpio",
-		"funcoes": ["GPIO1", "UART0_TXD", "CLK_OUT3", "PWM"],
-		"categorias": ["GPIO", "UART", "Clock", "PWM"],
-		"cor": "#3b82f6",
-		"restricoes": "Resistor pull-up interno; usado para download de firmware"
-	},
+        "numero": "8",
+        "nome": "SENSOR_VN",
+        "tipo": "analog",
+        "alimentacao": ["VDD3P3_RTC"],
+        "funcoes": [
+            "GPIO39",
+            "RTC_GPIO3",
+			"ADC1_CH3"
+        ],
+        "categorias": [
+            "GPIO",
+            "Low Power",
+			"ADC"
+        ],
+		"avisos": ["Este pino é de apenas de entrada (input only)"]
+    },
 	{
-		"numero": 2,
-		"nome": "GPIO2",
-		"tipo": "gpio",
-		"funcoes": ["GPIO2", "ADC2_CH2", "RTC_GPIO12", "TOUCH2", "I2C_SCL_RTC", "HSPIWP", "PWM"],
-		"categorias": ["GPIO", "ADC", "RTC", "Touch", "I2C", "PWM", "Strapping"],
-		"cor": "#3b82f6",
-		"restricoes": "Resistor pull-down interno; habilita download firmware junto com GPIO0 em nível baixo"
-	},
+        "numero": "9",
+        "nome": "CHIP_PU",
+        "tipo": "analog",
+        "alimentacao": ["VDD3P3_RTC"],
+        "funcoes": ["Habilitar o chip"],
+        "categorias": ["Power"],
+        "avisos": [
+            "Colocar este pino em nível alto habilitará o funcionamento do chip",
+            "Colocar este pino em nível baixo desabilitará o funcionamento do chip",
+            "Não deixe este pino flutuando, utilize um resistor de pull-up externo",
+            "Consulte o item 2.4 do datasheet para mais detalhes sobre pinos analógicos"
+        ]
+    },
 	{
-		"numero": 3,
-		"nome": "GPIO3",
-		"tipo": "gpio",
-		"funcoes": ["GPIO3", "UART0_RXD", "CLK_OUT2", "PWM"],
-		"categorias": ["GPIO", "UART", "Clock", "PWM"],
-		"cor": "#3b82f6",
-		"restricoes": "Resistor pull-up interno; usado para download de firmware"
-	},
+        "numero": "10",
+        "nome": "VDET_1",
+        "tipo": "analog",
+        "alimentacao": ["VDD3P3_RTC"],
+        "funcoes": [
+            "GPIO34",
+            "RTC_GPIO4",
+			"ADC1_CH6"
+        ],
+        "categorias": [
+            "GPIO",
+            "Low Power",
+			"ADC"
+        ],
+		"avisos": ["Este pino é de apenas de entrada (input only)"]
+    },
 	{
-		"numero": 4,
-		"nome": "GPIO4",
-		"tipo": "gpio",
-		"funcoes": ["GPIO4", "ADC2_CH0", "RTC_GPIO10", "TOUCH0", "HSPIHD", "I2C_SCL_RTC", "PWM"],
-		"categorias": ["GPIO", "ADC", "RTC", "Touch", "SPI", "I2C", "PWM"],
-		"cor": "#3b82f6",
-		"restricoes": ""
-	},
+        "numero": "11",
+        "nome": "VDET_2",
+        "tipo": "analog",
+        "alimentacao": ["VDD3P3_RTC"],
+        "funcoes": [
+            "GPIO35",
+            "RTC_GPIO5",
+			"ADC1_CH7"
+        ],
+        "categorias": [
+            "GPIO",
+            "Low Power",
+			"ADC"
+        ],
+		"avisos": ["Este pino é de apenas de entrada (input only)"]
+    },
 	{
-		"numero": 5,
-		"nome": "GPIO5",
-		"tipo": "gpio",
-		"funcoes": ["GPIO5", "VSPICS0", "PWM"],
-		"categorias": ["GPIO", "SPI", "PWM", "Strapping"],
-		"cor": "#3b82f6",
-		"restricoes": "Resistor pull-up interno; leitura em bordas para strapping"
-	},
+        "numero": "12",
+        "nome": "32K_XP",
+        "tipo": "analog",
+        "alimentacao": ["VDD3P3_RTC"],
+        "funcoes": [
+			"GPIO32",
+			"RTC_GPIO9",
+			"ADC1_CH4",
+			"TOUCH9",
+			"XTAL_32K_P"
+		],
+        "categorias": [
+			"GPIO",
+			"Low Power",
+			"ADC",
+			"Touch",
+			"Clock"
+		]
+    },
 	{
-		"numero": 6,
-		"nome": "GPIO6",
-		"tipo": "gpio",
-		"funcoes": ["GPIO6", "SPICLK", "UART1_CTS", "PWM"],
-		"categorias": ["GPIO", "SPI", "UART", "PWM"],
-		"cor": "#f97316",
-		"restricoes": "Compartilhado com memória flash externa; não usar como GPIO normal"
-	},
+        "numero": "13",
+        "nome": "32K_XN",
+        "tipo": "analog",
+        "alimentacao": ["VDD3P3_RTC"],
+        "funcoes": [
+			"GPIO33",
+			"RTC_GPIO8",
+			"ADC1_CH5",
+			"TOUCH8",
+			"XTAL_32K_N"
+		],
+        "categorias": [
+			"GPIO",
+			"Low Power",
+			"ADC",
+			"Touch",
+			"Clock"
+		]
+    },
 	{
-		"numero": 7,
-		"nome": "GPIO7",
-		"tipo": "gpio",
-		"funcoes": ["GPIO7", "SPIQ", "UART2_RTS", "PWM"],
-		"categorias": ["GPIO", "SPI", "UART", "PWM"],
-		"cor": "#f97316",
-		"restricoes": "Compartilhado com memória flash externa; não usar como GPIO normal"
-	},
+        "numero": "14",
+        "nome": "GPIO25",
+        "tipo": "io",
+        "alimentacao": ["VDD3P3_RTC"],
+        "funcoes": [
+			"GPIO25",
+			"RTC_GPIO6",
+			"ADC2_CH8",
+			"DAC_1",
+			"EMAC_RXD0"
+		],
+        "categorias": [
+			"GPIO",
+			"Low Power",
+			"ADC",
+			"DAC",
+			"Ethernet"
+		]
+    },
 	{
-		"numero": 8,
-		"nome": "GPIO8",
-		"tipo": "gpio",
-		"funcoes": ["GPIO8", "SPID", "UART2_CTS", "PWM"],
-		"categorias": ["GPIO", "SPI", "UART", "PWM"],
-		"cor": "#f97316",
-		"restricoes": "Compartilhado com memória flash externa; não usar como GPIO normal"
-	},
+        "numero": "15",
+        "nome": "GPIO26",
+        "tipo": "io",
+        "alimentacao": ["VDD3P3_RTC"],
+        "funcoes": [
+			"GPIO26",
+			"RTC_GPIO7",
+			"ADC2_CH9",
+			"DAC_2",
+			"EMAC_RXD1"
+		],
+        "categorias": [
+			"GPIO",
+			"Low Power",
+			"ADC",
+			"DAC",
+			"Ethernet"
+		]
+    },
 	{
-		"numero": 9,
-		"nome": "GPIO9",
-		"tipo": "gpio",
-		"funcoes": ["GPIO9", "SPIHD", "UART1_RXD", "PWM"],
-		"categorias": ["GPIO", "SPI", "UART", "PWM"],
-		"cor": "#f97316",
-		"restricoes": "Compartilhado com memória flash externa; não usar como GPIO normal"
-	},
+        "numero": "16",
+        "nome": "GPIO27",
+        "tipo": "io",
+        "alimentacao": ["VDD3P3_RTC"],
+        "funcoes": [
+			"GPIO27",
+			"RTC_GPIO17",
+			"ADC2_CH7",
+			"TOUCH7",
+			"EMAC_RXDV"
+		],
+        "categorias": [
+			"GPIO",
+			"Low Power",
+			"ADC",
+			"Touch",
+			"Ethernet"
+		]
+    },
 	{
-		"numero": 10,
-		"nome": "GPIO10",
-		"tipo": "gpio",
-		"funcoes": ["GPIO10", "SPIWP", "UART1_TXD", "PWM"],
-		"categorias": ["GPIO", "SPI", "UART", "PWM"],
-		"cor": "#f97316",
-		"restricoes": "Compartilhado com memória flash externa; não usar como GPIO normal"
-	},
+        "numero": "17",
+        "nome": "MTMS",
+        "tipo": "io",
+        "alimentacao": ["VDD3P3_RTC"],
+        "funcoes": [
+			"GPIO14",
+			"RTC_GPIO16",
+			"ADC2_CH6",
+			"TOUCH6",
+			"HSPICLK",
+			"HS2_CLK",
+			"SD_CLK",
+			"EMAC_TXD2",
+			"MTMS"
+		],
+        "categorias": [
+			"GPIO",
+			"Low Power",
+			"ADC",
+			"Touch",
+			"SPI",
+			"SD",
+			"Ethernet",
+			"JTAG"
+		],
+		"avisos": [
+            "Após o reset, este pino estará configurado como entrada com o pull-up interno ativado",
+            "Pino utilizado para debugging"
+        ]
+    },
 	{
-		"numero": 11,
-		"nome": "GPIO11",
-		"tipo": "gpio",
-		"funcoes": ["GPIO11", "SPICS0", "UART1_RTS", "PWM"],
-		"categorias": ["GPIO", "SPI", "UART", "PWM"],
-		"cor": "#f97316",
-		"restricoes": "Compartilhado com memória flash externa; não usar como GPIO normal"
-	},
+        "numero": "18",
+        "nome": "MTDI",
+        "tipo": "io",
+        "alimentacao": ["VDD3P3_RTC"],
+        "funcoes": [
+			"GPIO12",
+			"RTC_GPIO15",
+			"ADC2_CH5",
+			"TOUCH5",
+			"HSPIQ",
+			"HS2_DATA2",
+			"SD_DATA2",
+			"EMAC_TXD3",
+			"MTDI"
+		],
+        "categorias": [
+			"GPIO",
+			"Low Power",
+			"ADC",
+			"Touch",
+			"SPI",
+			"SD",
+			"Ethernet",
+			"JTAG",
+            "Strapping"
+		],
+		"avisos": [
+            "Durante o reset, este pino estará configurado como entrada com o pull-down interno ativado",
+            "Após o reset, este pino estará configurado como entrada com o pull-down interno ativado",
+            "Pino utilizado para debugging",
+            "Utilizado para controlar a tensão de VDD_SDIO (LDO interno) (consulte o item 3.2 do datasheet para mais detalhes)"
+        ]
+    },
 	{
-		"numero": 12,
-		"nome": "GPIO12",
-		"tipo": "gpio",
-		"funcoes": ["GPIO12", "ADC2_CH5", "RTC_GPIO15", "TOUCH5", "HSPIQ", "JTAG_MTDI", "PWM"],
-		"categorias": ["GPIO", "ADC", "RTC", "Touch", "SPI", "JTAG", "Strapping", "PWM"],
-		"cor": "#3b82f6",
-		"restricoes": "Resistor pull-down interno; seleção nível tensão flash externa; VDD_SDIO definida na inicialização"
-	},
-	{
-		"numero": 13,
-		"nome": "GPIO13",
-		"tipo": "gpio",
-		"funcoes": ["GPIO13", "ADC2_CH4", "RTC_GPIO14", "TOUCH4", "HSPID", "JTAG_MTCK", "PWM"],
-		"categorias": ["GPIO", "ADC", "RTC", "Touch", "SPI", "JTAG", "PWM"],
-		"cor": "#3b82f6",
-		"restricoes": ""
-	},
-	{
-		"numero": 14,
-		"nome": "GPIO14",
-		"tipo": "gpio",
-		"funcoes": ["GPIO14", "ADC2_CH6", "RTC_GPIO16", "TOUCH6", "HSPICLK", "JTAG_MTMS", "PWM"],
-		"categorias": ["GPIO", "ADC", "RTC", "Touch", "SPI", "JTAG", "PWM"],
-		"cor": "#3b82f6",
-		"restricoes": ""
-	},
-	{
-		"numero": 15,
-		"nome": "GPIO15",
-		"tipo": "gpio",
-		"funcoes": ["GPIO15", "ADC2_CH3", "RTC_GPIO13", "TOUCH3", "HSPICS0", "I2C_SDA_RTC", "JTAG_MTDO", "PWM"],
-		"categorias": ["GPIO", "ADC", "RTC", "Touch", "SPI", "I2C", "JTAG", "Strapping", "PWM"],
-		"cor": "#3b82f6",
-		"restricoes": "Resistor pull-up interno; controla logs na UART 0; configurações strapping"
-	},
-	{
-		"numero": 16,
-		"nome": "GPIO16",
-		"tipo": "gpio",
-		"funcoes": ["GPIO16", "UART2_RXD", "PWM"],
-		"categorias": ["GPIO", "UART", "PWM"],
-		"cor": "#3b82f6",
-		"restricoes": ""
-	},
-	{
-		"numero": 17,
-		"nome": "GPIO17",
-		"tipo": "gpio",
-		"funcoes": ["GPIO17", "UART2_TXD", "PWM"],
-		"categorias": ["GPIO", "UART", "PWM"],
-		"cor": "#3b82f6",
-		"restricoes": ""
-	},
-	{
-		"numero": 18,
-		"nome": "GPIO18",
-		"tipo": "gpio",
-		"funcoes": ["GPIO18", "VSPICLK", "PWM"],
-		"categorias": ["GPIO", "SPI", "PWM"],
-		"cor": "#3b82f6",
-		"restricoes": ""
-	},
-	{
-		"numero": 19,
-		"nome": "GPIO19",
-		"tipo": "gpio",
-		"funcoes": ["GPIO19", "UART0_CTS", "VSPIQ", "PWM"],
-		"categorias": ["GPIO", "UART", "SPI", "PWM"],
-		"cor": "#3b82f6",
-		"restricoes": ""
-	},
-	{
-		"numero": 21,
-		"nome": "GPIO21",
-		"tipo": "gpio",
-		"funcoes": ["GPIO21", "VSPIHD", "PWM"],
-		"categorias": ["GPIO", "SPI", "PWM"],
-		"cor": "#3b82f6",
-		"restricoes": ""
-	},
-	{
-		"numero": 22,
-		"nome": "GPIO22",
-		"tipo": "gpio",
-		"funcoes": ["GPIO22", "UART0_RTS", "VSPIWP", "PWM"],
-		"categorias": ["GPIO", "UART", "SPI", "PWM"],
-		"cor": "#3b82f6",
-		"restricoes": ""
-	},
-	{
-		"numero": 23,
-		"nome": "GPIO23",
-		"tipo": "gpio",
-		"funcoes": ["GPIO23", "VSPID", "PWM"],
-		"categorias": ["GPIO", "SPI", "PWM"],
-		"cor": "#3b82f6",
-		"restricoes": ""
-	},
-	{
-		"numero": 25,
-		"nome": "GPIO25",
-		"tipo": "gpio",
-		"funcoes": ["GPIO25", "ADC2_CH8", "RTC_GPIO6", "DAC1", "PWM"],
-		"categorias": ["GPIO", "ADC", "RTC", "DAC", "PWM"],
-		"cor": "#3b82f6",
-		"restricoes": ""
-	},
-	{
-		"numero": 26,
-		"nome": "GPIO26",
-		"tipo": "gpio",
-		"funcoes": ["GPIO26", "ADC2_CH9", "RTC_GPIO7", "DAC2", "PWM"],
-		"categorias": ["GPIO", "ADC", "RTC", "DAC", "PWM"],
-		"cor": "#3b82f6",
-		"restricoes": ""
-	},
-	{
-		"numero": 27,
-		"nome": "GPIO27",
-		"tipo": "gpio",
-		"funcoes": ["GPIO27", "ADC2_CH7", "RTC_GPIO17", "TOUCH7", "PWM"],
-		"categorias": ["GPIO", "ADC", "RTC", "Touch", "PWM"],
-		"cor": "#3b82f6",
-		"restricoes": ""
-	},
-	{
-		"numero": 32,
-		"nome": "GPIO32",
-		"tipo": "gpio",
-		"funcoes": ["GPIO32", "ADC1_CH4", "RTC_GPIO9", "TOUCH9", "XTAL_32K_P", "PWM"],
-		"categorias": ["GPIO", "ADC", "RTC", "Touch", "Clock", "PWM"],
-		"cor": "#3b82f6",
-		"restricoes": "Cristal oscilador externo opcional para RTC; frequência 32.768 kHz"
-	},
-	{
-		"numero": 33,
-		"nome": "GPIO33",
-		"tipo": "gpio",
-		"funcoes": ["GPIO33", "ADC1_CH5", "RTC_GPIO8", "TOUCH8", "XTAL_32K_N", "PWM"],
-		"categorias": ["GPIO", "ADC", "RTC", "Touch", "Clock", "PWM"],
-		"cor": "#3b82f6",
-		"restricoes": "Cristal oscilador externo opcional para RTC; frequência 32.768 kHz"
-	},
-	{
-		"numero": 34,
-		"nome": "GPIO34",
-		"tipo": "gpio",
-		"funcoes": ["GPIO34", "ADC1_CH6", "RTC_GPIO4"],
-		"categorias": ["GPIO", "ADC", "RTC"],
-		"cor": "#22c55e",
-		"restricoes": "Somente entrada; não suporta saída"
-	},
-	{
-		"numero": 35,
-		"nome": "GPIO35",
-		"tipo": "gpio",
-		"funcoes": ["GPIO35", "ADC1_CH7", "RTC_GPIO5"],
-		"categorias": ["GPIO", "ADC", "RTC"],
-		"cor": "#22c55e",
-		"restricoes": "Somente entrada; não suporta saída"
-	},
-	{
-		"numero": 36,
-		"nome": "GPIO36",
-		"tipo": "gpio",
-		"funcoes": ["GPIO36", "ADC1_CH0", "RTC_GPIO0"],
-		"categorias": ["GPIO", "ADC", "RTC"],
-		"cor": "#22c55e",
-		"restricoes": "Somente entrada; não suporta saída"
-	},
-	{
-		"numero": 37,
-		"nome": "GPIO37",
-		"tipo": "gpio",
-		"funcoes": ["GPIO37", "ADC1_CH1", "RTC_GPIO1"],
-		"categorias": ["GPIO", "ADC", "RTC"],
-		"cor": "#22c55e",
-		"restricoes": "Somente entrada; não suporta saída"
-	},
-	{
-		"numero": 38,
-		"nome": "GPIO38",
-		"tipo": "gpio",
-		"funcoes": ["GPIO38", "ADC1_CH2", "RTC_GPIO2"],
-		"categorias": ["GPIO", "ADC", "RTC"],
-		"cor": "#22c55e",
-		"restricoes": "Somente entrada; não suporta saída"
-	},
-	{
-		"numero": 39,
-		"nome": "GPIO39",
-		"tipo": "gpio",
-		"funcoes": ["GPIO39", "ADC1_CH3", "RTC_GPIO3"],
-		"categorias": ["GPIO", "ADC", "RTC"],
-		"cor": "#22c55e",
-		"restricoes": "Somente entrada (input-only)"
-	}
+        "numero": "19",
+        "nome": "VDD3P3_RTC",
+        "tipo": "power",
+        "funcoes": ["Entrada de alimentação do domínio de baixo consumo (RTC) e parte do domínio analógico"],
+        "categorias": ["Power"],
+        "avisos": [
+            "Tensão Recomendada: 3.3V",
+            "Tensão Mínima Recomendada: 2.3V ou 3.0V",
+            "Tensão Máxima Recomendada: 3.6V",
+            "Para chips com a flash ou PSRAM integrada, a tensão mínima recomendada é 3.0V",
+			"Para chips sem a flash ou PSRAM integrada, a tensão mínima recomendada é 2.3V",
+			"Consulte o item 2.5 do datasheet para mais detalhes sobre a alimentação do chip"
+        ]
+    },
+    {
+        "numero": "20",
+        "nome": "MTCK",
+        "tipo": "io",
+        "alimentacao": ["VDD3P3_RTC"],
+        "funcoes": [
+			"GPIO13",
+			"RTC_GPIO14",
+			"ADC2_CH4",
+			"TOUCH4",
+			"HSPID",
+			"HS2_DATA3",
+			"SD_DATA3",
+			"EMAC_RX_ER",
+			"MTCK"
+		],
+        "categorias": [
+			"GPIO",
+			"Low Power",
+			"ADC",
+			"Touch",
+			"SPI",
+			"SD",
+			"Ethernet",
+			"JTAG"
+		],
+		"avisos": [
+            "Após o reset, este pino estará configurado como entrada com o pull-down interno ativado",
+            "Pino utilizado para debugging"
+        ]
+    },
+    {
+        "numero": "21",
+        "nome": "MTDO",
+        "tipo": "io",
+        "alimentacao": ["VDD3P3_RTC"],
+        "funcoes": [
+			"GPIO15",
+			"RTC_GPIO13",
+			"ADC2_CH3",
+			"TOUCH3",
+			"HSPICS0",
+			"HS2_CMD",
+			"SD_CMD",
+			"EMAC_RXD3",
+			"MTDO",
+            "I2C_SDA"
+		],
+        "categorias": [
+			"GPIO",
+			"Low Power",
+			"ADC",
+			"Touch",
+			"SPI",
+			"SD",
+			"Ethernet",
+			"JTAG",
+            "I2C",
+            "Strapping"
+		],
+		"avisos": [
+            "Durante o reset, este pino estará configurado como entrada com o pull-up interno ativado",
+            "Após o reset, este pino estará configurado como entrada com o pull-up interno ativado",
+            "A função de I2C_SDA está disponível no modo de baixa potência (RTC)",
+            "Pino utilizado para debugging",
+            "Utilizado para controlar a exibição de mensagens ROM na UART0 (consulte o item 3.3 do datasheet para mais detalhes)",
+            "Utilizado para controlar a temporização do SDIO Slave (consulte o item 3.4 do datasheet para mais detalhes)"
+        ]
+    },
+    {
+        "numero": "22",
+        "nome": "GPIO2",
+        "tipo": "io",
+        "alimentacao": ["VDD3P3_RTC"],
+        "funcoes": [
+            "GPIO2",
+            "RTC_GPIO12",
+            "ADC2_CH2",
+            "TOUCH2",
+            "HSPIWP",
+            "HS2_DATA0",
+            "SD_DATA0",
+            "I2C_SCL"
+        ],
+        "categorias": [
+            "GPIO",
+            "Low Power",
+            "ADC",
+            "Touch",
+            "SPI",
+            "SD",
+            "I2C",
+            "Strapping"
+        ],
+        "avisos": [
+            "Durante o reset, este pino estará configurado como entrada com o pull-down interno ativado",
+            "Após o reset, este pino estará configurado como entrada com o pull-down interno ativado",
+            "A função de I2C_SCL está disponível no modo de baixa potência (RTC)",
+            "Utilizado para controlar o modo de boot do chip (consulte o item 3.1 do datasheet para mais detalhes)"
+        ]
+    },
+    {
+        "numero": "23",
+        "nome": "GPIO0",
+        "tipo": "io",
+        "alimentacao": ["VDD3P3_RTC"],
+        "funcoes": [
+            "GPIO0",
+            "RTC_GPIO11",
+            "ADC2_CH1",
+            "TOUCH1",
+            "CLC_OUT1",
+            "EMAC_TX_CLK",
+            "I2C_SDA"
+        ],
+        "categorias": [
+            "GPIO",
+            "Low Power",
+            "ADC",
+            "Touch",
+            "Clock",
+            "Ethernet",
+            "I2C",
+            "Strapping"
+        ],
+        "avisos": [
+            "Durante o reset, este pino estará configurado como entrada com o pull-up interno ativado",
+            "Após o reset, este pino estará configurado como entrada com o pull-up interno ativado",
+            "A função de I2C_SDA está disponível no modo de baixa potência (RTC)",
+            "Utilizado para controlar o modo de boot do chip (consulte o item 3.1 do datasheet para mais detalhes)"
+        ]
+    },
+    {
+        "numero": "24",
+        "nome": "GPIO4",
+        "tipo": "io",
+        "alimentacao": ["VDD3P3_RTC"],
+        "funcoes": [
+            "GPIO4",
+            "RTC_GPIO10",
+            "ADC2_CH0",
+            "TOUCH0",
+            "HSPIHD",
+            "HS2_DATA1",
+            "SD_DATA1",
+            "EMAC_TX_ER",
+            "I2C_SCL"
+        ],
+        "categorias": [
+            "GPIO",
+            "Low Power",
+            "ADC",
+            "Touch",
+            "SPI",
+            "SD",
+            "Ethernet",
+            "I2C"
+        ],
+        "avisos": [
+            "Durante o reset, este pino estará configurado como entrada com o pull-down interno ativado",
+            "Após o reset, este pino estará configurado como entrada com o pull-down interno ativado",
+            "A função de I2C_SCL está disponível no modo de baixa potência (RTC)"
+        ]
+    },
+    {
+        "numero": "25",
+        "nome": "GPIO16",
+        "tipo": "io",
+        "alimentacao": ["VDD_SDIO"],
+        "funcoes": [
+            "GPIO16",
+            "HS1_DATA4",
+            "U2RXD",
+            "EMAC_CLK_OUT"
+        ],
+        "categorias": [
+            "GPIO",
+            "SPI",
+            "UART",
+            "Ethernet"
+        ],
+        "avisos": [
+            "Após o reset, este pino estará configurado como entrada",
+            "Dedicado a comunicação com a Flash/PSRAM interna, não recomendado para outras funções"
+        ]
+    },
+    {
+        "numero": "26",
+        "nome": "VDD_SDIO",
+        "tipo": "power",
+        "funcoes": ["Entrada/saída da alimentação das memórias SDIO internas (Flash/PSRAM)"],
+        "categorias": ["Power"],
+        "avisos": [
+            "Tensão Recomendada: 3.3V",
+            "Tensão Mínima Recomendada: 2.3V ou 3.0V",
+            "Tensão Máxima Recomendada: 3.6V",
+            "Este pino é conectado a saída do LDO interno",
+            "Se for conectado diretamente ao VDD3P3_RTC, o LDO interno será desabilitado automaticamente",
+			"Consulte o item 2.5 do datasheet para mais detalhes sobre a alimentação do chip"
+        ]
+    },
+    {
+        "numero": "27",
+        "nome": "GPIO17",
+        "tipo": "io",
+        "alimentacao": ["VDD_SDIO"],
+        "funcoes": [
+            "GPIO17",
+            "HS1_DATA5",
+            "U2TXD",
+            "EMAC_CLK_OUT_180"
+        ],
+        "categorias": [
+            "GPIO",
+            "SPI",
+            "UART",
+            "Ethernet"
+        ],
+        "avisos": [
+            "Após o reset, este pino estará configurado como entrada",
+            "Dedicado a comunicação com a Flash/PSRAM interna, não recomendado para outras funções"
+        ]
+    },
+    {
+        "numero": "28",
+        "nome": "SD_DATA_2",
+        "tipo": "io",
+        "alimentacao": ["VDD_SDIO"],
+        "funcoes": [
+            "GPIO9",
+            "SPIHD",
+            "HS1_DATA2",
+            "SD_DATA2",
+            "U1RXD"
+        ],
+        "categorias": [
+            "GPIO",
+            "SPI",
+            "SD",
+            "UART"
+        ],
+        "avisos": [
+            "Durante o reset, este pino estará configurado como entrada com o pull-up interno ativado",
+            "Após o reset, este pino estará configurado como entrada com o pull-up interno ativado",
+            "Dedicado a comunicação com a Flash/PSRAM interna, não recomendado para outras funções"
+        ]
+    },
+    {
+        "numero": "29",
+        "nome": "SD_DATA_3",
+        "tipo": "io",
+        "alimentacao": ["VDD_SDIO"],
+        "funcoes": [
+            "GPIO10",
+            "SPIWP",
+            "HS1_DATA3",
+            "SD_DATA3",
+            "U1TXD"
+        ],
+        "categorias": [
+            "GPIO",
+            "SPI",
+            "SD",
+            "UART"
+        ],
+        "avisos": [
+            "Durante o reset, este pino estará configurado como entrada com o pull-up interno ativado",
+            "Após o reset, este pino estará configurado como entrada com o pull-up interno ativado",
+            "Dedicado a comunicação com a Flash/PSRAM interna, não recomendado para outras funções"
+        ]
+    },
+    {
+        "numero": "30",
+        "nome": "SD_CMD",
+        "tipo": "io",
+        "alimentacao": ["VDD_SDIO"],
+        "funcoes": [
+            "GPIO11",
+            "SPICS0",
+            "HS1_CMD",
+            "SD_CMD",
+            "U1RTS"
+        ],
+        "categorias": [
+            "GPIO",
+            "SPI",
+            "SD",
+            "UART"
+        ],
+        "avisos": [
+            "Durante o reset, este pino estará configurado como entrada com o pull-up interno ativado",
+            "Após o reset, este pino estará configurado como entrada com o pull-up interno ativado",
+            "Dedicado a comunicação com a Flash/PSRAM interna, não recomendado para outras funções"
+        ]
+    },
+    {
+        "numero": "31",
+        "nome": "SD_CLK",
+        "tipo": "io",
+        "alimentacao": ["VDD_SDIO"],
+        "funcoes": [
+            "GPIO6",
+            "SPICLK",
+            "HS1_CLK",
+            "SD_CLK",
+            "U1CTS"
+        ],
+        "categorias": [
+            "GPIO",
+            "SPI",
+            "SD",
+            "UART"
+        ],
+        "avisos": [
+            "Durante o reset, este pino estará configurado como entrada com o pull-up interno ativado",
+            "Após o reset, este pino estará configurado como entrada com o pull-up interno ativado",
+            "Dedicado a comunicação com a Flash/PSRAM interna, não recomendado para outras funções"
+        ]
+    },
+    {
+        "numero": "32",
+        "nome": "SD_DATA_0",
+        "tipo": "io",
+        "alimentacao": ["VDD_SDIO"],
+        "funcoes": [
+            "GPIO7",
+            "SPIQ",
+            "HS1_DATA0",
+            "SD_DATA0",
+            "U2RTS"
+        ],
+        "categorias": [
+            "GPIO",
+            "SPI",
+            "SD",
+            "UART"
+        ],
+        "avisos": [
+            "Durante o reset, este pino estará configurado como entrada com o pull-up interno ativado",
+            "Após o reset, este pino estará configurado como entrada com o pull-up interno ativado",
+            "Dedicado a comunicação com a Flash/PSRAM interna, não recomendado para outras funções"
+        ]
+    },
+    {
+        "numero": "33",
+        "nome": "SD_DATA_1",
+        "tipo": "io",
+        "alimentacao": ["VDD_SDIO"],
+        "funcoes": [
+            "GPIO8",
+            "SPID",
+            "HS1_DATA1",
+            "SD_DATA1",
+            "U2CTS"
+        ],
+        "categorias": [
+            "GPIO",
+            "SPI",
+            "SD",
+            "UART"
+        ],
+        "avisos": [
+            "Durante o reset, este pino estará configurado como entrada com o pull-up interno ativado",
+            "Após o reset, este pino estará configurado como entrada com o pull-up interno ativado",
+            "Dedicado a comunicação com a Flash/PSRAM interna, não recomendado para outras funções"
+        ]
+    },
+    {
+        "numero": "34",
+        "nome": "GPIO5",
+        "tipo": "io",
+        "alimentacao": ["VDD3P3_CPU"],
+        "funcoes": [
+            "GPIO5",
+            "VSPICS0",
+            "HS1_DATA6",
+            "EMAC_RX_CLK"
+        ],
+        "categorias": [
+            "GPIO",
+            "SPI",
+            "Ethernet"
+        ],
+        "avisos": [
+            "Durante o reset, este pino estará configurado como entrada com o pull-up interno ativado",
+            "Após o reset, este pino estará configurado como entrada com o pull-up interno ativado",
+            "Utilizado para controlar a temporização do SDIO Slave (consulte o item 3.4 do datasheet para mais detalhes)"
+        ]
+    },
+    {
+        "numero": "35",
+        "nome": "GPIO18",
+        "tipo": "io",
+        "alimentacao": ["VDD3P3_CPU"],
+        "funcoes": [
+            "GPIO18",
+            "VSPICLK",
+            "HS1_DATA7"
+        ],
+        "categorias": [
+            "GPIO",
+            "SPI"
+        ],
+        "avisos": ["Após o reset, este pino estará configurado como entrada"]
+    },
+    {
+        "numero": "36",
+        "nome": "GPIO23",
+        "tipo": "io",
+        "alimentacao": ["VDD3P3_CPU"],
+        "funcoes": [
+            "GPIO23",
+            "VSPID",
+            "HS1_STROBE"
+        ],
+        "categorias": [
+            "GPIO",
+            "SPI"
+        ],
+        "avisos": ["Após o reset, este pino estará configurado como entrada"]
+    },
+    {
+        "numero": "37",
+        "nome": "VDD3P3_CPU",
+        "tipo": "power",
+        "funcoes": ["Entrada de alimentação do domínio digital"],
+        "categorias": ["Power"],
+        "avisos": [
+            "Tensão Recomendada: 3.3V",
+            "Tensão Mínima Recomendada: 1.8V",
+            "Tensão Máxima Recomendada: 3.6V",
+			"Consulte o item 2.5 do datasheet para mais detalhes sobre a alimentação do chip"
+        ]
+    },
+    {
+        "numero": "38",
+        "nome": "GPIO19",
+        "tipo": "io",
+        "alimentacao": ["VDD3P3_CPU"],
+        "funcoes": [
+            "GPIO19",
+            "VSPIQ",
+            "U0CTS",
+            "EMAC_TXD0"
+        ],
+        "categorias": [
+            "GPIO",
+            "SPI",
+            "UART",
+            "Ethernet"
+        ],
+        "avisos": ["Após o reset, este pino estará configurado como entrada"]
+    },
+    {
+        "numero": "39",
+        "nome": "GPIO22",
+        "tipo": "io",
+        "alimentacao": ["VDD3P3_CPU"],
+        "funcoes": [
+            "GPIO22",
+            "VSPIWP",
+            "U0RTS",
+            "EMAC_TXD1"
+        ],
+        "categorias": [
+            "GPIO",
+            "SPI",
+            "UART",
+            "Ethernet"
+        ],
+        "avisos": ["Após o reset, este pino estará configurado como entrada"]
+    },
+    {
+        "numero": "40",
+        "nome": "U0RXD",
+        "tipo": "io",
+        "alimentacao": ["VDD3P3_CPU"],
+        "funcoes": [
+            "GPIO3",
+            "CLK_OUT2",
+            "U0RXD"
+        ],
+        "categorias": [
+            "GPIO",
+            "Clock",
+            "UART"
+        ],
+        "avisos": [
+            "Durante o reset, este pino estará configurado como entrada com o pull-up interno ativado",
+            "Após o reset, este pino estará configurado como entrada com o pull-up interno ativado",
+            "Pino utilizado para debugging"
+        ]
+    },
+    {
+        "numero": "41",
+        "nome": "U0TXD",
+        "tipo": "io",
+        "alimentacao": ["VDD3P3_CPU"],
+        "funcoes": [
+            "GPIO1",
+            "CLK_OUT3",
+            "U0TXD",
+            "EMAC_RXD2"
+        ],
+        "categorias": [
+            "GPIO",
+            "Clock",
+            "UART",
+            "Ethernet"
+        ],
+        "avisos": [
+            "Durante o reset, este pino estará configurado como entrada com o pull-up interno ativado",
+            "Após o reset, este pino estará configurado como entrada com o pull-up interno ativado",
+            "Pino utilizado para debugging"
+        ]
+    },
+    {
+        "numero": "42",
+        "nome": "GPIO21",
+        "tipo": "io",
+        "alimentacao": ["VDD3P3_CPU"],
+        "funcoes": [
+            "GPIO21",
+            "VSPIHD",
+            "EMAC_TX_EN"
+        ],
+        "categorias": [
+            "GPIO",
+            "SPI",
+            "Ethernet"
+        ],
+        "avisos": ["Após o reset, este pino estará configurado como entrada"]
+    },
+    {
+        "numero": "43",
+        "nome": "VDDA",
+        "tipo": "power",
+        "funcoes": ["Entrada de alimentação do domínio analógico"],
+        "categorias": ["Power"],
+        "avisos": [
+            "Tensão Recomendada: 3.3V",
+            "Tensão Mínima Recomendada: 2.3V ou 3.0V",
+            "Tensão Máxima Recomendada: 3.6V",
+            "Para chips com a flash ou PSRAM integrada, a tensão mínima recomendada é 3.0V",
+			"Para chips sem a flash ou PSRAM integrada, a tensão mínima recomendada é 2.3V",
+			"Consulte o item 2.5 do datasheet para mais detalhes sobre a alimentação do chip"
+        ]
+    },
+    {
+        "numero": "44",
+        "nome": "XTAL_N",
+        "tipo": "analog",
+		"alimentação": ["VDDA"],
+        "funcoes": ["Entrada/Saída negativa de clock"],
+        "categorias": ["clock"],
+        "avisos": ["Consulte o item 2.4 do datasheet para mais detalhes sobre pinos analógicos"]
+    },
+    {
+        "numero": "45",
+        "nome": "XTAL_P",
+        "tipo": "analog",
+        "alimentação": ["VDDA"],
+        "funcoes": ["Entrada/Saída positiva de clock"],
+        "categorias": ["clock"],
+        "avisos": ["Consulte o item 2.4 do datasheet para mais detalhes sobre pinos analógicos"]
+    },
+    {
+        "numero": "46",
+        "nome": "VDDA",
+        "tipo": "power",
+        "funcoes": ["Entrada de alimentação do domínio analógico"],
+        "categorias": ["Power"],
+        "avisos": [
+            "Tensão Recomendada: 3.3V",
+            "Tensão Mínima Recomendada: 2.3V ou 3.0V",
+            "Tensão Máxima Recomendada: 3.6V",
+            "Para chips com a flash ou PSRAM integrada, a tensão mínima recomendada é 3.0V",
+			"Para chips sem a flash ou PSRAM integrada, a tensão mínima recomendada é 2.3V",
+			"Consulte o item 2.5 do datasheet para mais detalhes sobre a alimentação do chip"
+        ]
+    },
+    {
+        "numero": "47",
+        "nome": "CAP2",
+        "tipo": "analog",
+        "alimentação": ["VDDA"],
+        "funcoes": ["Capacitor de filtro"],
+        "categorias": ["Power"],
+        "avisos": [
+            "Conecte um capacitor de 3.3nF (10%) e um resistor de 20kΩ em paralelo com o CAP1",
+            "Consulte o item 2.2 do datasheet para mais detalhes"
+        ]
+    },
+    {
+        "numero": "48",
+        "nome": "CAP1",
+        "tipo": "analog",
+        "alimentação": ["VDDA"],
+        "funcoes": ["Capacitor de filtro"],
+        "categorias": ["Power"],
+        "avisos": [
+            "Conecte um capacitor de 10nF em série com o GND",
+            "Consulte o item 2.2 do datasheet para mais detalhes"
+        ]
+    },
+    {
+        "numero": "49",
+        "nome": "GND",
+        "tipo": "ground",
+        "funcoes": ["Referência elétrica do circuito (terra)"],
+        "categorias": ["GND"]
+    }
 ]

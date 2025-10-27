@@ -1,105 +1,35 @@
 [
     {
-        "numero": "GND",
-        "nome": "GND",
-        "tipo": "ground",
-        "funcoes": [
-            "Referência elétrica do sistema",
-            "Conexão externa de terra"
-        ],
-        "categorias": [
-            "Ground"
-        ],
-        "cor": "#64748b",
-        "restricoes": ""
-    },
-    {
-        "numero": "VDD3P3",
+        "numero": "1",
         "nome": "VDD3P3",
         "tipo": "power",
-        "funcoes": [
-            "Alimentação do domínio analógico",
-            "Tensão de alimentação principal"
-        ],
-        "categorias": [
-            "Power"
-        ],
-        "cor": "#ef4444",
-        "restricoes": "Opera entre 3.0 V e 3.6 V (típico 3.3 V)"
+        "funcoes": ["Entrada de alimentação do domínio analógico"],
+        "categorias": ["Power"],
+        "avisos": [
+            "Tensão Recomendada: 3.3V",
+            "Tensão Mínima Recomendada: 3.0V",
+            "Tensão Máxima Recomendada: 3.6V",
+			"Consulte o item 2.5 do datasheet para mais detalhes sobre a alimentação do chip"
+        ]
     },
     {
-        "numero": "VDDAPMU",
-        "nome": "VDDAPMU",
+        "numero": "2",
+        "nome": "VDD3P3",
         "tipo": "power",
-        "funcoes": [
-            "Alimentação do domínio analógico",
-            "Alimentação para pinos GPIO12, XTAL32KP, XTAL32KN"
-        ],
-        "categorias": [
-            "Power"
-        ],
-        "cor": "#ef4444",
-        "restricoes": "Opera entre 3.0 V e 3.6 V (típico 3.3 V)"
+        "funcoes": ["Entrada de alimentação do domínio analógico"],
+        "categorias": ["Power"],
+        "avisos": [
+            "Tensão Recomendada: 3.3V",
+            "Tensão Mínima Recomendada: 3.0V",
+            "Tensão Máxima Recomendada: 3.6V",
+			"Consulte o item 2.5 do datasheet para mais detalhes sobre a alimentação do chip"
+        ]
     },
     {
-        "numero": "VBAT",
-        "nome": "VBAT",
-        "tipo": "power",
-        "funcoes": [
-            "Alimentação do domínio analógico ou bateria",
-            "Alimentação para pinos GPIO12, XTAL32KP, XTAL32KN"
-        ],
-        "categorias": [
-            "Power"
-        ],
-        "cor": "#ef4444",
-        "restricoes": "Opera entre 3.0 V e 3.6 V (típico 3.3 V)"
-    },
-    {
-        "numero": "VDDPST1",
-        "nome": "VDDPST1",
-        "tipo": "power",
-        "funcoes": [
-            "Alimentação do domínio de IO digital e LP IO"
-        ],
-        "categorias": [
-            "Power"
-        ],
-        "cor": "#ef4444",
-        "restricoes": "Opera entre 3.0 V e 3.6 V (típico 3.3 V)"
-    },
-    {
-        "numero": "VDDPST2",
-        "nome": "VDDPST2",
-        "tipo": "power",
-        "funcoes": [
-            "Alimentação do domínio de IO digital"
-        ],
-        "categorias": [
-            "Power"
-        ],
-        "cor": "#ef4444",
-        "restricoes": "Opera entre 3.0 V e 3.6 V (típico 3.3 V)"
-    },
-    {
-        "numero": "CHIP_PU",
-        "nome": "CHIP_PU (EN)",
-        "tipo": "power",
-        "funcoes": [
-            "Habilitar chip (nível alto)",
-            "Reseta o chip (nível baixo)"
-        ],
-        "categorias": [
-            "Power",
-            "Reset"
-        ],
-        "cor": "#f97316",
-        "restricoes": "Deve estar em nível alto para operação normal; não deixar flutuante"
-    },
-    {
-        "numero": 0,
+        "numero": "3",
         "nome": "GPIO0",
-        "tipo": "gpio",
+        "tipo": "io",
+        "alimentacao": ["VDDPST1"],
         "funcoes": [
             "GPIO0",
             "FSPIQ"
@@ -107,225 +37,286 @@
         "categorias": [
             "GPIO",
             "SPI"
-        ],
-        "cor": "#3b82f6",
-        "restricoes": ""
+        ]
     },
     {
-        "numero": 1,
+        "numero": "4",
         "nome": "GPIO1",
-        "tipo": "gpio",
+        "tipo": "io",
+        "alimentacao": ["VDDPST1"],
         "funcoes": [
             "GPIO1",
-            "ADC1_CH0",
-            "FSPICS0"
+            "FSPICS0",
+            "ADC1_CH0"
         ],
         "categorias": [
             "GPIO",
-            "ADC",
-            "SPI"
-        ],
-        "cor": "#3b82f6",
-        "restricoes": ""
-    },
-    {
-        "numero": 2,
-        "nome": "GPIO2 (MTMS)",
-        "tipo": "gpio",
-        "funcoes": [
-            "GPIO2",
-            "MTMS",
-            "ADC1_CH1",
-            "FSPIWP"
-        ],
-        "categorias": [
-            "GPIO",
-            "JTAG",
-            "ADC",
             "SPI",
-            "Strapping"
-        ],
-        "cor": "#3b82f6",
-        "restricoes": "Strapping pin; JTAG Test Mode Select"
+            "ADC"
+        ]
     },
     {
-        "numero": 3,
-        "nome": "GPIO3 (MTDO)",
-        "tipo": "gpio",
+        "numero": "5",
+        "nome": "MTMS",
+        "tipo": "io",
+        "alimentacao": ["VDDPST1"],
+        "funcoes": [
+            "GPIO1",
+            "FSPIWP",
+            "ADC1_CH1",
+            "MTMS"
+        ],
+        "categorias": [
+            "GPIO",
+            "SPI",
+            "ADC",
+            "JTAG"
+        ],
+		"avisos": [
+            "Durante o reset, este pino estará configurado como entrada",
+            "Após o reset, este pino estará configurado como entrada",
+            "Pino utilizado para debugging"
+        ]
+    },
+    {
+        "numero": "6",
+        "nome": "MTDO",
+        "tipo": "io",
+        "alimentacao": ["VDDPST1"],
         "funcoes": [
             "GPIO3",
-            "MTDO",
+            "FSPIHD",
             "ADC1_CH2",
-            "FSPIHD"
+            "MTDO"
         ],
         "categorias": [
             "GPIO",
-            "JTAG",
+            "SPI",
             "ADC",
-            "SPI"
+            "JTAG"
         ],
-        "cor": "#3b82f6",
-        "restricoes": "JTAG Test Data Out"
+		"avisos": [
+            "Durante o reset, este pino estará configurado como entrada",
+            "Após o reset, este pino estará configurado como entrada",
+            "Pino utilizado para debugging"
+        ]
     },
     {
-        "numero": 4,
-        "nome": "GPIO4 (MTCK)",
-        "tipo": "gpio",
+        "numero": "7",
+        "nome": "MTCK",
+        "tipo": "io",
+        "alimentacao": ["VDDPST1"],
         "funcoes": [
             "GPIO4",
-            "MTCK",
+            "FSPICLK",
             "ADC1_CH3",
-            "FSPICLK"
+            "MTCK"
         ],
         "categorias": [
             "GPIO",
-            "JTAG",
+            "SPI",
             "ADC",
-            "SPI"
+            "JTAG"
         ],
-        "cor": "#3b82f6",
-        "restricoes": "JTAG Test Clock"
+		"avisos": [
+            "Após o reset, este pino estará configurado como entrada",
+            "Pino utilizado para debugging"
+        ]
     },
     {
-        "numero": 5,
-        "nome": "GPIO5 (MTDI)",
-        "tipo": "gpio",
+        "numero": "8",
+        "nome": "MTDI",
+        "tipo": "io",
+        "alimentacao": ["VDDPST1"],
         "funcoes": [
             "GPIO5",
-            "MTDI",
+            "FSPID",
             "ADC1_CH4",
-            "FSPID"
+            "MTDI"
         ],
         "categorias": [
             "GPIO",
-            "JTAG",
+            "SPI",
             "ADC",
-            "SPI"
+            "JTAG"
         ],
-        "cor": "#3b82f6",
-        "restricoes": "JTAG Test Data In"
+		"avisos": [
+            "Após o reset, este pino estará configurado como entrada",
+            "Pino utilizado para debugging"
+        ]
     },
     {
-        "numero": 8,
+        "numero": "9",
+        "nome": "VDDPST1",
+        "tipo": "power",
+        "funcoes": ["Entrada de alimentação do domínio das IOs"],
+        "categorias": ["Power"],
+        "avisos": [
+            "Tensão Recomendada: 3.3V",
+            "Tensão Mínima Recomendada: 3.0V",
+            "Tensão Máxima Recomendada: 3.6V",
+			"Consulte o item 2.5 do datasheet para mais detalhes sobre a alimentação do chip"
+        ]
+    },
+    {
+        "numero": "10",
         "nome": "GPIO8",
-        "tipo": "gpio",
-        "funcoes": [
-            "GPIO8"
-        ],
+        "tipo": "io",
+        "alimentacao": ["VDDPST1"],
+        "funcoes": ["GPIO8"],
         "categorias": [
             "GPIO",
             "Strapping"
         ],
-        "cor": "#3b82f6",
-        "restricoes": "Strapping pin para controle de modo de boot e impressão ROM"
+		"avisos": [
+            "Durante o reset, este pino estará configurado como entrada",
+            "Após o reset, este pino estará configurado como entrada",
+            "Utilizado para controlar o modo de boot do chip (consulte o item 3.1 do datasheet para mais detalhes)",
+            "Utilizado para controlar a exibição de mensagens ROM na UART0 (consulte o item 3.3 do datasheet para mais detalhes)"
+        ]
     },
     {
-        "numero": 9,
+        "numero": "11",
         "nome": "GPIO9",
-        "tipo": "gpio",
-        "funcoes": [
-            "GPIO9"
-        ],
+        "tipo": "io",
+        "alimentacao": ["VDDPST1"],
+        "funcoes": ["GPIO9"],
         "categorias": [
             "GPIO",
             "Strapping"
         ],
-        "cor": "#3b82f6",
-        "restricoes": "Pull-up interno; strapping pin para modo boot (alto=SPI boot)"
+		"avisos": [
+            "Durante o reset, este pino estará configurado como entrada com o pull-up interno ativado",
+            "Após o reset, este pino estará configurado como entrada com o pull-up interno ativado",
+            "Utilizado para controlar o modo de boot do chip (consulte o item 3.1 do datasheet para mais detalhes)"
+        ]
     },
     {
-        "numero": 10,
+        "numero": "12",
         "nome": "GPIO10",
-        "tipo": "gpio",
+        "tipo": "io",
+        "alimentacao": ["VDDPST1"],
         "funcoes": [
             "GPIO10",
-            "Voltage Comparator ZCD0"
+            "ZCD0"
         ],
-        "categorias": [
-            "GPIO"
-        ],
-        "cor": "#3b82f6",
-        "restricoes": ""
+        "categorias": ["GPIO"]
     },
     {
-        "numero": 11,
+        "numero": "13",
         "nome": "GPIO11",
-        "tipo": "gpio",
+        "tipo": "io",
+        "alimentacao": ["VDDPST1"],
         "funcoes": [
             "GPIO11",
-            "Voltage Comparator ZCD1"
+            "ZCD1"
         ],
-        "categorias": [
-            "GPIO"
-        ],
-        "cor": "#3b82f6",
-        "restricoes": ""
+        "categorias": ["GPIO"]
     },
     {
-        "numero": 12,
+        "numero": "14",
         "nome": "GPIO12",
-        "tipo": "gpio",
-        "funcoes": [
-            "GPIO12"
-        ],
-        "categorias": [
-            "GPIO"
-        ],
-        "cor": "#3b82f6",
-        "restricoes": "Alimentado por VDDAPMU/VBAT"
+        "tipo": "io",
+        "alimentacao": ["VDDA_PMU", "VBAT"],
+        "funcoes": ["GPIO12"],
+        "categorias": ["GPIO"]
     },
     {
-        "numero": 13,
-        "nome": "GPIO13 (XTAL_32K_P)",
-        "tipo": "gpio",
+        "numero": "15",
+        "nome": "XTAL_32K_P",
+        "tipo": "io",
+        "alimentacao": ["VDDA_PMU", "VBAT"],
         "funcoes": [
             "GPIO13",
             "XTAL_32K_P"
         ],
         "categorias": [
             "GPIO",
-            "RTC",
             "Clock"
-        ],
-        "cor": "#3b82f6",
-        "restricoes": "Pode ser usado para cristal RTC de 32.768 kHz; alimentado por VDDAPMU/VBAT"
+        ]
     },
     {
-        "numero": 14,
-        "nome": "GPIO14 (XTAL_32K_N)",
-        "tipo": "gpio",
+        "numero": "16",
+        "nome": "XTAL_32K_N",
+        "tipo": "io",
+        "alimentacao": ["VDDA_PMU", "VBAT"],
         "funcoes": [
             "GPIO14",
             "XTAL_32K_N"
         ],
         "categorias": [
             "GPIO",
-            "RTC",
             "Clock"
-        ],
-        "cor": "#3b82f6",
-        "restricoes": "Pode ser usado para cristal RTC de 32.768 kHz; alimentado por VDDAPMU/VBAT"
+        ]
     },
     {
-        "numero": 22,
+        "numero": "17",
+        "nome": "CHIP_EN",
+        "tipo": "analog",
+        "alimentacao": ["VBAT"],
+        "funcoes": ["Habilitar o chip"],
+        "categorias": ["Power"],
+        "avisos": [
+            "Colocar este pino em nível alto habilitará o funcionamento do chip",
+            "Colocar este pino em nível baixo desabilitará o funcionamento do chip",
+            "Não deixe este pino flutuando, utilize um resistor de pull-up externo"
+        ]
+    },
+    {
+        "numero": "18",
+        "nome": "VBAT",
+        "tipo": "power",
+        "funcoes": ["Entrada de alimentação do domínio analógico ou da bateria"],
+        "categorias": ["Power"],
+        "avisos": [
+            "Tensão Recomendada: 3.3V",
+            "Tensão Mínima Recomendada: 3.0V",
+            "Tensão Máxima Recomendada: 3.6V",
+			"Consulte o item 2.5 do datasheet para mais detalhes sobre a alimentação do chip"
+        ]
+    },
+    {
+        "numero": "19",
+        "nome": "VDDA_PMU",
+        "tipo": "power",
+        "funcoes": ["Entrada de alimentação do domínio analógico"],
+        "categorias": ["Power"],
+        "avisos": [
+            "Tensão Recomendada: 3.3V",
+            "Tensão Mínima Recomendada: 3.0V",
+            "Tensão Máxima Recomendada: 3.6V",
+			"Consulte o item 2.5 do datasheet para mais detalhes sobre a alimentação do chip"
+        ]
+    },
+    {
+        "numero": "20",
+        "nome": "VDDPST1",
+        "tipo": "power",
+        "funcoes": ["Entrada de alimentação do domínio das IOs"],
+        "categorias": ["Power"],
+        "avisos": [
+            "Tensão Recomendada: 3.3V",
+            "Tensão Mínima Recomendada: 3.0V",
+            "Tensão Máxima Recomendada: 3.6V",
+			"Consulte o item 2.5 do datasheet para mais detalhes sobre a alimentação do chip"
+        ]
+    },
+    {
+        "numero": "21",
         "nome": "GPIO22",
-        "tipo": "gpio",
-        "funcoes": [
-            "GPIO22"
-        ],
-        "categorias": [
-            "GPIO"
-        ],
-        "cor": "#3b82f6",
-        "restricoes": ""
+        "tipo": "io",
+        "alimentacao": ["VDDPST2"],
+        "funcoes": ["GPIO22"],
+        "categorias": ["GPIO"]
     },
     {
-        "numero": 23,
-        "nome": "GPIO23 (U0RXD)",
-        "tipo": "gpio",
+        "numero": "22",
+        "nome": "U0RXD",
+        "tipo": "io",
+        "alimentacao": ["VDDPST2"],
         "funcoes": [
             "GPIO23",
-            "UART0_RXD",
+            "U0RXD",
             "FSPICS1"
         ],
         "categorias": [
@@ -333,16 +324,19 @@
             "UART",
             "SPI"
         ],
-        "cor": "#3b82f6",
-        "restricoes": "Pull-up interno; UART0 RX para download de firmware"
+		"avisos": [
+            "Após o reset, este pino estará configurado como entrada com o pull-up interno ativado",
+            "Pino utilizado para debugging"
+        ]
     },
     {
-        "numero": 24,
-        "nome": "GPIO24 (U0TXD)",
-        "tipo": "gpio",
+        "numero": "23",
+        "nome": "U0TXD",
+        "tipo": "io",
+        "alimentacao": ["VDDPST2"],
         "funcoes": [
             "GPIO24",
-            "UART0_TXD",
+            "U0TXD",
             "FSPICS2"
         ],
         "categorias": [
@@ -350,15 +344,18 @@
             "UART",
             "SPI"
         ],
-        "cor": "#3b82f6",
-        "restricoes": "Pull-up interno; UART0 TX para download de firmware"
+		"avisos": [
+            "Após o reset, este pino estará configurado como entrada com o pull-up interno ativado",
+            "Pino utilizado para debugging"
+        ]
     },
     {
-        "numero": 25,
+        "numero": "24",
         "nome": "GPIO25",
-        "tipo": "gpio",
+        "tipo": "io",
+        "alimentacao": ["VDDPST2"],
         "funcoes": [
-            "GPIO25",
+            "GPIO24",
             "FSPICS3"
         ],
         "categorias": [
@@ -366,83 +363,120 @@
             "SPI",
             "Strapping"
         ],
-        "cor": "#3b82f6",
-        "restricoes": "Strapping pin para controle de fonte de sinal JTAG"
+		"avisos": [
+            "Durante o reset, este pino estará configurado como entrada",
+            "Após o reset, este pino estará configurado como entrada",
+            "Utilizado para controlar a fonte de sinais JTAG (consulte o item 3.3 do datasheet para mais detalhes)"
+        ]
     },
     {
-        "numero": 26,
+        "numero": "25",
         "nome": "GPIO26",
-        "tipo": "gpio",
+        "tipo": "io",
+        "alimentacao": ["VDDPST2"],
         "funcoes": [
             "GPIO26",
-            "USB_D-",
-            "FSPICS4"
+            "FSPICS4",
+            "USB_D-"
         ],
         "categorias": [
             "GPIO",
-            "USB",
-            "SPI"
+            "SPI",
+            "USB"
         ],
-        "cor": "#3b82f6",
-        "restricoes": "USB D- para USB OTG e USB Serial/JTAG; drive strength padrão 40mA"
+		"avisos": [
+            "Após o reset, este pino estará configurado como entrada",
+            "Por padrão, este pino é utilizado para USB Serial/JTAG"
+        ]
     },
     {
-        "numero": 27,
+        "numero": "26",
         "nome": "GPIO27",
-        "tipo": "gpio",
+        "tipo": "io",
+        "alimentacao": ["VDDPST2"],
         "funcoes": [
             "GPIO27",
-            "USB_D+",
-            "FSPICS5"
+            "FSPICS5",
+            "USB_D+"
         ],
         "categorias": [
             "GPIO",
-            "USB",
-            "SPI"
+            "SPI",
+            "USB"
         ],
-        "cor": "#3b82f6",
-        "restricoes": "USB D+ para USB OTG e USB Serial/JTAG; drive strength padrão 40mA"
+		"avisos": [
+            "Após o reset, este pino estará configurado como entrada com o pull-up interno para USB ativado",
+            "Por padrão, este pino é utilizado para USB Serial/JTAG"
+        ]
     },
     {
-        "numero": "XTAL_N",
+        "numero": "27",
+        "nome": "VDD3P3",
+        "tipo": "power",
+        "funcoes": ["Entrada de alimentação do domínio analógico"],
+        "categorias": ["Power"],
+        "avisos": [
+            "Tensão Recomendada: 3.3V",
+            "Tensão Mínima Recomendada: 3.0V",
+            "Tensão Máxima Recomendada: 3.6V",
+			"Consulte o item 2.5 do datasheet para mais detalhes sobre a alimentação do chip"
+        ]
+    },
+    {
+        "numero": "28",
         "nome": "XTAL_N",
-        "tipo": "analógico",
-        "funcoes": [
-            "Entrada/saída de clock externo",
-            "Conexão ao cristal ou oscilador do chip"
-        ],
-        "categorias": [
-            "Clock"
-        ],
-        "cor": "#a855f7",
-        "restricoes": "Clock diferencial negativo de 32 MHz"
+        "tipo": "analog",
+        "funcoes": ["Entrada/Saída negativa de clock"],
+        "categorias": ["Clock"],
+        "avisos": ["Consulte o item 2.3.2 do datasheet para mais detalhes sobre pinos analógicos"]
     },
     {
-        "numero": "XTAL_P",
+        "numero": "29",
         "nome": "XTAL_P",
-        "tipo": "analógico",
-        "funcoes": [
-            "Entrada/saída de clock externo",
-            "Conexão ao cristal ou oscilador do chip"
-        ],
-        "categorias": [
-            "Clock"
-        ],
-        "cor": "#a855f7",
-        "restricoes": "Clock diferencial positivo de 32 MHz"
+        "tipo": "analog",
+        "funcoes": ["Entrada/Saída positiva de clock"],
+        "categorias": ["Clock"],
+        "avisos": ["Consulte o item 2.3.2 do datasheet para mais detalhes sobre pinos analógicos"]
     },
     {
-        "numero": "ANT",
+        "numero": "30",
+        "nome": "VDD3P3",
+        "tipo": "power",
+        "funcoes": ["Entrada de alimentação do domínio analógico"],
+        "categorias": ["Power"],
+        "avisos": [
+            "Tensão Recomendada: 3.3V",
+            "Tensão Mínima Recomendada: 3.0V",
+            "Tensão Máxima Recomendada: 3.6V",
+			"Consulte o item 2.5 do datasheet para mais detalhes sobre a alimentação do chip"
+        ]
+    },
+    {
+        "numero": "31",
+        "nome": "VDD3P3",
+        "tipo": "power",
+        "funcoes": ["Entrada de alimentação do domínio analógico"],
+        "categorias": ["Power"],
+        "avisos": [
+            "Tensão Recomendada: 3.3V",
+            "Tensão Mínima Recomendada: 3.0V",
+            "Tensão Máxima Recomendada: 3.6V",
+			"Consulte o item 2.5 do datasheet para mais detalhes sobre a alimentação do chip"
+        ]
+    },
+    {
+        "numero": "32",
         "nome": "ANT",
-        "tipo": "analógico",
-        "funcoes": [
-            "Entrada/saída RF para comunicação sem fio",
-            "Amplificador de baixo ruído RF"
-        ],
-        "categorias": [
-            "RF"
-        ],
-        "cor": "#a855f7",
-        "restricoes": "Sinais de entrada/saída do LNA RF para comunicação 2.4 GHz Bluetooth LE e 802.15.4"
+        "tipo": "analog",
+        "funcoes": ["Conexão da antena RF"],
+        "categorias": ["Antena"],
+        "avisos": ["Consulte o item 2.4 do datasheet para mais detalhes sobre pinos analógicos"]
+    },
+    {
+        "numero": "33",
+        "nome": "GND",
+        "tipo": "ground",
+        "funcoes": ["Referência elétrica do circuito (terra)"],
+        "categorias": ["GND"]
     }
 ]
