@@ -160,7 +160,7 @@
         "numero": "9",
         "nome": "VDD_LP",
         "tipo": "power",
-        "funcoes": ["Entrada de alimentação do domínio de baixa potência"],
+        "funcoes": ["Entrada de alimentação do domínio de baixo consumo"],
         "categorias": ["Power"],
         "avisos": [
             "Tensão Recomendada: 3.3V",

@@ -65,7 +65,7 @@
         "avisos": [
             "Durante o reset, este pino estará configurado como entrada com o pull-up interno ativado",
             "Após o reset, este pino estará configurado como entrada com o pull-up interno ativado",
-            "A função de I2C_SDA está disponível no modo de baixa potência (RTC)",
+            "A função de I2C_SDA está disponível no modo de baixo consumo (RTC)",
             "Utilizado para controlar o modo de boot do chip (consulte o item 3.1 do datasheet para mais detalhes)"
         ]
     },
@@ -91,7 +91,7 @@
         "avisos": [
             "Durante o reset, este pino estará configurado como entrada",
             "Após o reset, este pino estará configurado como entrada",
-            "A função de I2C_SDA está disponível no modo de baixa potência (RTC)"
+            "A função de I2C_SDA está disponível no modo de baixo consumo (RTC)"
         ]
     },
     {
@@ -116,7 +116,7 @@
         "avisos": [
             "Durante o reset, este pino estará configurado como entrada",
             "Após o reset, este pino estará configurado como entrada",
-            "A função de I2C_SDA está disponível no modo de baixa potência (RTC)"
+            "A função de I2C_SDA está disponível no modo de baixo consumo (RTC)"
         ]
     },
     {
@@ -141,7 +141,7 @@
         "avisos": [
             "Durante o reset, este pino estará configurado como entrada",
             "Após o reset, este pino estará configurado como entrada",
-            "A função de I2C_SDA está disponível no modo de baixa potência (RTC)",
+            "A função de I2C_SDA está disponível no modo de baixo consumo (RTC)",
             "Utilizado para controlar a fonte de sinais JTAG (consulte o item 3.4 do datasheet para mais detalhes)"
         ]
     },

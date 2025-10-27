@@ -152,7 +152,7 @@
         "avisos": [
             "Durante o reset, este pino estará configurado como entrada",
             "Após o reset, este pino estará configurado como entrada",
-            "A função de I2C_SDA está disponível no modo de baixa potência (LP)",
+            "A função de I2C_SDA está disponível no modo de baixo consumo (LP)",
             "Pino utilizado para debugging",
             "Utilizado para controlar a frequência do cristal oscilador do chip (consulte o item 3.5 do datasheet para mais detalhes)"
         ]
@@ -182,7 +182,7 @@
         "avisos": [
             "Durante o reset, este pino estará configurado como entrada",
             "Após o reset, este pino estará configurado como entrada",
-            "A função de I2C_SDA está disponível no modo de baixa potência (LP)",
+            "A função de I2C_SDA está disponível no modo de baixo consumo (LP)",
             "Pino utilizado para debugging",
             "Utilizado para controlar a temporização do SDIO Slave (consulte o item 3.2 do datasheet para mais detalhes)"
         ]
