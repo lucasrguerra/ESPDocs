@@ -9,6 +9,7 @@
 		"coprocessador_ulp": "Sim",
 		"wifi": "IEEE 802.11 b/g/n (2.4 GHz, até 150 Mbps)",
 		"bluetooth": "Bluetooth v4.2 BR/EDR (Clássico) e BLE (Low Energy)",
+		"ethernet": "Sim (Ethernet MAC integrado)",
 		"memoria_sram": "520 KB",
 		"memoria_sram_rtc": "16 KB (dividida em RTC FAST e RTC SLOW)",
 		"memoria_rom": "448 KB (para boot e funções core)",
