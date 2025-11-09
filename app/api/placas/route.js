@@ -1,8 +1,11 @@
 import { google } from 'googleapis';
 import { NextResponse } from 'next/server';
 
-// Configurar cache de 1 hora
-export const revalidate = 3600;
+// Habilitar/desabilitar cache
+const ENABLE_CACHE = false;
+
+// Configurar cache de 1 hora (se habilitado)
+export const revalidate = ENABLE_CACHE ? 3600 : 0;
 
 export async function GET() {
     try {
@@ -32,10 +35,14 @@ export async function GET() {
             return obj;
         });
 
+        const responseHeaders = ENABLE_CACHE ? {
+            'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=7200'
+        } : {
+            'Cache-Control': 'no-store, no-cache, must-revalidate'
+        };
+
         return NextResponse.json({ data, headers }, {
-            headers: {
-                'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=7200'
-            }
+            headers: responseHeaders
         });
     } catch (error) {
         console.error('Erro ao buscar dados do Google Sheets:', error);
