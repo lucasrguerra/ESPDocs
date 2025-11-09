@@ -1,11 +1,12 @@
 import { google } from 'googleapis';
 import { NextResponse } from 'next/server';
 
-// Habilitar/desabilitar cache
-const ENABLE_CACHE = false;
 
-// Configurar cache de 1 hora (se habilitado)
-export const revalidate = ENABLE_CACHE ? 3600 : 0;
+// Configurar cache de 1 hora (sempre exportar um número, 0 = sem cache)
+export const revalidate = 3600;
+
+// Habilitar/desabilitar cache
+const ENABLE_CACHE = revalidate > 0;
 
 export async function GET() {
     try {
