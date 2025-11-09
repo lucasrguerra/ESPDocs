@@ -4,13 +4,14 @@ import Link from "next/link";
 
 export default function Home() {
 	const resources = [
+        {name: "Catálogo de Placas", description: "Encontre placas de desenvolvimento ESP32 verificadas com filtros avançados e links seguros para compra", icon: "🛒"},
 		{name: "Detalhes Técnicos", description: "Explore as especificações técnicas de cada série ESP32, incluindo arquitetura, recursos e capacidades", icon: "🔧"},
 		{name: "Diagramas Interativos", description: "Visualize diagramas detalhados dos componentes ESP32 com interatividade para melhor compreensão", icon: "📊"},
 		{name: "Frameworks Avançados", description: "Aprenda sobre frameworks populares como ESP-IDF, Arduino e MicroPython para desenvolvimento com ESP32", icon: "⚡"},
 		{name: "Comparação de Séries", description: "Compare diferentes séries ESP32 para escolher o mais adequado ao seu projeto", icon: "📈"},
 		{name: "Datasheets", description: "Acesso direto aos datasheets oficiais para informações detalhadas sobre cada série", icon: "📄"},
 		{name: "Exemplos de Código", description: "Encontre exemplos práticos de código para iniciar rapidamente seus projetos com ESP32", icon: "💻"},
-	]
+    ]
 
     return (
         <div className="bg-linear-to-br from-blue-50 via-white to-purple-50 min-h-screen">
@@ -49,6 +50,13 @@ export default function Home() {
 						href="/frameworks"
 					>
 						⚡ Ver Frameworks
+                    </Link>
+
+                    <Link
+                        className="bg-white text-gray-700 px-8 py-4 rounded-xl font-semibold text-lg shadow-lg hover:shadow-xl border-2 border-gray-200 hover:border-purple-400 transform hover:-translate-y-1 transition-all duration-300"
+                        href="/catalogo"
+                    >
+                        🛒 Ver Catálogo de Placas
                     </Link>
                 </div>
 

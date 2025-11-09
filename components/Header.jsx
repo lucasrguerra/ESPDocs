@@ -15,6 +15,7 @@ import AboutIcon from "@mui/icons-material/Info";
 import ModelsIcon from "@mui/icons-material/Memory";
 import FrameworksIcon from "@mui/icons-material/Apps";
 import CompareIcon from "@mui/icons-material/CompareArrows";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 
 export default function Header() {
     const [drawerOpen, setDrawerOpen] = useState(false);
@@ -26,6 +27,7 @@ export default function Header() {
         { text: "Séries", href: "/series", icon: <ModelsIcon /> },
         { text: "Frameworks", href: "/frameworks", icon: <FrameworksIcon /> },
         { text: "Comparar Séries", href: "/comparacao", icon: <CompareIcon /> },
+        { text: "Catálogo de Placas", href: "/catalogo", icon: <ShoppingCartIcon /> },
     ];
 
     function isActive(href) {
