@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server';
 
 
 // Configurar cache (sempre exportar um número, 0 = sem cache)
-export const revalidate = 60 * 10;  // 10 minutos
+export const revalidate = 600;  // 10 minutos
 
 // Habilitar/desabilitar cache
 const ENABLE_CACHE = revalidate > 0;
@@ -37,7 +37,7 @@ export async function GET() {
         });
 
         const responseHeaders = ENABLE_CACHE ? {
-            'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=7200'
+            'Cache-Control': `public, s-maxage=${revalidate}, stale-while-revalidate=${revalidate * 2}`
         } : {
             'Cache-Control': 'no-store, no-cache, must-revalidate'
         };
