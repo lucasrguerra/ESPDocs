@@ -196,6 +196,27 @@ export default function Comparacao() {
                     </div>
                 </div>
 
+                {/* Call-to-Action para Catálogo de Placas */}
+                <div className="my-12 bg-linear-to-r from-blue-600 to-purple-600 rounded-3xl shadow-xl p-8 text-white">
+                    <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+                        <div className="flex-1">
+                            <h3 className="text-2xl md:text-3xl font-bold mb-3 flex items-center gap-2">
+                                🛒 Encontrou a série ideal?
+                            </h3>
+                            <p className="text-lg text-blue-100 leading-relaxed text-justify">
+                                Confira nosso catálogo com placas de desenvolvimento verificadas das séries que você comparou.
+                                Links diretos para lojas oficiais e confiáveis!
+                            </p>
+                        </div>
+                        <Link
+                            href="/catalogo"
+                            className="bg-white text-purple-700 px-8 py-4 rounded-xl font-bold text-lg shadow-lg hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300 whitespace-nowrap"
+                        >
+                            Ver Placas Disponíveis →
+                        </Link>
+                    </div>
+                </div>
+
                 <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                     {selectedSeries.map(seriesKey => {
                         const seriesItem = seriesData[seriesKey];

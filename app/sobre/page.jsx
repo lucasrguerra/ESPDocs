@@ -52,7 +52,7 @@ export default function Sobre() {
                     <section className="md:col-span-2 space-y-6">
                         <article className="bg-white/70 backdrop-blur-sm rounded-2xl p-6 shadow-sm border border-gray-100">
                             <h2 className="text-2xl font-bold mb-2">Missão</h2>
-                            <p className="text-gray-700 leading-relaxed">
+                            <p className="text-gray-700 leading-relaxed text-justify">
                                 Facilitar o aprendizado e acelerar projetos com ESP32 por meio de
                                 documentação clara, exemplos testados e comparativos práticos.
                                 Priorizei traduções fiéis, explicações passo a passo e dicas
@@ -105,6 +105,47 @@ export default function Sobre() {
                     </section>
 
                     <aside className="space-y-4">
+                        <div className="bg-white rounded-2xl p-6 shadow-md border border-gray-100">
+                            <div className="flex flex-col items-center mb-4">
+                                <img 
+                                    src="/logo.png" 
+                                    alt="Ciência Embarcada" 
+                                    className="h-16 mb-3"
+                                />
+                                <h3 className="text-lg font-semibold text-center">Sobre o Autor</h3>
+                            </div>
+
+                            <p className="text-gray-700 text-sm leading-relaxed mb-4 text-justify">
+                                <strong>Lucas Rayan Guerra</strong>, criador do <a 
+                                    href="https://cienciaembarcada.com.br" 
+                                    target="_blank" 
+                                    rel="noopener noreferrer"
+                                    className="text-purple-600 hover:text-purple-800 font-semibold"
+                                >
+                                    Ciência Embarcada
+                                </a>, é Técnico em Desenvolvimento de Sistemas, estudante de Ciência da Computação na UFRPE e de Blockchain e Criptografia Digital na FMU.
+                            </p>
+
+                            <p className="text-gray-700 text-sm leading-relaxed mb-4 text-justify">
+                                Recifense apaixonado por Pernambuco, Diretor de Software da Semine AgriTech e palestrante em eventos como o REC'n'Play, Lucas compartilha conhecimento sobre ESP32, Eletrônica, IoT, Cibersegurança e muito mais.
+                            </p>
+
+                            <div className="bg-purple-50 border border-purple-100 rounded-lg p-4 mb-4 text-justify">
+                                <p className="text-sm text-gray-700 italic">
+                                    "O Ciência Embarcada nasceu do desejo de criar um espaço livre e organizado para compartilhar conhecimentos e experiências sobre tecnologia e ciência."
+                                </p>
+                            </div>
+
+                            <a
+                                href="https://cienciaembarcada.com.br"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="inline-flex items-center justify-center w-full px-4 py-2 rounded-lg bg-linear-to-r from-blue-600 to-purple-600 text-white font-semibold shadow-sm hover:shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 transition-all"
+                            >
+                                🚀 Visitar Ciência Embarcada
+                            </a>
+                        </div>
+
                         <div className="bg-white rounded-2xl p-6 shadow-md border border-gray-100">
                             <div className="flex items-center justify-between mb-3">
                                 <h3 className="text-lg font-semibold">Contribua</h3>

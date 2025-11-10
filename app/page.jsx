@@ -11,6 +11,8 @@ export default function Home() {
 		{name: "Comparação de Séries", description: "Compare diferentes séries ESP32 para escolher o mais adequado ao seu projeto", icon: "📈"},
 		{name: "Datasheets", description: "Acesso direto aos datasheets oficiais para informações detalhadas sobre cada série", icon: "📄"},
 		{name: "Exemplos de Código", description: "Encontre exemplos práticos de código para iniciar rapidamente seus projetos com ESP32", icon: "💻"},
+        {name: "Atualizações Constantes", description: "Mantenha-se atualizado com as últimas novidades e lançamentos no ecossistema ESP32", icon: "🔄"},
+        {name: "Conteúdo em Português", description: "Toda a documentação e recursos são apresentados em português para facilitar o entendimento", icon: "📚"},
     ]
 
     return (
@@ -74,13 +76,59 @@ export default function Home() {
                     ))}
                 </div>
 
-				<div className="mt-12 px-4 md:px-16">
-					<p className="text-md">
-						O ESPDocs é uma documentação não oficial e independente, criada por
-						um entusiasta da comunidade ESP32 e que não possui nenhum tipo de afiliação
-						com a Espressif Systems, fabricante dos chips ESP32. Todas as informações
-						são coletadas de fontes públicas e experiências pessoais de desenvolvimento.
-					</p>
+				<div className="mt-16 px-4 md:px-16">
+					<div className="bg-white rounded-2xl shadow-lg p-8 border border-gray-100">
+						{/* Logo e Link do Ciência Embarcada */}
+						<div className="flex flex-col items-center mb-6">
+							<a 
+								href="https://cienciaembarcada.com.br" 
+								target="_blank" 
+								rel="noopener noreferrer"
+								className="group"
+							>
+								<img 
+									src="/logo.png" 
+									alt="Ciência Embarcada" 
+									className="h-16 md:h-20 mb-4 transition-transform duration-300 group-hover:scale-110"
+								/>
+							</a>
+							<p className="text-lg font-semibold text-gray-800 mb-2">
+								Conteúdo por <a 
+									href="https://cienciaembarcada.com.br" 
+									target="_blank" 
+									rel="noopener noreferrer"
+									className="text-purple-600 hover:text-purple-800 transition-colors"
+								>
+									Ciência Embarcada
+								</a>
+							</p>
+							<p className="text-sm text-gray-600 max-w-xl text-center mb-4">
+								Artigos sobre ESP32, Eletrônica, IoT, Cibersegurança e muito mais.
+								Visite o blog para aprender com tutoriais práticos e projetos reais!
+							</p>
+							<a
+								href="https://cienciaembarcada.com.br"
+								target="_blank"
+								rel="noopener noreferrer"
+								className="inline-flex items-center gap-2 bg-linear-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-xl font-semibold hover:shadow-lg transform hover:-translate-y-1 transition-all duration-300"
+							>
+								🚀 Visitar Blog
+								<svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+									<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+								</svg>
+							</a>
+						</div>
+
+						{/* Disclaimer */}
+						<div className="border-t border-gray-200 pt-6 mt-6">
+							<p className="text-sm text-gray-600 text-center">
+								O ESPDocs é uma documentação não oficial e independente, criada por
+								um entusiasta da comunidade ESP32 e que não possui nenhum tipo de afiliação
+								com a Espressif Systems, fabricante dos chips ESP32. Todas as informações
+								são coletadas de fontes públicas e experiências pessoais de desenvolvimento.
+							</p>
+						</div>
+					</div>
 				</div> 
             </main>
 

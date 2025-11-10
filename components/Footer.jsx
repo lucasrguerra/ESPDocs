@@ -5,7 +5,7 @@ export default function Footer() {
 
     return (
         <footer role="contentinfo" aria-label="Rodapé do site ESPDocs" className="bg-linear-to-r from-blue-600 to-purple-600 text-white mt-12">
-            <div className="max-w-6xl mx-auto px-6 py-8 rounded-t-2xl shadow-inner border-t border-white/10">
+            <div className="max-w-6xl mx-auto px-6 pt-8 pb-4 rounded-t-2xl shadow-inner border-t border-white/10">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <div className="space-y-3">
                         <h3 className="text-2xl font-extrabold tracking-tight">ESPDocs</h3>
