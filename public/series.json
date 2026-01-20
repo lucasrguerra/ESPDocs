@@ -29,6 +29,14 @@
 		"sdio": "1 (SD/SDIO/MMC Host), 1 (SDIO/SPI Slave)",
 		"sensor_hall": "1 (interno)",
 		"sensor_temperatura": "1 (interno, precisão limitada)",
+		"consumo_energia": {
+			"active_cpu_240mhz": "30-68 mA",
+			"active_wifi_tx": "180-240 mA",
+			"modem_sleep": "20-44 mA",
+			"light_sleep": "0.8 mA",
+			"deep_sleep": "10-150 µA",
+			"hibernation": "5 µA"
+		},
 		"temperatura_operacao": "-40°C a 125°C",
 		"temperatura_armazenamento": "-40°C a 150°C",
 		"datasheet": "https://documentation.espressif.com/esp32_datasheet_en.html",
@@ -65,6 +73,12 @@
 		"lcd": "Interface LCD de 8/16 bits",
 		"camera": "Interface DVP de 8/16 bits",
 		"sensor_temperatura": "1 (interno)",
+		"consumo_energia": {
+			"active_wifi_tx": "190-310 mA",
+			"modem_sleep_cpu_160mhz": "15-20 mA",
+			"light_sleep": "130 µA",
+			"deep_sleep": "20-150 µA"
+		},
 		"temperatura_operacao": "-40°C a 105°C",
 		"temperatura_armazenamento": "-40°C a 150°C",
 		"datasheet": "https://documentation.espressif.com/esp32-s2_datasheet_en.html",
@@ -103,6 +117,12 @@
 		"camera": "Interface DVP de 8/16 bits",
 		"sdio": "1 (SD/SDIO/MMC Host)",
 		"sensor_temperatura": "1 (interno)",
+		"consumo_energia": {
+			"active": "78 mW (~24 mA @3.3V)",
+			"modem_sleep": "20-30 mA",
+			"light_sleep": "0.8 mA",
+			"deep_sleep": "7 µA"
+		},
 		"temperatura_operacao": "-40°C a 65/85/105°C",
 		"temperatura_armazenamento": "-40°C a 150°C",
 		"datasheet": "https://documentation.espressif.com/esp32-s3_datasheet_en.html",
@@ -136,6 +156,13 @@
 		"pwm": "LED PWM (até 6 canais)",
 		"usb": "1 (USB Serial/JTAG)",
 		"sensor_temperatura": "1 (interno)",
+		"consumo_energia": {
+			"active_cpu_160mhz": "20 mA",
+			"active_wifi_tx_peak": "350 mA",
+			"modem_sleep_cpu_160mhz": "20 mA",
+			"light_sleep": "130 µA",
+			"deep_sleep": "5 µA"
+		},
 		"temperatura_operacao": "-40°C a 125°C",
 		"temperatura_armazenamento": "-40°C a 150°C",
 		"datasheet": "https://documentation.espressif.com/esp32-c3_datasheet_en.html",
@@ -170,6 +197,11 @@
 		"pwm": "LED PWM (até 6 canais), Motor PWM",
 		"usb": "1 (USB Serial/JTAG)",
 		"sensor_temperatura": "1 (interno)",
+		"consumo_energia": {
+			"active_wifi": "100-300 mA (TX)",
+			"light_sleep": "0.06 mA",
+			"deep_sleep": "7 µA"
+		},
 		"temperatura_operacao": "-40°C a 105°C",
 		"temperatura_armazenamento": "-40°C a 150°C",
 		"datasheet": "https://documentation.espressif.com/esp32-c5_datasheet_en.html",
@@ -206,6 +238,11 @@
 		"usb": "1 (USB Serial/JTAG)",
 		"sdio": "1 (SD/SDIO/MMC Host)",
 		"sensor_temperatura": "1 (interno)",
+		"consumo_energia": {
+			"active_wifi6": "Varia conforme perfil TX/RX",
+			"light_sleep": "0.8 mA",
+			"deep_sleep": "7 µA"
+		},
 		"temperatura_operacao": "-40°C a 105°C",
 		"temperatura_armazenamento": "-40°C a 150°C",
 		"datasheet": "https://documentation.espressif.com/esp32-c6_datasheet_en.html",
@@ -245,6 +282,11 @@
 		"camera": "Interface DVP de 8/16 bits",
 		"sdio": "2 (SD/SDIO/MMC Host)",
 		"sensor_temperatura": "1 (interno)",
+		"consumo_energia": {
+			"active": "50-100 mA (estimado, alto desempenho)",
+			"light_sleep": "Baixo consumo",
+			"deep_sleep": "Poucos µA"
+		},
 		"temperatura_operacao": "-40°C a 85°C",
 		"temperatura_armazenamento": "-40°C a 150°C",
 		"datasheet": "https://documentation.espressif.com/esp32-p4-chip-revision-v1.3_datasheet_en.html",
@@ -280,6 +322,11 @@
 		"pwm": "LED PWM (até 6 canais)",
 		"usb": "1 (USB Serial/JTAG)",
 		"sensor_temperatura": "1 (interno)",
+		"consumo_energia": {
+			"active": "30-50 mA",
+			"light_sleep": "0.8 mA",
+			"deep_sleep": "7-10 µA"
+		},
 		"temperatura_operacao": "-40°C a 105°C",
 		"temperatura_armazenamento": "-40°C a 150°C",
 		"datasheet": "https://documentation.espressif.com/esp32-h2_datasheet_en.html",

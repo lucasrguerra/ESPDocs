@@ -10,17 +10,22 @@ export default function Series() {
         <div className="bg-linear-to-br from-blue-50 via-white to-purple-50 min-h-screen">
             <Header />
 
-            <main className="px-4 pt-16 pb-8 max-w-7xl mx-auto">
-                <div className="text-center mb-12">
-                    <h1 className="text-5xl md:text-6xl font-extrabold bg-linear-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent mb-4">
+            <main id="conteudo" className="px-4 pt-16 pb-20 max-w-7xl mx-auto">
+                <section className="text-center mb-16">
+                    <div className="inline-flex items-center gap-2 bg-white/70 backdrop-blur-sm px-4 py-2 rounded-full mb-6 border border-purple-200 shadow-sm">
+                        <span className="text-xl">⚡</span>
+                        <span className="text-sm font-semibold text-gray-700">Explore o Ecossistema ESP32</span>
+                    </div>
+                    
+                    <h1 className="text-5xl md:text-7xl font-black bg-linear-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent mb-6 leading-tight tracking-tight">
                         Séries ESP32
                     </h1>
                     
-                    <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+                    <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
                         Explore toda a família ESP32. Cada série foi projetada para atender necessidades específicas,
                         desde projetos simples até aplicações de IA e IoT avançadas.
                     </p>
-                </div>
+                </section>
 
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {series.map(([key, serie]) => (
@@ -80,6 +85,13 @@ export default function Series() {
                                         </span>
                                     </div>
 
+                                    {serie.consumo_energia?.deep_sleep && (
+                                        <div className="flex items-center justify-between text-sm">
+                                            <span className="text-gray-600">🔋 Deep Sleep:</span>
+                                            <span className="font-semibold text-gray-800">{serie.consumo_energia.deep_sleep}</span>
+                                        </div>
+                                    )}
+
                                     {serie.aceleradores_ia && (
                                         <div className="pt-2 border-t border-gray-100">
                                             <span className="inline-block px-2 py-1 bg-purple-100 text-purple-700 text-xs font-semibold rounded">
@@ -108,20 +120,34 @@ export default function Series() {
                     ))}
                 </div>
 
-                <div className="mt-8 bg-white rounded-2xl shadow-lg p-8 border border-gray-100">
-                    <h3 className="text-2xl font-bold text-gray-800 mb-4 text-center">
-                        💡 Não sabe qual escolher?
-                    </h3>
-                    <p className="text-gray-600 text-center max-w-2xl mx-auto mb-6">
-                        Compare as especificações de cada série para encontrar a mais adequada ao seu projeto.
-                        Considere requisitos de conectividade, processamento e recursos específicos.
-                    </p>
+                <div className="mt-16 bg-linear-to-br from-white to-purple-50 rounded-3xl shadow-2xl p-10 border-2 border-purple-100">
+                    <div className="text-center mb-8">
+                        <div className="inline-flex items-center justify-center w-16 h-16 bg-linear-to-br from-blue-500 to-purple-600 rounded-2xl mb-4">
+                            <span className="text-3xl">💡</span>
+                        </div>
+                        <h3 className="text-3xl font-bold text-gray-900 mb-3">
+                            Não sabe qual escolher?
+                        </h3>
+                        <p className="text-gray-600 max-w-2xl mx-auto leading-relaxed text-base">
+                            Compare as especificações de cada série para encontrar a mais adequada ao seu projeto.
+                            Considere requisitos de conectividade, processamento e recursos específicos.
+                        </p>
+                    </div>
                     <div className="flex justify-center">
                         <Link
                             href="/comparacao"
-                            className="bg-linear-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300"
+                            className="inline-flex items-center justify-center gap-2 bg-linear-to-r from-blue-600 via-purple-600 to-pink-600 text-white px-8 py-4 rounded-xl font-bold shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 group"
                         >
-                            📊 Comparar Séries
+                            <span className="text-xl">📊</span>
+                            <span>Comparar Séries</span>
+                            <svg 
+                                className="w-5 h-5 transition-transform group-hover:translate-x-1" 
+                                fill="none" 
+                                stroke="currentColor" 
+                                viewBox="0 0 24 24"
+                            >
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                            </svg>
                         </Link>
                     </div>
                 </div>

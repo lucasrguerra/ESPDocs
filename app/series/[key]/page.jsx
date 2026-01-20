@@ -74,34 +74,34 @@ export default async function SerieDetail({ params }) {
     if (serie.sensor_hall) interfacesEspeciais.push({ label: "Sensor Hall", value: serie.sensor_hall, icon: "🧲" });
     if (serie.sensor_temperatura) interfacesEspeciais.push({ label: "Sensor Temperatura", value: serie.sensor_temperatura, icon: "🌡️" });
 
-    const tabs = [
-        {
-            id: 'connections',
-            label: 'Diagrama de Conexões',
-            available: conexoes.length > 0,
-            content: (
-                <div className="bg-white rounded-3xl shadow-xl p-8 border-2 border-gray-100">
-                    <ConnectionsDiagram connections={conexoes} color={serie.cor} />
+    // Consumo de Energia
+    const consumoEnergia = [];
+    if (serie.consumo_energia) {
+        Object.entries(serie.consumo_energia).forEach(([modo, consumo]) => {
+            const modoLabels = {
+                'active': 'Modo Ativo',
+                'active_cpu_240mhz': 'Ativo (CPU 240MHz)',
+                'active_cpu_160mhz': 'Ativo (CPU 160MHz)',
+                'active_wifi_tx': 'Ativo (Wi-Fi TX)',
+                'active_wifi_tx_peak': 'Ativo (Wi-Fi TX Pico)',
+                'active_wifi': 'Ativo (Wi-Fi)',
+                'active_wifi6': 'Ativo (Wi-Fi 6)',
+                'modem_sleep': 'Modem Sleep',
+                'modem_sleep_cpu_160mhz': 'Modem Sleep (CPU 160MHz)',
+                'light_sleep': 'Light Sleep',
+                'deep_sleep': 'Deep Sleep',
+                'hibernation': 'Hibernação'
+            };
+            
+            consumoEnergia.push({
+                label: modoLabels[modo] || modo.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase()),
+                value: consumo,
+                icon: "🔋"
+            });
+        });
+    }
 
-                    <div className="bg-white rounded-2xl shadow-lg p-6 border-2 border-gray-100">
-                        <h3 className="text-lg font-bold text-gray-800 mb-3 flex items-center gap-2">
-                            <svg className="w-5 h-5 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
-                                <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
-                            </svg>
-                            Sobre a Matriz de Conexões Flexível
-                        </h3>
-                        <p className="text-gray-700 leading-relaxed">
-                            O ESP32 possui uma matriz de conexões flexível que permite mapear diversas funções para múltiplos pinos.
-                            Isso significa que muitas conexões podem ser configuradas para desempenhar diferentes papéis, dependendo das necessidades do seu projeto.
-                            Consulte a documentação oficial para entender como aproveitar ao máximo as GPIOs&nbsp;
-                            <a href={`https://docs.espressif.com/projects/esp-idf/en/latest/${String(key).toLowerCase().replace("-", "")}/api-reference/peripherals/gpio.html`} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
-                                nesse link.
-                            </a>
-                        </p>
-                    </div>
-                </div>
-            )
-        },
+    const tabs = [
         {
             id: 'devboard',
             label: 'Placa de Desenvolvimento',
@@ -131,26 +131,43 @@ export default async function SerieDetail({ params }) {
             )
         },
         {
-            id: 'specs',
-            label: 'Especificações',
-            available: true,
+            id: 'connections',
+            label: 'Diagrama de Conexões',
+            available: conexoes.length > 0,
             content: (
-                <div className="space-y-6">
-                    <SpecSection title="⚙️ Processador" specs={processadorSpecs} cor={serie.cor} />
-                    <SpecSection title="📡 Conectividade" specs={conectividadeSpecs} cor={serie.cor} />
-                    <SpecSection title="💾 Memória" specs={memoriaSpecs} cor={serie.cor} />
-                    <SpecSection title="🔌 Periféricos" specs={perifericos} cor={serie.cor} />
-                    {interfacesEspeciais.length > 0 && (
-                        <SpecSection title="✨ Interfaces Especiais" specs={interfacesEspeciais} cor={serie.cor} />
-                    )}
-                    <SpecSection
-                        title="🌡️ Temperatura"
-                        specs={[
-                            { label: "Operação", value: serie.temperatura_operacao, icon: "🔧" },
-                            { label: "Armazenamento", value: serie.temperatura_armazenamento, icon: "📦" },
-                        ]}
-                        cor={serie.cor}
-                    />
+                <div className="bg-white rounded-3xl shadow-xl p-8 border-2 border-gray-100">
+                    <div className="bg-amber-50 border-l-4 border-amber-500 p-4 mb-6 rounded-lg">
+                        <div className="flex items-start gap-3">
+                            <span className="text-2xl">⚠️</span>
+                            <div>
+                                <h4 className="font-bold text-amber-900 mb-1">Diagrama do SoC (System on Chip)</h4>
+                                <p className="text-amber-800 text-sm leading-relaxed">
+                                    Este diagrama mostra as conexões e periféricos do chip <strong>{key}</strong> (SoC), 
+                                    não da placa de desenvolvimento completa. As placas de desenvolvimento podem ter 
+                                    configurações diferentes de pinos expostos e componentes adicionais.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <ConnectionsDiagram connections={conexoes} serie={serie} />
+
+                    <div className="bg-white rounded-2xl shadow-lg p-6 border-2 border-gray-100 mt-6">
+                        <h3 className="text-lg font-bold text-gray-800 mb-3 flex items-center gap-2">
+                            <svg className="w-5 h-5 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                                <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
+                            </svg>
+                            Sobre a Matriz de Conexões Flexível
+                        </h3>
+                        <p className="text-gray-700 leading-relaxed">
+                            O ESP32 possui uma matriz de conexões flexível que permite mapear diversas funções para múltiplos pinos.
+                            Isso significa que muitas conexões podem ser configuradas para desempenhar diferentes papéis, dependendo das necessidades do seu projeto.
+                            Consulte a documentação oficial para entender como aproveitar ao máximo as GPIOs&nbsp;
+                            <a href={`https://docs.espressif.com/projects/esp-idf/en/latest/${String(key).toLowerCase().replace("-", "")}/api-reference/peripherals/gpio.html`} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
+                                nesse link.
+                            </a>
+                        </p>
+                    </div>
                 </div>
             )
         }
@@ -241,23 +258,84 @@ export default async function SerieDetail({ params }) {
 
                 <SeriesTabMenu tabs={tabs} color={serie.cor} />
 
+                <div className="space-y-6">
+                    <SpecSection title="⚙️ Processador" specs={processadorSpecs} cor={serie.cor} />
+                    <SpecSection title="📡 Conectividade" specs={conectividadeSpecs} cor={serie.cor} />
+                    <SpecSection title="💾 Memória" specs={memoriaSpecs} cor={serie.cor} />
+                    {consumoEnergia.length > 0 && (
+                        <div className="bg-white rounded-2xl shadow-lg p-6 border-2 border-gray-100">
+                            <h2 className="text-2xl font-bold text-gray-800 mb-4 pb-3 border-b-2 flex items-center gap-3" style={{ borderColor: serie.cor }}>
+                                <span>🔋</span>
+                                Consumo de Energia
+                            </h2>
+                            <div className="bg-blue-50 border-l-4 border-blue-500 p-4 mb-6 rounded-lg">
+                                <div className="flex items-start gap-3">
+                                    <span className="text-2xl">💡</span>
+                                    <div>
+                                        <p className="text-blue-900 text-sm leading-relaxed">
+                                            <strong>Valores típicos @3.3V, 25°C.</strong> O consumo real varia com clock, estado de RF (Wi-Fi/Bluetooth ligado/desligado) e configurações.
+                                            Para precisão, consulte o datasheet oficial.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+                                {consumoEnergia.map((spec, index) => (
+                                    <div key={index} className="flex items-start gap-3 p-3 rounded-lg hover:bg-gray-50 transition-colors">
+                                        <span className="text-2xl">{spec.icon}</span>
+                                        <div className="flex-1">
+                                            <p className="text-sm font-semibold text-gray-600">{spec.label}</p>
+                                            <p className="text-base font-bold text-gray-800 mt-1">{spec.value}</p>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+                    <SpecSection title="🔌 Periféricos" specs={perifericos} cor={serie.cor} />
+                    {interfacesEspeciais.length > 0 && (
+                        <SpecSection title="✨ Interfaces Especiais" specs={interfacesEspeciais} cor={serie.cor} />
+                    )}
+                    <SpecSection
+                        title="🌡️ Temperatura"
+                        specs={[
+                            { label: "Operação", value: serie.temperatura_operacao, icon: "🔧" },
+                            { label: "Armazenamento", value: serie.temperatura_armazenamento, icon: "📦" },
+                        ]}
+                        cor={serie.cor}
+                    />
+                </div>
+
                 {/* Call-to-Action para Catálogo de Placas */}
-                <div className="my-12 bg-linear-to-r from-blue-600 to-purple-600 rounded-3xl shadow-xl p-8 text-white">
-                    <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+                <div className="my-16 bg-linear-to-br from-blue-600 via-purple-600 to-pink-600 rounded-3xl shadow-2xl p-10 text-white border-2 border-purple-400">
+                    <div className="flex flex-col md:flex-row items-center justify-between gap-8">
                         <div className="flex-1">
-                            <h3 className="text-2xl md:text-3xl font-bold mb-3 flex items-center gap-2">
-                                🛒 Pronto para começar?
+                            <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full mb-4 border border-white/30">
+                                <span className="text-xl">🎯</span>
+                                <span className="text-sm font-semibold">Próximo Passo</span>
+                            </div>
+                            <h3 className="text-3xl md:text-4xl font-black mb-4">
+                                Pronto para começar?
                             </h3>
-                            <p className="text-lg text-blue-100 leading-relaxed text-justify">
+                            <p className="text-lg text-white/90 leading-relaxed">
                                 Encontre placas de desenvolvimento {key} verificadas no nosso catálogo.
                                 Links diretos para lojas oficiais e confiáveis com os melhores preços!
                             </p>
                         </div>
                         <Link
                             href="/catalogo"
-                            className="bg-white text-purple-700 px-8 py-4 rounded-xl font-bold text-lg shadow-lg hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300 whitespace-nowrap"
+                            className="inline-flex items-center justify-center gap-2 bg-white text-purple-700 px-8 py-4 rounded-xl font-bold text-lg shadow-xl hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300 whitespace-nowrap group"
                         >
-                            Ver Placas Disponíveis →
+                            <span className="text-xl">🛒</span>
+                            <span>Ver Placas Disponíveis</span>
+                            <svg 
+                                className="w-5 h-5 transition-transform group-hover:translate-x-1" 
+                                fill="none" 
+                                stroke="currentColor" 
+                                viewBox="0 0 24 24"
+                            >
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                            </svg>
                         </Link>
                     </div>
                 </div>

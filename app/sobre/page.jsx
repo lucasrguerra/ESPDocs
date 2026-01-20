@@ -4,10 +4,10 @@ import Link from "next/link";
 
 export default function Sobre() {
     const features = [
-        { icon: "📚", title: "Documentação Curada", desc: "Conteúdos organizados por níveis — do iniciante ao avançado." },
-        { icon: "🔧", title: "Exemplos Práticos", desc: "Projetos e trechos de código para aprender fazendo." },
-        { icon: "🌐", title: "Comunidade", desc: "Contribuições abertas e canal para dúvidas e trocas." },
-        { icon: "♿", title: "Acessibilidade", desc: "Textos claros, contraste adequado e navegação por teclado." },
+        { icon: "📚", title: "Interface em Português", desc: "Organização e apresentação de dados técnicos totalmente em português." },
+        { icon: "🔧", title: "Comparações Visuais", desc: "Tabelas comparativas e diagramas para facilitar a escolha da série ideal." },
+        { icon: "🌐", title: "Acesso Centralizado", desc: "Links diretos para documentação oficial, repositórios e exemplos." },
+        { icon: "♿", title: "Código Aberto", desc: "Projeto open-source com contribuições bem-vindas no GitHub." },
     ];
 
     return (
@@ -18,101 +18,134 @@ export default function Sobre() {
 
             <Header />
 
-            <main id="conteudo" className="px-4 pt-16 pb-20 max-w-6xl mx-auto">
-                <header className="relative overflow-hidden rounded-2xl p-8 md:p-12 bg-linear-to-r from-blue-600 via-purple-600 to-pink-500 text-white shadow-lg">
+            <main id="conteudo" className="px-4 pt-12 pb-20 max-w-7xl mx-auto">
+                <header className="relative overflow-hidden rounded-3xl p-10 md:p-16 bg-linear-to-br from-blue-600 via-purple-600 to-pink-600 text-white shadow-2xl mb-12">
+                    <div className="absolute inset-0 bg-black/10"></div>
                     <div className="relative z-10 max-w-4xl mx-auto">
-                        <h1 className="text-4xl md:text-5xl font-extrabold leading-tight bg-clip-text text-transparent bg-linear-to-r from-white to-purple-100 mb-3">
+                        <h1 className="text-4xl md:text-6xl font-black leading-tight mb-6">
                             Sobre o ESPDocs
                         </h1>
 
-                        <p className="text-lg md:text-xl opacity-90 max-w-3xl mb-6">
-                            Uma documentação não oficial, em português, feita por um entusiasta e para
-                            a comunidade — com foco em clareza, exemplos práticos e colaboração aberta.
+                        <p className="text-lg md:text-xl opacity-95 max-w-3xl mb-8 leading-relaxed">
+                            Uma plataforma não oficial com interface em português que organiza
+                            informações técnicas do ESP32 e facilita o acesso à documentação oficial
+                            da Espressif. Feita por um entusiasta para a comunidade.
                         </p>
 
-                        <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 items-start sm:items-center">
-                            <Link href="/" className="inline-flex items-center justify-center bg-white text-blue-700 px-4 py-2 rounded-lg font-semibold shadow-sm hover:shadow-md transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white" aria-label="Voltar para a página inicial">
-                                ← Voltar
+                        <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
+                            <Link href="/" className="inline-flex items-center justify-center gap-2 bg-white text-blue-700 px-6 py-3 rounded-xl font-bold shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1" aria-label="Voltar para a página inicial">
+                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                                </svg>
+                                <span>Voltar</span>
                             </Link>
 
                             <a
                                 href="https://github.com/lucasrguerra/ESPDocs"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="inline-flex items-center justify-center bg-white/20 border border-white/30 text-white px-4 py-2 rounded-lg font-semibold hover:bg-white/30 transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white"
+                                className="inline-flex items-center justify-center gap-2 bg-white/10 backdrop-blur-sm border-2 border-white/30 text-white px-6 py-3 rounded-xl font-bold hover:bg-white/20 transition-all"
                                 aria-label="Abrir repositório do projeto no GitHub (abre em nova aba)"
                             >
-                                Contribuir no GitHub
+                                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M12 .5a12 12 0 00-3.8 23.4c.6.1.8-.3.8-.6v-2.1c-3.3.7-4-1.6-4-1.6-.5-1.2-1.2-1.5-1.2-1.5-1-.7.1-.7.1-.7 1.1.1 1.7 1.1 1.7 1.1 1 .1 1.6-.7 1.9-1 .1-.8.4-1.3.8-1.6-2.6-.3-5.3-1.3-5.3-5.8 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.6.1-3.3 0 0 1-.3 3.3 1.2a11.4 11.4 0 016 0c2.3-1.5 3.3-1.2 3.3-1.2.6 1.7.2 3 .1 3.3.8.8 1.2 1.9 1.2 3.1 0 4.5-2.7 5.5-5.3 5.8.5.4.9 1.1.9 2.2v3.2c0 .3.2.7.8.6A12 12 0 0012 .5z" fill="currentColor"/>
+                                </svg>
+                                <span>GitHub</span>
                             </a>
                         </div>
                     </div>
                 </header>
 
-                <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <section className="md:col-span-2 space-y-6">
-                        <article className="bg-white/70 backdrop-blur-sm rounded-2xl p-6 shadow-sm border border-gray-100">
-                            <h2 className="text-2xl font-bold mb-2">Missão</h2>
-                            <p className="text-gray-700 leading-relaxed text-justify">
-                                Facilitar o aprendizado e acelerar projetos com ESP32 por meio de
-                                documentação clara, exemplos testados e comparativos práticos.
-                                Priorizei traduções fiéis, explicações passo a passo e dicas
-                                baseadas em experiência real de desenvolvimento.
+                <div className="mt-12 grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <section className="lg:col-span-2 space-y-8">
+                        <article className="bg-white rounded-3xl p-8 shadow-lg border-2 border-gray-100 hover:border-purple-200 transition-colors">
+                            <div className="flex items-center gap-3 mb-4">
+                                <div className="w-12 h-12 bg-linear-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center">
+                                    <span className="text-2xl">🎯</span>
+                                </div>
+                                <h2 className="text-3xl font-bold text-gray-900">Missão</h2>
+                            </div>
+                            <p className="text-gray-700 leading-relaxed text-base">
+                                Facilitar o acesso e a compreensão do ecossistema ESP32 através de uma
+                                interface em português que organiza especificações técnicas, compara séries,
+                                apresenta frameworks e centraliza links para a documentação oficial da
+                                Espressif. O objetivo é economizar tempo na busca por informações técnicas.
                             </p>
                         </article>
 
-                        <article className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
-                            <h2 className="text-2xl font-bold mb-2">Por que o ESPDocs?</h2>
-                            <p className="text-gray-700 leading-relaxed mb-4">
-                                Informações técnicas frequentemente estão dispersas entre datasheets,
-                                fóruns e repositórios. O ESPDocs centraliza esse conteúdo em português,
-                                com foco em aplicabilidade.
+                        <article className="bg-white rounded-3xl p-8 shadow-lg border-2 border-gray-100">
+                            <div className="flex items-center gap-3 mb-4">
+                                <div className="w-12 h-12 bg-linear-to-br from-purple-500 to-pink-600 rounded-xl flex items-center justify-center">
+                                    <span className="text-2xl">❓</span>
+                                </div>
+                                <h2 className="text-3xl font-bold text-gray-900">Por que o ESPDocs?</h2>
+                            </div>
+                            <p className="text-gray-700 leading-relaxed mb-6 text-base">
+                                As informações sobre ESP32 estão dispersas em datasheets (PDF), repositórios
+                                GitHub e documentação oficial — tudo em inglês. O ESPDocs organiza essas
+                                informações em uma interface em português, facilitando comparações e consultas
+                                rápidas antes de mergulhar na documentação técnica oficial.
                             </p>
 
-                            <ul role="list" className="grid sm:grid-cols-2 gap-4">
+                            <div className="grid sm:grid-cols-2 gap-4">
                                 {features.map((f) => (
-                                    <li key={f.title} className="flex gap-3 items-start bg-gray-50 p-4 rounded-lg border border-gray-100">
-                                        <div className="text-2xl" aria-hidden="true">{f.icon}</div>
-                                        <div>
-                                            <h3 className="font-semibold text-gray-800">{f.title}</h3>
-                                            <p className="text-sm text-gray-600">{f.desc}</p>
+                                    <div key={f.title} className="flex gap-4 items-start bg-linear-to-br from-gray-50 to-white p-5 rounded-xl border-2 border-gray-100 hover:border-purple-200 transition-colors">
+                                        <div className="text-3xl shrink-0" aria-hidden="true">{f.icon}</div>
+                                        <div className="flex-1">
+                                            <h3 className="font-bold text-gray-900 mb-1 text-base">{f.title}</h3>
+                                            <p className="text-sm text-gray-600 leading-relaxed">{f.desc}</p>
                                         </div>
-                                    </li>
+                                    </div>
                                 ))}
-                            </ul>
+                            </div>
                         </article>
 
-                        <article className="bg-white/70 backdrop-blur-sm rounded-2xl p-6 shadow-sm border border-gray-100">
-                            <h2 className="text-2xl font-bold mb-2">Como contribuir</h2>
-                            <p className="text-gray-700 leading-relaxed mb-3">
+                        <article className="bg-white rounded-3xl p-8 shadow-lg border-2 border-gray-100">
+                            <div className="flex items-center gap-3 mb-4">
+                                <div className="w-12 h-12 bg-linear-to-br from-green-500 to-teal-600 rounded-xl flex items-center justify-center">
+                                    <span className="text-2xl">🤝</span>
+                                </div>
+                                <h2 className="text-3xl font-bold text-gray-900">Como contribuir</h2>
+                            </div>
+                            <p className="text-gray-700 leading-relaxed mb-4 text-base">
                                 Correções, traduções e novos exemplos são bem-vindos. Abra uma
                                 issue ou um pull request no repositório. Busco por clareza nas
                                 descrições e exemplos testáveis.
                             </p>
-                            <ol className="list-decimal list-inside text-gray-700 space-y-1">
-                                <li>Fork do repositório e crie uma branch clara.</li>
-                                <li>Adicione exemplos ou corrija o conteúdo com referências quandopossível.</li>
-                                <li>Abra um PR e descreva o que foi alterado.</li>
-                            </ol>
+                            <div className="bg-linear-to-r from-blue-50 to-purple-50 rounded-xl p-5 border-2 border-blue-100">
+                                <ol className="list-decimal list-inside text-gray-700 space-y-2 text-sm">
+                                    <li className="font-medium">Fork do repositório e crie uma branch clara.</li>
+                                    <li className="font-medium">Adicione exemplos ou corrija o conteúdo com referências quando possível.</li>
+                                    <li className="font-medium">Abra um PR e descreva o que foi alterado.</li>
+                                </ol>
+                            </div>
                         </article>
 
-                        <article className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
-                            <h2 className="text-2xl font-bold mb-2">Acessibilidade</h2>
-                            <p className="text-gray-700 leading-relaxed">
+                        <article className="bg-linear-to-br from-purple-50 to-pink-50 rounded-3xl p-8 shadow-lg border-2 border-purple-100">
+                            <div className="flex items-center gap-3 mb-4">
+                                <div className="w-12 h-12 bg-linear-to-br from-purple-600 to-pink-600 rounded-xl flex items-center justify-center">
+                                    <span className="text-2xl">♿</span>
+                                </div>
+                                <h2 className="text-3xl font-bold text-gray-900">Acessibilidade</h2>
+                            </div>
+                            <p className="text-gray-700 leading-relaxed text-base">
                                 O site prioriza leitura, contraste legível e navegação por teclado.
                                 Se encontrar barreiras, por favor relate para que eu possa melhorar.
                             </p>
                         </article>
                     </section>
 
-                    <aside className="space-y-4">
-                        <div className="bg-white rounded-2xl p-6 shadow-md border border-gray-100">
-                            <div className="flex flex-col items-center mb-4">
-                                <img 
-                                    src="/logo.png" 
-                                    alt="Ciência Embarcada" 
-                                    className="h-16 mb-3"
-                                />
-                                <h3 className="text-lg font-semibold text-center">Sobre o Autor</h3>
+                    <aside className="space-y-6">
+                        <div className="bg-white rounded-3xl p-8 shadow-lg border-2 border-gray-100 hover:border-purple-200 transition-colors">
+                            <div className="flex flex-col items-center mb-6">
+                                <div className="w-20 h-20 bg-linear-to-br from-purple-100 to-pink-100 rounded-2xl flex items-center justify-center mb-4">
+                                    <img 
+                                        src="/logo.png" 
+                                        alt="Ciência Embarcada" 
+                                        className="h-16 w-16 object-contain"
+                                    />
+                                </div>
+                                <h3 className="text-xl font-bold text-gray-900 text-center">Sobre o Autor</h3>
                             </div>
 
                             <p className="text-gray-700 text-sm leading-relaxed mb-4 text-justify">
@@ -169,8 +202,10 @@ export default function Sobre() {
                             </div>
 
                             <div className="mt-4 text-sm text-gray-500">
-                                <strong>Nota:</strong> Conteúdo não oficial. Consulte sempre datasheets
-                                e documentos oficiais para decisões críticas.
+                                <strong>Importante:</strong> Esta é uma plataforma de organização de informações, não uma
+                                tradução da documentação oficial. A interface está em português, mas datasheets, manuais
+                                técnicos e repositórios linkados são da Espressif e estão em inglês. Para decisões
+                                técnicas críticas, sempre consulte a documentação oficial.
                             </div>
                         </div>
 

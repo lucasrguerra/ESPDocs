@@ -185,19 +185,29 @@ export default function PlacasPage() {
         <div className="bg-linear-to-br from-blue-50 via-white to-purple-50 min-h-screen">
         <Header />
 
-        <main className="max-w-7xl mx-auto px-4 py-16">
-            <div className="text-center mb-12">
-                <h1 className="text-5xl font-extrabold bg-linear-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent leading-relaxed mb-4">
-                    🛒 Catálogo de Placas ESP32
+        <main id="conteudo" className="max-w-7xl mx-auto px-4 py-16">
+            <section className="text-center mb-16">
+                <div className="inline-flex items-center gap-2 bg-white/70 backdrop-blur-sm px-4 py-2 rounded-full mb-6 border border-purple-200 shadow-sm">
+                    <span className="text-xl">🛒</span>
+                    <span className="text-sm font-semibold text-gray-700">Encontre sua placa ideal</span>
+                </div>
+                
+                <h1 className="text-5xl md:text-7xl font-black bg-linear-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent leading-tight mb-6 tracking-tight">
+                    Catálogo de Placas ESP32
                 </h1>
 
-                <p className="text-2xl text-gray-600 mb-2">
+                <p className="text-xl md:text-2xl text-gray-700 mb-4 font-medium">
                     Encontre a placa perfeita para o seu projeto
                 </p>
-                <p className="text-md text-green-600 font-semibold flex items-center justify-center gap-2">
-                    ✓ Todos os links são verificados e de fontes confiáveis
-                </p>
-            </div>
+                <div className="inline-flex items-center gap-2 bg-green-50 px-6 py-3 rounded-full border-2 border-green-200">
+                    <svg className="w-5 h-5 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                    </svg>
+                    <p className="text-sm text-green-700 font-bold">
+                        Todos os links são verificados e de fontes confiáveis
+                    </p>
+                </div>
+            </section>
 
             <div className="grid lg:grid-cols-4 gap-8">
                 <div className="lg:col-span-1">

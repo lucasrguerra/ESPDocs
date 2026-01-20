@@ -34,7 +34,7 @@ const type_colors = {
     nc: "#9ca3af",
 };
 
-export default function ConnectionsDiagram({ connections, color }) {
+export default function ConnectionsDiagram({ connections, serie }) {
     const [activeFilter, setActiveFilter] = useState("All");
     const [selectedConnection, setSelectedConnection] = useState(null);
     const [hoveredConnection, setHoveredConnection] = useState(null);
@@ -138,12 +138,12 @@ export default function ConnectionsDiagram({ connections, color }) {
     return (
         <div className="space-y-8 pb-8">
             <div className="space-y-3">
-                <h2 className="text-2xl font-bold text-gray-800 mb-6 pb-3 border-b-2 flex items-center gap-3" style={{ borderColor: color }}>
+                <h2 className="text-2xl font-bold text-gray-800 mb-6 pb-3 border-b-2 flex items-center gap-3" style={{ borderColor: serie.color }}>
                     <span>📍</span>
                     Diagrama de Conexões Interativo
                 </h2>
-                <p className="text-lg text-gray-600 leading-relaxed max-w-3xl">
-                    Explore as conexões do ESP32. Use a busca, filtros por função ou passe o mouse para ver detalhes rápidos.
+                <p className="text-lg text-gray-600 leading-relaxed">
+                    Explore as conexões do {serie.nome_completo}. Use a busca, filtros por função ou passe o mouse para ver detalhes rápidos.
                 </p>
             </div>
 

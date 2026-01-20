@@ -5,79 +5,102 @@ import Link from "next/link";
 export default function Home() {
 	const resources = [
         {name: "Catálogo de Placas", description: "Encontre placas de desenvolvimento ESP32 verificadas com filtros avançados e links seguros para compra", icon: "🛒"},
-		{name: "Detalhes Técnicos", description: "Explore as especificações técnicas de cada série ESP32, incluindo arquitetura, recursos e capacidades", icon: "🔧"},
-		{name: "Diagramas Interativos", description: "Visualize diagramas detalhados dos componentes ESP32 com interatividade para melhor compreensão", icon: "📊"},
-		{name: "Frameworks Avançados", description: "Aprenda sobre frameworks populares como ESP-IDF, Arduino e MicroPython para desenvolvimento com ESP32", icon: "⚡"},
-		{name: "Comparação de Séries", description: "Compare diferentes séries ESP32 para escolher o mais adequado ao seu projeto", icon: "📈"},
-		{name: "Datasheets", description: "Acesso direto aos datasheets oficiais para informações detalhadas sobre cada série", icon: "📄"},
-		{name: "Exemplos de Código", description: "Encontre exemplos práticos de código para iniciar rapidamente seus projetos com ESP32", icon: "💻"},
-        {name: "Atualizações Constantes", description: "Mantenha-se atualizado com as últimas novidades e lançamentos no ecossistema ESP32", icon: "🔄"},
-        {name: "Conteúdo em Português", description: "Toda a documentação e recursos são apresentados em português para facilitar o entendimento", icon: "📚"},
+		{name: "Especificações Organizadas", description: "Especificações técnicas de cada série ESP32 organizadas em tabelas comparativas em português", icon: "🔧"},
+		{name: "Diagramas de Conexões", description: "Visualize diagramas interativos dos componentes e pinos de cada série ESP32", icon: "📊"},
+		{name: "Informações sobre Frameworks", description: "Conheça frameworks como ESP-IDF, Arduino e MicroPython com descrições, casos de uso e exemplos", icon: "⚡"},
+		{name: "Comparação de Séries", description: "Compare lado a lado as especificações de diferentes séries ESP32 em uma única visualização", icon: "📈"},
+		{name: "Links para Documentação", description: "Acesso direto aos datasheets, manuais técnicos e guias oficiais da Espressif (em inglês)", icon: "📄"},
+		{name: "Exemplos de Código", description: "Snippets de código básico para diferentes frameworks com links para repositórios oficiais", icon: "💻"},
+        {name: "Informações Atualizadas", description: "Dados atualizados sobre as séries e frameworks mais recentes do ecossistema ESP32", icon: "🔄"},
+        {name: "Interface em Português", description: "Navegação e organização de informações totalmente em português para facilitar a consulta", icon: "📚"},
     ]
 
     return (
         <div className="bg-linear-to-br from-blue-50 via-white to-purple-50 min-h-screen">
 			<Header />
 
-            <main className="text-center px-4 pt-16 pb-8 max-w-5xl mx-auto">
-                <div className="inline-block mb-6">
-                    <div className="bg-linear-to-r from-blue-600 to-purple-600 text-white px-4 py-2 rounded-full text-sm font-semibold shadow-lg">
-                        🚀 Documentação em Português
+            <main className="px-4 pt-12 pb-16 max-w-7xl mx-auto">
+                {/* Hero Section */}
+                <section className="text-center mb-20">
+                    <h1 className="text-5xl md:text-7xl lg:text-8xl font-black bg-linear-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent mb-6 tracking-tight">
+                        ESPDocs
+                    </h1>
+                    
+                    <h2 className="text-xl md:text-2xl lg:text-3xl text-gray-800 font-bold mb-6 max-w-4xl mx-auto leading-tight">
+                        Organização e acesso facilitado ao ecossistema ESP32
+                    </h2>
+                    
+                    <p className="text-base md:text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed mb-10">
+                        Plataforma não oficial com interface em português que organiza e centraliza
+                        informações sobre ESP32. Compare especificações, visualize diagramas e acesse
+                        a documentação oficial da Espressif.
+                    </p>
+
+                    <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                        <Link
+                            className="group inline-flex items-center gap-3 bg-linear-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-xl font-bold text-base shadow-lg hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300"
+                            href="/series"
+                        >
+                            <span className="text-xl">📚</span>
+                            <span>Explorar Séries ESP32</span>
+                            <svg className="w-5 h-5 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                            </svg>
+                        </Link>
+
+                        <Link
+                            className="group inline-flex items-center gap-3 bg-white text-gray-800 px-8 py-4 rounded-xl font-bold text-base shadow-lg hover:shadow-xl border-2 border-gray-200 hover:border-purple-500 transform hover:-translate-y-1 transition-all duration-300"
+                            href="/frameworks"
+                        >
+                            <span className="text-xl">⚡</span>
+                            <span>Frameworks</span>
+                        </Link>
+
+                        <Link
+                            className="group inline-flex items-center gap-3 bg-white text-gray-800 px-8 py-4 rounded-xl font-bold text-base shadow-lg hover:shadow-xl border-2 border-gray-200 hover:border-purple-500 transform hover:-translate-y-1 transition-all duration-300"
+                            href="/catalogo"
+                        >
+                            <span className="text-xl">🛒</span>
+                            <span>Catálogo</span>
+                        </Link>
                     </div>
-                </div>
-                
-                <h1 className="text-6xl md:text-7xl font-extrabold bg-linear-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent mb-6 animate-fade-in">
-                    ESPDocs
-                </h1>
-                
-                <h2 className="text-2xl md:text-3xl text-gray-700 font-semibold mb-6">
-                    Ecossistema ESP32 em Português
-                </h2>
-                
-                <p className="text-lg text-gray-600 max-w-xl mx-auto leading-relaxed mb-12">
-                    Documentação não oficial completa para facilitar seu aprendizado e desenvolvimento 
-                    com ESP32. Explore especificações, diagramas, frameworks e muito mais!
-                </p>
+                </section>
 
-                <div className="flex flex-col sm:flex-row gap-4 justify-center mb-20">
-                    <Link
-						className="bg-linear-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-xl font-semibold text-lg shadow-xl hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300"
-						href="/series"
-					>
-						📚 Ver Séries
-                    </Link>
+                {/* Recursos Section */}
+                <section className="mb-20">
+                    <div className="text-center mb-12">
+                        <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Recursos da Plataforma</h2>
+                        <p className="text-lg text-gray-600 max-w-2xl mx-auto">Ferramentas e informações organizadas para facilitar seu trabalho com ESP32</p>
+                    </div>
+                    
+                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {resources.map((resource, index) => (
+                            <div 
+                                key={resource.name} 
+                                className="group bg-white p-6 rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 border-2 border-gray-100 hover:border-purple-200"
+                                style={{ animationDelay: `${index * 50}ms` }}
+                            >
+                                <div className="flex items-start gap-4">
+                                    <div className="text-4xl shrink-0 transform group-hover:scale-110 transition-transform">
+                                        {resource.icon}
+                                    </div>
+                                    <div className="flex-1">
+                                        <h3 className="text-lg font-bold text-gray-900 mb-2 group-hover:text-purple-600 transition-colors">
+                                            {resource.name}
+                                        </h3>
+                                        <p className="text-sm text-gray-600 leading-relaxed">
+                                            {resource.description}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </section>
 
-                    <Link
-						className="bg-white text-gray-700 px-8 py-4 rounded-xl font-semibold text-lg shadow-lg hover:shadow-xl border-2 border-gray-200 hover:border-purple-400 transform hover:-translate-y-1 transition-all duration-300"
-						href="/frameworks"
-					>
-						⚡ Ver Frameworks
-                    </Link>
-
-                    <Link
-                        className="bg-white text-gray-700 px-8 py-4 rounded-xl font-semibold text-lg shadow-lg hover:shadow-xl border-2 border-gray-200 hover:border-purple-400 transform hover:-translate-y-1 transition-all duration-300"
-                        href="/catalogo"
-                    >
-                        🛒 Ver Catálogo de Placas
-                    </Link>
-                </div>
-
-                <div className="grid md:grid-cols-3 gap-6 mt-16">
-                    {resources.map((resource) => (
-                        <div key={resource.name} className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-300 border border-gray-100">
-                            <div className="text-5xl mb-4">{resource.icon}</div>
-                            <h3 className="text-xl font-bold text-gray-800 mb-3">
-                                {resource.name}
-                            </h3>
-                            <p className="text-gray-600">
-                                {resource.description}
-                            </p>
-                        </div>
-                    ))}
-                </div>
-
-				<div className="mt-16 px-4 md:px-16">
-					<div className="bg-white rounded-2xl shadow-lg p-8 border border-gray-100">
+                {/* Ciência Embarcada Section */}
+                <section className="mb-12">
+                    <div className="bg-linear-to-br from-white to-purple-50 rounded-3xl shadow-xl p-8 md:p-12 border-2 border-purple-100">
 						{/* Logo e Link do Ciência Embarcada */}
 						<div className="flex flex-col items-center mb-6">
 							<a 
@@ -119,17 +142,23 @@ export default function Home() {
 							</a>
 						</div>
 
-						{/* Disclaimer */}
-						<div className="border-t border-gray-200 pt-6 mt-6">
-							<p className="text-sm text-gray-600 text-center">
-								O ESPDocs é uma documentação não oficial e independente, criada por
-								um entusiasta da comunidade ESP32 e que não possui nenhum tipo de afiliação
-								com a Espressif Systems, fabricante dos chips ESP32. Todas as informações
-								são coletadas de fontes públicas e experiências pessoais de desenvolvimento.
-							</p>
-						</div>
-					</div>
-				</div> 
+                        {/* Disclaimer */}
+                        <div className="border-t-2 border-purple-200 pt-6 mt-6">
+                            <div className="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-r-lg">
+                                <div className="flex items-start gap-3">
+                                    <svg className="w-5 h-5 text-blue-600 mt-0.5 shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
+                                    </svg>
+                                    <p className="text-sm text-gray-700 leading-relaxed">
+                                        <strong className="font-semibold text-gray-900">Plataforma não oficial:</strong> O ESPDocs é independente e sem afiliação com a Espressif Systems. 
+                                        Organiza informações públicas e links para documentação oficial. Para dados técnicos críticos, 
+                                        consulte sempre os datasheets e manuais oficiais da Espressif.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section> 
             </main>
 
 			<Footer />
