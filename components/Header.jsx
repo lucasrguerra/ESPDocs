@@ -17,6 +17,7 @@ import FrameworksIcon from "@mui/icons-material/Apps";
 import CompareIcon from "@mui/icons-material/CompareArrows";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
+import FindInPageIcon from "@mui/icons-material/FindInPage";
 
 export default function Header() {
     const [drawerOpen, setDrawerOpen] = useState(false);
@@ -27,6 +28,7 @@ export default function Header() {
         { text: "Sobre o Projeto", brief: "Sobre", href: "/sobre", icon: <AboutIcon /> },
         { text: "Glossário", href: "/glossario", icon: <MenuBookIcon /> },
         { text: "Séries", href: "/series", icon: <ModelsIcon />, featured: true },
+        { text: "Seletor de ESP32", brief: "Seletor", href: "/seletor", icon: <FindInPageIcon />, featured: true },
         { text: "Frameworks", href: "/frameworks", icon: <FrameworksIcon />, featured: true },
         { text: "Comparar Séries", brief: "Comparar", href: "/comparacao", icon: <CompareIcon />, featured: true },
         { text: "Catálogo de Placas", brief: "Catálogo", href: "/catalogo", icon: <ShoppingCartIcon /> },

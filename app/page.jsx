@@ -4,6 +4,7 @@ import Link from "next/link";
 
 export default function Home() {
 	const resources = [
+        {name: "Seletor Inteligente", description: "Responda perguntas sobre seu projeto e descubra qual série ESP32 é ideal para você", icon: "🎯"},
         {name: "Catálogo de Placas", description: "Encontre placas de desenvolvimento ESP32 verificadas com filtros avançados e links seguros para compra", icon: "🛒"},
 		{name: "Especificações Organizadas", description: "Especificações técnicas de cada série ESP32 organizadas em tabelas comparativas em português", icon: "🔧"},
 		{name: "Diagramas de Conexões", description: "Visualize diagramas interativos dos componentes e pinos de cada série ESP32", icon: "📊"},
@@ -38,14 +39,22 @@ export default function Home() {
 
                     <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
                         <Link
+                            className="group inline-flex items-center gap-3 bg-linear-to-r from-green-600 to-emerald-600 text-white px-8 py-4 rounded-xl font-bold text-base shadow-lg hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300"
+                            href="/seletor"
+                        >
+                            <span className="text-xl">🎯</span>
+                            <span>Encontrar ESP32 Ideal</span>
+                            <svg className="w-5 h-5 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                            </svg>
+                        </Link>
+
+                        <Link
                             className="group inline-flex items-center gap-3 bg-linear-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-xl font-bold text-base shadow-lg hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300"
                             href="/series"
                         >
                             <span className="text-xl">📚</span>
                             <span>Explorar Séries ESP32</span>
-                            <svg className="w-5 h-5 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                            </svg>
                         </Link>
 
                         <Link
