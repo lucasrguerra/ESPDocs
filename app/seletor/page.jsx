@@ -555,7 +555,7 @@ export default function Seletor() {
 
                             <button
                                 onClick={() => setShowResults(true)}
-                                className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white px-8 md:px-12 py-3 md:py-4 rounded-xl font-bold text-sm md:text-base shadow-lg hover:shadow-xl transition-all duration-300"
+                                className="inline-flex items-center justify-center gap-2 bg-linear-to-r from-blue-600 via-purple-600 to-pink-600 text-white px-8 md:px-12 py-3 md:py-4 rounded-xl font-bold text-sm md:text-base shadow-lg hover:shadow-xl transition-all duration-300"
                             >
                                 <span>✨</span>
                                 Ver Recomendações
@@ -800,7 +800,7 @@ export default function Seletor() {
                             <div className="flex flex-col sm:flex-row gap-4 justify-center items-stretch sm:items-center">
                                 <button
                                     onClick={resetQuiz}
-                                    className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white px-8 py-4 rounded-xl font-bold shadow-lg hover:shadow-xl transition-all duration-300"
+                                    className="inline-flex items-center justify-center gap-2 bg-linear-to-r from-blue-600 via-purple-600 to-pink-600 text-white px-8 py-4 rounded-xl font-bold shadow-lg hover:shadow-xl transition-all duration-300"
                                 >
                                     <span>🔄</span>
                                     <span>Tentar Novamente</span>
