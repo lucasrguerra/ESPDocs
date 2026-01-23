@@ -710,7 +710,7 @@ export default function ConnectionsDiagram({ connections, serie }) {
                             <button
                                 onClick={() => setSelectedConnection(null)}
                                 className="w-full py-4 rounded-2xl font-bold text-white shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 focus:outline-none focus:ring-4 focus:ring-offset-2"
-                                style={{ backgroundColor: color }}
+                                style={{ backgroundColor: serie.color }}
                                 aria-label="Close modal"
                             >
                                 Fechar
