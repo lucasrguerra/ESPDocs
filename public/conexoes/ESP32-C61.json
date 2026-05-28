@@ -1,0 +1,536 @@
+[
+    {
+        "numero": "1",
+        "nome": "ANT_2G",
+        "tipo": "analog",
+        "funcoes": ["Conexão de antena de RF (Wi-Fi e Bluetooth)"],
+        "categorias": ["Antena", "RF"],
+        "avisos": ["Pino de RF dedicado a 2.4 GHz. Requer casamento de impedância de 50 ohms."]
+    },
+    {
+        "numero": "2",
+        "nome": "VDDA3",
+        "tipo": "power",
+        "funcoes": ["Alimentação do domínio analógico de 3.3V"],
+        "categorias": ["Power"],
+        "avisos": ["Tensão recomendada: 3.3V (3.0V a 3.6V). Fornece energia para circuitos de RF e clock."]
+    },
+    {
+        "numero": "3",
+        "nome": "VDDA4",
+        "tipo": "power",
+        "funcoes": ["Alimentação do domínio analógico de 3.3V"],
+        "categorias": ["Power"],
+        "avisos": ["Tensão recomendada: 3.3V (3.0V a 3.6V). Fornece energia para circuitos de RF e clock."]
+    },
+    {
+        "numero": "4",
+        "nome": "CHIP_PU",
+        "tipo": "analog",
+        "funcoes": ["Habilitar o chip (Power-up / Reset)"],
+        "categorias": ["Power"],
+        "avisos": [
+            "Ativo Alto. Puxe para nível alto para inicializar o chip.",
+            "Não deixe este pino flutuando. Recomenda-se usar um circuito RC externo para reset limpo."
+        ]
+    },
+    {
+        "numero": "5",
+        "nome": "VDDPST1",
+        "tipo": "power",
+        "funcoes": ["Alimentação digital dos domínios HP (High Performance) e LP (Low Power)"],
+        "categorias": ["Power"],
+        "avisos": ["Tensão recomendada: 3.3V. Alimenta a parte digital de baixo consumo e pinos associados."]
+    },
+    {
+        "numero": "6",
+        "nome": "GPIO0",
+        "tipo": "io",
+        "alimentacao": ["VDDPST1"],
+        "funcoes": [
+            "GPIO0",
+            "XTAL_32K_P"
+        ],
+        "categorias": [
+            "GPIO",
+            "Clock"
+        ],
+        "avisos": ["Pino multifuncional de baixo consumo. Pode ser conectado ao cristal oscilador de 32 kHz externo (Entrada P)."]
+    },
+    {
+        "numero": "7",
+        "nome": "GPIO1",
+        "tipo": "io",
+        "alimentacao": ["VDDPST1"],
+        "funcoes": [
+            "GPIO1",
+            "XTAL_32K_N",
+            "ADC1_CH0"
+        ],
+        "categorias": [
+            "GPIO",
+            "Clock",
+            "ADC"
+        ],
+        "avisos": ["Pino multifuncional. Conexão do cristal de 32 kHz externo (Saída N) e entrada analógica ADC1 Canal 0."]
+    },
+    {
+        "numero": "8",
+        "nome": "GPIO2",
+        "tipo": "io",
+        "alimentacao": ["VDDPST1"],
+        "funcoes": ["GPIO2"],
+        "categorias": ["GPIO"]
+    },
+    {
+        "numero": "9",
+        "nome": "GPIO3",
+        "tipo": "io",
+        "alimentacao": ["VDDPST1"],
+        "funcoes": [
+            "GPIO3",
+            "MTMS",
+            "ADC1_CH1"
+        ],
+        "categorias": [
+            "GPIO",
+            "JTAG",
+            "ADC",
+            "Strapping"
+        ],
+        "avisos": [
+            "Pino multifuncional: JTAG MTMS, ADC1 Canal 1 e pino de Strapping para controle de borda de clock do SDIO.",
+            "Flutuante por padrão durante o reset."
+        ]
+    },
+    {
+        "numero": "10",
+        "nome": "GPIO4",
+        "tipo": "io",
+        "alimentacao": ["VDDPST1"],
+        "funcoes": [
+            "GPIO4",
+            "MTDI",
+            "ADC1_CH2"
+        ],
+        "categorias": [
+            "GPIO",
+            "JTAG",
+            "ADC",
+            "Strapping"
+        ],
+        "avisos": [
+            "Pino multifuncional: JTAG MTDI, ADC1 Canal 2 e pino de Strapping para controle de borda de clock do SDIO.",
+            "Flutuante por padrão durante o reset."
+        ]
+    },
+    {
+        "numero": "11",
+        "nome": "GPIO5",
+        "tipo": "io",
+        "alimentacao": ["VDDPST1"],
+        "funcoes": [
+            "GPIO5",
+            "MTCK",
+            "ADC1_CH3"
+        ],
+        "categorias": [
+            "GPIO",
+            "JTAG",
+            "ADC"
+        ],
+        "avisos": ["Pino multifuncional: JTAG MTCK e entrada analógica ADC1 Canal 3."]
+    },
+    {
+        "numero": "12",
+        "nome": "GPIO6",
+        "tipo": "io",
+        "alimentacao": ["VDDPST1"],
+        "funcoes": [
+            "GPIO6",
+            "MTDO"
+        ],
+        "categorias": [
+            "GPIO",
+            "JTAG"
+        ],
+        "avisos": ["Pino multifuncional JTAG MTDO."]
+    },
+    {
+        "numero": "13",
+        "nome": "GPIO25",
+        "tipo": "io",
+        "alimentacao": ["VDDPST2"],
+        "funcoes": [
+            "GPIO25",
+            "SDIO_CMD",
+            "FSPICS0"
+        ],
+        "categorias": [
+            "GPIO",
+            "SDIO",
+            "SPI"
+        ],
+        "avisos": ["Pino multifuncional de alta velocidade: SDIO Comando ou SPI2 Chip Select 0."]
+    },
+    {
+        "numero": "14",
+        "nome": "GPIO26",
+        "tipo": "io",
+        "alimentacao": ["VDDPST2"],
+        "funcoes": [
+            "GPIO26",
+            "SDIO_CLK",
+            "FSPICLK"
+        ],
+        "categorias": [
+            "GPIO",
+            "SDIO",
+            "SPI"
+        ],
+        "avisos": ["Pino multifuncional de alta velocidade: SDIO Clock ou SPI2 Clock."]
+    },
+    {
+        "numero": "15",
+        "nome": "GPIO27",
+        "tipo": "io",
+        "alimentacao": ["VDDPST2"],
+        "funcoes": [
+            "GPIO27",
+            "SDIO_DATA0",
+            "FSPID"
+        ],
+        "categorias": [
+            "GPIO",
+            "SDIO",
+            "SPI"
+        ],
+        "avisos": ["Pino multifuncional de alta velocidade: SDIO Dados 0 ou SPI2 MOSI (FSPID)."]
+    },
+    {
+        "numero": "16",
+        "nome": "GPIO28",
+        "tipo": "io",
+        "alimentacao": ["VDDPST2"],
+        "funcoes": [
+            "GPIO28",
+            "SDIO_DATA1",
+            "FSPIQ"
+        ],
+        "categorias": [
+            "GPIO",
+            "SDIO",
+            "SPI"
+        ],
+        "avisos": ["Pino de alta velocidade: SDIO Dados 1 ou SPI2 MISO (FSPIQ)."]
+    },
+    {
+        "numero": "17",
+        "nome": "GPIO22",
+        "tipo": "io",
+        "alimentacao": ["VDDPST2"],
+        "funcoes": [
+            "GPIO22",
+            "SDIO_DATA2",
+            "FSPIWP"
+        ],
+        "categorias": [
+            "GPIO",
+            "SDIO",
+            "SPI"
+        ],
+        "avisos": ["Pino de alta velocidade: SDIO Dados 2 ou SPI2 Write Protect."]
+    },
+    {
+        "numero": "18",
+        "nome": "GPIO23",
+        "tipo": "io",
+        "alimentacao": ["VDDPST2"],
+        "funcoes": [
+            "GPIO23",
+            "SDIO_DATA3",
+            "FSPIHD"
+        ],
+        "categorias": [
+            "GPIO",
+            "SDIO",
+            "SPI"
+        ],
+        "avisos": ["Pino de alta velocidade: SDIO Dados 3 ou SPI2 Hold."]
+    },
+    {
+        "numero": "19",
+        "nome": "GPIO14",
+        "tipo": "io",
+        "alimentacao": ["VDD_SPI", "VDDPST2"],
+        "funcoes": [
+            "GPIO14",
+            "SPICS1"
+        ],
+        "categorias": [
+            "GPIO",
+            "SPI"
+        ],
+        "avisos": ["Pino dedicado para Chip Select 1 da interface de memória SPI Flash/PSRAM."]
+    },
+    {
+        "numero": "20",
+        "nome": "GPIO15",
+        "tipo": "io",
+        "alimentacao": ["VDD_SPI", "VDDPST2"],
+        "funcoes": [
+            "GPIO15",
+            "SPICS0"
+        ],
+        "categorias": [
+            "GPIO",
+            "SPI"
+        ],
+        "avisos": ["Pino dedicado para Chip Select 0 da interface de memória SPI Flash."]
+    },
+    {
+        "numero": "21",
+        "nome": "VDDPST2",
+        "tipo": "power",
+        "funcoes": ["Alimentação do domínio digital HP (High Performance)"],
+        "categorias": ["Power"],
+        "avisos": ["Tensão recomendada: 3.3V (3.0V a 3.6V). Alimenta as interfaces digitais rápidas."]
+    },
+    {
+        "numero": "22",
+        "nome": "GPIO16",
+        "tipo": "io",
+        "alimentacao": ["VDD_SPI", "VDDPST2"],
+        "funcoes": [
+            "GPIO16",
+            "SPIQ"
+        ],
+        "categorias": [
+            "GPIO",
+            "SPI"
+        ],
+        "avisos": ["Pino de dados Q (MISO) da interface de memória flash SPI."]
+    },
+    {
+        "numero": "23",
+        "nome": "GPIO17",
+        "tipo": "io",
+        "alimentacao": ["VDD_SPI", "VDDPST2"],
+        "funcoes": [
+            "GPIO17",
+            "SPIWP"
+        ],
+        "categorias": [
+            "GPIO",
+            "SPI"
+        ],
+        "avisos": ["Pino de proteção contra escrita (Write Protect) da interface de memória flash SPI."]
+    },
+    {
+        "numero": "24",
+        "nome": "VDD_SPI",
+        "tipo": "power",
+        "funcoes": ["Tensão de saída LDO gerada a partir de VDDPST2 para alimentar a flash e PSRAM"],
+        "categorias": ["Power"],
+        "avisos": [
+            "Tensão de saída configurável via software de acordo com as especificações da flash interna/externa (normalmente 3.3V ou 1.8V).",
+            "Não deve ser usado como fonte geral de energia de alta corrente."
+        ]
+    },
+    {
+        "numero": "25",
+        "nome": "GPIO19",
+        "tipo": "io",
+        "alimentacao": ["VDD_SPI", "VDDPST2"],
+        "funcoes": [
+            "GPIO19",
+            "SPIHD"
+        ],
+        "categorias": [
+            "GPIO",
+            "SPI"
+        ],
+        "avisos": ["Pino de controle de Hold da interface de memória flash SPI."]
+    },
+    {
+        "numero": "26",
+        "nome": "GPIO20",
+        "tipo": "io",
+        "alimentacao": ["VDD_SPI", "VDDPST2"],
+        "funcoes": [
+            "GPIO20",
+            "SPICLK"
+        ],
+        "categorias": [
+            "GPIO",
+            "SPI"
+        ],
+        "avisos": ["Pino de sinal de clock da interface de memória flash SPI."]
+    },
+    {
+        "numero": "27",
+        "nome": "GPIO21",
+        "tipo": "io",
+        "alimentacao": ["VDD_SPI", "VDDPST2"],
+        "funcoes": [
+            "GPIO21",
+            "SPID"
+        ],
+        "categorias": [
+            "GPIO",
+            "SPI"
+        ],
+        "avisos": ["Pino de dados D (MOSI) da interface de memória flash SPI."]
+    },
+    {
+        "numero": "28",
+        "nome": "GPIO12",
+        "tipo": "io",
+        "alimentacao": ["VDDPST2"],
+        "funcoes": [
+            "GPIO12",
+            "USB_D-"
+        ],
+        "categorias": [
+            "GPIO",
+            "USB"
+        ],
+        "avisos": ["Pino de sinal negativo do transceptor USB Serial/JTAG integrado."]
+    },
+    {
+        "numero": "29",
+        "nome": "GPIO13",
+        "tipo": "io",
+        "alimentacao": ["VDDPST2"],
+        "funcoes": [
+            "GPIO13",
+            "USB_D+"
+        ],
+        "categorias": [
+            "GPIO",
+            "USB"
+        ],
+        "avisos": [
+            "Pino de sinal positivo do transceptor USB Serial/JTAG integrado.",
+            "Possui resistor de pull-up integrado ativado por padrão na inicialização do USB."
+        ]
+    },
+    {
+        "numero": "30",
+        "nome": "GPIO24",
+        "tipo": "io",
+        "alimentacao": ["VDDPST2"],
+        "funcoes": ["GPIO24"],
+        "categorias": ["GPIO"]
+    },
+    {
+        "numero": "31",
+        "nome": "GPIO8",
+        "tipo": "io",
+        "alimentacao": ["VDDPST2"],
+        "funcoes": ["GPIO8"],
+        "categorias": ["GPIO", "Strapping"],
+        "avisos": [
+            "Pino de Strapping para seleção do modo de boot e controle de impressão das mensagens da ROM.",
+            "Flutuante por padrão durante o reset. Nível alto (1) ativa a impressão do log de inicialização."
+        ]
+    },
+    {
+        "numero": "32",
+        "nome": "GPIO9",
+        "tipo": "io",
+        "alimentacao": ["VDDPST2"],
+        "funcoes": ["GPIO9"],
+        "categorias": ["GPIO", "Strapping"],
+        "avisos": [
+            "Pino de Strapping principal para seleção do modo de boot.",
+            "Equipado com pull-up fraco integrado. Nível alto (1) no reset ativa SPI Boot (carrega do flash). Nível baixo (0) força o modo de Download."
+        ]
+    },
+    {
+        "numero": "33",
+        "nome": "GPIO10",
+        "tipo": "io",
+        "alimentacao": ["VDDPST2"],
+        "funcoes": [
+            "GPIO10",
+            "U0RXD"
+        ],
+        "categorias": [
+            "GPIO",
+            "UART"
+        ],
+        "avisos": ["Recepção serial UART0 (Serial RX para gravação do firmware externa e depuração)."]
+    },
+    {
+        "numero": "34",
+        "nome": "GPIO11",
+        "tipo": "io",
+        "alimentacao": ["VDDPST2"],
+        "funcoes": [
+            "GPIO11",
+            "U0TXD"
+        ],
+        "categorias": [
+            "GPIO",
+            "UART"
+        ],
+        "avisos": ["Transmissão serial UART0 (Serial TX para gravação do firmware externa e depuração)."]
+    },
+    {
+        "numero": "35",
+        "nome": "GPIO29",
+        "tipo": "io",
+        "alimentacao": ["VDDPST2"],
+        "funcoes": ["GPIO29"],
+        "categorias": ["GPIO"]
+    },
+    {
+        "numero": "36",
+        "nome": "GPIO7",
+        "tipo": "io",
+        "alimentacao": ["VDDPST2"],
+        "funcoes": ["GPIO7"],
+        "categorias": ["GPIO", "Strapping"],
+        "avisos": [
+            "Pino de Strapping para seleção da fonte dos sinais JTAG (inicialização precoce).",
+            "Sem resistores de pull internos no reset. Deve ser mantido estável por circuito externo se usado."
+        ]
+    },
+    {
+        "numero": "37",
+        "nome": "VDDA1",
+        "tipo": "power",
+        "funcoes": ["Alimentação do domínio analógico de 3.3V"],
+        "categorias": ["Power"]
+    },
+    {
+        "numero": "38",
+        "nome": "XTAL_N",
+        "tipo": "analog",
+        "funcoes": ["Conexão externa do cristal oscilador de 40 MHz (Saída N)"],
+        "categorias": ["Clock"]
+    },
+    {
+        "numero": "39",
+        "nome": "XTAL_P",
+        "tipo": "analog",
+        "funcoes": ["Conexão externa do cristal oscilador de 40 MHz (Entrada P)"],
+        "categorias": ["Clock"]
+    },
+    {
+        "numero": "40",
+        "nome": "VDDA2",
+        "tipo": "power",
+        "funcoes": ["Alimentação do domínio analógico de 3.3V"],
+        "categorias": ["Power"]
+    },
+    {
+        "numero": "41",
+        "nome": "GND",
+        "tipo": "power",
+        "funcoes": ["Pino de aterramento central (Exposed Pad)"],
+        "categorias": ["Power"],
+        "avisos": ["Deve ser adequadamente soldado ao plano de terra (GND) da PCB para controle de RF e térmica estáveis."]
+    }
+]

@@ -1,0 +1,307 @@
+[
+    {
+        "numero": "1",
+        "nome": "ANT",
+        "tipo": "analog",
+        "funcoes": ["Conexão de antena de RF (Wi-Fi e Bluetooth)"],
+        "categorias": ["Antena", "RF"],
+        "avisos": ["Pino de RF dedicado. Evite traçar pistas longas ou sem casamento de impedância de 50 ohms."]
+    },
+    {
+        "numero": "2",
+        "nome": "VDDA3P3",
+        "tipo": "power",
+        "funcoes": ["Alimentação analógica de 3.3V"],
+        "categorias": ["Power"],
+        "avisos": [
+            "Tensão recomendada: 3.3V (3.0V a 3.6V)",
+            "Fornece energia para os circuitos analógicos e de RF do chip"
+        ]
+    },
+    {
+        "numero": "3",
+        "nome": "VDDA3P3",
+        "tipo": "power",
+        "funcoes": ["Alimentação analógica de 3.3V"],
+        "categorias": ["Power"],
+        "avisos": [
+            "Tensão recomendada: 3.3V (3.0V a 3.6V)",
+            "Fornece energia para os circuitos analógicos e de RF do chip"
+        ]
+    },
+    {
+        "numero": "4",
+        "nome": "GPIO0",
+        "tipo": "io",
+        "alimentacao": ["VDD3P3_RTC"],
+        "funcoes": [
+            "GPIO0",
+            "ADC1_CH0"
+        ],
+        "categorias": [
+            "GPIO",
+            "ADC"
+        ],
+        "avisos": ["Pino de entrada analógica ADC1 Canal 0"]
+    },
+    {
+        "numero": "5",
+        "nome": "GPIO1",
+        "tipo": "io",
+        "alimentacao": ["VDD3P3_RTC"],
+        "funcoes": [
+            "GPIO1",
+            "ADC1_CH1"
+        ],
+        "categorias": [
+            "GPIO",
+            "ADC"
+        ],
+        "avisos": ["Pino de entrada analógica ADC1 Canal 1"]
+    },
+    {
+        "numero": "6",
+        "nome": "GPIO2",
+        "tipo": "io",
+        "alimentacao": ["VDD3P3_RTC"],
+        "funcoes": [
+            "GPIO2",
+            "ADC1_CH2",
+            "FSPIQ"
+        ],
+        "categorias": [
+            "GPIO",
+            "ADC",
+            "SPI"
+        ],
+        "avisos": ["Mapeado para a função SPI MISO (FSPIQ) por padrão na inicialização do flash"]
+    },
+    {
+        "numero": "7",
+        "nome": "CHIP_EN",
+        "tipo": "analog",
+        "funcoes": ["Habilitar o chip (Power-up / Reset)"],
+        "categorias": ["Power"],
+        "avisos": [
+            "Ativo Alto. Puxe para nível alto para inicializar o chip.",
+            "Não deixe este pino flutuando. Use um circuito RC de atraso externo para inicialização estável."
+        ]
+    },
+    {
+        "numero": "8",
+        "nome": "GPIO3",
+        "tipo": "io",
+        "alimentacao": ["VDD3P3_RTC"],
+        "funcoes": [
+            "GPIO3",
+            "ADC1_CH3"
+        ],
+        "categorias": [
+            "GPIO",
+            "ADC"
+        ],
+        "avisos": ["Pino de entrada analógica ADC1 Canal 3"]
+    },
+    {
+        "numero": "9",
+        "nome": "GPIO4",
+        "tipo": "io",
+        "alimentacao": ["VDD3P3_RTC"],
+        "funcoes": [
+            "GPIO4",
+            "MTMS",
+            "FSPIQ",
+            "ADC1_CH4"
+        ],
+        "categorias": [
+            "GPIO",
+            "JTAG",
+            "SPI",
+            "ADC"
+        ],
+        "avisos": [
+            "Pino multifuncional: JTAG MTMS, SPI2 MISO e ADC1 Canal 4.",
+            "Pode ser usado para depuração JTAG em conjunto com outros pinos JTAG."
+        ]
+    },
+    {
+        "numero": "10",
+        "nome": "GPIO5",
+        "tipo": "io",
+        "alimentacao": ["VDD3P3_RTC"],
+        "funcoes": [
+            "GPIO5",
+            "MTDI",
+            "FSPIWP"
+        ],
+        "categorias": [
+            "GPIO",
+            "JTAG",
+            "SPI"
+        ],
+        "avisos": ["Pino multifuncional: JTAG MTDI e SPI2 Write Protect (FSPIWP)."]
+    },
+    {
+        "numero": "11",
+        "nome": "VDD3P3_RTC",
+        "tipo": "power",
+        "funcoes": ["Alimentação do domínio de RTC e IOs de baixo consumo"],
+        "categorias": ["Power"],
+        "avisos": ["Tensão recomendada: 3.3V"]
+    },
+    {
+        "numero": "12",
+        "nome": "GPIO6",
+        "tipo": "io",
+        "alimentacao": ["VDD3P3_RTC"],
+        "funcoes": [
+            "GPIO6",
+            "MTCK",
+            "FSPICLK"
+        ],
+        "categorias": [
+            "GPIO",
+            "JTAG",
+            "SPI"
+        ],
+        "avisos": ["Pino multifuncional: JTAG MTCK e SPI2 Clock (FSPICLK)."]
+    },
+    {
+        "numero": "13",
+        "nome": "GPIO7",
+        "tipo": "io",
+        "alimentacao": ["VDD3P3_RTC"],
+        "funcoes": [
+            "GPIO7",
+            "MTDO",
+            "FSPID"
+        ],
+        "categorias": [
+            "GPIO",
+            "JTAG",
+            "SPI"
+        ],
+        "avisos": ["Pino multifuncional: JTAG MTDO e SPI2 MOSI (FSPID)."]
+    },
+    {
+        "numero": "14",
+        "nome": "GPIO8",
+        "tipo": "io",
+        "alimentacao": ["VDD3P3_CPU"],
+        "funcoes": ["GPIO8"],
+        "categorias": ["GPIO", "Strapping"],
+        "avisos": [
+            "Pino de Strapping para controle de boot.",
+            "Em conjunto com o GPIO9, seleciona o modo de inicialização do SoC (deve estar em 1 durante o reset para Joint Download Boot se GPIO9=0)."
+        ]
+    },
+    {
+        "numero": "15",
+        "nome": "GPIO9",
+        "tipo": "io",
+        "alimentacao": ["VDD3P3_CPU"],
+        "funcoes": ["GPIO9"],
+        "categorias": ["GPIO", "Strapping"],
+        "avisos": [
+            "Pino de Strapping principal. Nível alto (1) no reset activa SPI Boot (padrão via pull-up fraco).",
+            "Nível baixo (0) no reset coloca o chip no modo de download UART/SPI."
+        ]
+    },
+    {
+        "numero": "16",
+        "nome": "GPIO10",
+        "tipo": "io",
+        "alimentacao": ["VDD3P3_CPU"],
+        "funcoes": [
+            "GPIO10",
+            "FSPICS0"
+        ],
+        "categorias": [
+            "GPIO",
+            "SPI"
+        ],
+        "avisos": ["Pino multifuncional: SPI2 Chip Select 0 (FSPICS0)."]
+    },
+    {
+        "numero": "17",
+        "nome": "VDD3P3_CPU",
+        "tipo": "power",
+        "funcoes": ["Alimentação digital da CPU e IOs correspondentes (3.3V)"],
+        "categorias": ["Power"],
+        "avisos": ["Tensão recomendada: 3.3V"]
+    },
+    {
+        "numero": "18",
+        "nome": "GPIO18",
+        "tipo": "io",
+        "alimentacao": ["VDD3P3_CPU"],
+        "funcoes": ["GPIO18"],
+        "categorias": ["GPIO"]
+    },
+    {
+        "numero": "19",
+        "nome": "GPIO19",
+        "tipo": "io",
+        "alimentacao": ["VDD3P3_CPU"],
+        "funcoes": [
+            "GPIO19",
+            "U0RXD"
+        ],
+        "categorias": [
+            "GPIO",
+            "UART"
+        ],
+        "avisos": ["Pino de recepção UART0 (Serial RX por padrão para gravação e monitoramento)."]
+    },
+    {
+        "numero": "20",
+        "nome": "GPIO20",
+        "tipo": "io",
+        "alimentacao": ["VDD3P3_CPU"],
+        "funcoes": [
+            "GPIO20",
+            "U0TXD"
+        ],
+        "categorias": [
+            "GPIO",
+            "UART"
+        ],
+        "avisos": ["Pino de transmissão UART0 (Serial TX por padrão para gravação e monitoramento)."]
+    },
+    {
+        "numero": "21",
+        "nome": "VDDA",
+        "tipo": "power",
+        "funcoes": ["Alimentação de entrada analógica de 3.3V"],
+        "categorias": ["Power"]
+    },
+    {
+        "numero": "22",
+        "nome": "XTAL_N",
+        "tipo": "analog",
+        "funcoes": ["Conexão externa do cristal oscilador (Saída)"],
+        "categorias": ["Clock"]
+    },
+    {
+        "numero": "23",
+        "nome": "XTAL_P",
+        "tipo": "analog",
+        "funcoes": ["Conexão externa do cristal oscilador (Entrada)"],
+        "categorias": ["Clock"]
+    },
+    {
+        "numero": "24",
+        "nome": "VDDA",
+        "tipo": "power",
+        "funcoes": ["Alimentação de entrada analógica de 3.3V"],
+        "categorias": ["Power"]
+    },
+    {
+        "numero": "25",
+        "nome": "GND",
+        "tipo": "power",
+        "funcoes": ["Pino de aterramento central (Exposed Pad)"],
+        "categorias": ["Power"],
+        "avisos": ["Deve ser devidamente soldado ao plano de terra (GND) da PCB para desempenho estável e dissipação térmica."]
+    }
+]

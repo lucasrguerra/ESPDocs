@@ -1,7 +1,18 @@
-import { Roboto } from "next/font/google";
+import { Outfit, Inter } from "next/font/google";
 import "./globals.css";
+import Providers from "@/components/Providers";
 
-const roboto = Roboto({ subsets: ["latin"] });
+const outfit = Outfit({ 
+	subsets: ["latin"],
+	variable: "--font-outfit",
+	display: "swap",
+});
+
+const inter = Inter({ 
+	subsets: ["latin"],
+	variable: "--font-inter",
+	display: "swap",
+});
 
 export const metadata = {
 	title: "ESPDocs",
@@ -11,9 +22,11 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
 	return (
-		<html lang="pt-BR">
-			<body className={`${roboto.className} font-sans`}>
-				{children}
+		<html lang="pt-BR" className={`${outfit.variable} ${inter.variable}`} suppressHydrationWarning>
+			<body className="font-sans antialiased bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-50 transition-colors duration-300">
+				<Providers>
+					{children}
+				</Providers>
 			</body>
 		</html>
 	);

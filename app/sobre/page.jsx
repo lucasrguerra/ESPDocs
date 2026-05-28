@@ -1,227 +1,262 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Link from "next/link";
+import { 
+	Languages, 
+	GitCompare, 
+	Globe, 
+	Code, 
+	Target, 
+	HelpCircle, 
+	Users, 
+	Accessibility,
+	ArrowLeft,
+	Award,
+	BookOpen,
+	Compass,
+	Terminal,
+	Layers
+} from "lucide-react";
 
 export default function Sobre() {
-    const features = [
-        { icon: "📚", title: "Interface em Português", desc: "Organização e apresentação de dados técnicos totalmente em português." },
-        { icon: "🔧", title: "Comparações Visuais", desc: "Tabelas comparativas e diagramas para facilitar a escolha da série ideal." },
-        { icon: "🌐", title: "Acesso Centralizado", desc: "Links diretos para documentação oficial, repositórios e exemplos." },
-        { icon: "♿", title: "Código Aberto", desc: "Projeto open-source com contribuições bem-vindas no GitHub." },
-    ];
+	const features = [
+		{ icon: <Languages className="w-6 h-6 text-purple-500" />, title: "Interface em Português", desc: "Organização e apresentação de dados técnicos totalmente em português." },
+		{ icon: <GitCompare className="w-6 h-6 text-blue-500" />, title: "Comparações Visuais", desc: "Tabelas comparativas e diagramas para facilitar a escolha da série ideal." },
+		{ icon: <Globe className="w-6 h-6 text-emerald-500" />, title: "Acesso Centralizado", desc: "Links diretos para documentação oficial, repositórios e exemplos." },
+		{ icon: <Code className="w-6 h-6 text-amber-500" />, title: "Código Aberto", desc: "Projeto open-source com contribuições bem-vindas no GitHub." },
+	];
 
-    return (
-        <div className="bg-linear-to-br from-blue-50 via-white to-purple-50 min-h-screen text-gray-800">
-            <a href="#conteudo" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:bg-white focus:px-4 focus:py-2 focus:rounded-md focus:shadow focus:ring-2 focus:ring-purple-500">
-                Ir para o conteúdo
-            </a>
+	return (
+		<div className="bg-gradient-to-br from-slate-50 via-white to-purple-50/40 dark:from-slate-950 dark:via-slate-950 dark:to-slate-900 min-h-screen text-slate-900 dark:text-slate-100 transition-colors duration-300">
+			<a href="#conteudo" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:bg-white focus:px-4 focus:py-2 focus:rounded-md focus:shadow focus:ring-2 focus:ring-purple-500">
+				Ir para o conteúdo
+			</a>
 
-            <Header />
+			<Header />
 
-            <main id="conteudo" className="px-4 pt-12 pb-20 max-w-7xl mx-auto">
-                <header className="relative overflow-hidden rounded-3xl p-10 md:p-16 bg-linear-to-br from-blue-600 via-purple-600 to-pink-600 text-white shadow-2xl mb-12">
-                    <div className="absolute inset-0 bg-black/10"></div>
-                    <div className="relative z-10 max-w-4xl mx-auto">
-                        <h1 className="text-4xl md:text-6xl font-black leading-tight mb-6">
-                            Sobre o ESPDocs
-                        </h1>
+			<main id="conteudo" className="px-6 pt-16 pb-24 max-w-7xl mx-auto">
+				{/* Top Hero Heading Block */}
+				<header className="relative overflow-hidden rounded-3xl p-10 md:p-16 bg-gradient-to-br from-blue-600 via-purple-600 to-pink-600 text-white shadow-2xl mb-12 select-none">
+					<div className="absolute inset-0 bg-black/10"></div>
+					<div className="relative z-10 max-w-4xl mx-auto">
+						<h1 className="text-4xl md:text-6xl font-display font-extrabold leading-tight mb-6">
+							Sobre o ESPDocs
+						</h1>
 
-                        <p className="text-lg md:text-xl opacity-95 max-w-3xl mb-8 leading-relaxed">
-                            Uma plataforma não oficial com interface em português que organiza
-                            informações técnicas do ESP32 e facilita o acesso à documentação oficial
-                            da Espressif. Feita por um entusiasta para a comunidade.
-                        </p>
+						<p className="text-sm md:text-base opacity-95 max-w-3xl mb-8 leading-relaxed font-semibold">
+							Uma plataforma não oficial com interface em português que organiza
+							informações técnicas do ESP32 e facilita o acesso à documentação oficial
+							da Espressif. Desenvolvida para a comunidade de hardware livre.
+						</p>
 
-                        <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
-                            <Link href="/" className="inline-flex items-center justify-center gap-2 bg-white text-blue-700 px-6 py-3 rounded-xl font-bold shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1" aria-label="Voltar para a página inicial">
-                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-                                </svg>
-                                <span>Voltar</span>
-                            </Link>
+						<div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
+							<Link href="/" className="inline-flex items-center justify-center gap-2 bg-white text-blue-700 px-6 py-3 rounded-xl font-bold shadow-lg hover:shadow-xl active:scale-98 transition-all" aria-label="Voltar para a página inicial">
+								<ArrowLeft className="w-5 h-5" />
+								<span>Início</span>
+							</Link>
 
-                            <a
-                                href="https://github.com/lucasrguerra/ESPDocs"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="inline-flex items-center justify-center gap-2 bg-white/10 backdrop-blur-sm border-2 border-white/30 text-white px-6 py-3 rounded-xl font-bold hover:bg-white/20 transition-all"
-                                aria-label="Abrir repositório do projeto no GitHub (abre em nova aba)"
-                            >
-                                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                                    <path d="M12 .5a12 12 0 00-3.8 23.4c.6.1.8-.3.8-.6v-2.1c-3.3.7-4-1.6-4-1.6-.5-1.2-1.2-1.5-1.2-1.5-1-.7.1-.7.1-.7 1.1.1 1.7 1.1 1.7 1.1 1 .1 1.6-.7 1.9-1 .1-.8.4-1.3.8-1.6-2.6-.3-5.3-1.3-5.3-5.8 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.6.1-3.3 0 0 1-.3 3.3 1.2a11.4 11.4 0 016 0c2.3-1.5 3.3-1.2 3.3-1.2.6 1.7.2 3 .1 3.3.8.8 1.2 1.9 1.2 3.1 0 4.5-2.7 5.5-5.3 5.8.5.4.9 1.1.9 2.2v3.2c0 .3.2.7.8.6A12 12 0 0012 .5z" fill="currentColor"/>
-                                </svg>
-                                <span>GitHub</span>
-                            </a>
-                        </div>
-                    </div>
-                </header>
+							<a
+								href="https://github.com/lucasrguerra/ESPDocs"
+								target="_blank"
+								rel="noopener noreferrer"
+								className="inline-flex items-center justify-center gap-2 bg-white/10 backdrop-blur-xs border border-white/30 text-white px-6 py-3 rounded-xl font-bold hover:bg-white/20 active:scale-98 transition-all"
+								aria-label="Abrir repositório do projeto no GitHub (abre em nova aba)"
+							>
+								<svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+									<path d="M12 .5a12 12 0 00-3.8 23.4c.6.1.8-.3.8-.6v-2.1c-3.3.7-4-1.6-4-1.6-.5-1.2-1.2-1.5-1.2-1.5-1-.7.1-.7.1-.7 1.1.1 1.7 1.1 1.7 1.1 1 .1 1.6-.7 1.9-1 .1-.8.4-1.3.8-1.6-2.6-.3-5.3-1.3-5.3-5.8 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.6.1-3.3 0 0 1-.3 3.3 1.2a11.4 11.4 0 016 0c2.3-1.5 3.3-1.2 3.3-1.2.6 1.7.2 3 .1 3.3.8.8 1.2 1.9 1.2 3.1 0 4.5-2.7 5.5-5.3 5.8.5.4.9 1.1.9 2.2v3.2c0 .3.2.7.8.6A12 12 0 0012 .5z" />
+								</svg>
+								<span>GitHub</span>
+							</a>
+						</div>
+					</div>
+				</header>
 
-                <div className="mt-12 grid grid-cols-1 lg:grid-cols-3 gap-8">
-                    <section className="lg:col-span-2 space-y-8">
-                        <article className="bg-white rounded-3xl p-8 shadow-lg border-2 border-gray-100 hover:border-purple-200 transition-colors">
-                            <div className="flex items-center gap-3 mb-4">
-                                <div className="w-12 h-12 bg-linear-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center">
-                                    <span className="text-2xl">🎯</span>
-                                </div>
-                                <h2 className="text-3xl font-bold text-gray-900">Missão</h2>
-                            </div>
-                            <p className="text-gray-700 leading-relaxed text-base">
-                                Facilitar o acesso e a compreensão do ecossistema ESP32 através de uma
-                                interface em português que organiza especificações técnicas, compara séries,
-                                apresenta frameworks e centraliza links para a documentação oficial da
-                                Espressif. O objetivo é economizar tempo na busca por informações técnicas.
-                            </p>
-                        </article>
+				{/* Two columns details grid */}
+				<div className="mt-12 grid grid-cols-1 lg:grid-cols-3 gap-8">
+					<section className="lg:col-span-2 space-y-8">
+						{/* Missao article */}
+						<article className="bg-white/80 dark:bg-slate-900/40 backdrop-blur-xl rounded-3xl p-8 shadow-xl border border-slate-200/60 dark:border-slate-800/80 hover:border-purple-500/20 dark:hover:border-purple-400/20 transition-all">
+							<div className="flex items-center gap-3.5 mb-5 select-none">
+								<div className="w-12 h-12 bg-purple-500/10 border border-purple-500/20 rounded-2xl flex items-center justify-center text-purple-500">
+									<Target className="w-6 h-6" />
+								</div>
+								<h2 className="text-2xl font-display font-extrabold text-slate-850 dark:text-slate-100">Missão</h2>
+							</div>
+							<p className="text-slate-650 dark:text-slate-350 leading-relaxed font-semibold text-sm">
+								Facilitar o acesso e a compreensão do ecossistema ESP32 através de uma
+								interface em português que organiza especificações técnicas, compara séries,
+								apresenta frameworks e centraliza links para a documentação oficial da
+								Espressif. O objetivo principal é otimizar o tempo no desenvolvimento de firmware e IoT.
+							</p>
+						</article>
 
-                        <article className="bg-white rounded-3xl p-8 shadow-lg border-2 border-gray-100">
-                            <div className="flex items-center gap-3 mb-4">
-                                <div className="w-12 h-12 bg-linear-to-br from-purple-500 to-pink-600 rounded-xl flex items-center justify-center">
-                                    <span className="text-2xl">❓</span>
-                                </div>
-                                <h2 className="text-3xl font-bold text-gray-900">Por que o ESPDocs?</h2>
-                            </div>
-                            <p className="text-gray-700 leading-relaxed mb-6 text-base">
-                                As informações sobre ESP32 estão dispersas em datasheets (PDF), repositórios
-                                GitHub e documentação oficial — tudo em inglês. O ESPDocs organiza essas
-                                informações em uma interface em português, facilitando comparações e consultas
-                                rápidas antes de mergulhar na documentação técnica oficial.
-                            </p>
+						{/* Por que o ESPDocs article */}
+						<article className="bg-white/80 dark:bg-slate-900/40 backdrop-blur-xl rounded-3xl p-8 shadow-xl border border-slate-200/60 dark:border-slate-800/80">
+							<div className="flex items-center gap-3.5 mb-5 select-none">
+								<div className="w-12 h-12 bg-blue-500/10 border border-blue-500/20 rounded-2xl flex items-center justify-center text-blue-500">
+									<HelpCircle className="w-6 h-6" />
+								</div>
+								<h2 className="text-2xl font-display font-extrabold text-slate-850 dark:text-slate-100">Por que o ESPDocs?</h2>
+							</div>
+							<p className="text-slate-650 dark:text-slate-350 leading-relaxed mb-6 font-semibold text-sm">
+								As informações sobre os microcontroladores ESP32 muitas vezes estão dispersas em datasheets densos, 
+								manuais de referência (TRM), repositórios secundários e documentação técnica — tudo inteiramente em inglês. 
+								O ESPDocs condensa e estrutura esses dados, auxiliando na triagem rápida antes de aprofundar na engenharia oficial.
+							</p>
 
-                            <div className="grid sm:grid-cols-2 gap-4">
-                                {features.map((f) => (
-                                    <div key={f.title} className="flex gap-4 items-start bg-linear-to-br from-gray-50 to-white p-5 rounded-xl border-2 border-gray-100 hover:border-purple-200 transition-colors">
-                                        <div className="text-3xl shrink-0" aria-hidden="true">{f.icon}</div>
-                                        <div className="flex-1">
-                                            <h3 className="font-bold text-gray-900 mb-1 text-base">{f.title}</h3>
-                                            <p className="text-sm text-gray-600 leading-relaxed">{f.desc}</p>
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-                        </article>
+							<div className="grid sm:grid-cols-2 gap-4">
+								{features.map((f) => (
+									<div key={f.title} className="flex gap-4 items-start bg-slate-50/50 dark:bg-slate-950/20 p-5 rounded-2xl border border-slate-150/40 dark:border-slate-850/40 hover:border-purple-500/10 dark:hover:border-purple-400/10 transition-colors">
+										<div className="shrink-0 p-1 bg-white dark:bg-slate-900 rounded-xl shadow-xs" aria-hidden="true">
+											{f.icon}
+										</div>
+										<div className="flex-1">
+											<h3 className="font-bold text-slate-800 dark:text-slate-200 mb-1 text-sm">{f.title}</h3>
+											<p className="text-xs text-slate-500 dark:text-slate-450 leading-relaxed font-semibold">{f.desc}</p>
+										</div>
+									</div>
+								))}
+							</div>
+						</article>
 
-                        <article className="bg-white rounded-3xl p-8 shadow-lg border-2 border-gray-100">
-                            <div className="flex items-center gap-3 mb-4">
-                                <div className="w-12 h-12 bg-linear-to-br from-green-500 to-teal-600 rounded-xl flex items-center justify-center">
-                                    <span className="text-2xl">🤝</span>
-                                </div>
-                                <h2 className="text-3xl font-bold text-gray-900">Como contribuir</h2>
-                            </div>
-                            <p className="text-gray-700 leading-relaxed mb-4 text-base">
-                                Correções, traduções e novos exemplos são bem-vindos. Abra uma
-                                issue ou um pull request no repositório. Busco por clareza nas
-                                descrições e exemplos testáveis.
-                            </p>
-                            <div className="bg-linear-to-r from-blue-50 to-purple-50 rounded-xl p-5 border-2 border-blue-100">
-                                <ol className="list-decimal list-inside text-gray-700 space-y-2 text-sm">
-                                    <li className="font-medium">Fork do repositório e crie uma branch clara.</li>
-                                    <li className="font-medium">Adicione exemplos ou corrija o conteúdo com referências quando possível.</li>
-                                    <li className="font-medium">Abra um PR e descreva o que foi alterado.</li>
-                                </ol>
-                            </div>
-                        </article>
+						{/* Contribuir article */}
+						<article className="bg-white/80 dark:bg-slate-900/40 backdrop-blur-xl rounded-3xl p-8 shadow-xl border border-slate-200/60 dark:border-slate-800/80">
+							<div className="flex items-center gap-3.5 mb-5 select-none">
+								<div className="w-12 h-12 bg-emerald-500/10 border border-emerald-500/20 rounded-2xl flex items-center justify-center text-emerald-500">
+									<Users className="w-6 h-6" />
+								</div>
+								<h2 className="text-2xl font-display font-extrabold text-slate-850 dark:text-slate-100">Como Contribuir</h2>
+							</div>
+							
+							<p className="text-slate-650 dark:text-slate-350 leading-relaxed mb-6 font-semibold text-sm">
+								Correções de tradução, refinamento de tabelas e novos trechos funcionais de exemplos são muito bem-vindos! 
+								A plataforma cresce por meio da comunidade.
+							</p>
 
-                        <article className="bg-linear-to-br from-purple-50 to-pink-50 rounded-3xl p-8 shadow-lg border-2 border-purple-100">
-                            <div className="flex items-center gap-3 mb-4">
-                                <div className="w-12 h-12 bg-linear-to-br from-purple-600 to-pink-600 rounded-xl flex items-center justify-center">
-                                    <span className="text-2xl">♿</span>
-                                </div>
-                                <h2 className="text-3xl font-bold text-gray-900">Acessibilidade</h2>
-                            </div>
-                            <p className="text-gray-700 leading-relaxed text-base">
-                                O site prioriza leitura, contraste legível e navegação por teclado.
-                                Se encontrar barreiras, por favor relate para que eu possa melhorar.
-                            </p>
-                        </article>
-                    </section>
+							<div className="bg-slate-50/50 dark:bg-slate-950/20 rounded-2xl p-5 border border-slate-150/40 dark:border-slate-850/40">
+								<ol className="list-decimal list-inside text-slate-700 dark:text-slate-300 space-y-2 text-xs font-semibold">
+									<li>Faça o fork do repositório no GitHub.</li>
+									<li>Implemente melhorias e revise referências técnicas oficiais.</li>
+									<li>Abra o seu Pull Request (PR) detalhando os ajustes efetuados.</li>
+								</ol>
+							</div>
+						</article>
 
-                    <aside className="space-y-6">
-                        <div className="bg-white rounded-3xl p-8 shadow-lg border-2 border-gray-100 hover:border-purple-200 transition-colors">
-                            <div className="flex flex-col items-center mb-6">
-                                <div className="w-20 h-20 bg-linear-to-br from-purple-100 to-pink-100 rounded-2xl flex items-center justify-center mb-4">
-                                    <img 
-                                        src="/logo.png" 
-                                        alt="Ciência Embarcada" 
-                                        className="h-16 w-16 object-contain"
-                                    />
-                                </div>
-                                <h3 className="text-xl font-bold text-gray-900 text-center">Sobre o Autor</h3>
-                            </div>
+						{/* Accessibility note */}
+						<article className="bg-gradient-to-br from-purple-500/5 to-pink-500/5 dark:from-purple-500/10 dark:to-pink-500/10 rounded-3xl p-8 shadow-lg border border-purple-500/20 dark:border-pink-500/20">
+							<div className="flex items-center gap-3.5 mb-5 select-none">
+								<div className="w-12 h-12 bg-pink-500/10 border border-pink-500/20 rounded-2xl flex items-center justify-center text-pink-500">
+									<Accessibility className="w-6 h-6" />
+								</div>
+								<h2 className="text-2xl font-display font-extrabold text-slate-850 dark:text-slate-100">Acessibilidade</h2>
+							</div>
+							<p className="text-slate-650 dark:text-slate-350 leading-relaxed font-semibold text-sm">
+								O ESPDocs preza pela legibilidade, alto contraste cromático e compatibilidade de navegação por teclado. 
+								Caso encontre alguma barreira técnica de leitura ou navegação, sinta-se encorajado a relatar via Issue.
+							</p>
+						</article>
+					</section>
 
-                            <p className="text-gray-700 text-sm leading-relaxed mb-4 text-justify">
-                                <strong>Lucas Rayan Guerra</strong>, criador do <a 
-                                    href="https://cienciaembarcada.com.br" 
-                                    target="_blank" 
-                                    rel="noopener noreferrer"
-                                    className="text-purple-600 hover:text-purple-800 font-semibold"
-                                >
-                                    Ciência Embarcada
-                                </a>, é Técnico em Desenvolvimento de Sistemas, estudante de Ciência da Computação na UFRPE e de Blockchain e Criptografia Digital na FMU.
-                            </p>
+					{/* Sidebar area */}
+					<aside className="space-y-6">
+						{/* Author Card */}
+						<div className="bg-white/80 dark:bg-slate-900/40 backdrop-blur-xl border border-slate-200/60 dark:border-slate-800/80 rounded-3xl p-8 shadow-xl">
+							<div className="flex flex-col items-center mb-6 select-none">
+								<div className="w-20 h-20 bg-gradient-to-br from-purple-500/10 to-pink-500/10 rounded-2xl flex items-center justify-center mb-4 border border-purple-500/20 shadow-inner">
+									<img 
+										src="/logo.png" 
+										alt="Ciência Embarcada Logo" 
+										className="h-16 w-16 object-contain"
+									/>
+								</div>
+								<h3 className="text-lg font-display font-extrabold text-slate-850 dark:text-slate-100 text-center">Sobre o Autor</h3>
+							</div>
 
-                            <p className="text-gray-700 text-sm leading-relaxed mb-4 text-justify">
-                                Recifense apaixonado por Pernambuco, Diretor de Software da Semine AgriTech e palestrante em eventos como o REC'n'Play, Lucas compartilha conhecimento sobre ESP32, Eletrônica, IoT, Cibersegurança e muito mais.
-                            </p>
+							<div className="space-y-4 text-xs font-semibold text-slate-650 dark:text-slate-350 text-justify leading-relaxed">
+								<p>
+									<strong>Lucas Rayan Guerra</strong>, criador da iniciativa <a 
+										href="https://cienciaembarcada.com.br" 
+										target="_blank" 
+										rel="noopener noreferrer"
+										className="text-purple-600 hover:text-purple-800 dark:text-purple-400 dark:hover:text-purple-300 font-bold"
+									>
+										Ciência Embarcada
+									</a>, é Técnico em Desenvolvimento de Sistemas, estudante de Ciência da Computação na UFRPE e estuda Blockchain e Criptografia.
+								</p>
 
-                            <div className="bg-purple-50 border border-purple-100 rounded-lg p-4 mb-4 text-justify">
-                                <p className="text-sm text-gray-700 italic">
-                                    "O Ciência Embarcada nasceu do desejo de criar um espaço livre e organizado para compartilhar conhecimentos e experiências sobre tecnologia e ciência."
-                                </p>
-                            </div>
+								<p>
+									Diretor de Software na Semine AgriTech e palestrante em feiras e conferências (como o REC'n'Play), compartilha ativamente material sobre hardware, internet das coisas e cibersegurança.
+								</p>
+							</div>
 
-                            <a
-                                href="https://cienciaembarcada.com.br"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="inline-flex items-center justify-center w-full px-4 py-2 rounded-lg bg-linear-to-r from-blue-600 to-purple-600 text-white font-semibold shadow-sm hover:shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 transition-all"
-                            >
-                                🚀 Visitar Ciência Embarcada
-                            </a>
-                        </div>
+							<div className="bg-purple-500/5 dark:bg-purple-400/5 border border-purple-500/10 dark:border-purple-400/10 rounded-2xl p-4 my-5 text-justify">
+								<p className="text-[10px] text-slate-650 dark:text-slate-400 italic font-semibold leading-relaxed">
+									"O Ciência Embarcada nasceu para criar um espaço de curadoria técnica livre, promovendo a popularização científica e do hardware embarcado."
+								</p>
+							</div>
 
-                        <div className="bg-white rounded-2xl p-6 shadow-md border border-gray-100">
-                            <div className="flex items-center justify-between mb-3">
-                                <h3 className="text-lg font-semibold">Contribua</h3>
-                                <span className="text-xs bg-green-100 text-green-800 px-2 py-1 rounded-full">Open Source</span>
-                            </div>
+							<a
+								href="https://cienciaembarcada.com.br"
+								target="_blank"
+								rel="noopener noreferrer"
+								className="inline-flex items-center justify-center gap-1.5 w-full px-4 py-3 rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 text-white font-bold text-xs uppercase tracking-wider shadow-md hover:shadow-lg active:scale-98 transition-all"
+							>
+								<span>Visitar Ciência Embarcada</span>
+							</a>
+						</div>
 
-                            <p className="text-gray-700 mb-4">
-                                Ajude a melhorar o ESPDocs com exemplos, correções e traduções.
-                            </p>
+						{/* Repository / Contributions card */}
+						<div className="bg-white/80 dark:bg-slate-900/40 backdrop-blur-xl border border-slate-200/60 dark:border-slate-800/80 rounded-3xl p-6 shadow-xl">
+							<div className="flex items-center justify-between mb-4 select-none">
+								<h3 className="text-sm font-display font-extrabold text-slate-800 dark:text-slate-200">Contribua</h3>
+								<span className="text-[9px] bg-emerald-500/10 text-emerald-600 dark:text-emerald-450 px-2.5 py-0.5 rounded-full font-bold uppercase tracking-wider border border-emerald-500/20">Open Source</span>
+							</div>
 
-                            <div className="flex flex-col gap-3">
-                                <a
-                                    href="https://github.com/lucasrguerra/ESPDocs"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="inline-flex items-center justify-center px-4 py-2 rounded-lg bg-linear-to-r from-blue-600 to-purple-600 text-white font-semibold shadow-sm hover:shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
-                                    aria-label="Abrir repositório no GitHub"
-                                >
-                                    Ver repositório
-                                </a>
-                            </div>
+							<p className="text-xs text-slate-500 dark:text-slate-450 leading-relaxed mb-4 font-semibold">
+								Ajude a expandir a cobertura do ESPDocs submetendo exemplos de códigos ou aprimoramentos técnicos.
+							</p>
 
-                            <div className="mt-4 text-sm text-gray-500">
-                                <strong>Importante:</strong> Esta é uma plataforma de organização de informações, não uma
-                                tradução da documentação oficial. A interface está em português, mas datasheets, manuais
-                                técnicos e repositórios linkados são da Espressif e estão em inglês. Para decisões
-                                técnicas críticas, sempre consulte a documentação oficial.
-                            </div>
-                        </div>
+							<a
+								href="https://github.com/lucasrguerra/ESPDocs"
+								target="_blank"
+								rel="noopener noreferrer"
+								className="inline-flex items-center justify-center gap-2 w-full px-4 py-3 rounded-xl bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-950 font-bold text-xs uppercase tracking-wider shadow-md hover:opacity-90 active:scale-98 transition-all"
+								aria-label="Abrir repositório no GitHub"
+							>
+								<svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+									<path d="M12 .5a12 12 0 00-3.8 23.4c.6.1.8-.3.8-.6v-2.1c-3.3.7-4-1.6-4-1.6-.5-1.2-1.2-1.5-1.2-1.5-1-.7.1-.7.1-.7 1.1.1 1.7 1.1 1.7 1.1 1 .1 1.6-.7 1.9-1 .1-.8.4-1.3.8-1.6-2.6-.3-5.3-1.3-5.3-5.8 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.6.1-3.3 0 0 1-.3 3.3 1.2a11.4 11.4 0 016 0c2.3-1.5 3.3-1.2 3.3-1.2.6 1.7.2 3 .1 3.3.8.8 1.2 1.9 1.2 3.1 0 4.5-2.7 5.5-5.3 5.8.5.4.9 1.1.9 2.2v3.2c0 .3.2.7.8.6A12 12 0 0012 .5z" />
+								</svg>
+								<span>Ver Repositório</span>
+							</a>
 
-                        <div className="bg-white/80 rounded-2xl p-4 shadow-sm border border-gray-100">
-                            <h4 className="font-semibold mb-2">Resumo</h4>
-                            <ul className="text-sm text-gray-700 space-y-2">
-                                <li>🔎 Conteúdo técnico explicado.</li>
-                                <li>🧪 Exemplos e projetos.</li>
-                                <li>🤝 Comunidade e contribuições.</li>
-                            </ul>
-                        </div>
-                    </aside>
-                </div>
-            </main>
+							<div className="mt-4 text-[10px] text-slate-450 dark:text-slate-500 leading-relaxed font-semibold border-t border-slate-100 dark:border-slate-850/45 pt-4">
+								<strong>Aviso Legal:</strong> O ESPDocs é um agregador e organizador. Manuais técnicos detalhados e repositórios oficiais referenciados são de propriedade exclusiva da Espressif Systems. Para projetos críticos comerciais, consulte sempre a documentação nativa oficial.
+							</div>
+						</div>
 
-            <Footer />
-        </div>
-    );
+						{/* Summary sidebar card */}
+						<div className="bg-white/80 dark:bg-slate-900/40 backdrop-blur-xl border border-slate-200/60 dark:border-slate-800/80 rounded-3xl p-6 shadow-xl select-none">
+							<h4 className="text-xs font-display font-extrabold text-slate-800 dark:text-slate-200 mb-3 uppercase tracking-wider">Conteúdo Técnico</h4>
+							<ul className="text-xs text-slate-600 dark:text-slate-400 space-y-2.5 font-bold">
+								<li className="flex items-center gap-2">
+									<span className="w-1.5 h-1.5 rounded-full bg-purple-500" />
+									<span>Focado em clareza técnica</span>
+								</li>
+								<li className="flex items-center gap-2">
+									<span className="w-1.5 h-1.5 rounded-full bg-blue-500" />
+									<span>Exemplos práticos de códigos</span>
+								</li>
+								<li className="flex items-center gap-2">
+									<span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+									<span>Links oficiais mapeados</span>
+								</li>
+							</ul>
+						</div>
+					</aside>
+				</div>
+			</main>
+
+			<Footer />
+		</div>
+	);
 }

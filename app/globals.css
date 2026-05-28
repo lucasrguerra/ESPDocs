@@ -1,1 +1,47 @@
 @import "tailwindcss";
+
+@theme {
+	--font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system, sans-serif;
+	--font-display: var(--font-outfit), ui-sans-serif, system-ui, -apple-system, sans-serif;
+	
+	/* Premium dark mode palette accents */
+	--color-brand-purple: #8b5cf6;
+	--color-brand-blue: #3b82f6;
+	--color-brand-pink: #ec4899;
+}
+
+/* Enable class-based dark mode selector in Tailwind v4 */
+@variant dark (&:where(.dark, .dark *));
+
+@layer base {
+	html {
+		scroll-behavior: smooth;
+	}
+	
+	body {
+		@apply bg-slate-50 text-slate-900 transition-colors duration-300;
+	}
+	
+	body.dark {
+		@apply bg-slate-950 text-slate-50;
+	}
+
+	/* Sleek selection highlighting */
+	::selection {
+		@apply bg-purple-500/30 text-purple-200;
+	}
+
+	/* Scrollbar customization for a premium, non-default OS look */
+	::-webkit-scrollbar {
+		width: 8px;
+		height: 8px;
+	}
+
+	::-webkit-scrollbar-track {
+		@apply bg-transparent;
+	}
+
+	::-webkit-scrollbar-thumb {
+		@apply bg-slate-300 dark:bg-slate-800 rounded-full hover:bg-slate-400 dark:hover:bg-slate-700 transition-colors;
+	}
+}

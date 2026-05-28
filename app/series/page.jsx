@@ -1,159 +1,222 @@
+"use client";
+
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Link from "next/link";
 import seriesData from "@/public/series.json";
+import { 
+	Cpu, 
+	Activity, 
+	Database, 
+	Wifi, 
+	Bluetooth, 
+	Battery, 
+	Sparkles, 
+	Home, 
+	ArrowRight,
+	Scale,
+	Compass
+} from "lucide-react";
 
 export default function Series() {
-    const series = Object.entries(seriesData);
+	const series = Object.entries(seriesData);
 
-    return (
-        <div className="bg-linear-to-br from-blue-50 via-white to-purple-50 min-h-screen">
-            <Header />
+	return (
+		<div className="bg-gradient-to-br from-slate-50 via-white to-purple-50/40 dark:from-slate-950 dark:via-slate-950 dark:to-slate-900 min-h-screen text-slate-900 dark:text-slate-100 transition-colors duration-300">
+			<Header />
 
-            <main id="conteudo" className="px-4 pt-16 pb-20 max-w-7xl mx-auto">
-                <section className="text-center mb-16">
-                    <div className="inline-flex items-center gap-2 bg-white/70 backdrop-blur-sm px-4 py-2 rounded-full mb-6 border border-purple-200 shadow-sm">
-                        <span className="text-xl">⚡</span>
-                        <span className="text-sm font-semibold text-gray-700">Explore o Ecossistema ESP32</span>
-                    </div>
-                    
-                    <h1 className="text-5xl md:text-7xl font-black bg-linear-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent mb-6 leading-tight tracking-tight">
-                        Séries ESP32
-                    </h1>
-                    
-                    <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-                        Explore toda a família ESP32. Cada série foi projetada para atender necessidades específicas,
-                        desde projetos simples até aplicações de IA e IoT avançadas.
-                    </p>
-                </section>
+			<main id="conteudo" className="px-6 pt-16 pb-24 max-w-7xl mx-auto">
+				
+				{/* Top Section */}
+				<section className="text-center mb-20">
+					<div className="inline-flex items-center gap-2 bg-purple-500/10 dark:bg-purple-400/5 px-4 py-2 rounded-full mb-6 border border-purple-500/20 shadow-xs select-none">
+						<Compass className="w-4 h-4 text-purple-600 dark:text-purple-400" />
+						<span className="text-xs font-bold text-purple-600 dark:text-purple-400 uppercase tracking-widest">Explore o Ecossistema ESP32</span>
+					</div>
+					
+					<h1 className="text-5xl md:text-7xl font-display font-extrabold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 dark:from-blue-400 dark:via-purple-400 dark:to-pink-400 bg-clip-text text-transparent mb-6 tracking-tight leading-tight">
+						Séries ESP32
+					</h1>
+					
+					<p className="text-base md:text-lg text-slate-500 dark:text-slate-400 max-w-3xl mx-auto leading-relaxed">
+						Conheça toda a família de microcontroladores da Espressif. Cada série foi projetada com foco em engenharia especializada, desde nós de sensores autônomos de baixo consumo até poderosos aceleradores de inteligência artificial.
+					</p>
+				</section>
 
-                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {series.map(([key, serie]) => (
-                        <Link
-                            key={key}
-                            href={`/series/${key}`}
-                            className="group"
-                        >
-                            <div className="bg-white rounded-2xl shadow-lg hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-300 border-2 border-gray-100 hover:border-opacity-50 h-full"
-                                style={{ '--hover-color': serie.cor }}>
-                                
-                                <div className="p-6 border-b border-gray-100">
-                                    <div className="flex items-center justify-between mb-3">
-                                        <span className="text-4xl">{serie.icone}</span>
-                                        <span className="px-3 py-1 rounded-full text-xs font-semibold text-white"
-                                            style={{ backgroundColor: serie.cor }}>
-                                            {serie.arquitetura.includes("RISC-V") ? "RISC-V" : "Xtensa"}
-                                        </span>
-                                    </div>
-                                    
-                                    <h2 className="text-2xl font-bold text-gray-800 mb-2 group-hover:text-purple-600 transition-colors">
-                                        {key}
-                                    </h2>
-                                    
-                                    <p className="text-sm text-gray-600 line-clamp-2">
-                                        {serie.descricao}
-                                    </p>
-                                </div>
+				{/* Series Grid */}
+				<div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+					{series.map(([key, serie]) => {
+						const isRiscV = serie.arquitetura.includes("RISC-V");
+						return (
+							<Link
+								key={key}
+								href={`/series/${key}`}
+								className="group block"
+							>
+								{/* Glassmorphic card container with dynamic color borders and shadows */}
+								<div 
+									className="bg-white/80 dark:bg-slate-900/40 backdrop-blur-xl rounded-3xl p-6 md:p-8 border border-slate-200/60 dark:border-slate-800/80 hover:shadow-2xl transition-all duration-500 h-full flex flex-col justify-between"
+									style={{
+										borderColor: 'rgba(148, 163, 184, 0.1)',
+										transition: 'border-color 0.3s, box-shadow 0.3s, transform 0.3s'
+									}}
+									onMouseEnter={(e) => {
+										e.currentTarget.style.borderColor = serie.cor;
+										e.currentTarget.style.boxShadow = `0 15px 35px -12px ${serie.cor}35`;
+										e.currentTarget.style.transform = 'translateY(-6px)';
+									}}
+									onMouseLeave={(e) => {
+										e.currentTarget.style.borderColor = '';
+										e.currentTarget.style.boxShadow = '';
+										e.currentTarget.style.transform = '';
+									}}
+								>
+									<div>
+										{/* Header block with Icon & Architecture */}
+										<div className="flex items-center justify-between mb-6">
+											<span className="text-4xl select-none filter drop-shadow-md transform group-hover:scale-110 transition-transform duration-300">{serie.icone}</span>
+											<span 
+												className={`px-3 py-1 rounded-full text-[10px] font-bold tracking-widest uppercase select-none`}
+												style={{ backgroundColor: `${serie.cor}18`, color: serie.cor, border: `1px solid ${serie.cor}30` }}
+											>
+												{isRiscV ? "RISC-V" : "Xtensa"}
+											</span>
+										</div>
+										
+										{/* Title and description */}
+										<h2 className="text-2xl font-display font-extrabold text-slate-850 dark:text-slate-100 mb-3 group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">
+											{key}
+										</h2>
+										
+										<p className="text-xs text-slate-450 dark:text-slate-500 line-clamp-2 leading-relaxed mb-6">
+											{serie.descricao}
+										</p>
 
-                                <div className="p-6 space-y-3">
-                                    <div className="flex items-center justify-between text-sm">
-                                        <span className="text-gray-600">⚙️ Núcleos:</span>
-                                        <span className="font-semibold text-gray-800">{serie.nucleos}</span>
-                                    </div>
-                                    
-                                    <div className="flex items-center justify-between text-sm">
-                                        <span className="text-gray-600">🚀 Frequência:</span>
-                                        <span className="font-semibold text-gray-800">{serie.frequencia}</span>
-                                    </div>
-                                    
-                                    <div className="flex items-center justify-between text-sm">
-                                        <span className="text-gray-600">💾 SRAM:</span>
-                                        <span className="font-semibold text-gray-800">{serie.memoria_sram}</span>
-                                    </div>
-                                    
-                                    <div className="flex items-center justify-between text-sm">
-                                        <span className="text-gray-600">📶 Wi-Fi:</span>
-                                        <span className="font-semibold text-gray-800">
-                                            {String(serie.wifi).includes("Não") ? "❌" : "✅"}
-                                        </span>
-                                    </div>
-                                    
-                                    <div className="flex items-center justify-between text-sm">
-                                        <span className="text-gray-600">📱 Bluetooth:</span>
-                                        <span className="font-semibold text-gray-800">
-                                            {serie.bluetooth === "Não" ? "❌" : "✅"}
-                                        </span>
-                                    </div>
+										{/* Detailed specs micro-grid */}
+										<div className="space-y-3.5 border-t border-slate-100 dark:border-slate-800/60 pt-6">
+											<div className="flex items-center justify-between text-xs">
+												<div className="flex items-center gap-2 text-slate-400 dark:text-slate-500 font-semibold select-none">
+													<Cpu className="w-3.5 h-3.5 text-blue-500/80" />
+													<span>Núcleos:</span>
+												</div>
+												<span className="font-bold text-slate-800 dark:text-slate-200">{serie.nucleos}</span>
+											</div>
+											
+											<div className="flex items-center justify-between text-xs">
+												<div className="flex items-center gap-2 text-slate-400 dark:text-slate-500 font-semibold select-none">
+													<Activity className="w-3.5 h-3.5 text-amber-500/80" />
+													<span>Frequência:</span>
+												</div>
+												<span className="font-bold text-slate-800 dark:text-slate-200">{serie.frequencia}</span>
+											</div>
+											
+											<div className="flex items-center justify-between text-xs">
+												<div className="flex items-center gap-2 text-slate-400 dark:text-slate-500 font-semibold select-none">
+													<Database className="w-3.5 h-3.5 text-pink-500/80" />
+													<span>SRAM:</span>
+												</div>
+												<span className="font-bold text-slate-800 dark:text-slate-200">{serie.memoria_sram}</span>
+											</div>
+											
+											<div className="flex items-center justify-between text-xs">
+												<div className="flex items-center gap-2 text-slate-400 dark:text-slate-500 font-semibold select-none">
+													<Wifi className="w-3.5 h-3.5 text-emerald-500/80" />
+													<span>Wi-Fi:</span>
+												</div>
+												<span className="font-bold text-slate-800 dark:text-slate-200">
+													{String(serie.wifi).includes("Não") ? (
+														<span className="text-slate-350 dark:text-slate-650">—</span>
+													) : (
+														<span className="text-emerald-500 dark:text-emerald-400 font-extrabold">Sim</span>
+													)}
+												</span>
+											</div>
+											
+											<div className="flex items-center justify-between text-xs">
+												<div className="flex items-center gap-2 text-slate-400 dark:text-slate-500 font-semibold select-none">
+													<Bluetooth className="w-3.5 h-3.5 text-indigo-500/80" />
+													<span>Bluetooth:</span>
+												</div>
+												<span className="font-bold text-slate-800 dark:text-slate-200">
+													{serie.bluetooth === "Não" ? (
+														<span className="text-slate-350 dark:text-slate-650">—</span>
+													) : (
+														<span className="text-indigo-500 dark:text-indigo-400 font-extrabold">Sim</span>
+													)}
+												</span>
+											</div>
 
-                                    {serie.consumo_energia?.deep_sleep && (
-                                        <div className="flex items-center justify-between text-sm">
-                                            <span className="text-gray-600">🔋 Deep Sleep:</span>
-                                            <span className="font-semibold text-gray-800">{serie.consumo_energia.deep_sleep}</span>
-                                        </div>
-                                    )}
+											{serie.consumo_energia?.deep_sleep && (
+												<div className="flex items-center justify-between text-xs">
+													<div className="flex items-center gap-2 text-slate-400 dark:text-slate-500 font-semibold select-none">
+														<Battery className="w-3.5 h-3.5 text-green-500/80" />
+														<span>Deep Sleep:</span>
+													</div>
+													<span className="font-bold text-slate-800 dark:text-slate-200">{serie.consumo_energia.deep_sleep}</span>
+												</div>
+											)}
+										</div>
+									</div>
 
-                                    {serie.aceleradores_ia && (
-                                        <div className="pt-2 border-t border-gray-100">
-                                            <span className="inline-block px-2 py-1 bg-purple-100 text-purple-700 text-xs font-semibold rounded">
-                                                🤖 Aceleradores IA
-                                            </span>
-                                        </div>
-                                    )}
+									{/* IA / Matter Badges & Action Footer */}
+									<div className="mt-8">
+										<div className="flex flex-wrap gap-2 mb-6">
+											{serie.aceleradores_ia && (
+												<span className="inline-flex items-center gap-1 px-2.5 py-1 bg-purple-500/10 text-purple-600 dark:text-purple-400 text-[10px] font-bold uppercase rounded-lg border border-purple-500/20 shadow-xs select-none">
+													<Sparkles className="w-3 h-3" />
+													<span>Aceleradores IA</span>
+												</span>
+											)}
 
-                                    {serie.matter === "Sim" && (
-                                        <div className="pt-2 border-t border-gray-100">
-                                            <span className="inline-block px-2 py-1 bg-green-100 text-green-700 text-xs font-semibold rounded">
-                                                🏠 Suporte Matter
-                                            </span>
-                                        </div>
-                                    )}
-                                </div>
+											{serie.matter === "Sim" && (
+												<span className="inline-flex items-center gap-1 px-2.5 py-1 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-[10px] font-bold uppercase rounded-lg border border-emerald-500/20 shadow-xs select-none">
+													<Home className="w-3 h-3" />
+													<span>Suporte Matter</span>
+												</span>
+											)}
+										</div>
 
-                                <div className="px-6 pb-6">
-                                    <div className="flex items-center justify-between text-sm font-semibold group-hover:text-purple-600 transition-colors">
-                                        <span>Ver Detalhes</span>
-                                        <span className="transform group-hover:translate-x-2 transition-transform">→</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </Link>
-                    ))}
-                </div>
+										<div className="flex items-center justify-between text-xs font-bold text-slate-500 group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors uppercase tracking-wider select-none border-t border-slate-100 dark:border-slate-800/60 pt-4">
+											<span>Ver Detalhes</span>
+											<ArrowRight className="w-4 h-4 transform group-hover:translate-x-2 transition-transform duration-300" />
+										</div>
+									</div>
+								</div>
+							</Link>
+						);
+					})}
+				</div>
 
-                <div className="mt-16 bg-linear-to-br from-white to-purple-50 rounded-3xl shadow-2xl p-10 border-2 border-purple-100">
-                    <div className="text-center mb-8">
-                        <div className="inline-flex items-center justify-center w-16 h-16 bg-linear-to-br from-blue-500 to-purple-600 rounded-2xl mb-4">
-                            <span className="text-3xl">💡</span>
-                        </div>
-                        <h3 className="text-3xl font-bold text-gray-900 mb-3">
-                            Não sabe qual escolher?
-                        </h3>
-                        <p className="text-gray-600 max-w-2xl mx-auto leading-relaxed text-base">
-                            Compare as especificações de cada série para encontrar a mais adequada ao seu projeto.
-                            Considere requisitos de conectividade, processamento e recursos específicos.
-                        </p>
-                    </div>
-                    <div className="flex justify-center">
-                        <Link
-                            href="/comparacao"
-                            className="inline-flex items-center justify-center gap-2 bg-linear-to-r from-blue-600 via-purple-600 to-pink-600 text-white px-8 py-4 rounded-xl font-bold shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 group"
-                        >
-                            <span className="text-xl">📊</span>
-                            <span>Comparar Séries</span>
-                            <svg 
-                                className="w-5 h-5 transition-transform group-hover:translate-x-1" 
-                                fill="none" 
-                                stroke="currentColor" 
-                                viewBox="0 0 24 24"
-                            >
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                            </svg>
-                        </Link>
-                    </div>
-                </div>
-            </main>
+				{/* Quick comparison CTA Box */}
+				<div className="mt-20 bg-gradient-to-br from-slate-900 to-indigo-950 dark:from-slate-950 dark:to-purple-950/20 rounded-3xl p-8 md:p-12 shadow-2xl relative overflow-hidden border border-slate-800/80">
+					<div className="absolute right-0 bottom-0 w-96 h-96 bg-purple-500/5 rounded-full blur-3xl pointer-events-none" />
 
-            <Footer />
-        </div>
-    );
+					<div className="flex flex-col md:flex-row items-center justify-between gap-8 relative z-10">
+						<div className="flex-1 max-w-2xl text-center md:text-left">
+							<div className="inline-flex items-center gap-2 bg-white/10 text-slate-350 px-3 py-1 rounded-full mb-4 text-xs font-semibold select-none animate-pulse">
+								<Scale className="w-3.5 h-3.5" />
+								<span>Decisão Técnica</span>
+							</div>
+							<h3 className="text-2xl md:text-3xl font-display font-extrabold text-white mb-4">
+								Ficou em dúvida de qual escolher?
+							</h3>
+							<p className="text-sm text-slate-400 leading-relaxed">
+								Use nosso comparador técnico dinâmico para posicionar as especificações de conectividade RF, potência de rádio e suporte a barramentos de periféricos lado a lado.
+							</p>
+						</div>
+						
+						<Link
+							href="/comparacao"
+							className="inline-flex items-center justify-center gap-2 bg-white text-slate-900 px-6 py-3.5 rounded-xl font-bold text-sm hover:bg-slate-100 transition-all duration-300 shrink-0 shadow-md active:scale-95"
+						>
+							<span>Comparar Séries</span>
+							<ArrowRight className="w-4 h-4" />
+						</Link>
+					</div>
+				</div>
+			</main>
+
+			<Footer />
+		</div>
+	);
 }
