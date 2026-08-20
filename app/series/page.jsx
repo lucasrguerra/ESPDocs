@@ -15,7 +15,9 @@ import {
 	Home, 
 	ArrowRight,
 	Scale,
-	Compass
+	Compass,
+	ShieldCheck,
+	AlertTriangle
 } from "lucide-react";
 
 export default function Series() {
@@ -158,13 +160,27 @@ export default function Series() {
 										</div>
 									</div>
 
-									{/* IA / Matter Badges & Action Footer */}
+									{/* IA / Cripto / Matter Badges & Action Footer */}
 									<div className="mt-8">
 										<div className="flex flex-wrap gap-2 mb-6">
 											{serie.aceleradores_ia && (
 												<span className="inline-flex items-center gap-1 px-2.5 py-1 bg-purple-500/10 text-purple-600 dark:text-purple-400 text-[10px] font-bold uppercase rounded-lg border border-purple-500/20 shadow-xs select-none">
 													<Sparkles className="w-3 h-3" />
 													<span>Aceleradores IA</span>
+												</span>
+											)}
+
+											{serie.status_documentacao && (
+												<span className="inline-flex items-center gap-1 px-2.5 py-1 bg-amber-500/10 text-amber-600 dark:text-amber-400 text-[10px] font-bold uppercase rounded-lg border border-amber-500/20 shadow-xs select-none">
+													<AlertTriangle className="w-3 h-3" />
+													<span>Doc. Preliminar</span>
+												</span>
+											)}
+
+											{serie.aceleradores_cripto && (
+												<span className="inline-flex items-center gap-1 px-2.5 py-1 bg-teal-500/10 text-teal-600 dark:text-teal-400 text-[10px] font-bold uppercase rounded-lg border border-teal-500/20 shadow-xs select-none">
+													<ShieldCheck className="w-3 h-3" />
+													<span>Cripto por Hardware</span>
 												</span>
 											)}
 

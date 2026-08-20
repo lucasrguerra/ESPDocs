@@ -32,7 +32,8 @@ import {
 	ShoppingBag,
 	BookOpen,
 	Compass,
-	Smartphone
+	Smartphone,
+	ShieldCheck
 } from "lucide-react";
 
 // Dynamic icon mapper to convert choices to sleek Lucide vectors
@@ -67,6 +68,10 @@ const iconMap = {
 	// IA
 	"ai_ai-ml": <Bot className="w-6 h-6 text-pink-500" />,
 	"ai_standard": <Ban className="w-6 h-6 text-slate-450 dark:text-slate-550" />,
+
+	// Segurança
+	"security_critical": <ShieldCheck className="w-6 h-6 text-teal-500" />,
+	"security_standard": <HelpCircle className="w-6 h-6 text-slate-450 dark:text-slate-550" />,
 };
 
 const getOptionIcon = (questionId, value) => {
@@ -83,6 +88,7 @@ export default function Seletor() {
 		power: null,
 		hardware: null,
 		ai: null,
+		security: null,
 	});
 	const [showResults, setShowResults] = useState(false);
 	const [showSummary, setShowSummary] = useState(false);
@@ -138,6 +144,15 @@ export default function Seletor() {
 				{ value: "ai-ml", label: "Sim, preciso rodar modelos de IA localmente", icon: "ai_ai-ml" },
 				{ value: "standard", label: "Não, processamento lógico comum é suficiente", icon: "ai_standard" },
 			]
+		},
+		{
+			id: "security",
+			question: "Qual o nível de segurança criptográfica exigido pelo produto?",
+			description: "Aceleradores criptográficos no silício executam AES, SHA, RSA e curvas elípticas em hardware, viabilizando Secure Boot, criptografia de flash e provisionamento seguro de chaves sem penalizar a CPU.",
+			options: [
+				{ value: "critical", label: "Crítico (Matter, pagamentos, provisionamento seguro de chaves)", icon: "security_critical" },
+				{ value: "standard", label: "Padrão (TLS comum e projetos sem requisitos regulatórios)", icon: "security_standard" },
+			]
 		}
 	];
 
@@ -168,6 +183,7 @@ export default function Seletor() {
 			power: null,
 			hardware: null,
 			ai: null,
+			security: null,
 		});
 	};
 
@@ -354,6 +370,27 @@ export default function Seletor() {
 			} else if (answers.ai === "standard") {
 				scores[key] += 5;
 			}
+
+			// 6. SEGURANÇA CRIPTOGRÁFICA (security)
+			if (answers.security === "critical") {
+				const cripto = serie.aceleradores_cripto || "";
+
+				if (cripto.includes("Key Manager")) {
+					scores[key] += 30;
+					reasons[key].push("Suíte criptográfica completa em hardware com Key Manager (provisionamento e uso de chaves sem exposição ao firmware)");
+				} else if (cripto.includes("ECDSA")) {
+					scores[key] += 20;
+					reasons[key].push("Aceleradores criptográficos com ECC/ECDSA dedicados (assinatura digital e Secure Boot eficientes)");
+				} else if (cripto) {
+					scores[key] += 10;
+					reasons[key].push("Aceleradores criptográficos básicos em hardware (AES, SHA, Secure Boot e criptografia de flash)");
+				} else {
+					scores[key] -= 20;
+					reasons[key].push("Sem aceleração criptográfica dedicada: operações de segurança ficam a cargo da CPU");
+				}
+			} else if (answers.security === "standard") {
+				scores[key] += 5;
+			}
 		});
 		
 		return { scores, reasons };
@@ -397,7 +434,7 @@ export default function Seletor() {
 					</h1>
 					
 					<p className="text-sm md:text-base text-slate-500 dark:text-slate-400 leading-relaxed max-w-2xl mx-auto">
-						Responda a **5 perguntas simples** sobre o propósito, conexões de hardware e fonte de alimentação do seu projeto e encontre instantaneamente o silício Espressif perfeito para sua bancada.
+						Responda a **6 perguntas simples** sobre o propósito, conexões de hardware, alimentação e segurança do seu projeto e encontre instantaneamente o silício Espressif perfeito para sua bancada.
 					</p>
 				</section>
 

@@ -39,7 +39,9 @@ import {
 	Folder,
 	Thermometer,
 	ChevronRight,
-	Lightbulb
+	Lightbulb,
+	ShieldCheck,
+	KeyRound
 } from "lucide-react";
 
 export default async function SerieDetail({ params }) {
@@ -68,6 +70,11 @@ export default async function SerieDetail({ params }) {
 		{ label: "Frequência", value: serie.frequencia, icon: <Activity className="w-5 h-5 text-blue-500" /> },
 		{ label: "Coprocessador ULP", value: serie.coprocessador_ulp || "Não", icon: <Moon className="w-5 h-5 text-blue-500" /> },
 		{ label: "Aceleradores IA", value: serie.aceleradores_ia || "Não", icon: <Sparkles className="w-5 h-5 text-purple-500" /> },
+	];
+
+	const segurancaSpecs = [
+		{ label: "Aceleradores Criptográficos", value: serie.aceleradores_cripto || "Não", icon: <ShieldCheck className="w-5 h-5 text-teal-500" /> },
+		{ label: "Gerador de Números Aleatórios", value: serie.aceleradores_cripto ? "Sim (RNG por hardware)" : "Não", icon: <KeyRound className="w-5 h-5 text-teal-500" /> },
 	];
 
 	const conectividadeSpecs = [
@@ -249,15 +256,22 @@ export default async function SerieDetail({ params }) {
 							
 							{/* Links Block */}
 							<div className="grid sm:grid-cols-2 lg:grid-cols-1 gap-3 w-full lg:w-auto">
-								<a
-									href={serie.datasheet}
-									target="_blank"
-									rel="noopener noreferrer"
-									className="inline-flex items-center justify-center gap-2 bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-950 px-5 py-3 rounded-xl font-bold text-xs uppercase tracking-wider hover:opacity-90 transition-opacity shadow-lg"
-								>
-									<FileText className="w-4 h-4" />
-									<span>Datasheet Oficial</span>
-								</a>
+								{serie.datasheet ? (
+									<a
+										href={serie.datasheet}
+										target="_blank"
+										rel="noopener noreferrer"
+										className="inline-flex items-center justify-center gap-2 bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-950 px-5 py-3 rounded-xl font-bold text-xs uppercase tracking-wider hover:opacity-90 transition-opacity shadow-lg"
+									>
+										<FileText className="w-4 h-4" />
+										<span>Datasheet Oficial</span>
+									</a>
+								) : (
+									<span className="inline-flex items-center justify-center gap-2 bg-slate-200/60 dark:bg-slate-800/60 text-slate-500 dark:text-slate-400 border border-slate-300/60 dark:border-slate-700/60 px-5 py-3 rounded-xl font-bold text-xs uppercase tracking-wider select-none cursor-not-allowed">
+										<FileText className="w-4 h-4" />
+										<span>Datasheet ainda não publicado</span>
+									</span>
+								)}
 
 								<a
 									href={serie.guia_de_programacao}
@@ -286,6 +300,18 @@ export default async function SerieDetail({ params }) {
 						<p className="text-sm text-slate-500 dark:text-slate-400 mt-6 leading-relaxed max-w-4xl">
 							{serie.descricao}
 						</p>
+
+						{serie.status_documentacao && (
+							<div className="mt-6 max-w-4xl bg-amber-500/10 text-amber-700 dark:text-amber-400 border border-amber-500/20 p-5 rounded-2xl">
+								<div className="flex items-start gap-3">
+									<AlertTriangle className="w-5 h-5 shrink-0 mt-0.5" />
+									<div>
+										<p className="text-xs font-bold uppercase tracking-wider mb-1">Documentação preliminar</p>
+										<p className="text-xs leading-relaxed">{serie.status_documentacao}</p>
+									</div>
+								</div>
+							</div>
+						)}
 					</div>
 				</div>
 
@@ -326,6 +352,7 @@ export default async function SerieDetail({ params }) {
 				<div className="space-y-6 mt-12">
 					<SpecSection title="Processador" specs={processadorSpecs} cor={serie.cor} icon={<Cpu className="w-5 h-5" style={{ color: serie.cor }} />} />
 					<SpecSection title="Conectividade RF" specs={conectividadeSpecs} cor={serie.cor} icon={<Wifi className="w-5 h-5" style={{ color: serie.cor }} />} />
+					<SpecSection title="Segurança e Criptografia" specs={segurancaSpecs} cor={serie.cor} icon={<ShieldCheck className="w-5 h-5" style={{ color: serie.cor }} />} />
 					<SpecSection title="Estrutura de Memória" specs={memoriaSpecs} cor={serie.cor} icon={<Database className="w-5 h-5" style={{ color: serie.cor }} />} />
 					
 					{/* Power Consumption section */}

@@ -39,6 +39,11 @@ export default function Glossario() {
                     definicao: "Hardware dedicado para acelerar operações de inteligência artificial e redes neurais.",
                     exemplo: "ESP32-P4 possui Vector Extension para processamento de IA.",
                 },
+                {
+                    termo: "Aceleradores Criptográficos",
+                    definicao: "Blocos de hardware dedicados que executam algoritmos de criptografia (AES, SHA, RSA, ECC/ECDSA, HMAC) muito mais rápido e com menor consumo do que a CPU, além de sustentarem recursos como Secure Boot, criptografia de flash e assinatura digital.",
+                    exemplo: "ESP32-C5 e ESP32-P4 incluem AES, SHA, RSA, ECC/ECDSA e Key Manager para provisionamento seguro de chaves.",
+                },
             ],
         },
         {

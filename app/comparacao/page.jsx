@@ -21,7 +21,8 @@ import {
 	Sliders, 
 	Activity,
 	HelpCircle,
-	Thermometer
+	Thermometer,
+	ShieldCheck
 } from "lucide-react";
 
 // Category to Icon mapping
@@ -32,6 +33,7 @@ const categoryIcons = {
 	"Memória": <Database className="w-4 h-4 text-pink-500" />,
 	"Periféricos Digitais": <Sliders className="w-4 h-4 text-sky-500" />,
 	"Periféricos Analógicos": <Activity className="w-4 h-4 text-emerald-500" />,
+	"Segurança": <ShieldCheck className="w-4 h-4 text-teal-500" />,
 	"Interfaces Especiais": <Activity className="w-4 h-4 text-cyan-500" />,
 	"Especificações Ambientais": <Thermometer className="w-4 h-4 text-red-500" />,
 };
@@ -107,6 +109,9 @@ export default function Comparacao() {
 			{ key: "touch", label: "Touch Capacitivo" },
 			{ key: "sensor_hall", label: "Sensor Hall" },
 			{ key: "sensor_temperatura", label: "Sensor de Temperatura" },
+		]},
+		{ category: "Segurança", fields: [
+			{ key: "aceleradores_cripto", label: "Aceleradores Criptográficos" },
 		]},
 		{ category: "Interfaces Especiais", fields: [
 			{ key: "lcd", label: "LCD" },
@@ -339,15 +344,21 @@ export default function Comparacao() {
 										</div>
 									</div>
 
-									<a
-										href={seriesItem.datasheet}
-										target="_blank"
-										rel="noopener noreferrer"
-										className="inline-flex items-center justify-center gap-1.5 w-full text-center py-2 bg-slate-100 dark:bg-slate-950 hover:bg-purple-500/10 dark:hover:bg-purple-400/10 border border-slate-200 dark:border-slate-800 rounded-xl text-xs font-bold text-slate-650 dark:text-slate-350 hover:text-purple-600 dark:hover:text-purple-400 transition-colors"
-									>
-										<span>Datasheet Oficial</span>
-										<ExternalLink className="w-3.5 h-3.5" />
-									</a>
+									{seriesItem.datasheet ? (
+										<a
+											href={seriesItem.datasheet}
+											target="_blank"
+											rel="noopener noreferrer"
+											className="inline-flex items-center justify-center gap-1.5 w-full text-center py-2 bg-slate-100 dark:bg-slate-950 hover:bg-purple-500/10 dark:hover:bg-purple-400/10 border border-slate-200 dark:border-slate-800 rounded-xl text-xs font-bold text-slate-650 dark:text-slate-350 hover:text-purple-600 dark:hover:text-purple-400 transition-colors"
+										>
+											<span>Datasheet Oficial</span>
+											<ExternalLink className="w-3.5 h-3.5" />
+										</a>
+									) : (
+										<span className="inline-flex items-center justify-center gap-1.5 w-full text-center py-2 bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl text-xs font-bold text-slate-400 dark:text-slate-500 select-none">
+											<span>Datasheet ainda não publicado</span>
+										</span>
+									)}
 								</div>
 							);
 						})}

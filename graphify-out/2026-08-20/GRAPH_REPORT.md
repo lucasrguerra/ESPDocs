@@ -1,16 +1,16 @@
-# Graph Report - ESPDocs  (2026-08-20)
+# Graph Report - espdocs  (2026-07-14)
 
 ## Corpus Check
-- 47 files · ~536,186 words
+- 47 files · ~535,253 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 510 nodes · 550 edges · 78 communities (53 shown, 25 thin omitted)
+- 510 nodes · 554 edges · 77 communities (53 shown, 24 thin omitted)
 - Extraction: 81% EXTRACTED · 19% INFERRED · 0% AMBIGUOUS · INFERRED: 104 edges (avg confidence: 0.87)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `b1e76757`
+- Built from commit: `de4abf7c`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -46,16 +46,15 @@
 - RISC-V Core Clock Variants
 - Secure Boot (RISC-V Family)
 - ESP-NN Code Example
-- ESP-WHO Code Example
 - Next.js Config
 - PostCSS Config
 - TEE and Permission Control
-- ESP-DSP Code Example
 - eslint.config.mjs
 - page.jsx
 - ConnectionsDiagram.jsx
 - page.jsx
 - page.jsx
+- CLAUDE.md
 - Crypto Accelerators (AES, SHA, RSA, ECC, HMAC, RNG)
 - API do Marketplace (app/api/placas/route.js)
 - Comparação de Séries
@@ -87,6 +86,8 @@
 10. `ESP32-S2 Series SoC` - 17 edges
 
 ## Surprising Connections (you probably didn't know these)
+- `Google Site Verification Token` --conceptually_related_to--> `ESPDocs - Documentação ESP32 em Português`  [AMBIGUOUS]
+  public/google21a790a2c23c0ec5.html → README.md
 - `Crypto Accelerators (AES, SHA, RSA, ECC, HMAC, TRNG)` --semantically_similar_to--> `Crypto Accelerators (SHA, AES, RSA, HMAC, RSA_DS, RNG)`  [INFERRED] [semantically similar]
   public/datasheets/ESP32-P4.pdf → public/datasheets/ESP32-S3.pdf
 - `ULP Coprocessor (ULP-RISC-V, ULP-FSM)` --semantically_similar_to--> `ULP Coprocessor (ULP-RISC-V, ULP-FSM)`  [INFERRED] [semantically similar]
@@ -94,8 +95,6 @@
 - `RISC-V 32-bit Single-Core CPU (120 MHz)` --semantically_similar_to--> `RISC-V 32-bit Single-Core CPU (160 MHz)`  [INFERRED] [semantically similar]
   public/datasheets/ESP32-C2 (ESP8684).pdf → public/datasheets/ESP32-C3.pdf
 - `2.4 GHz Wi-Fi (IEEE 802.11b/g/n)` --semantically_similar_to--> `2.4 GHz Wi-Fi (IEEE 802.11b/g/n)`  [INFERRED] [semantically similar]
-  public/datasheets/ESP32-C2 (ESP8684).pdf → public/datasheets/ESP32-C3.pdf
-- `Bluetooth LE 5.3` --semantically_similar_to--> `Bluetooth LE 5 / Bluetooth mesh`  [INFERRED] [semantically similar]
   public/datasheets/ESP32-C2 (ESP8684).pdf → public/datasheets/ESP32-C3.pdf
 
 ## Import Cycles
@@ -127,7 +126,7 @@
 - **ESP32-S31 Connectivity Ports** — public_placas_esp32_s31_rj45_ethernet_port, public_placas_esp32_s31_usb_type_a_port, public_placas_esp32_s31_usb_serial_jtag_port, public_placas_esp32_s31_usb_type_c_uart_port [INFERRED 0.85]
 - **Espressif ESP32 Dev Board Image Gallery** — public_placas_esp32_pinout_diagram, public_placas_esp32_s2_pinout_diagram, public_placas_esp32_s3_pinout_diagram, public_placas_esp32_s31_board_photo [INFERRED 0.85]
 
-## Communities (78 total, 25 thin omitted)
+## Communities (77 total, 24 thin omitted)
 
 ### Community 1 - "ESP32 Original SoC Silicon"
 Cohesion: 0.06
@@ -139,7 +138,7 @@ Nodes (31): ESP32 CP2102 USB-UART Bridge, ESP32 EN and Boot Buttons, ESP32 Micro
 
 ### Community 3 - "Layout and Marketplace API"
 Cohesion: 0.09
-Nodes (23): @emotion/react, @emotion/styled, framer-motion, googleapis, dependencies, @emotion/react, @emotion/styled, framer-motion (+15 more)
+Nodes (23): @emotion/react, @emotion/styled, framer-motion, googleapis, lucide-react, @mui/icons-material, @mui/material, next (+15 more)
 
 ### Community 4 - "ESP32-C2 DevKit and Branding"
 Cohesion: 0.10
@@ -168,6 +167,10 @@ Nodes (18): APM and TEE Controller, ECDSA Accelerator, ESP32-C5 Series, Event Ta
 ### Community 10 - "ESP32-H2 Silicon Subsystems"
 Cohesion: 0.11
 Nodes (18): TEE Controller and Access Permission Management (APM), ESP32-H2 SoC, Event Task Matrix (ETM), Flash Encryption, General DMA Controller (GDMA), 2 MB or 4 MB In-Package Flash, LP Memory 4 KB, Motor Control PWM (MCPWM) (+10 more)
+
+### Community 11 - "ESPDocs Site Content Pillars"
+Cohesion: 0.12
+Nodes (15): Google Site Verification Token, 👤 Autor, Configuração do Marketplace (Opcional), 🤝 Contribuindo, 🚀 Deploy on Vercel, ⚠️ Disclaimer, ESPDocs - Documentação ESP32 em Português, 📁 Estrutura do Projeto (+7 more)
 
 ### Community 12 - "ESP32-C6 Silicon Subsystems"
 Cohesion: 0.12
@@ -241,10 +244,6 @@ Nodes (3): RISC-V 32-bit Single-Core Processor (160 MHz), HP RISC-V 32-bit Proce
 Cohesion: 0.67
 Nodes (3): Secure Boot, Secure Boot, Secure Boot
 
-### Community 31 - "ESP-NN Code Example"
-Cohesion: 0.13
-Nodes (14): 👤 Autor, Configuração do Marketplace (Opcional), 🤝 Contribuindo, 🚀 Deploy on Vercel, ⚠️ Disclaimer, ESPDocs - Documentação ESP32 em Português, 📁 Estrutura do Projeto, Executar em Desenvolvimento (+6 more)
-
 ### Community 35 - "TEE and Permission Control"
 Cohesion: 0.40
 Nodes (3): inter, metadata, outfit
@@ -261,14 +260,20 @@ Nodes (3): getOptionIcon(), iconMap, Seletor()
 Cohesion: 0.67
 Nodes (3): ConnectionsDiagram(), FILTER_CATEGORIES, type_colors
 
+## Ambiguous Edges - Review These
+- `ESPDocs - Documentação ESP32 em Português` → `Google Site Verification Token`  [AMBIGUOUS]
+  public/google21a790a2c23c0ec5.html · relation: conceptually_related_to
+
 ## Knowledge Gaps
 - **225 isolated node(s):** `categoryIcons`, `metadata`, `outfit`, `inter`, `metadata` (+220 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **25 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **24 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
+- **What is the exact relationship between `ESPDocs - Documentação ESP32 em Português` and `Google Site Verification Token`?**
+  _Edge tagged AMBIGUOUS (relation: conceptually_related_to) - confidence is low._
 - **Why does `ESP32-S3 Series SoC` connect `ESP32-S3 Silicon Subsystems` to `ESP32-P4 Silicon Subsystems`, `ESP32-S2 Silicon Subsystems`, `Classic Wi-Fi and BLE Radios`, `CPU Cores and SIMD Extensions`, `Secure Boot (RISC-V Family)`?**
   _High betweenness centrality (0.014) - this node is a cross-community bridge._
 - **Why does `ESP32-C6 SoC` connect `ESP32-C6 Silicon Subsystems` to `ESP32-C61 Silicon Subsystems`, `ESP32-H2 Silicon Subsystems`, `Crypto Accelerators (AES, SHA, RSA, ECC, HMAC, RNG)`, `802.15.4 Thread and Zigbee`, `Bluetooth LE 5.3 Variants`, `RISC-V Core Clock Variants`?**
@@ -281,5 +286,3 @@ _Questions this graph is uniquely positioned to answer:_
   _`ESP32-S3 Series SoC` has 2 INFERRED edges - model-reasoned connections that need verification._
 - **What connects `categoryIcons`, `metadata`, `outfit` to the rest of the system?**
   _225 weakly-connected nodes found - possible documentation gaps or missing edges._
-- **Should `ESP32 Original SoC Silicon` be split into smaller, more focused modules?**
-  _Cohesion score 0.06086956521739131 - nodes in this community are weakly interconnected._
