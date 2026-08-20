@@ -41,7 +41,7 @@
 			</div>
 			<div style="text-align:right">
 				<strong>Material de apoio</strong>
-				Uso livre para fins educacionais
+				Formação presencial · uso livre para fins educacionais
 			</div>
 		</div>
 	</div>
@@ -147,6 +147,7 @@
 		<a href="#cap8"><span class="num">8</span><span class="txt">Como escolher a série do seu projeto</span><span class="pontos"></span></a>
 		<a href="#cap9"><span class="num">9</span><span class="txt">Prática: lendo um DHT11 com o ESP32-S3</span><span class="pontos"></span></a>
 		<a href="#cap10"><span class="num">10</span><span class="txt">Glossário e próximos passos</span><span class="pontos"></span></a>
+		<a href="#creditos"><span class="num">·</span><span class="txt">Créditos</span><span class="pontos"></span></a>
 	</nav>
 </section>
 
@@ -1843,11 +1844,115 @@ Temperatura: 26.1 C | Umidade: 62.0 %</code></pre>
 		</p>
 	</div>
 
-	<p style="margin-top:10mm;padding-top:4mm;border-top:0.8pt solid var(--linha);font-size:8.5pt;color:var(--tinta-3)">
-		Material produzido para a <strong>LASER</strong>, Liga Acadêmica de Sistemas Embarcados do Centro de Informática
-		da UFPE. Dados técnicos conferidos nos datasheets oficiais da
-		Espressif e nas definições de hardware do ESP-IDF. Este é um material independente, sem
-		vínculo com a Espressif Systems.
+</section>
+
+<!-- ══════════════════════════ CRÉDITOS ══════════════════════════ -->
+<section class="capitulo" id="creditos">
+	<div class="capitulo-abertura">
+		<div>
+			<h2>Créditos</h2>
+			<p class="subtitulo">Quem fez, para quem, e o que você pode fazer com este material.</p>
+		</div>
+	</div>
+
+	<div class="grupo">
+		<h3>Sobre este material</h3>
+		<p class="junto">
+			Esta apostila é <strong>material de apoio a uma formação presencial</strong> da LASER.
+			Ela foi escrita para ser lida junto com o encontro, não no lugar dele: os capítulos
+			seguem a ordem da aula, e o capítulo 9 é a prática que acontece na bancada, com o
+			hardware em mãos e monitoria no local.
+		</p>
+		<p>
+			Ela também funciona sozinha, como referência para consultar depois. As tabelas
+			comparativas, a lista de pinos com restrição e o guia de solução de problemas foram
+			escritos pensando em quem volta ao texto meses depois, no meio de um projeto.
+		</p>
+	</div>
+
+	<h3>Realização</h3>
+
+	<table>
+		<thead><tr><th style="width:30%">Papel</th><th>Quem</th></tr></thead>
+		<tbody>
+			<tr>
+				<td class="destaque">Realização</td>
+				<td><strong>LASER</strong>, Liga Acadêmica de Sistemas Embarcados<br>
+					Centro de Informática · Universidade Federal de Pernambuco<br>
+					<a href="https://laser.cin.ufpe.br/">laser.cin.ufpe.br</a></td>
+			</tr>
+			<tr>
+				<td class="destaque">Conteúdo e redação</td>
+				<td><strong>Lucas Rayan Guerra</strong><br>
+					Ciência Embarcada · <a href="https://cienciaembarcada.com.br">cienciaembarcada.com.br</a></td>
+			</tr>
+			<tr>
+				<td class="destaque">Dados técnicos</td>
+				<td>ESPDocs, plataforma de documentação do ESP32 em português<br>
+					<a href="https://espdocs.cienciaembarcada.com.br/">espdocs.cienciaembarcada.com.br</a></td>
+			</tr>
+			<tr>
+				<td class="destaque">Prática e esquemático</td>
+				<td>Montagem em Fritzing, arquivo editável disponível para download no capítulo 9</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<div class="grupo">
+		<h3>Fontes e verificação</h3>
+
+		<p class="junto">
+			Nenhum número desta apostila foi estimado. Cada dado tem origem rastreável:
+		</p>
+
+		<table>
+			<thead><tr><th style="width:38%">Informação</th><th>Origem</th></tr></thead>
+			<tbody>
+				<tr><td class="destaque">Arquitetura, memória, periféricos</td><td>Datasheets oficiais da Espressif Systems</td></tr>
+				<tr><td class="destaque">Blocos de segurança por série</td><td>Definições de hardware do ESP-IDF (<code>soc_caps.h</code>)</td></tr>
+				<tr><td class="destaque">Versão mínima do ESP-IDF</td><td>Índice de versões publicado pela Espressif</td></tr>
+				<tr><td class="destaque">Suporte no core Arduino</td><td>Repositório oficial <code>arduino-esp32</code></td></tr>
+				<tr><td class="destaque">Encapsulamento</td><td>Datasheets oficiais, capítulo de <em>packaging</em></td></tr>
+				<tr><td class="destaque">Pinos com restrição</td><td>Datasheets, cruzados com a base de pinagem do ESPDocs</td></tr>
+				<tr><td class="destaque">Diagrama de blocos do ESP32-S3</td><td>Imagem da Espressif Systems, reproduzida para fins didáticos</td></tr>
+			</tbody>
+			<caption>Onde a Espressif ainda não publicou documentação, como no ESP32-H4, isso está dito no texto em vez de preenchido por estimativa.</caption>
+		</table>
+	</div>
+
+	<h3>Uso e distribuição</h3>
+
+	<p>
+		Este material pode ser <strong>usado, copiado e adaptado livremente para fins
+		educacionais</strong>, desde que citada a origem. Se for adaptá-lo para outra formação,
+		mantenha os créditos desta página e ajuste as partes que dependem do contexto da LASER.
+	</p>
+
+	<div class="caixa atencao">
+		<div class="caixa-titulo">Independência</div>
+		<p>
+			Este é um material independente, produzido pela LASER, <strong>sem vínculo, patrocínio
+			ou revisão da Espressif Systems</strong>. Os nomes ESP32, ESP-IDF e demais marcas
+			citadas pertencem aos seus respectivos titulares.
+		</p>
+		<p>
+			Para decisão de engenharia ou projeto industrial, a referência final é sempre o
+			datasheet e a errata do fabricante, na revisão de silício que você tem em mãos.
+		</p>
+	</div>
+
+	<div class="caixa dica">
+		<div class="caixa-titulo">Encontrou um erro?</div>
+		<p>
+			Correções e sugestões são bem-vindas e ajudam as próximas turmas. Reporte pelo ESPDocs,
+			em <a href="https://espdocs.cienciaembarcada.com.br/">espdocs.cienciaembarcada.com.br</a>,
+			ou fale com a coordenação da LASER.
+		</p>
+	</div>
+
+	<p style="margin-top:12mm;padding-top:4mm;border-top:0.8pt solid var(--linha);font-size:8.5pt;color:var(--tinta-3);text-align:center">
+		LASER · Liga Acadêmica de Sistemas Embarcados · Centro de Informática · UFPE<br>
+		Formação em ESP32 · Módulo 1: Conhecendo a Família
 	</p>
 </section>
 

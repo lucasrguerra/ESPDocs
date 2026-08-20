@@ -363,22 +363,22 @@ export default function Glossario() {
     ];
 
     return (
-        <div className="min-h-screen bg-linear-to-br from-gray-50 via-purple-50 to-pink-50">
+        <div className="min-h-screen bg-linear-to-br from-slate-100 via-slate-50 to-purple-100/40 dark:from-slate-950 dark:via-slate-950 dark:to-slate-900 transition-colors">
             <Header />
 
             <main id="conteudo" className="px-4 pt-16 pb-20 max-w-7xl mx-auto">
                 {/* Hero Section */}
                 <section className="text-center mb-16">
-                    <div className="inline-flex items-center gap-2 bg-white backdrop-blur-sm px-4 py-2 rounded-full mb-6 border border-purple-200 shadow-sm">
+                    <div className="inline-flex items-center gap-2 bg-white dark:bg-slate-900 px-4 py-2 rounded-full mb-6 border border-purple-200 dark:border-purple-500/30 shadow-sm">
                         <span className="text-xl">📖</span>
-                        <span className="text-sm font-semibold text-gray-700">Aprenda os Conceitos</span>
+                        <span className="text-sm font-semibold text-slate-700 dark:text-slate-300">Aprenda os Conceitos</span>
                     </div>
                     
                     <h1 className="text-5xl md:text-7xl font-black mb-6 bg-clip-text text-transparent bg-linear-to-r from-blue-600 via-purple-600 to-pink-600 leading-tight tracking-tight">
                         Glossário Técnico
                     </h1>
 
-                    <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+                    <p className="text-lg md:text-xl text-slate-600 dark:text-slate-400 max-w-3xl mx-auto leading-relaxed">
                         Entenda termos e conceitos do ecossistema ESP32 explicados em português,
                         do básico ao avançado.
                     </p>
@@ -386,8 +386,8 @@ export default function Glossario() {
 
                 {/* Navegação Rápida */}
                 <section className="mb-12">
-                    <div className="bg-white rounded-3xl shadow-lg p-8 border-2 border-gray-100">
-                        <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">
+                    <div className="bg-white dark:bg-slate-900/40 rounded-3xl shadow-lg p-8 border-2 border-slate-200 dark:border-slate-800/80">
+                        <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-6 text-center">
                             Navegação Rápida
                         </h2>
                         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -395,10 +395,10 @@ export default function Glossario() {
                                 <a
                                     key={cat.nome}
                                     href={`#${cat.nome.toLowerCase().replace(/\s+/g, '-')}`}
-                                    className="flex flex-col items-center gap-2 p-4 rounded-xl bg-linear-to-br from-gray-50 to-white border-2 border-gray-100 hover:border-purple-300 hover:shadow-md transition-all"
+                                    className="flex flex-col items-center gap-2 p-4 rounded-xl bg-slate-50 dark:bg-slate-950/40 border-2 border-slate-200 dark:border-slate-800/60 hover:border-purple-300 dark:hover:border-purple-500/50 hover:shadow-md transition-all"
                                 >
                                     <span className="text-4xl">{cat.icone}</span>
-                                    <span className="text-sm font-bold text-gray-800 text-center">
+                                    <span className="text-sm font-bold text-slate-800 dark:text-slate-200 text-center">
                                         {cat.nome}
                                     </span>
                                 </a>
@@ -415,13 +415,13 @@ export default function Glossario() {
                             id={categoria.nome.toLowerCase().replace(/\s+/g, '-')}
                             className="scroll-mt-20"
                         >
-                            <div className="bg-white rounded-3xl shadow-xl p-8 border-2 border-gray-100">
+                            <div className="bg-white dark:bg-slate-900/40 rounded-3xl shadow-xl p-8 border-2 border-slate-200 dark:border-slate-800/80">
                                 {/* Header da Categoria */}
-                                <div className="flex items-center gap-4 mb-8 pb-6 border-b-2 border-gray-100">
+                                <div className="flex items-center gap-4 mb-8 pb-6 border-b-2 border-slate-200 dark:border-slate-800/80">
                                     <div className={`w-16 h-16 bg-linear-to-br from-${categoria.cor}-500 to-${categoria.cor}-600 rounded-2xl flex items-center justify-center shadow-lg`}>
                                         <span className="text-3xl">{categoria.icone}</span>
                                     </div>
-                                    <h2 className="text-3xl font-black text-gray-900">
+                                    <h2 className="text-3xl font-black text-slate-900 dark:text-slate-100">
                                         {categoria.nome}
                                     </h2>
                                 </div>
@@ -431,20 +431,20 @@ export default function Glossario() {
                                     {categoria.termos.map((item, idx) => (
                                         <article
                                             key={idx}
-                                            className="bg-linear-to-br from-gray-50 to-white p-6 rounded-2xl border-2 border-gray-100 hover:border-purple-200 transition-colors"
+                                            className="bg-slate-50 dark:bg-slate-950/40 p-6 rounded-2xl border-2 border-slate-200 dark:border-slate-800/60 hover:border-purple-200 dark:hover:border-purple-500/40 transition-colors"
                                         >
-                                            <h3 className="text-xl font-bold text-gray-900 mb-3">
+                                            <h3 className="text-xl font-bold text-slate-900 dark:text-slate-100 mb-3">
                                                 {item.termo}
                                             </h3>
-                                            <p className="text-gray-700 leading-relaxed mb-4">
+                                            <p className="text-slate-700 dark:text-slate-300 leading-relaxed mb-4">
                                                 {item.definicao}
                                             </p>
-                                            <div className="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-lg">
+                                            <div className="bg-blue-50 dark:bg-blue-950/30 border-l-4 border-blue-500 p-4 rounded-lg">
                                                 <div className="flex items-start gap-2">
-                                                    <span className="text-blue-600 font-bold text-sm shrink-0 mt-0.5">
+                                                    <span className="text-blue-700 dark:text-blue-400 font-bold text-sm shrink-0 mt-0.5">
                                                         💡 Exemplo:
                                                     </span>
-                                                    <p className="text-blue-900 text-sm leading-relaxed">
+                                                    <p className="text-blue-900 dark:text-blue-200 text-sm leading-relaxed">
                                                         {item.exemplo}
                                                     </p>
                                                 </div>
