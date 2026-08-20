@@ -126,7 +126,7 @@ export default function Series() {
 												</div>
 												<span className="font-bold text-slate-800 dark:text-slate-200">
 													{String(serie.wifi).includes("Não") ? (
-														<span className="text-slate-500 dark:text-slate-400">—</span>
+														<span className="text-slate-500 dark:text-slate-400">Não</span>
 													) : (
 														<span className="text-emerald-500 dark:text-emerald-400 font-extrabold">Sim</span>
 													)}
@@ -140,7 +140,7 @@ export default function Series() {
 												</div>
 												<span className="font-bold text-slate-800 dark:text-slate-200">
 													{serie.bluetooth === "Não" ? (
-														<span className="text-slate-500 dark:text-slate-400">—</span>
+														<span className="text-slate-500 dark:text-slate-400">Não</span>
 													) : (
 														<span className="text-indigo-500 dark:text-indigo-400 font-extrabold">Sim</span>
 													)}

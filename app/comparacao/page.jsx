@@ -154,7 +154,7 @@ export default function Comparacao() {
 
 	const renderValue = (value) => {
 		if (!value || value === "Não") {
-			return <span className="text-slate-500 dark:text-slate-400 font-medium select-none">—</span>;
+			return <span className="text-slate-500 dark:text-slate-400 font-medium select-none">Não</span>;
 		}
 		if (value === "Sim") {
 			return (

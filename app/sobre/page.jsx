@@ -100,7 +100,7 @@ export default function Sobre() {
 							</div>
 							<p className="text-slate-650 dark:text-slate-350 leading-relaxed mb-6 font-semibold text-sm">
 								As informações sobre os microcontroladores ESP32 muitas vezes estão dispersas em datasheets densos, 
-								manuais de referência (TRM), repositórios secundários e documentação técnica — tudo inteiramente em inglês. 
+								manuais de referência (TRM), repositórios secundários e documentação técnica, tudo inteiramente em inglês. 
 								O ESPDocs condensa e estrutura esses dados, auxiliando na triagem rápida antes de aprofundar na engenharia oficial.
 							</p>
 

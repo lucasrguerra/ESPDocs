@@ -13,7 +13,7 @@ import {
 /**
  * Restrições de pinos por série.
  *
- * Os grupos são DERIVADOS de public/conexoes/<serie>.json — o mesmo arquivo que
+ * Os grupos são DERIVADOS de public/conexoes/<serie>.json, o mesmo arquivo que
  * alimenta o diagrama de conexões. Nada aqui é escrito à mão, então a seção e o
  * diagrama nunca divergem: corrigir um pino no JSON corrige os dois.
  */
@@ -25,7 +25,7 @@ const GRUPOS = [
 		icone: ArrowDownToLine,
 		cor: "text-sky-500",
 		explicacao:
-			"Aceitam apenas leitura. Não podem ser configurados como saída e não possuem resistores de pull-up ou pull-down internos — se precisar de um, coloque no circuito.",
+			"Aceitam apenas leitura. Não podem ser configurados como saída e não possuem resistores de pull-up ou pull-down internos. Se precisar de um, coloque no circuito.",
 		combina: (avisos) => /apenas de entrada|input only/.test(avisos),
 	},
 	{
@@ -45,7 +45,7 @@ const GRUPOS = [
 		icone: Power,
 		cor: "text-amber-500",
 		explicacao:
-			"O chip lê o nível destes pinos no instante do reset para decidir como inicializar. Dá para usá-los depois do boot, mas o circuito externo não pode forçar o nível errado durante o reset — senão a placa não inicia ou entra em modo de gravação sozinha.",
+			"O chip lê o nível destes pinos no instante do reset para decidir como inicializar. Dá para usá-los depois do boot, mas o circuito externo não pode forçar o nível errado durante o reset, senão a placa não inicia ou entra em modo de gravação sozinha.",
 		combina: (avisos, cats) =>
 			cats.includes("Strapping") ||
 			/strapping|modo de boot|modo de inicialização/.test(avisos),
@@ -65,7 +65,7 @@ const GRUPOS = [
 		icone: Usb,
 		cor: "text-teal-500",
 		explicacao:
-			"Saem de fábrica ligados ao USB Serial/JTAG interno. Para usá-los como GPIO é preciso desativar essa função — o que também remove a gravação por USB direto.",
+			"Saem de fábrica ligados ao USB Serial/JTAG interno. Para usá-los como GPIO é preciso desativar essa função, o que também remove a gravação por USB direto.",
 		combina: (avisos) => /usb serial\/jtag|usb_d[+-]/.test(avisos),
 	},
 	{
@@ -118,7 +118,7 @@ export default function PinRestrictions({ conexoes, serieKey, cor }) {
 
 			<p className="text-sm text-slate-650 dark:text-slate-350 leading-relaxed mb-8">
 				Nem todo pino do {serieKey} está livre para uso geral. {totalPinos} deles têm alguma
-				condição — já estão ocupados por memória, são lidos durante o boot ou só funcionam
+				condição: já estão ocupados por memória, são lidos durante o boot ou só funcionam
 				como entrada. Vale conferir antes de fechar o esquemático.
 			</p>
 

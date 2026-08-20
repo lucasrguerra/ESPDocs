@@ -1,0 +1,670 @@
+/* =========================================================================
+   Sistema visual das apostilas da LASER, compartilhado por todas as edições.
+   Paginação A4 via Paged.js. Identidade da liga: prussiano, âmbar, laranja e
+   vermelho, tirados da logo oficial (laser.cin.ufpe.br).
+
+   Uma apostila nova só precisa de:
+     <link rel="stylesheet" href="../assets/apostila.css">
+     <script src="../assets/paged.polyfill.js"></script>
+   e usar as classes documentadas aqui.
+   ========================================================================= */
+
+:root {
+	/* Paleta da LASER, extraída da logo oficial (laser.cin.ufpe.br).
+	   O gradiente é o próprio "feixe" da marca. */
+	--prussiano: #003049;
+	--vermelho: #D62828;
+	--laranja: #F77F00;
+	--ambar: #FCBF49;
+	--creme: #EAE2B7;
+	/* O laranja da marca é vibrante demais para texto: 2,63:1 sobre branco.
+	   Esta versão queimada mantém a matiz e passa em AA (4,74:1). */
+	--laranja-texto: #B85800;
+
+	--tinta: #062639;
+	--tinta-2: #33566a;
+	--tinta-3: #557080;   /* 5,23:1 no branco e 4,94:1 na linha zebrada */
+	--linha: #c2d2db;
+	--linha-suave: #dde7ed;
+	--fundo-suave: #f5f9fb;
+
+	/* O feixe da marca. Use APENAS em superfície grande e decorativa: uma faixa,
+	   um traço largo, o desenho da capa. Nunca recortado em texto: cinco paradas
+	   de cor num glifo viram arco-íris e ainda quebram o contraste. */
+	--marca: linear-gradient(90deg, var(--prussiano), var(--creme), var(--ambar), var(--laranja), var(--vermelho));
+}
+
+/* -------------------------------------------------------------------------
+   1. Página A4
+   ------------------------------------------------------------------------- */
+
+@page {
+	size: A4;
+	margin: 20mm 18mm 18mm 18mm;
+
+	@bottom-left {
+		content: string(titulo-corrente);
+		font-family: "Inter", sans-serif;
+		font-size: 7.5pt;
+		color: #94a3b8;
+		padding-bottom: 4mm;
+	}
+
+	@bottom-right {
+		content: counter(page);
+		font-family: "Outfit", sans-serif;
+		font-size: 9pt;
+		font-weight: 700;
+		color: #64748b;
+		padding-bottom: 4mm;
+	}
+}
+
+/* Capa e contracapa sem cabeçalho, rodapé ou margem. */
+@page capa {
+	margin: 0;
+	@bottom-left { content: none; }
+	@bottom-right { content: none; }
+}
+
+.pagina-capa {
+	page: capa;
+	/* Sem break-after: todo .capitulo já traz break-before, e as duas juntas
+	   podem gerar uma página em branco depois da capa. */
+}
+
+/* Capa: clara e minimalista. O desenho é o feixe da LASER atravessando
+   a página. Conceitual, não decorativo. */
+.capa {
+	width: 210mm;
+	height: 297mm;
+	background: #fdfdfb;
+	color: var(--tinta);
+	display: flex;
+	flex-direction: column;
+	padding: 30mm 24mm 24mm;
+	position: relative;
+	overflow: hidden;
+}
+
+.capa-curvas {
+	position: absolute;
+	inset: 0;
+	width: 210mm;
+	height: 297mm;
+	pointer-events: none;
+}
+
+/* O desenho fica no fundo; todo o resto sobe acima dele.
+   Precisa excluir .capa-curvas: mesma especificidade sobrescreveria o absolute. */
+.capa > *:not(.capa-curvas) { position: relative; z-index: 1; }
+
+.capa-marca {
+	display: flex;
+	align-items: center;
+	gap: 4mm;
+	margin-bottom: 26mm;
+}
+
+.capa-marca img { height: 9mm; width: auto; }
+
+.capa-marca span {
+	font-size: 8pt;
+	line-height: 1.35;
+	color: var(--tinta-3);
+	border-left: 0.6pt solid var(--linha);
+	padding-left: 4mm;
+}
+
+.capa-selo {
+	font-family: "Outfit", sans-serif;
+	font-size: 8pt;
+	font-weight: 600;
+	letter-spacing: 0.22em;
+	text-transform: uppercase;
+	color: var(--laranja-texto);
+	margin-bottom: 5mm;
+}
+
+.capa-titulo {
+	font-family: "Outfit", sans-serif;
+	font-size: 42pt;
+	font-weight: 300;
+	line-height: 1.02;
+	letter-spacing: -0.025em;
+	margin: 0 0 6mm;
+	color: var(--prussiano);
+	max-width: 140mm;
+}
+
+.capa-titulo strong { font-weight: 700; }
+
+.capa-sub {
+	font-size: 11pt;
+	font-weight: 300;
+	line-height: 1.55;
+	color: var(--tinta-2);
+	max-width: 116mm;
+	text-align: left;
+	margin-bottom: 0;
+}
+
+.capa-rodape {
+	margin-top: auto;
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-end;
+	gap: 8mm;
+	font-size: 8pt;
+	color: var(--tinta-3);
+	line-height: 1.6;
+	border-top: 0.6pt solid var(--linha);
+	padding-top: 5mm;
+}
+
+.capa-rodape strong {
+	color: var(--tinta);
+	font-weight: 600;
+	display: block;
+	font-size: 9pt;
+	margin-bottom: 0.8mm;
+}
+
+/* -------------------------------------------------------------------------
+   2. Base tipográfica
+   ------------------------------------------------------------------------- */
+
+* { box-sizing: border-box; }
+
+html {
+	/* Faz fundos e cores chegarem ao PDF em vez de imprimirem em branco. */
+	-webkit-print-color-adjust: exact;
+	print-color-adjust: exact;
+}
+
+body {
+	margin: 0;
+	font-family: "Inter", system-ui, -apple-system, sans-serif;
+	font-size: 10pt;
+	line-height: 1.62;
+	color: var(--tinta-2);
+	hyphens: auto;
+}
+
+p {
+	margin: 0 0 3.2mm;
+	text-align: justify;
+	/* Nunca deixa uma ou duas linhas soltas no pé nem no topo da página. */
+	orphans: 3;
+	widows: 3;
+}
+strong { color: var(--tinta); font-weight: 600; }
+
+a { color: #b34700; text-decoration: none; border-bottom: 0.6pt solid #f7c9a0; }
+
+ul, ol { margin: 0 0 3.5mm; padding-left: 5.5mm; }
+li { margin-bottom: 1.4mm; orphans: 2; widows: 2; }
+li::marker { color: var(--laranja-texto); }
+
+/* -------------------------------------------------------------------------
+   3. Capítulos e títulos
+   ------------------------------------------------------------------------- */
+
+.capitulo { break-before: page; }
+
+.capitulo-abertura {
+	display: flex;
+	align-items: flex-start;
+	gap: 5mm;
+	margin-bottom: 7mm;
+	padding-bottom: 4mm;
+	border-bottom: 2.2pt solid var(--tinta);
+}
+
+.capitulo-numero {
+	font-family: "Outfit", sans-serif;
+	font-size: 44pt;
+	font-weight: 300;          /* leve, para não competir com o título em 800 */
+	line-height: 0.8;
+	letter-spacing: -0.03em;
+	color: var(--laranja-texto);
+	flex-shrink: 0;
+	font-variant-numeric: lining-nums;
+}
+
+h1, h2, h3, h4 {
+	font-family: "Outfit", sans-serif;
+	color: var(--tinta);
+	margin: 0;
+	break-after: avoid;
+	text-align: left;
+}
+
+h2 {
+	font-size: 19pt;
+	font-weight: 800;
+	line-height: 1.1;
+	letter-spacing: -0.01em;
+	/* Alimenta o rodapé com o capítulo corrente. */
+	string-set: titulo-corrente content();
+}
+
+.capitulo-abertura .subtitulo {
+	font-family: "Inter", sans-serif;
+	font-size: 9pt;
+	font-weight: 400;
+	color: var(--tinta-3);
+	margin-top: 1.5mm;
+	line-height: 1.45;
+}
+
+h3 {
+	font-size: 12.5pt;
+	break-before: auto;
+	font-weight: 700;
+	margin: 7mm 0 2.5mm;
+	padding-left: 3mm;
+	border-left: 2.5pt solid var(--laranja);
+}
+
+h4 {
+	font-size: 10pt;
+	font-weight: 700;
+	margin: 5mm 0 2mm;
+	text-transform: uppercase;
+	letter-spacing: 0.06em;
+	color: var(--tinta-3);
+}
+
+/* -------------------------------------------------------------------------
+   3.1. Coesão entre blocos
+
+   O fragmentador quebra onde couber, e o resultado padrão separa coisas que
+   pertencem juntas: a frase que apresenta uma tabela numa página e a tabela na
+   seguinte. Estas duas classes resolvem, e devem ser usadas sempre que um
+   trecho só faz sentido lido de uma vez.
+   ------------------------------------------------------------------------- */
+
+/* Na frase que apresenta o que vem logo abaixo. Proíbe quebra logo depois dela. */
+.junto { break-after: avoid; }
+
+/* NÃO declare break-before:avoid de forma genérica (h3 + *, .junto + *).
+   Testado: o Paged.js encadeia as recusas e produz páginas com 2% de conteúdo,
+   além de partir palavras entre páginas. Para manter um título junto do que ele
+   apresenta, envolva os dois em .grupo, que usa break-inside:avoid, o único
+   controle que o fragmentador aplica de forma previsível. */
+
+/* No wrapper de um conjunto curto que precisa caber inteiro na mesma página
+   (uma introdução mais os itens que ela apresenta, por exemplo). */
+.grupo { break-inside: avoid; }
+
+/* -------------------------------------------------------------------------
+   4. Caixas de destaque
+   Cada tipo tem um papel didático fixo. Não misture.
+   ------------------------------------------------------------------------- */
+
+.caixa {
+	break-inside: avoid;
+	margin: 4.5mm 0;
+	padding: 3.5mm 4mm;
+	border-radius: 2mm;
+	border-left: 2.5pt solid var(--cor-caixa, var(--laranja));
+	background: var(--fundo-caixa, #fff8ec);
+	font-size: 9pt;
+	line-height: 1.55;
+}
+
+.caixa p { margin-bottom: 2mm; text-align: left; }
+.caixa p:last-child { margin-bottom: 0; }
+
+.caixa-titulo {
+	font-family: "Outfit", sans-serif;
+	font-weight: 800;
+	font-size: 8.5pt;
+	text-transform: uppercase;
+	letter-spacing: 0.07em;
+	color: var(--cor-caixa, var(--laranja));
+	margin-bottom: 1.5mm;
+}
+
+.caixa.atencao   { --cor-caixa: #a35a00; --fundo-caixa: #fff8ea; }
+.caixa.erro      { --cor-caixa: #b01f1f; --fundo-caixa: #fdf1f1; }
+.caixa.dica      { --cor-caixa: #0b6b52; --fundo-caixa: #eefaf5; }
+.caixa.curiosidade { --cor-caixa: #003049; --fundo-caixa: #eff6fa; }
+
+/* -------------------------------------------------------------------------
+   5. Tabelas
+   ------------------------------------------------------------------------- */
+
+table {
+	width: 100%;
+	border-collapse: collapse;
+	font-size: 8.5pt;
+	margin: 4mm 0 5mm;
+	break-inside: avoid;
+}
+
+caption {
+	caption-side: bottom;
+	font-size: 7.5pt;
+	color: var(--tinta-3);
+	text-align: left;
+	padding-top: 1.8mm;
+}
+
+thead {
+	break-inside: avoid;
+	break-after: avoid;
+	/* Repete o cabeçalho quando a tabela atravessa a página. */
+	display: table-header-group;
+}
+
+tbody tr { break-inside: avoid; }
+
+/* As tabelas de 12 linhas (uma por série) podem dividir: mantê-las inteiras
+   empurrava a tabela toda e deixava quase metade da página em branco. */
+table.compacta { break-inside: auto; }
+
+th {
+	font-family: "Outfit", sans-serif;
+	font-weight: 700;
+	font-size: 7.5pt;
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+	text-align: left;
+	color: #fff;
+	background: var(--tinta);
+	padding: 2.2mm 2.5mm;
+}
+
+td {
+	padding: 2.2mm 2.5mm;
+	border-bottom: 0.5pt solid var(--linha-suave);
+	vertical-align: top;
+}
+
+tbody tr:nth-child(even) { background: var(--fundo-suave); }
+td.destaque { font-weight: 600; color: var(--tinta); }
+td.sim { color: #0b6b52; font-weight: 600; }
+td.nao { color: var(--tinta-3); }
+
+/* -------------------------------------------------------------------------
+   6. Código
+   ------------------------------------------------------------------------- */
+
+pre {
+	break-inside: avoid;
+	margin: 4mm 0;
+	padding: 4mm 4.5mm;
+	background: #062639;
+	border-radius: 2mm;
+	color: #e2e8f0;
+	font-family: "JetBrains Mono", ui-monospace, "Courier New", monospace;
+	font-size: 8pt;
+	line-height: 1.6;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+code {
+	font-family: "JetBrains Mono", ui-monospace, "Courier New", monospace;
+	font-size: 8.6pt;
+	background: #f2f6f8;
+	color: #b34700;
+	padding: 0.4mm 1.2mm;
+	border-radius: 1mm;
+}
+
+pre code { background: none; color: inherit; padding: 0; font-size: inherit; }
+
+.c-com { color: #94a3b8; font-style: italic; }  /* comentário */
+.c-key { color: #c4b5fd; }                       /* palavra-chave */
+.c-fun { color: #7dd3fc; }                       /* função */
+.c-str { color: #86efac; }                       /* string */
+.c-num { color: #fdba74; }                       /* número */
+.c-pre { color: #f9a8d4; }                       /* diretiva */
+
+.legenda-codigo {
+	font-size: 7.5pt;
+	color: var(--tinta-3);
+	margin: -2.5mm 0 4mm;
+}
+
+/* -------------------------------------------------------------------------
+   7. Figuras
+   ------------------------------------------------------------------------- */
+
+figure {
+	break-inside: avoid;
+	margin: 5mm 0;
+	text-align: center;
+}
+
+figure img {
+	max-width: 100%;
+	height: auto;
+	border-radius: 1.5mm;
+}
+
+/* Diagramas desenhados em SVG dentro do próprio documento, para herdarem a
+   paleta da liga. Traço fino e sem preenchimento pesado: imprimem bem. */
+.diagrama {
+	width: 100%;
+	height: auto;
+	display: block;
+}
+
+.diagrama text {
+	font-family: "Inter", system-ui, sans-serif;
+	fill: var(--tinta-2);
+}
+
+.diagrama .rotulo {
+	font-family: "Outfit", sans-serif;
+	font-weight: 700;
+	fill: var(--tinta);
+}
+
+.diagrama .miudo { fill: var(--tinta-3); }
+.diagrama .caixa { fill: #ffffff; stroke: var(--linha); stroke-width: 1.2; }
+.diagrama .caixa-destaque { fill: #fff6ea; stroke: var(--laranja); stroke-width: 1.4; }
+.diagrama .traco { stroke: var(--tinta-3); stroke-width: 1.2; fill: none; }
+.diagrama .onda { stroke: var(--prussiano); stroke-width: 1.8; fill: none; stroke-linejoin: round; }
+
+figcaption {
+	font-size: 7.5pt;
+	color: var(--tinta-3);
+	margin-top: 2mm;
+	text-align: left;
+	line-height: 1.5;
+}
+
+/* -------------------------------------------------------------------------
+   8. Grade de séries: cada chip com a cor que o site usa
+   ------------------------------------------------------------------------- */
+
+.grade-series {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 3mm;
+	margin: 4mm 0;
+}
+
+.chip {
+	break-inside: avoid;
+	border: 0.8pt solid var(--linha);
+	border-top: 2.5pt solid var(--cor-chip, var(--laranja));
+	border-radius: 1.5mm;
+	padding: 3mm 3.5mm;
+}
+
+.chip-nome {
+	font-family: "Outfit", sans-serif;
+	font-weight: 800;
+	font-size: 11pt;
+	line-height: 1.1;
+	/* A cor da série fica na faixa superior do card, que é decoração e não
+	   precisa de contraste. Dez das doze cores reprovam em AA como texto
+	   (o amarelo do P4 dá 1,63:1 sobre branco), então o nome vai em tinta. */
+	color: var(--tinta);
+}
+
+.chip-papel {
+	font-size: 7.5pt;
+	font-weight: 600;
+	color: var(--tinta-3);
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+	margin-bottom: 2mm;
+}
+
+.chip p { font-size: 8.2pt; line-height: 1.5; margin-bottom: 2mm; text-align: left; }
+
+.chip dl {
+	margin: 0;
+	font-size: 7.6pt;
+	display: grid;
+	grid-template-columns: auto 1fr;
+	gap: 0.6mm 2mm;
+	border-top: 0.5pt solid var(--linha-suave);
+	padding-top: 1.8mm;
+}
+
+.chip dt { color: var(--tinta-3); font-weight: 500; }
+.chip dd { margin: 0; color: var(--tinta); font-weight: 600; }
+
+/* -------------------------------------------------------------------------
+   9. Sumário: numeração de página resolvida pelo Paged.js
+   ------------------------------------------------------------------------- */
+
+.sumario { margin-top: 6mm; }
+
+.sumario a {
+	display: flex;
+	align-items: baseline;
+	gap: 2mm;
+	border: none;
+	color: var(--tinta);
+	text-decoration: none;
+	padding: 1.8mm 0;
+	border-bottom: 0.5pt solid var(--linha-suave);
+	font-size: 10pt;
+}
+
+.sumario .num {
+	font-family: "Outfit", sans-serif;
+	font-weight: 700;
+	color: var(--laranja-texto);
+	min-width: 7mm;
+}
+
+.sumario .txt { font-weight: 600; }
+
+.sumario .pontos {
+	flex: 1;
+	border-bottom: 0.5pt dotted var(--linha);
+	transform: translateY(-1mm);
+}
+
+.sumario a::after {
+	content: target-counter(attr(href url), page);
+	font-family: "Outfit", sans-serif;
+	font-weight: 700;
+	color: var(--tinta-3);
+}
+
+/* -------------------------------------------------------------------------
+   10. Passos numerados da prática
+   ------------------------------------------------------------------------- */
+
+.passo {
+	/* Indivisível: testado com break-inside:auto, o círculo com o número do
+	   passo ficava sozinho no pé da página, separado do próprio conteúdo. */
+	break-inside: avoid;
+	display: grid;
+	grid-template-columns: 8mm 1fr;
+	gap: 3mm;
+	margin-bottom: 5mm;
+}
+
+.passo-num {
+	font-family: "Outfit", sans-serif;
+	font-weight: 800;
+	font-size: 12pt;
+	color: #fff;
+	background: var(--prussiano);
+	width: 8mm;
+	height: 8mm;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	line-height: 1;
+}
+
+.passo h3 { margin-top: 0.5mm; border: none; padding: 0; }
+
+/* -------------------------------------------------------------------------
+   11. Visual só de tela (Paged.js desenha as folhas)
+   ------------------------------------------------------------------------- */
+
+@media screen {
+	body {
+		background:
+			radial-gradient(60rem 40rem at 50% -10rem, #eaf1f5 0%, transparent 70%),
+			#dfe7ec;
+		padding: 10mm 0 16mm;
+	}
+
+	/* Pilha de folhas centralizada na janela, com respiro entre elas. */
+	.pagedjs_pages {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 9mm;
+		width: 100%;
+		max-width: none;
+	}
+
+	.pagedjs_page {
+		background: #fff;
+		box-shadow:
+			0 0 0 1px rgba(6, 38, 57, 0.07),
+			0 6px 22px -6px rgba(6, 38, 57, 0.22);
+		border-radius: 1.5mm;
+		margin: 0;
+		transition: box-shadow 0.2s ease;
+	}
+
+	.pagedjs_page:hover {
+		box-shadow:
+			0 0 0 1px rgba(6, 38, 57, 0.12),
+			0 10px 30px -8px rgba(6, 38, 57, 0.3);
+	}
+
+	/* A capa é sangria total: sem cantos arredondados brigando com o desenho. */
+	.pagedjs_page:first-child { border-radius: 0; }
+
+	.aviso-carregando {
+		font-family: "Inter", sans-serif;
+		text-align: center;
+		padding: 40mm 20mm;
+		color: #5b7688;
+		font-size: 11pt;
+	}
+
+	/* Leitura confortável: um pouco mais de corpo do que no papel. */
+	.pagedjs_page_content { font-size: 10.2pt; }
+}
+
+/* Telas estreitas: encolhe a folha inteira em vez de estourar a largura. */
+@media screen and (max-width: 230mm) {
+	.pagedjs_pages {
+		transform: scale(calc(100vw / 232mm));
+		transform-origin: top center;
+	}
+}
+
+@media print {
+	.aviso-carregando { display: none; }
+}

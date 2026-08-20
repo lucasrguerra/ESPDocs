@@ -386,7 +386,7 @@ export default function Seletor() {
 			if (answers.security === "matter") {
 				if (temECDSA) {
 					scores[key] += 30;
-					reasons[key].push(`ECDSA em hardware (${seg.ecc}) — atestado de dispositivo Matter assinado sem custo de CPU`);
+					reasons[key].push(`ECDSA em hardware (${seg.ecc}): atestado de dispositivo Matter assinado sem custo de CPU`);
 				} else if (temECC) {
 					scores[key] += 10;
 					reasons[key].push(`Tem ECC (${seg.ecc}) mas não o periférico ECDSA: a assinatura roda parcialmente em software`);

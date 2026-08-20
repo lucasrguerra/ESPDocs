@@ -1,0 +1,1863 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>LASER · Formação em ESP32 · Módulo 1: Conhecendo a Família</title>
+<meta name="author" content="Lucas Rayan Guerra">
+<meta name="description" content="Apostila do módulo 1 da formação em ESP32 da LASER, Liga Acadêmica de Sistemas Embarcados da UFPE.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/apostila.css">
+</head>
+<body>
+
+<p class="aviso-carregando">Paginando a apostila…</p>
+
+<!-- ══════════════════════════════ CAPA ══════════════════════════════ -->
+<section class="pagina-capa">
+	<div class="capa">
+		<img class="capa-curvas" src="../assets/capa-curvas.svg" alt="">
+
+		<div class="capa-marca">
+			<img src="../assets/laser-escuro.svg" alt="LASER">
+			<span>Liga Acadêmica de Sistemas Embarcados<br>Centro de Informática · UFPE</span>
+		</div>
+
+		<div class="capa-selo">Formação em ESP32 · Módulo 1</div>
+
+		<h1 class="capa-titulo">Conhecendo a<br><strong>família ESP32</strong></h1>
+
+		<p class="capa-sub">
+			Do silício à bancada: como esses microcontroladores funcionam por dentro, o que cada
+			uma das doze séries faz e não faz, onde eles superam Arduino e STM32, e como escolher
+			o chip certo antes de fechar um projeto.
+		</p>
+
+		<div class="capa-rodape">
+			<div>
+				<strong>Lucas Rayan Guerra</strong>
+				Ciência Embarcada · ESPDocs
+			</div>
+			<div style="text-align:right">
+				<strong>Material de apoio</strong>
+				Uso livre para fins educacionais
+			</div>
+		</div>
+	</div>
+</section>
+
+<!-- ══════════════════════════ APRESENTAÇÃO ══════════════════════════ -->
+<section class="capitulo" id="apresentacao">
+	<div class="capitulo-abertura">
+		<div>
+			<h2>Apresentação</h2>
+			<p class="subtitulo">Sobre a formação, sobre a liga, e como aproveitar esta apostila.</p>
+		</div>
+	</div>
+
+	<p>
+		A <strong>LASER</strong>, Liga Acadêmica de Sistemas Embarcados do Centro de Informática
+		da UFPE tem como propósito fortalecer a área de sistemas embarcados na universidade,
+		promovendo estudo, pesquisa e aplicação de tecnologias que envolvem tanto hardware quanto
+		software. Suas frentes vão de automação e Internet das Coisas a IA na borda, robótica,
+		sistemas críticos, tecnologias veiculares e engenharia biomédica.
+	</p>
+
+	<p>
+		Esta apostila acompanha a formação em ESP32 da liga. A escolha da plataforma não é
+		acidental: o ESP32 atravessa quase todas as frentes da LASER. Ele é o nó de IoT, é a
+		placa de automação, roda inferência na borda, e é barato o bastante para que cada pessoa
+		tenha o seu.
+	</p>
+
+	<h3>O que você vai levar deste módulo</h3>
+	<ul>
+		<li>Entender o que existe dentro de um ESP32 e por que ele é diferente de um Arduino.</li>
+		<li>Saber navegar as doze séries da família sem se perder na nomenclatura.</li>
+		<li>Ter um método objetivo para escolher a série de um projeto novo.</li>
+		<li>Reconhecer as limitações reais da plataforma antes de esbarrar nelas.</li>
+		<li>Sair com um sensor real lendo temperatura e umidade na sua bancada.</li>
+	</ul>
+
+	<h3>Pré-requisitos</h3>
+	<p>
+		Espera-se que você já tenha ligado um LED em algum microcontrolador e saiba o que é uma
+		porta digital. Programação em C ou C++ em nível básico ajuda, mas o código da prática é
+		curto e comentado. <strong>Não é preciso</strong> saber nada de Wi-Fi, RTOS, RISC-V ou
+		criptografia. Tudo isso aparece explicado no caminho.
+	</p>
+
+	<h3>Material para a prática</h3>
+	<p>
+		Uma placa <strong>ESP32-S3-DevKitC-1</strong>, um sensor <strong>DHT11</strong>, um
+		resistor de <strong>10 kΩ</strong>, jumpers, protoboard e um cabo USB de dados. A lista
+		completa e o esquema de ligação estão no capítulo 9.
+	</p>
+
+	<h3>Como esta apostila está organizada</h3>
+	<p>
+		Os capítulos 1 a 3 constroem o entendimento do hardware. Os capítulos 4 a 6 apresentam a
+		família e comparam com alternativas. Os capítulos 7 e 8 são de decisão: como escolher série
+		e ferramenta. O capítulo 9 é a prática, e o 10 fecha com glossário e caminhos de estudo.
+	</p>
+
+	<div class="grupo">
+		<p class="junto">Ao longo do texto você encontra quatro tipos de caixa:</p>
+
+		<div class="caixa dica">
+			<div class="caixa-titulo">Dica</div>
+			<p>Atalho, boa prática ou recomendação que economiza tempo.</p>
+		</div>
+
+		<div class="caixa atencao">
+			<div class="caixa-titulo">Atenção</div>
+			<p>Ponto que costuma causar problema se passar despercebido.</p>
+		</div>
+
+		<div class="caixa erro">
+			<div class="caixa-titulo">Erro comum</div>
+			<p>Armadilha concreta, com o sintoma que ela produz e como escapar.</p>
+		</div>
+
+		<div class="caixa curiosidade">
+			<div class="caixa-titulo">Curiosidade</div>
+			<p>Contexto ou detalhe técnico que ajuda a fixar o conceito.</p>
+		</div>
+	</div>
+</section>
+
+<!-- ═════════════════════════════ SUMÁRIO ═════════════════════════════ -->
+<section class="capitulo">
+	<div class="capitulo-abertura">
+		<div>
+			<h2>Sumário</h2>
+			<p class="subtitulo">Dez capítulos, do conceito à bancada.</p>
+		</div>
+	</div>
+
+	<nav class="sumario">
+		<a href="#cap1"><span class="num">1</span><span class="txt">O que é o ESP32</span><span class="pontos"></span></a>
+		<a href="#cap2"><span class="num">2</span><span class="txt">Anatomia: o que existe dentro do chip</span><span class="pontos"></span></a>
+		<a href="#cap3"><span class="num">3</span><span class="txt">Como o chip acorda: boot e execução</span><span class="pontos"></span></a>
+		<a href="#cap4"><span class="num">4</span><span class="txt">A família completa: as 12 séries</span><span class="pontos"></span></a>
+		<a href="#cap5"><span class="num">5</span><span class="txt">Segurança em hardware</span><span class="pontos"></span></a>
+		<a href="#cap6"><span class="num">6</span><span class="txt">ESP32, ESP8266, Arduino e STM32</span><span class="pontos"></span></a>
+		<a href="#cap7"><span class="num">7</span><span class="txt">Pontos fortes e limitações reais</span><span class="pontos"></span></a>
+		<a href="#cap8"><span class="num">8</span><span class="txt">Como escolher a série do seu projeto</span><span class="pontos"></span></a>
+		<a href="#cap9"><span class="num">9</span><span class="txt">Prática: lendo um DHT11 com o ESP32-S3</span><span class="pontos"></span></a>
+		<a href="#cap10"><span class="num">10</span><span class="txt">Glossário e próximos passos</span><span class="pontos"></span></a>
+	</nav>
+</section>
+
+<!-- ═══════════════════════════ CAPÍTULO 1 ═══════════════════════════ -->
+<section class="capitulo" id="cap1">
+	<div class="capitulo-abertura">
+		<div class="capitulo-numero">1</div>
+		<div>
+			<h2>O que é o ESP32</h2>
+			<p class="subtitulo">De onde ele veio e por que virou padrão de fato em projetos conectados.</p>
+		</div>
+	</div>
+
+	<p>
+		O ESP32 é uma linha de microcontroladores da <strong>Espressif Systems</strong>, empresa
+		fundada em 2008 e sediada em Xangai. A história que interessa começa em 2014, com o
+		ESP8266: um chip barato de Wi-Fi vendido como "módulo serial para internet", que a
+		comunidade descobriu ser, na verdade, um microcontrolador completo por poucos dólares.
+	</p>
+
+	<p>
+		Em 2016 veio o ESP32 original, já projetado como plataforma: dois núcleos, Wi-Fi,
+		Bluetooth e um conjunto grande de periféricos. A partir de 2020 a linha se ramificou, e
+		hoje são <strong>doze séries</strong>, cada uma otimizada para um recorte diferente de
+		custo, consumo, conectividade e desempenho.
+	</p>
+
+	<h3>Linha do tempo</h3>
+
+	<table>
+		<thead><tr><th style="width:14%">Ano</th><th style="width:26%">Lançamento</th><th>O que mudou</th></tr></thead>
+		<tbody>
+			<tr><td class="destaque">2014</td><td>ESP8266</td><td>Wi-Fi barato ao alcance de qualquer projeto. Ainda muito usado.</td></tr>
+			<tr><td class="destaque">2016</td><td>ESP32</td><td>Dois núcleos, Bluetooth e periféricos de verdade. O marco da plataforma.</td></tr>
+			<tr><td class="destaque">2019</td><td>ESP32-S2</td><td>Foco em segurança e USB nativo; abre mão do Bluetooth.</td></tr>
+			<tr><td class="destaque">2020</td><td>ESP32-C3</td><td>Primeira série RISC-V. Marca a virada de arquitetura da empresa.</td></tr>
+			<tr><td class="destaque">2021</td><td>ESP32-S3</td><td>Dois núcleos com instruções vetoriais para IA. Vira o carro-chefe.</td></tr>
+			<tr><td class="destaque">2022</td><td>ESP32-C6, H2</td><td>Chega o rádio 802.15.4: Zigbee, Thread e Matter entram na família.</td></tr>
+			<tr><td class="destaque">2023</td><td>ESP32-P4</td><td>Alto desempenho sem rádio, com MIPI para câmera e display.</td></tr>
+			<tr><td class="destaque">2024 e 2025</td><td>C5, C61, H4, S31</td><td>Wi-Fi 6, dual-band de 5 GHz e a geração seguinte de malha.</td></tr>
+		</tbody>
+		<caption>Datas de anúncio. A disponibilidade comercial e o suporte nas ferramentas costumam vir meses depois.</caption>
+	</table>
+
+	<h3>O que explica a adoção</h3>
+
+	<p>
+		Antes do ESP8266, colocar um projeto na internet significava comprar um microcontrolador
+		<em>e</em> um módulo de rede, ligá-los por serial ou SPI, e gastar boa parte da memória
+		disponível com a pilha de comunicação. O ESP32 traz <strong>o rádio dentro do mesmo
+		encapsulamento do processador</strong>, com as pilhas de Wi-Fi e Bluetooth prontas,
+		testadas em campo por centenas de milhões de dispositivos.
+	</p>
+
+	<p>
+		Some a isso o preço, já que um módulo custa menos que muitos microcontroladores sem rádio, e
+		uma documentação pública completa, com datasheets, manuais de referência e código-fonte
+		abertos. Essa combinação é rara no mercado de semicondutores.
+	</p>
+
+	<h3>SoC, módulo, placa e série: quatro coisas diferentes</h3>
+
+	<p class="junto">
+		Muita confusão nasce de usar "ESP32" para quatro coisas distintas. Vale separar desde já,
+		porque isso muda o que você compra, quanto custa e como projeta:
+	</p>
+
+	<table>
+		<thead><tr><th style="width:23%">Termo</th><th>O que é</th><th style="width:26%">Exemplo</th></tr></thead>
+		<tbody>
+			<tr>
+				<td class="destaque">Chip (SoC)</td>
+				<td>O silício nu, num encapsulamento QFN de poucos milímetros. Precisa de antena,
+					cristal e memória flash externos para funcionar. É o que a Espressif vende em
+					bobina para fábricas.</td>
+				<td><code>ESP32-S3</code></td>
+			</tr>
+			<tr>
+				<td class="destaque">Módulo</td>
+				<td>O chip montado numa plaquinha com flash, cristal, antena, blindagem e, o
+					mais importante, <strong>homologação de rádio</strong>. É o que vai dentro
+					de um produto comercial.</td>
+				<td><code>ESP32-S3-WROOM-1</code></td>
+			</tr>
+			<tr>
+				<td class="destaque">Placa de desenvolvimento</td>
+				<td>O módulo numa placa com regulador de tensão, conector USB, botões de boot e
+					reset e pinos em barra. É o que usamos para aprender e prototipar.</td>
+				<td><code>ESP32-S3-DevKitC-1</code></td>
+			</tr>
+			<tr>
+				<td class="destaque">Série</td>
+				<td>A família daquele silício: define a arquitetura do processador, quais rádios
+					existem e quais periféricos estão presentes.</td>
+				<td><code>Série S3</code></td>
+			</tr>
+		</tbody>
+	</table>
+
+	<div class="caixa atencao">
+		<div class="caixa-titulo">Homologação pertence ao módulo, não ao chip</div>
+		<p>
+			Se um dia você levar um projeto a produto, lembre que as certificações de rádio
+			(Anatel no Brasil, FCC nos Estados Unidos, CE na Europa) são emitidas para o
+			<strong>módulo</strong>. Usar um módulo já homologado evita um processo de certificação
+			caro e demorado. Projetar com o chip nu significa homologar o seu produto do zero.
+		</p>
+	</div>
+
+	<figure>
+		<img src="../../placas/esp32-s3.png" alt="Diagrama do ESP32-S3-DevKitC-1 com a pinagem completa, mostrando o módulo ESP32-S3-WROOM soldado no centro da placa.">
+		<figcaption>
+			Os três primeiros níveis numa imagem só. O retângulo prateado no centro é o
+			<strong>módulo</strong> ESP32-S3-WROOM, com a antena impressa numa ponta e a blindagem
+			metálica cobrindo o resto; dentro dele, sem aparecer, está o <strong>chip</strong>. Todo
+			o resto (regulador de tensão, conversor USB-serial, botões e as barras de pinos) é a
+			<strong>placa de desenvolvimento</strong>. Num produto seu, só o módulo iria para a PCB.
+		</figcaption>
+	</figure>
+
+	<h3>O que a Espressif entrega junto com o silício</h3>
+
+	<p>
+		Boa parte do valor do ESP32 não está no chip, e sim no software que vem junto. O
+		<strong>ESP-IDF</strong> (Espressif IoT Development Framework) é o ambiente oficial:
+		baseado em FreeRTOS, traz as pilhas de Wi-Fi, Bluetooth, TCP/IP, TLS, atualização remota
+		de firmware (OTA), sistemas de arquivos, provisionamento e ferramentas de depuração. É
+		software que levaria anos para uma equipe escrever do zero.
+	</p>
+
+	<p>
+		Existe também o <strong>core Arduino para ESP32</strong>, que traduz esse ambiente para as
+		funções que você já conhece. É a porta de entrada, e é o que usaremos na prática, mas por
+		baixo continua sendo o ESP-IDF rodando. Entender isso ajuda quando algo não funciona:
+		muitas respostas estão na documentação do IDF, não na do Arduino.
+	</p>
+</section>
+
+<!-- ═══════════════════════════ CAPÍTULO 2 ═══════════════════════════ -->
+<section class="capitulo" id="cap2">
+	<div class="capitulo-abertura">
+		<div class="capitulo-numero">2</div>
+		<div>
+			<h2>Anatomia: o que existe dentro do chip</h2>
+			<p class="subtitulo">Os blocos que aparecem em qualquer série, e por que cada um importa.</p>
+		</div>
+	</div>
+
+	<figure>
+		<img src="esp32-s3-blocos.png" alt="Diagrama de blocos oficial do ESP32-S3: CPU principal, memórias, rádio Wi-Fi e Bluetooth, cadeia de RF, periféricos, domínio RTC e bloco de segurança.">
+		<figcaption>
+			Diagrama de blocos do ESP32-S3, publicado pela Espressif. Vale voltar a ele ao longo da
+			apostila: o <strong>Main CPU</strong> com os dois núcleos Xtensa e, ao lado, as memórias
+			internas (ROM, SRAM e o <em>cache</em> que discutimos adiante). O bloco
+			<strong>RF</strong> é a parte analógica do rádio, que fala com a antena. Em
+			<strong>RTC</strong> mora o coprocessador ULP, que continua acordado com o resto do chip
+			dormindo. E o bloco <strong>Security</strong> é exatamente o assunto do capítulo 5: SHA,
+			AES, RSA, RNG, HMAC, assinatura digital, Secure Boot e criptografia de flash, tudo em
+			silício.
+			<br><br>
+			Cada série tem o seu diagrama equivalente, com blocos a mais ou a menos. Imagem da
+			Espressif Systems, reproduzida para fins didáticos.
+		</figcaption>
+	</figure>
+
+	<h3>Processador: Xtensa ou RISC-V</h3>
+
+	<p>
+		As séries mais antigas (ESP32, S2, S3) usam núcleos <strong>Xtensa</strong>, arquitetura
+		licenciada da Cadence. As séries novas (C2, C3, C5, C6, C61, H2, H4, P4, S31) migraram
+		para <strong>RISC-V</strong>, um conjunto de instruções aberto e livre de royalties.
+	</p>
+
+	<p>
+		Para quem programa em C, a diferença é quase invisível, porque o compilador cuida disso. Ela
+		aparece quando você precisa de <em>assembly</em>, de ferramentas de análise de baixo nível,
+		ou quando uma biblioteca pré-compilada existe só para uma das arquiteturas. A tendência é
+		clara: todo lançamento recente é RISC-V.
+	</p>
+
+	<h4>Um ou dois núcleos, e o que fazer com eles</h4>
+	<p>
+		Séries como ESP32, S3, P4, H4 e S31 têm dois núcleos. No ESP-IDF eles recebem nomes:
+		<code>PRO_CPU</code> (núcleo 0) e <code>APP_CPU</code> (núcleo 1). Por convenção, as
+		tarefas do Wi-Fi e do Bluetooth rodam no núcleo 0, deixando o 1 mais livre para o seu
+		código. É possível fixar uma tarefa em um núcleo específico, recurso valioso quando você
+		precisa de um laço com temporização mais previsível.
+	</p>
+
+	<h4>O coprocessador de baixo consumo</h4>
+	<p>
+		Algumas séries trazem um <strong>segundo processador de baixíssimo consumo</strong>, o ULP
+		ou LP core. Ele continua acordado enquanto o processador principal dorme, lendo um sensor
+		de tempos em tempos e só acordando o resto do chip quando algo interessa. É o que permite
+		um projeto a bateria durar meses em vez de dias.
+	</p>
+
+	<h3>Memória: quatro tipos, quatro papéis</h3>
+
+	<table>
+		<thead><tr><th style="width:19%">Memória</th><th>Para que serve</th><th style="width:21%">Ordem de grandeza</th></tr></thead>
+		<tbody>
+			<tr>
+				<td class="destaque">SRAM</td>
+				<td>Memória de trabalho: variáveis, pilha, buffers. Rápida e volátil. É o recurso
+					que acaba primeiro em projetos com Wi-Fi: a pilha de rede sozinha consome
+					dezenas de kilobytes.</td>
+				<td>272 KB a 768 KB</td>
+			</tr>
+			<tr>
+				<td class="destaque">ROM</td>
+				<td>Gravada de fábrica pela Espressif. Contém o bootloader inicial e rotinas
+					básicas. Você não altera, e é por isso que um ESP32 é praticamente
+					impossível de "brickar" de forma permanente.</td>
+				<td>128 KB a 576 KB</td>
+			</tr>
+			<tr>
+				<td class="destaque">Flash externa</td>
+				<td>Onde mora o <em>seu</em> programa. Fica fora do núcleo do chip, num segundo
+					componente ou dentro do mesmo encapsulamento, e conversa por SPI.</td>
+				<td>2 MB a 16 MB típico</td>
+			</tr>
+			<tr>
+				<td class="destaque">PSRAM</td>
+				<td>RAM extra externa, opcional, para quando a SRAM não basta: buffer de câmera,
+					tela gráfica, áudio, modelo de rede neural.</td>
+				<td>2 MB a 32 MB</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<div class="caixa atencao">
+		<div class="caixa-titulo">O detalhe que pega todo mundo</div>
+		<p>
+			A flash é <strong>externa ao núcleo</strong>. Isso significa que alguns pinos do chip
+			já estão ocupados conversando com ela o tempo todo. No ESP32 original, são os GPIO 6 a 11.
+			Se você usar esses pinos para um LED, o chip trava, porque você está interferindo no
+			barramento de onde o programa está sendo lido. Todo ESP32 tem um conjunto assim; o
+			número e a posição mudam conforme a série.
+		</p>
+	</div>
+
+	<figure>
+		<svg class="diagrama" viewBox="0 0 640 175" role="img"
+		     aria-label="A memória flash e a PSRAM ficam fora do chip, ligadas por um barramento SPI de seis condutores.">
+			<rect x="14" y="22" width="290" height="134" rx="8" fill="none"
+			      stroke="var(--prussiano)" stroke-width="1.6" stroke-dasharray="5 4"/>
+			<text class="rotulo" x="14" y="14" font-size="12">O chip</text>
+
+			<rect class="caixa" x="30" y="44" width="124" height="46" rx="5"/>
+			<text class="rotulo" x="92" y="64" font-size="10.5" text-anchor="middle">Processador</text>
+			<text class="miudo" x="92" y="79" font-size="9" text-anchor="middle">SRAM e ROM internas</text>
+
+			<rect class="caixa" x="168" y="44" width="126" height="46" rx="5"/>
+			<text class="rotulo" x="231" y="64" font-size="10.5" text-anchor="middle">Cache + MMU</text>
+			<text class="miudo" x="231" y="79" font-size="9" text-anchor="middle">traz o código para dentro</text>
+
+			<rect class="caixa-destaque" x="30" y="106" width="264" height="32" rx="5"/>
+			<text class="rotulo" x="162" y="126" font-size="10" text-anchor="middle">Matriz de roteamento: função quase livre por pino</text>
+
+			<!-- Barramento em notação de esquemático: uma linha só, com a barra
+			     diagonal e o número de condutores. Sai da borda do bloco Cache+MMU
+			     e mantém a mesma cor e espessura até as duas memórias, para não
+			     parecer que o caminho muda no meio. -->
+			<g stroke="var(--vermelho)" stroke-width="1.9" fill="none" stroke-linecap="round">
+				<line x1="294" y1="67" x2="438" y2="67"/>
+				<line x1="438" y1="52" x2="438" y2="126"/>
+				<line x1="438" y1="52" x2="458" y2="52"/>
+				<line x1="438" y1="126" x2="458" y2="126"/>
+			</g>
+			<line x1="324" y1="77" x2="336" y2="57" stroke="var(--vermelho)" stroke-width="1.6" stroke-linecap="round"/>
+			<text class="rotulo" x="342" y="63" font-size="10.5" fill="var(--vermelho)">6</text>
+
+			<text class="rotulo" x="392" y="58" font-size="9.5" text-anchor="middle" fill="var(--vermelho)">SPI</text>
+			<text class="miudo" x="380" y="88" font-size="8.5" text-anchor="middle">CS, CLK, D, Q, WP e HD</text>
+
+			<rect class="caixa" x="458" y="30" width="166" height="44" rx="5"/>
+			<text class="rotulo" x="541" y="49" font-size="10.5" text-anchor="middle">Flash externa</text>
+			<text class="miudo" x="541" y="63" font-size="9" text-anchor="middle">o seu firmware mora aqui</text>
+
+			<rect class="caixa" x="458" y="104" width="166" height="44" rx="5"/>
+			<text class="rotulo" x="541" y="123" font-size="10.5" text-anchor="middle">PSRAM (opcional)</text>
+			<text class="miudo" x="541" y="137" font-size="9" text-anchor="middle">buffers grandes</text>
+		</svg>
+		<figcaption>
+			O que o diagrama de blocos não deixa evidente: a flash fica <strong>fora</strong> do
+			chip. O cache e a MMU escondem isso do seu código, mas os seis pinos desse barramento
+			ficam ocupados de forma permanente, mesmo com o seu programa rodando. É daí que sai o
+			primeiro grupo de pinos com restrição, mais adiante neste capítulo. A barra diagonal
+			com o número é a notação usual de esquemático para um feixe de condutores.
+		</figcaption>
+	</figure>
+
+	<div class="caixa curiosidade">
+		<div class="caixa-titulo">Como o código roda se ele está fora do chip?</div>
+		<p>
+			Existe um bloco chamado <strong>MMU com cache</strong> entre o processador e a flash.
+			Ele traz para dentro do chip os pedaços de código que estão sendo executados, mantendo
+			os mais usados em cache. O efeito é que a flash externa "parece" memória interna, com a ressalva de que um acesso fora do cache custa bem mais caro. Esse é um dos
+			motivos pelos quais o desempenho de um ESP32 varia mais que o de um microcontrolador
+			com flash interna.
+		</p>
+	</div>
+
+	<div class="grupo">
+		<h3>Rádio</h3>
+
+		<p class="junto">
+			É o bloco que distingue o ESP32 da maioria dos microcontroladores. Dependendo da série
+			você encontra:
+		</p>
+
+		<table>
+			<thead><tr><th style="width:26%">Tecnologia</th><th>Para quê</th></tr></thead>
+			<tbody>
+				<tr><td class="destaque">Wi-Fi 4 (802.11 b/g/n)</td><td>Conexão direta à internet pela rede local. Presente na maioria das séries.</td></tr>
+				<tr><td class="destaque">Wi-Fi 6 (802.11ax)</td><td>Melhor desempenho em redes congestionadas e menor consumo com o recurso Target Wake Time.</td></tr>
+				<tr><td class="destaque">Bluetooth LE</td><td>Comunicação com celular, sensores de baixo consumo, provisionamento de rede.</td></tr>
+				<tr><td class="destaque">Bluetooth Clássico</td><td>Áudio (A2DP) e porta serial sem fio (SPP). Só no ESP32 e no S31.</td></tr>
+				<tr><td class="destaque">IEEE 802.15.4</td><td>Base do Zigbee e do Thread, redes em malha de baixo consumo, e portanto do Matter.</td></tr>
+			</tbody>
+		</table>
+	</div>
+
+	<p>
+		O rádio não é de graça: transmitir custa corrente, com picos que passam de 300 mA, ocupa
+		memória e consome tempo de processamento. Voltaremos a isso no capítulo 7.
+	</p>
+
+	<h3>Periféricos e a matriz de roteamento</h3>
+
+	<p>
+		GPIO, UART, SPI, I²C, I²S, PWM, ADC, sensor de temperatura interno, USB, controlador CAN
+		(que a Espressif chama de TWAI), contador de pulsos, transceptor de infravermelho. O
+		conjunto varia por série.
+	</p>
+
+	<p class="junto">
+		Uma característica facilita muito a vida: na maioria das séries existe uma
+		<strong>matriz de roteamento</strong> (<em>GPIO matrix</em>) que permite mapear quase
+		qualquer função para quase qualquer pino, por software. Em um microcontrolador tradicional,
+		a UART2 só existe nos pinos que o fabricante escolheu; aqui, você decide na hora de
+		programar. Na prática do projeto de placa isso é ouro: você desenha o traçado da forma mais
+		limpa e depois adapta o firmware.
+	</p>
+
+	<div class="caixa curiosidade">
+		<div class="caixa-titulo">A matriz tem limite</div>
+		<p>
+			Sinais de alta velocidade (o SPI da flash, o USB, o cristal, algumas linhas de I²S e
+			LCD) não passam pela matriz: eles usam <em>IO_MUX</em>, um caminho direto e mais
+			rápido, disponível apenas em pinos específicos. Se você rotear um SPI rápido por um
+			pino qualquer, ele funciona, mas a frequência máxima cai.
+		</p>
+	</div>
+
+	<h3>Pinos com restrição, e o estrago que eles causam</h3>
+
+	<p>
+		Aqui está a diferença mais concreta entre ler o datasheet e não ler. Num Arduino UNO,
+		os vinte pinos são praticamente equivalentes. Num ESP32, uma parte deles já tem dono, e
+		usar o pino errado não produz um erro de compilação: produz uma placa que não liga, um
+		firmware que trava, ou pior, um protótipo que funciona na bancada e falha em campo.
+	</p>
+
+	<p>
+		São cinco grupos, e cada um quebra o projeto de um jeito diferente.
+	</p>
+
+	<figure>
+		<img src="../../placas/esp32.png" alt="Diagrama de pinagem do ESP32-DevKitC, com legenda indicando pinos de flash, strapping, somente entrada e depuração.">
+		<figcaption>
+			A pinagem do ESP32 clássico já traz as restrições marcadas, se você souber o que
+			procurar. As <strong>barras vermelhas</strong> à esquerda dos GPIO 6 a 11 significam
+			"compartilhado com a memória flash, não pode ser usado como GPIO comum". As etiquetas
+			rosa <strong>STRAP</strong> marcam os pinos de boot. As setas simples (em vez de duplas)
+			nos GPIO 34 a 39 indicam <strong>somente entrada</strong>. E as etiquetas
+			<strong>DEBUG</strong> em azul são as linhas de JTAG.
+		</figcaption>
+	</figure>
+
+	<h4>1. Ligados à memória flash ou PSRAM</h4>
+	<p>
+		Estes pinos conversam com a memória de onde o firmware está sendo lido, o tempo todo,
+		enquanto o chip funciona. Escrever neles interrompe essa conversa no meio.
+	</p>
+	<p>
+		<strong>Como falha:</strong> o chip reinicia em laço, ou trava no boot com uma mensagem de
+		erro de leitura da flash. Não é intermitente e não tem contorno em software.
+	</p>
+	<p>
+		<strong>Como evitar:</strong> no ESP32-S3 são os GPIO 26 a 32; no ESP32 clássico, os GPIO
+		6 a 11 (mais o 16 e o 17 em módulos WROVER, que têm PSRAM). Boa notícia: em muitos módulos
+		esses pinos nem chegam à barra de pinos, justamente para você não ter como errar.
+	</p>
+
+	<h4>2. Strapping (seleção do modo de boot)</h4>
+	<p>
+		O chip lê o nível destes pinos no instante do reset para decidir como inicializar. Depois
+		do boot eles voltam a ser GPIO normais, e é aí que mora a armadilha: o pino funciona
+		perfeitamente enquanto a placa está ligada, mas o que você pendurou nele atrapalha o
+		próximo reset.
+	</p>
+	<p>
+		<strong>Como falha:</strong> a placa para de iniciar quando o circuito externo puxa o pino
+		para o nível errado. Um exemplo comum: você liga um LED com resistor no GPIO0 do ESP32.
+		O LED funciona. Na próxima energização, o resistor mantém o pino em nível baixo, o chip
+		entende que deve entrar em modo de gravação e fica esperando um firmware que nunca chega.
+		A placa parece morta.
+	</p>
+	<p>
+		<strong>Como evitar:</strong> reserve os pinos de strapping para saídas que ficam em alta
+		impedância no boot, ou use-os para entradas com o resistor de pull no sentido que o chip
+		espera. Se puder, simplesmente não use.
+	</p>
+
+	<h4>3. Somente entrada</h4>
+	<p>
+		Alguns pinos são fisicamente incapazes de acionar uma saída, e não têm resistores de
+		pull-up nem pull-down internos.
+	</p>
+	<p>
+		<strong>Como falha:</strong> silenciosamente. O <code>pinMode(pino, OUTPUT)</code> não
+		reclama, o <code>digitalWrite</code> não reclama, e o pino simplesmente não muda de nível.
+		Você passa a tarde procurando o problema no código.
+	</p>
+	<p>
+		<strong>Como evitar:</strong> no ESP32 clássico são os GPIO 34, 35, 36, 37, 38 e 39. Use-os
+		para leitura, e lembre de colocar o resistor de pull no circuito, já que não existe um
+		interno para ativar. As séries RISC-V mais novas não têm pinos assim.
+	</p>
+
+	<h4>4. Gravação e depuração</h4>
+	<p>
+		São a UART0 (por onde o firmware é gravado e as mensagens de <code>Serial</code> saem) e
+		as quatro linhas de JTAG.
+	</p>
+	<p>
+		<strong>Como falha:</strong> você não perde o projeto, perde a capacidade de trabalhar
+		nele. Se um sensor ocupa os pinos da UART0, cada gravação exige desconectar o sensor. Se
+		algo escreve nesses pinos durante a execução, o monitor serial enche de lixo.
+	</p>
+	<p>
+		<strong>Como evitar:</strong> deixe a UART0 livre até o projeto estar fechado. Se precisar
+		de mais uma serial, use a UART1 ou a UART2, que a matriz de roteamento leva para quase
+		qualquer pino.
+	</p>
+
+	<h4>5. USB nativo</h4>
+	<p>
+		Nas séries com USB no próprio chip, dois pinos saem de fábrica ligados ao periférico
+		USB Serial/JTAG.
+	</p>
+	<p>
+		<strong>Como falha:</strong> ao usá-los como GPIO comum, a porta USB de gravação some do
+		computador. Recuperar exige o modo de gravação manual pelos botões BOOT e RESET.
+	</p>
+	<p>
+		<strong>Como evitar:</strong> no ESP32-S3 são o GPIO19 e o GPIO20. Trate-os como
+		indisponíveis, a não ser que você tenha certeza de que não vai precisar do USB nativo.
+	</p>
+
+	<div class="grupo">
+		<h3>Os pinos com restrição do ESP32-S3</h3>
+
+		<p class="junto">
+			Como a prática do capítulo 9 usa um ESP32-S3, vale ter esta lista à mão. Dos 45 GPIOs
+			da série, 18 têm alguma condição:
+		</p>
+
+		<table>
+		<thead><tr><th style="width:27%">Grupo</th><th>Pinos</th></tr></thead>
+		<tbody>
+			<tr><td class="destaque">Flash e PSRAM</td><td>GPIO26, 27, 28, 29, 30, 31 e 32</td></tr>
+			<tr><td class="destaque">Strapping</td><td>GPIO0, GPIO45 e GPIO46</td></tr>
+			<tr><td class="destaque">Gravação e JTAG</td><td>GPIO39, 40, 41, 42 (JTAG) e GPIO43, 44 (UART0)</td></tr>
+			<tr><td class="destaque">USB nativo</td><td>GPIO19 e GPIO20</td></tr>
+			<tr><td class="destaque">Somente entrada</td><td>Nenhum nesta série</td></tr>
+		</tbody>
+			<caption>Sobram 27 pinos totalmente livres, incluindo o GPIO12 que usaremos na prática.</caption>
+		</table>
+	</div>
+
+	<div class="caixa erro">
+		<div class="caixa-titulo">O erro que mais custa caro</div>
+		<p>
+			Fechar o esquemático de uma placa própria distribuindo os sinais pelos pinos "que
+			sobraram no traçado", sem conferir a lista. O protótipo chega da fábrica, a placa não
+			liga, e a correção passa por cortar trilha ou mandar refazer o lote.
+		</p>
+		<p>
+			Cinco minutos de conferência antes do envio valem semanas de prazo. E como a matriz de
+			roteamento deixa quase toda função ir para quase todo pino, quase sempre dá para
+			reorganizar o traçado sem perder nada.
+		</p>
+	</div>
+
+	<div class="caixa dica">
+		<div class="caixa-titulo">Onde consultar</div>
+		<p>
+			A página de cada série no <strong>ESPDocs</strong> traz uma seção de pinos com
+			restrição, com os grupos acima listados pino a pino para aquela série específica, mais
+			o diagrama de conexões completo com todas as funções de cada pino.
+			Em <a href="https://espdocs.cienciaembarcada.com.br/">espdocs.cienciaembarcada.com.br</a>.
+		</p>
+	</div>
+</section>
+
+<!-- ═══════════════════════════ CAPÍTULO 3 ═══════════════════════════ -->
+<section class="capitulo" id="cap3">
+	<div class="capitulo-abertura">
+		<div class="capitulo-numero">3</div>
+		<div>
+			<h2>Como o chip acorda: boot e execução</h2>
+			<p class="subtitulo">Entender esta sequência economiza horas de depuração.</p>
+		</div>
+	</div>
+
+
+
+	<figure>
+		<svg class="diagrama" viewBox="0 0 640 210" role="img"
+		     aria-label="Sequência de boot do ESP32 em quatro etapas, com desvio para o modo de gravação.">
+			<rect class="caixa" x="8" y="30" width="132" height="52" rx="5"/>
+			<text class="rotulo" x="74" y="52" font-size="10.5" text-anchor="middle">1. Energização</text>
+			<text class="miudo" x="74" y="67" font-size="8.5" text-anchor="middle">CHIP_EN em nível alto</text>
+
+			<rect class="caixa" x="164" y="30" width="132" height="52" rx="5"/>
+			<text class="rotulo" x="230" y="52" font-size="10.5" text-anchor="middle">2. Bootloader da ROM</text>
+			<text class="miudo" x="230" y="67" font-size="8.5" text-anchor="middle">lê os pinos de strapping</text>
+
+			<rect class="caixa" x="320" y="30" width="146" height="52" rx="5"/>
+			<text class="rotulo" x="393" y="48" font-size="10.5" text-anchor="middle">3. Segundo estágio</text>
+			<text class="miudo" x="393" y="62" font-size="8.5" text-anchor="middle">partições, assinatura,</text>
+			<text class="miudo" x="393" y="73" font-size="8.5" text-anchor="middle">descriptografia</text>
+
+			<rect class="caixa-destaque" x="490" y="30" width="140" height="52" rx="5"/>
+			<text class="rotulo" x="560" y="48" font-size="10.5" text-anchor="middle">4. Sua aplicação</text>
+			<text class="miudo" x="560" y="62" font-size="8.5" text-anchor="middle">app_main() ou</text>
+			<text class="miudo" x="560" y="73" font-size="8.5" text-anchor="middle">setup() + loop()</text>
+
+			<g class="traco" stroke-width="1.4">
+				<path d="M140 56 L158 56 M152 51 l7 5 -7 5" fill="var(--tinta-3)"/>
+				<path d="M296 56 L314 56 M308 51 l7 5 -7 5" fill="var(--tinta-3)"/>
+				<path d="M466 56 L484 56 M478 51 l7 5 -7 5" fill="var(--tinta-3)"/>
+			</g>
+
+			<path class="traco" d="M230 82 L230 130 L258 130" stroke-dasharray="4 3"/>
+			<rect x="258" y="110" width="188" height="40" rx="5" fill="#fdf1f1" stroke="var(--vermelho)" stroke-width="1.3"/>
+			<text class="rotulo" x="352" y="127" font-size="10" text-anchor="middle" fill="#b01f1f">Modo de gravação</text>
+			<text class="miudo" x="352" y="141" font-size="8.5" text-anchor="middle">espera firmware pela serial</text>
+			<text class="miudo" x="150" y="126" font-size="8.5">strapping</text>
+			<text class="miudo" x="150" y="137" font-size="8.5">em nível de boot</text>
+
+			<text class="miudo" x="320" y="180" font-size="9" text-anchor="middle">É este desvio que os botões BOOT e RESET forçam na mão</text>
+			<path class="traco" d="M352 150 L352 168" stroke-dasharray="4 3"/>
+		</svg>
+		<figcaption>
+			Quando a gravação falha com <em>timeout</em>, é a etapa 2 que não chegou ao desvio.
+			Segurar BOOT e pressionar RESET força o caminho pontilhado.
+		</figcaption>
+	</figure>
+
+	<h3>A sequência de partida</h3>
+
+	<div class="passo">
+		<div class="passo-num">1</div>
+		<div>
+			<h3>Energização e reset</h3>
+			<p>
+				Ao receber energia, o chip mantém o processador parado até as tensões estabilizarem.
+				O pino de habilitação (<code>CHIP_EN</code> ou <code>CHIP_PU</code>) precisa estar
+				em nível alto, e é por isso que ele nunca pode ficar flutuando.
+			</p>
+		</div>
+	</div>
+
+	<div class="passo">
+		<div class="passo-num">2</div>
+		<div>
+			<h3>Bootloader da ROM</h3>
+			<p>
+				O processador começa a executar código gravado de fábrica na ROM. Esse código lê o
+				nível dos <strong>pinos de strapping</strong> para decidir o que fazer: iniciar
+				normalmente a partir da flash, ou entrar em <strong>modo de gravação</strong> e
+				esperar um firmware chegar pela serial.
+			</p>
+		</div>
+	</div>
+
+	<div class="passo">
+		<div class="passo-num">3</div>
+		<div>
+			<h3>Bootloader de segundo estágio</h3>
+			<p>
+				Se o boot for normal, a ROM carrega da flash um segundo bootloader, este sim
+				gravado por você junto com o firmware. Ele lê a tabela de partições, escolhe qual
+				imagem executar (importante para OTA, onde há duas), verifica assinatura se o
+				Secure Boot estiver ativo, e descriptografa se a flash estiver cifrada.
+			</p>
+		</div>
+	</div>
+
+	<div class="passo">
+		<div class="passo-num">4</div>
+		<div>
+			<h3>Sua aplicação</h3>
+			<p>
+				Só então o seu programa começa. No ESP-IDF, o ponto de entrada é
+				<code>app_main()</code>. No Arduino, o core cria uma tarefa que chama
+				<code>setup()</code> e depois <code>loop()</code> repetidamente. Ou seja: o
+				<code>loop()</code> que você conhece é, por baixo, uma tarefa do FreeRTOS.
+			</p>
+		</div>
+	</div>
+
+	<div class="caixa dica">
+		<div class="caixa-titulo">Os botões BOOT e RESET</div>
+		<p>
+			É por causa do passo 2 que as placas têm esses dois botões. Segurar <strong>BOOT</strong>
+			enquanto pressiona e solta <strong>RESET</strong> força o modo de gravação. A maioria
+			das placas modernas faz isso automaticamente pelo conversor USB, mas quando a gravação
+			falha com <em>timeout</em>, esse é o truque manual que resolve.
+		</p>
+	</div>
+
+	<h3>FreeRTOS: seu código não está sozinho</h3>
+
+	<p>
+		Diferente de um Arduino UNO, onde o seu <code>loop()</code> é literalmente a única coisa
+		executando, no ESP32 há um <strong>sistema operacional de tempo real</strong> gerenciando
+		várias tarefas ao mesmo tempo: a sua, as do Wi-Fi, as do Bluetooth, o temporizador de
+		sistema, o coletor de estatísticas.
+	</p>
+
+	<p>
+		O escalonador distribui o processador entre elas por prioridade. Isso traz dois efeitos
+		práticos que surpreendem quem vem do Arduino:
+	</p>
+
+	<p>
+		<strong>Primeiro:</strong> um <code>delay()</code> no ESP32 não trava o chip: ele cede o
+		processador para outras tarefas. É por isso que o Wi-Fi continua funcionando enquanto o seu
+		código "espera".
+	</p>
+
+	<p class="junto">
+		<strong>Segundo:</strong> um laço que nunca cede o processador causa problema. Se você
+		escrever um <code>while(true)</code> sem <code>delay()</code> nem espera, o
+		<em>watchdog</em> vai reiniciar o chip, reclamando que a tarefa não alimentou o cão de
+		guarda. Não é bug: é o sistema protegendo as tarefas do rádio.
+	</p>
+
+	<div class="caixa erro">
+		<div class="caixa-titulo">"Task watchdog got triggered"</div>
+		<p>
+			Esta mensagem no monitor serial quase sempre significa laço apertado sem ceder tempo.
+			A correção costuma ser um <code>delay(1)</code> ou um <code>vTaskDelay()</code> dentro
+			do laço. Parece contraintuitivo colocar espera para o programa funcionar, mas em um
+			sistema com RTOS é exatamente o que se faz.
+		</p>
+	</div>
+
+	<h3>Partições: a flash não é um bloco só</h3>
+
+	<p>
+		A memória flash é dividida segundo uma <strong>tabela de partições</strong>. Um layout
+		típico tem: o bootloader, a tabela em si, uma área <code>nvs</code> para guardar
+		configurações (como a senha do Wi-Fi), uma ou duas partições de aplicação e, às vezes, um
+		sistema de arquivos.
+	</p>
+
+	<p>
+		Duas partições de aplicação existem para permitir <strong>OTA</strong>: o firmware novo é
+		gravado na partição inativa, e só depois de validado o chip passa a iniciar por ela. Se a
+		imagem nova falhar, ele volta sozinho para a anterior. É por isso que um projeto com
+		atualização remota precisa de mais que o dobro do espaço do firmware.
+	</p>
+</section>
+
+<!-- ═══════════════════════════ CAPÍTULO 4 ═══════════════════════════ -->
+<section class="capitulo" id="cap4">
+	<div class="capitulo-abertura">
+		<div class="capitulo-numero">4</div>
+		<div>
+			<h2>A família completa: as 12 séries</h2>
+			<p class="subtitulo">Cada uma nasceu para resolver um problema diferente.</p>
+		</div>
+	</div>
+
+	<p class="junto">
+		A nomenclatura ajuda mais do que parece. A letra indica a vocação da série:
+		<strong>S</strong> de <em>sensing</em>, desempenho e USB; <strong>C</strong> de custo
+		reduzido em RISC-V; <strong>H</strong> de malha 802.15.4 sem Wi-Fi; <strong>P</strong> de
+		processamento bruto sem rádio.
+	</p>
+
+	<div class="grade-series">
+
+		<div class="chip" style="--cor-chip:#007bff">
+			<div class="chip-nome">ESP32</div>
+			<div class="chip-papel">O clássico</div>
+			<p>O original de 2016. Dois núcleos, Bluetooth Clássico (raro na família), Ethernet e
+				dois DACs. Ainda é o mais barato e o de maior base instalada.</p>
+			<dl><dt>Núcleo</dt><dd>Xtensa LX6 ×2, 240 MHz</dd>
+				<dt>SRAM</dt><dd>520 KB</dd><dt>GPIO</dt><dd>34</dd></dl>
+		</div>
+
+		<div class="chip" style="--cor-chip:#28a745">
+			<div class="chip-nome">ESP32-S2</div>
+			<div class="chip-papel">USB e segurança</div>
+			<p>Um núcleo e sem Bluetooth, mas trouxe USB OTG nativo e muitos GPIOs. Bom quando o
+				projeto precisa se comportar como dispositivo USB.</p>
+			<dl><dt>Núcleo</dt><dd>Xtensa LX7, 240 MHz</dd>
+				<dt>SRAM</dt><dd>320 KB</dd><dt>GPIO</dt><dd>43</dd></dl>
+		</div>
+
+		<div class="chip" style="--cor-chip:#fd7e14">
+			<div class="chip-nome">ESP32-S3</div>
+			<div class="chip-papel">O cavalo de batalha</div>
+			<p>Dois núcleos, BLE 5, USB nativo, muita RAM e instruções vetoriais para IA. A série
+				mais usada em projetos novos, e a da nossa prática.</p>
+			<dl><dt>Núcleo</dt><dd>Xtensa LX7 ×2, 240 MHz</dd>
+				<dt>SRAM</dt><dd>512 KB</dd><dt>GPIO</dt><dd>45</dd></dl>
+		</div>
+
+		<div class="chip" style="--cor-chip:#8c52ff">
+			<div class="chip-nome">ESP32-C2</div>
+			<div class="chip-papel">O mínimo viável</div>
+			<p>Também vendido como ESP8684. Feito para custo: poucos pinos, sem I²S e sem
+				acelerador AES. Para dispositivos simples em altíssimo volume.</p>
+			<dl><dt>Núcleo</dt><dd>RISC-V, 120 MHz</dd>
+				<dt>SRAM</dt><dd>272 KB</dd><dt>GPIO</dt><dd>14</dd></dl>
+		</div>
+
+		<div class="chip" style="--cor-chip:#20c997">
+			<div class="chip-nome">ESP32-C3</div>
+			<div class="chip-papel">O substituto do clássico</div>
+			<p>O primeiro RISC-V da casa. Wi-Fi, BLE 5 e USB para depuração num chip barato.
+				Escolha natural para trocar um ESP8266 antigo.</p>
+			<dl><dt>Núcleo</dt><dd>RISC-V, 160 MHz</dd>
+				<dt>SRAM</dt><dd>400 KB</dd><dt>GPIO</dt><dd>22</dd></dl>
+		</div>
+
+		<div class="chip" style="--cor-chip:#17a2b8">
+			<div class="chip-nome">ESP32-C6</div>
+			<div class="chip-papel">Matter e malha</div>
+			<p>Wi-Fi 6, BLE 6 e 802.15.4 no mesmo chip: fala Zigbee, Thread e Matter. A porta de
+				entrada para automação residencial moderna.</p>
+			<dl><dt>Núcleo</dt><dd>RISC-V + LP, 160 MHz</dd>
+				<dt>SRAM</dt><dd>512 KB</dd><dt>GPIO</dt><dd>30</dd></dl>
+		</div>
+
+		<div class="chip" style="--cor-chip:#6f42c1">
+			<div class="chip-nome">ESP32-C5</div>
+			<div class="chip-papel">Wi-Fi de duas faixas</div>
+			<p>O primeiro da família com Wi-Fi 6 em 2,4 GHz <em>e</em> 5 GHz. Útil onde a faixa de
+				2,4 GHz está congestionada.</p>
+			<dl><dt>Núcleo</dt><dd>RISC-V + LP, 240 MHz</dd>
+				<dt>SRAM</dt><dd>384 KB</dd><dt>GPIO</dt><dd>29</dd></dl>
+		</div>
+
+		<div class="chip" style="--cor-chip:#0dcaf0">
+			<div class="chip-nome">ESP32-C61</div>
+			<div class="chip-papel">Wi-Fi 6 econômico</div>
+			<p>Wi-Fi 6 com foco em custo, com flash e PSRAM já no encapsulamento. Sem 802.15.4 e
+				sem acelerador AES.</p>
+			<dl><dt>Núcleo</dt><dd>RISC-V, 160 MHz</dd>
+				<dt>SRAM</dt><dd>320 KB</dd><dt>GPIO</dt><dd>30</dd></dl>
+		</div>
+
+		<div class="chip" style="--cor-chip:#6c757d">
+			<div class="chip-nome">ESP32-H2</div>
+			<div class="chip-papel">Malha a bateria</div>
+			<p>Sem Wi-Fi de propósito: só BLE 6 e 802.15.4. Sem o rádio mais faminto, o consumo
+				despenca. Ideal para sensor Zigbee/Thread alimentado por pilha.</p>
+			<dl><dt>Núcleo</dt><dd>RISC-V, 96 MHz</dd>
+				<dt>SRAM</dt><dd>320 KB</dd><dt>GPIO</dt><dd>19</dd></dl>
+		</div>
+
+		<div class="chip" style="--cor-chip:#e83e8c">
+			<div class="chip-nome">ESP32-H4</div>
+			<div class="chip-papel">Malha, segunda geração</div>
+			<p>Sucessor do H2, com dois núcleos e BLE 5.4 com LE Audio. Ainda em documentação
+				preliminar, sem datasheet publicado e sem suporte estável.</p>
+			<dl><dt>Núcleo</dt><dd>RISC-V ×2, 96 MHz</dd>
+				<dt>SRAM</dt><dd>384 KB</dd><dt>GPIO</dt><dd>40</dd></dl>
+		</div>
+
+		<div class="chip" style="--cor-chip:#ffc107">
+			<div class="chip-nome">ESP32-P4</div>
+			<div class="chip-papel">Força bruta, sem rádio</div>
+			<p>400 MHz, dois núcleos, MIPI para câmera e display, Ethernet. Não tem Wi-Fi nem
+				Bluetooth: é para interface gráfica e processamento pesado.</p>
+			<dl><dt>Núcleo</dt><dd>RISC-V ×2 + LP, 400 MHz</dd>
+				<dt>SRAM</dt><dd>768 KB</dd><dt>GPIO</dt><dd>55</dd></dl>
+		</div>
+
+		<div class="chip" style="--cor-chip:#ff2a5f">
+			<div class="chip-nome">ESP32-S31</div>
+			<div class="chip-papel">O topo de linha</div>
+			<p>320 MHz, Wi-Fi 6, Bluetooth Clássico, 802.15.4, CAN FD e aceleração de IA. Ainda
+				sem versão estável do ESP-IDF nem suporte no Arduino.</p>
+			<dl><dt>Núcleo</dt><dd>RISC-V ×2 + LP, 320 MHz</dd>
+				<dt>SRAM</dt><dd>512 KB</dd><dt>GPIO</dt><dd>60</dd></dl>
+		</div>
+
+	</div>
+
+	<h3>Tabelas comparativas</h3>
+
+	<h4>Processamento e memória</h4>
+	<table class="compacta">
+		<thead><tr><th>Série</th><th>Núcleo</th><th>Clock</th><th>SRAM</th><th>GPIO</th><th>ESP-IDF mínimo</th></tr></thead>
+		<tbody>
+			<tr><td class="destaque">ESP32</td><td>Xtensa LX6 ×2</td><td>240 MHz</td><td>520 KB</td><td>34</td><td>v3.x</td></tr>
+			<tr><td class="destaque">ESP32-S2</td><td>Xtensa LX7 ×1</td><td>240 MHz</td><td>320 KB</td><td>43</td><td>v4.2</td></tr>
+			<tr><td class="destaque">ESP32-S3</td><td>Xtensa LX7 ×2</td><td>240 MHz</td><td>512 KB</td><td>45</td><td>v4.4</td></tr>
+			<tr><td class="destaque">ESP32-S31</td><td>RISC-V ×2</td><td>320 MHz</td><td>512 KB</td><td>60</td><td class="nao">master</td></tr>
+			<tr><td class="destaque">ESP32-C2</td><td>RISC-V ×1</td><td>120 MHz</td><td>272 KB</td><td>14</td><td>v5.0</td></tr>
+			<tr><td class="destaque">ESP32-C3</td><td>RISC-V ×1</td><td>160 MHz</td><td>400 KB</td><td>22</td><td>v4.3</td></tr>
+			<tr><td class="destaque">ESP32-C5</td><td>RISC-V ×1</td><td>240 MHz</td><td>384 KB</td><td>29</td><td>v5.5.2</td></tr>
+			<tr><td class="destaque">ESP32-C6</td><td>RISC-V ×1</td><td>160 MHz</td><td>512 KB</td><td>30</td><td>v5.1</td></tr>
+			<tr><td class="destaque">ESP32-C61</td><td>RISC-V ×1</td><td>160 MHz</td><td>320 KB</td><td>30</td><td>v5.5.2</td></tr>
+			<tr><td class="destaque">ESP32-P4</td><td>RISC-V ×2</td><td>400 MHz</td><td>768 KB</td><td>55</td><td>v5.3</td></tr>
+			<tr><td class="destaque">ESP32-H2</td><td>RISC-V ×1</td><td>96 MHz</td><td>320 KB</td><td>19</td><td>v5.1</td></tr>
+			<tr><td class="destaque">ESP32-H4</td><td>RISC-V ×2</td><td>96 MHz</td><td>384 KB</td><td>40</td><td class="nao">master</td></tr>
+		</tbody>
+		<caption>"master" indica série que ainda não entrou em versão estável do ESP-IDF.</caption>
+	</table>
+
+	<h4>Rádios</h4>
+	<table class="compacta">
+		<thead><tr><th>Série</th><th>Wi-Fi</th><th>Bluetooth</th><th>802.15.4</th><th>Matter</th></tr></thead>
+		<tbody>
+			<tr><td class="destaque">ESP32</td><td>Wi-Fi 4</td><td>BLE + Clássico</td><td class="nao">Não</td><td class="nao">Não</td></tr>
+			<tr><td class="destaque">ESP32-S2</td><td>Wi-Fi 4</td><td class="nao">Não</td><td class="nao">Não</td><td class="nao">Não</td></tr>
+			<tr><td class="destaque">ESP32-S3</td><td>Wi-Fi 4</td><td>BLE 5.4</td><td class="nao">Não</td><td class="nao">Não</td></tr>
+			<tr><td class="destaque">ESP32-S31</td><td>Wi-Fi 6</td><td>BLE + Clássico</td><td class="sim">Sim</td><td class="sim">Sim</td></tr>
+			<tr><td class="destaque">ESP32-C2</td><td>Wi-Fi 4</td><td>BLE 5.3</td><td class="nao">Não</td><td class="nao">Não</td></tr>
+			<tr><td class="destaque">ESP32-C3</td><td>Wi-Fi 4</td><td>BLE 5.4</td><td class="nao">Não</td><td class="nao">Não</td></tr>
+			<tr><td class="destaque">ESP32-C5</td><td>Wi-Fi 6 · 2,4 e 5 GHz</td><td>BLE 6.0</td><td class="sim">Sim</td><td class="sim">Sim</td></tr>
+			<tr><td class="destaque">ESP32-C6</td><td>Wi-Fi 6</td><td>BLE 6.0</td><td class="sim">Sim</td><td class="sim">Sim</td></tr>
+			<tr><td class="destaque">ESP32-C61</td><td>Wi-Fi 6</td><td>BLE 6.0</td><td class="nao">Não</td><td>Via Wi-Fi</td></tr>
+			<tr><td class="destaque">ESP32-P4</td><td class="nao">Não</td><td class="nao">Não</td><td class="nao">Não</td><td class="nao">Não</td></tr>
+			<tr><td class="destaque">ESP32-H2</td><td class="nao">Não</td><td>BLE 6.0</td><td class="sim">Sim</td><td class="sim">Sim</td></tr>
+			<tr><td class="destaque">ESP32-H4</td><td class="nao">Não</td><td>BLE 5.4</td><td class="sim">Sim</td><td class="sim">Sim</td></tr>
+		</tbody>
+	</table>
+
+	<h4>Ferramentas e encapsulamento</h4>
+	<table class="compacta">
+		<thead><tr><th>Série</th><th>Core Arduino</th><th>Depuração</th><th>Encapsulamento</th></tr></thead>
+		<tbody>
+			<tr><td class="destaque">ESP32</td><td class="sim">147 placas</td><td>Sonda externa</td><td>QFN48 (6×6 e 5×5 mm)</td></tr>
+			<tr><td class="destaque">ESP32-S2</td><td class="sim">26 placas</td><td>Sonda externa</td><td>QFN56 (7×7 mm)</td></tr>
+			<tr><td class="destaque">ESP32-S3</td><td class="sim">158 placas</td><td>USB integrado</td><td>QFN56 (7×7 mm)</td></tr>
+			<tr><td class="destaque">ESP32-S31</td><td class="nao">Não</td><td>USB integrado</td><td>QFN80 (8×8 mm)</td></tr>
+			<tr><td class="destaque">ESP32-C2</td><td>1 placa</td><td>Sonda externa</td><td>QFN24 (4×4 mm)</td></tr>
+			<tr><td class="destaque">ESP32-C3</td><td class="sim">29 placas</td><td>USB integrado</td><td>QFN32 (5×5) e QFN28 (4×4 mm)</td></tr>
+			<tr><td class="destaque">ESP32-C5</td><td>10 placas</td><td>USB integrado</td><td>QFN48 (6×6 mm)</td></tr>
+			<tr><td class="destaque">ESP32-C6</td><td class="sim">21 placas</td><td>USB integrado</td><td>QFN40 e QFN32 (5×5 mm)</td></tr>
+			<tr><td class="destaque">ESP32-C61</td><td>1 placa</td><td>USB integrado</td><td>QFN40 (5×5 mm)</td></tr>
+			<tr><td class="destaque">ESP32-P4</td><td>7 placas</td><td>USB integrado</td><td>QFN104 (10×10 mm)</td></tr>
+			<tr><td class="destaque">ESP32-H2</td><td>3 placas</td><td>USB integrado</td><td>QFN32 (4×4 mm)</td></tr>
+			<tr><td class="destaque">ESP32-H4</td><td class="nao">Não</td><td>USB integrado</td><td class="nao">Não divulgado</td></tr>
+		</tbody>
+		<caption>Número de definições de placa no core oficial arduino-esp32, um bom termômetro da maturidade do ecossistema.</caption>
+	</table>
+
+	<div class="caixa atencao">
+		<div class="caixa-titulo">Lançado não é o mesmo que utilizável</div>
+		<p>
+			Um chip anunciado pode levar meses até ter suporte estável nas ferramentas. O
+			<strong>S31</strong> e o <strong>H4</strong> hoje só existem no branch de
+			desenvolvimento do ESP-IDF e não têm suporte no core Arduino. Antes de escolher uma
+			série recente para um projeto com prazo, verifique em qual versão do ESP-IDF ela entrou
+			e se ela já tem módulo à venda.
+		</p>
+	</div>
+</section>
+
+<!-- ═══════════════════════════ CAPÍTULO 5 ═══════════════════════════ -->
+<section class="capitulo" id="cap5">
+	<div class="capitulo-abertura">
+		<div class="capitulo-numero">5</div>
+		<div>
+			<h2>Segurança em hardware</h2>
+			<p class="subtitulo">O que existe no silício, para que serve, e por que isso separa as séries.</p>
+		</div>
+	</div>
+
+	<p>
+		Segurança costuma ser tratada como assunto de software, mas boa parte dela depende de
+		blocos de hardware. Executar criptografia em hardware é dezenas de vezes mais rápido e
+		mais econômico que na CPU. E alguns recursos, como esconder uma chave privada do próprio
+		firmware, são <em>impossíveis</em> sem apoio do silício.
+	</p>
+
+	<p>
+		Este é também o assunto em que as séries mais divergem, o que faz dele um bom critério de
+		escolha.
+	</p>
+
+	<h3>Os blocos e o que cada um resolve</h3>
+
+	<table>
+		<thead><tr><th style="width:26%">Bloco</th><th>Para que serve</th></tr></thead>
+		<tbody>
+			<tr><td class="destaque">AES</td><td>Cifra simétrica: é o que protege o tráfego depois que uma conexão TLS é estabelecida.</td></tr>
+			<tr><td class="destaque">SHA</td><td>Funções de resumo (<em>hash</em>). Base de assinaturas, verificação de integridade e HMAC.</td></tr>
+			<tr><td class="destaque">RSA / MPI</td><td>Aritmética de números grandes, usada em chave pública clássica. É o que acelera o handshake TLS.</td></tr>
+			<tr><td class="destaque">ECC</td><td>Criptografia de curvas elípticas: mesma segurança do RSA com chaves muito menores, o que importa bastante em microcontrolador.</td></tr>
+			<tr><td class="destaque">ECDSA</td><td>Assinatura digital sobre curvas elípticas. É o que o Matter exige para o atestado de dispositivo.</td></tr>
+			<tr><td class="destaque">HMAC</td><td>Autenticação de mensagem com chave secreta.</td></tr>
+			<tr><td class="destaque">Digital Signature</td><td>Assina usando uma chave RSA guardada em eFuse, sem que o firmware chegue a vê-la.</td></tr>
+			<tr><td class="destaque">Key Manager</td><td>Provisiona e usa chaves sem que elas fiquem legíveis para o firmware, nem se alguém extrair a imagem.</td></tr>
+			<tr><td class="destaque">RNG</td><td>Gerador de números verdadeiramente aleatórios. Sem ele, toda a criptografia fica previsível.</td></tr>
+			<tr><td class="destaque">Criptografia de flash</td><td>Cifra o conteúdo da flash, impedindo que alguém leia o firmware soldando um gravador na memória.</td></tr>
+			<tr><td class="destaque">Secure Boot</td><td>O chip se recusa a executar firmware que não esteja assinado pela sua chave.</td></tr>
+			<tr><td class="destaque">Proteção DPA</td><td>Defesa contra ataque que deduz a chave medindo variações no consumo de energia durante a operação.</td></tr>
+		</tbody>
+	</table>
+
+	<h3>O que cada série tem</h3>
+
+	<table class="compacta">
+		<thead><tr><th>Série</th><th>AES</th><th>ECC</th><th>ECDSA</th><th>Key Manager</th><th>Secure Boot</th></tr></thead>
+		<tbody>
+			<tr><td class="destaque">ESP32</td><td>128/192/256</td><td class="nao">Não</td><td class="nao">Não</td><td class="nao">Não</td><td>V1 (legado)</td></tr>
+			<tr><td class="destaque">ESP32-S2</td><td>128/192/256 + GCM</td><td class="nao">Não</td><td class="nao">Não</td><td class="nao">Não</td><td>V2 · RSA-3072</td></tr>
+			<tr><td class="destaque">ESP32-S3</td><td>128/256</td><td class="nao">Não</td><td class="nao">Não</td><td class="nao">Não</td><td>V2 · RSA-3072</td></tr>
+			<tr><td class="destaque">ESP32-S31</td><td>128/256 + GCM</td><td class="sim">P-192/256/384</td><td class="sim">Sim</td><td class="sim">Sim</td><td>V2 · RSA-3072</td></tr>
+			<tr><td class="destaque">ESP32-C2</td><td class="nao">Não</td><td>P-192/256</td><td class="nao">Não</td><td class="nao">Não</td><td>V2 · ECDSA</td></tr>
+			<tr><td class="destaque">ESP32-C3</td><td>128/256</td><td class="nao">Não</td><td class="nao">Não</td><td class="nao">Não</td><td>V2 · RSA-3072</td></tr>
+			<tr><td class="destaque">ESP32-C5</td><td>128/256</td><td class="sim">P-192/256/384</td><td class="sim">Sim</td><td class="sim">Sim</td><td>V2 · RSA/ECDSA</td></tr>
+			<tr><td class="destaque">ESP32-C6</td><td>128/256</td><td>P-192/256</td><td class="nao">Não</td><td class="nao">Não</td><td>V2 · RSA/ECDSA</td></tr>
+			<tr><td class="destaque">ESP32-C61</td><td class="nao">Não</td><td>P-192/256</td><td class="sim">Sim</td><td class="nao">Não</td><td>V2 · ECDSA</td></tr>
+			<tr><td class="destaque">ESP32-P4</td><td>128/256 + GCM</td><td class="sim">P-192/256/384</td><td class="sim">Sim</td><td class="sim">Sim</td><td>V2 · RSA/ECDSA</td></tr>
+			<tr><td class="destaque">ESP32-H2</td><td>128/256</td><td>P-192/256</td><td class="sim">Sim</td><td class="nao">Não</td><td>V2 · RSA/ECDSA</td></tr>
+			<tr><td class="destaque">ESP32-H4</td><td>128/256</td><td class="sim">P-192/256/384</td><td class="sim">Sim</td><td class="nao">Não</td><td class="nao">Pendente</td></tr>
+		</tbody>
+		<caption>Dados extraídos das definições de hardware (<code>soc_caps.h</code>) do ESP-IDF.</caption>
+	</table>
+
+	<h3>Três leituras que essa tabela permite</h3>
+
+	<p>
+		<strong>Nem toda série tem acelerador AES.</strong> O C2 e o C61 não têm. Eles conseguem
+		fazer TLS, mas a cifra do tráfego roda na CPU, o que pesa se o dispositivo transmitir
+		muito dado.
+	</p>
+
+	<p>
+		<strong>ECC é um divisor claro.</strong> As séries mais antigas (ESP32, S2, S3 e C3) não
+		têm curvas elípticas em hardware. Como o mundo caminha para ECC (chaves menores, menos
+		memória), essa é uma diferença que tende a pesar mais com o tempo.
+	</p>
+
+	<p class="junto">
+		<strong>Key Manager é raro.</strong> Só S31, C5 e P4. Se o seu produto precisa que a chave
+		privada seja inacessível mesmo para quem tem o firmware em mãos, a lista de candidatos é
+		bem curta.
+	</p>
+
+	<div class="caixa curiosidade">
+		<div class="caixa-titulo">eFuse: memória que só grava uma vez</div>
+		<p>
+			Os segredos ficam em <strong>eFuses</strong>, bits que podem ser queimados uma única
+			vez e nunca mais voltam. É assim que se grava a chave do Secure Boot e da criptografia
+			de flash, e é por isso que essas operações são irreversíveis: uma vez ativado o Secure
+			Boot, aquela placa só executa firmware assinado por você. Para sempre. Em bancada, é
+			uma ótima forma de inutilizar uma placa por engano. Ative apenas quando souber
+			exatamente o que está fazendo.
+		</p>
+	</div>
+</section>
+
+<!-- ═══════════════════════════ CAPÍTULO 6 ═══════════════════════════ -->
+<section class="capitulo" id="cap6">
+	<div class="capitulo-abertura">
+		<div class="capitulo-numero">6</div>
+		<div>
+			<h2>ESP32, ESP8266, Arduino e STM32</h2>
+			<p class="subtitulo">Quatro mundos diferentes, e por que "qual é o melhor" não tem resposta.</p>
+		</div>
+	</div>
+
+	<p class="junto">
+		Comparar plataformas exige cuidado: "Arduino" é uma marca de placas e um ambiente de
+		programação, e "STM32" é uma família enorme da STMicroelectronics que vai de chips de
+		centavos a processadores de 480 MHz. Para a comparação fazer sentido, usaremos
+		representantes concretos.
+	</p>
+
+	<table class="compacta">
+		<thead>
+			<tr><th style="width:20%"></th><th>Arduino UNO R3</th><th>ESP8266</th><th>ESP32-S3</th><th>STM32F103</th></tr>
+		</thead>
+		<tbody>
+			<tr><td class="destaque">Núcleo</td><td>AVR 8 bits</td><td>Xtensa L106</td><td>Xtensa LX7 ×2</td><td>Cortex-M3</td></tr>
+			<tr><td class="destaque">Clock</td><td>16 MHz</td><td>80 a 160 MHz</td><td>240 MHz</td><td>72 MHz</td></tr>
+			<tr><td class="destaque">SRAM</td><td>2 KB</td><td>~50 KB úteis</td><td>512 KB</td><td>20 KB</td></tr>
+			<tr><td class="destaque">Flash</td><td>32 KB</td><td>Externa, 1 a 4 MB</td><td>Externa, 4 a 16 MB</td><td>64 a 128 KB</td></tr>
+			<tr><td class="destaque">Wi-Fi</td><td class="nao">Não</td><td class="sim">Sim</td><td class="sim">Sim</td><td class="nao">Não</td></tr>
+			<tr><td class="destaque">Bluetooth</td><td class="nao">Não</td><td class="nao">Não</td><td class="sim">BLE 5</td><td class="nao">Não</td></tr>
+			<tr><td class="destaque">Tensão de E/S</td><td>5 V</td><td>3,3 V</td><td>3,3 V</td><td>3,3 V (alguns 5 V)</td></tr>
+			<tr><td class="destaque">ADC</td><td>10 bits, linear</td><td>1 canal, 10 bits</td><td>12 bits, calibrar</td><td>12 bits, bom</td></tr>
+			<tr><td class="destaque">GPIO úteis</td><td>20</td><td>~9</td><td>45</td><td>37</td></tr>
+			<tr><td class="destaque">Dormindo</td><td>~35 µA</td><td>~20 µA</td><td>~7 µA</td><td>~2 µA</td></tr>
+		</tbody>
+		<caption>Valores típicos para ordem de grandeza. Confira sempre o datasheet da peça exata.</caption>
+	</table>
+
+	<h3>Onde cada um ganha</h3>
+
+	<h4>Arduino UNO</h4>
+	<p>
+		Ganha em <strong>simplicidade e previsibilidade</strong>. Sem sistema operacional, sem
+		pilha de rede: o que você escreve é exatamente o que executa, na ordem que escreveu.
+		Trabalha em 5 V, o que dispensa conversão de nível com muitos sensores e módulos antigos.
+		É insuperável como primeiro contato e para ensinar eletrônica. Perde feio em memória, porque 2 KB
+		de SRAM acabam rápido, e não tem qualquer conectividade.
+	</p>
+
+	<h4>ESP8266</h4>
+	<p>
+		Ganha em <strong>preço puro</strong>. Ainda é o jeito mais barato de colocar algo simples
+		no Wi-Fi, e tem uma base gigante de tutoriais. Perde em quase todo o resto: poucos GPIOs
+		utilizáveis, um único canal de ADC, sem Bluetooth, e uma arquitetura que a Espressif já não
+		desenvolve. Para projeto novo, o C3 costuma custar quase o mesmo e é melhor em tudo.
+	</p>
+
+	<h4>ESP32</h4>
+	<p>
+		Ganha em <strong>conectividade e relação recurso/preço</strong>. Você recebe centenas de
+		kilobytes de RAM, dois núcleos, Wi-Fi, Bluetooth e criptografia por hardware pelo preço de
+		um microcontrolador simples. Para qualquer coisa que precise falar com a rede, é difícil
+		justificar outra escolha. Perde em determinismo de tempo real rígido e na qualidade do
+		conversor analógico.
+	</p>
+
+	<h4>STM32</h4>
+	<p class="junto">
+		Ganha em <strong>controle fino e diversidade</strong>. A família cobre desde encapsulamentos
+		de 8 pinos até chips com centenas, com variantes especializadas em consumo ultrabaixo
+		(série L), desempenho (H7) ou segurança. Os periféricos de temporização são muito superiores
+		para controle de motor e conversão de potência, e o ecossistema é padrão industrial, com
+		ferramentas de certificação e suporte de longo prazo. Perde na curva de aprendizado, já que a HAL
+		da ST é bem mais verbosa, e não tem rádio integrado, salvo nas séries WB e WL.
+	</p>
+
+	<div class="caixa dica">
+		<div class="caixa-titulo">Regra prática para decidir</div>
+		<p>
+			<strong>Precisa falar com a internet ou com um celular?</strong> ESP32, quase sempre.<br>
+			<strong>É controle de tempo real crítico, como motor, inversor ou malha rápida?</strong> STM32.<br>
+			<strong>É para ensinar eletrônica ou um protótipo simples em 5 V?</strong> Arduino.<br>
+			<strong>É produto comercial com certificação e vida longa?</strong> Avalie STM32 e ESP32
+			juntos, olhando módulos homologados e compromisso de fornecimento.
+		</p>
+	</div>
+
+	<div class="caixa curiosidade">
+		<div class="caixa-titulo">"Programar em Arduino" não é o mesmo que "usar um Arduino"</div>
+		<p>
+			O ambiente Arduino é só uma camada de software. Você pode programar um ESP32 ou um
+			STM32 usando a IDE do Arduino, e é exatamente o que faremos no capítulo 9. Placa e
+			linguagem são escolhas independentes.
+		</p>
+	</div>
+</section>
+
+<!-- ═══════════════════════════ CAPÍTULO 7 ═══════════════════════════ -->
+<section class="capitulo" id="cap7">
+	<div class="capitulo-abertura">
+		<div class="capitulo-numero">7</div>
+		<div>
+			<h2>Pontos fortes e limitações reais</h2>
+			<p class="subtitulo">O que ninguém conta no vídeo de unboxing.</p>
+		</div>
+	</div>
+
+	<h3>Onde o ESP32 é muito bom</h3>
+
+	<p>
+		<strong>Conectividade sem dor.</strong> Subir um cliente MQTT com TLS, um servidor HTTP ou
+		uma conexão BLE são tarefas de dezenas de linhas, com pilhas maduras.
+	</p>
+	<p>
+		<strong>Recursos por real gasto.</strong> Nenhuma outra plataforma entrega tanta memória,
+		clock e rádio nessa faixa de preço.
+	</p>
+	<p>
+		<strong>Segurança de verdade.</strong> Boot seguro, criptografia de flash e aceleradores
+		criptográficos estão presentes até nas séries baratas, recursos que em outras famílias
+		aparecem só nas linhas premium.
+	</p>
+	<p>
+		<strong>Flexibilidade de pinos.</strong> A matriz de roteamento simplifica muito o traçado
+		da placa: você adapta o firmware ao layout, não o contrário.
+	</p>
+	<p>
+		<strong>Atualização remota.</strong> OTA com partição dupla e reversão automática vem
+		pronto no framework.
+	</p>
+	<p>
+		<strong>Documentação aberta.</strong> Datasheets, manuais de referência, erratas e o
+		código-fonte do framework são públicos e versionados.
+	</p>
+
+	<h3>Onde ele decepciona</h3>
+
+	<h4>O conversor analógico é fraco</h4>
+	<p>
+		É a queixa mais comum e mais justa. O ADC do ESP32 tem não-linearidade perceptível, ruído
+		e variação entre unidades; precisa de calibração para medidas sérias. Pior: em várias
+		séries, o bloco <strong>ADC2</strong> fica indisponível enquanto o Wi-Fi está ligado,
+		porque ambos compartilham recursos internos. Se o seu projeto depende de medida analógica
+		precisa, use um ADC externo por I²C ou SPI.
+	</p>
+
+	<h4>O rádio consome muito</h4>
+	<p>
+		Picos de transmissão passam de 300 mA. Um regulador subdimensionado ou uma bateria com
+		resistência interna alta provoca reinicializações aparentemente aleatórias, que parecem
+		bug de software e não são.
+	</p>
+
+	<h4>Tempo real é aproximado</h4>
+	<p>
+		O firmware roda sobre FreeRTOS, e o rádio tem tarefas de alta prioridade que precisam ser
+		atendidas. Isso introduz variação de alguns microssegundos a milissegundos no seu laço.
+		Existem soluções, como fixar tarefa em um núcleo, usar o periférico RMT ou delegar a
+		hardware dedicado, mas todas exigem planejamento.
+	</p>
+
+	<h4>Só 3,3 V</h4>
+	<p>
+		Os pinos não toleram 5 V. Sensor ou display antigo em 5 V exige conversor de nível; ligar
+		direto degrada ou destrói a entrada.
+	</p>
+
+	<h4>Documentação viva demais</h4>
+	<p>
+		A família cresce rápido, e com ela erratas, diferenças entre revisões de silício e
+		funcionalidades que mudam de comportamento entre versões do IDF. Ler a errata do seu chip
+		antes de fechar o projeto é hábito recomendado.
+	</p>
+
+	<h4>Consumo em repouso não é mágico</h4>
+	<p class="junto">
+		Os 7 µA de <em>deep sleep</em> que aparecem no datasheet valem para o chip nu, em
+		condições ideais. Numa placa de desenvolvimento, o regulador, o LED de energia e o
+		conversor USB-serial costumam consumir muito mais que o próprio ESP32. Medir consumo em
+		DevKit leva a conclusões erradas.
+	</p>
+
+	<div class="caixa erro">
+		<div class="caixa-titulo">Erro clássico de bancada</div>
+		<p>
+			Alimentar a placa pela USB do notebook e ligar nela um motor, uma fita de LED ou um
+			display grande. Na hora em que o Wi-Fi transmite, a corrente ultrapassa o que a porta
+			fornece, a tensão cai e o chip reinicia. O sintoma parece software travando; a causa é
+			alimentação. Use fonte externa adequada para as cargas.
+		</p>
+	</div>
+</section>
+
+<!-- ═══════════════════════════ CAPÍTULO 8 ═══════════════════════════ -->
+<section class="capitulo" id="cap8">
+	<div class="capitulo-abertura">
+		<div class="capitulo-numero">8</div>
+		<div>
+			<h2>Como escolher a série do seu projeto</h2>
+			<p class="subtitulo">Um método em cinco perguntas, na ordem que elimina mais opções primeiro.</p>
+		</div>
+	</div>
+
+	<p>
+		A escolha fica muito mais simples quando feita na ordem certa. Comece pelo que é impossível
+		contornar depois, que é o rádio, e só no fim olhe para o que é ajustável.
+	</p>
+
+	<h4>Pergunta 1: Como ele se comunica?</h4>
+	<p class="junto">
+		Esta pergunta sozinha elimina a maior parte da família, porque rádio não se acrescenta
+		depois.
+	</p>
+
+	<table>
+		<thead><tr><th style="width:38%">Necessidade</th><th>Séries que atendem</th></tr></thead>
+		<tbody>
+			<tr><td class="destaque">Wi-Fi + Bluetooth LE</td><td>ESP32, S3, C3, C6, C5, C61, S31</td></tr>
+			<tr><td class="destaque">Bluetooth Clássico (áudio, SPP)</td><td>ESP32, S31</td></tr>
+			<tr><td class="destaque">Zigbee / Thread / Matter em malha</td><td>C6, C5, H2, H4, S31</td></tr>
+			<tr><td class="destaque">Wi-Fi 5 GHz</td><td>C5</td></tr>
+			<tr><td class="destaque">Ethernet cabeada</td><td>ESP32, P4</td></tr>
+			<tr><td class="destaque">Sem rádio, só processamento</td><td>P4</td></tr>
+		</tbody>
+	</table>
+
+	<h4>Pergunta 2: De onde vem a energia?</h4>
+	<p>
+		Se o projeto vive de bateria ou painel solar, o consumo em repouso passa a mandar em tudo.
+		Séries com processador de baixo consumo (C5, C6, P4, S31) mantêm uma tarefa simples rodando
+		com o resto do chip dormindo. E se você não precisa de Wi-Fi, o H2 e o H4 economizam
+		justamente por não carregarem o rádio mais faminto.
+	</p>
+
+	<h4>Pergunta 3: O que vai ligado nele?</h4>
+	<p>
+		Conte os pinos de que precisa e verifique as interfaces especiais. Display gráfico grande
+		ou câmera pedem S3 ou P4 (que tem MIPI). Muitos atuadores pedem uma série com bastante
+		GPIO, lembrando de descontar os pinos com restrição. USB nativo, para o dispositivo se
+		apresentar como teclado ou pendrive, existe do S2 em diante e nas séries C recentes.
+	</p>
+
+	<h4>Pergunta 4: Que exigência de segurança existe?</h4>
+	<p>
+		Para um protótipo, qualquer série serve. Para produto, o requisito define o chip: atestado
+		de dispositivo Matter pede ECDSA em hardware; chave privada que o firmware nunca pode ler
+		pede Key Manager. Consulte a tabela do capítulo 5.
+	</p>
+
+	<h4>Pergunta 5: Quando precisa estar pronto?</h4>
+	<p>
+		Esta é a pergunta esquecida. Uma série recém-anunciada pode não ter suporte estável no
+		ESP-IDF, não ter core Arduino, não ter módulo à venda e não ter placa de desenvolvimento
+		acessível. Para trabalho com prazo, prefira séries com pelo menos um ano de estrada.
+	</p>
+
+	<h3>Atalhos por perfil de projeto</h3>
+
+	<table>
+		<thead><tr><th style="width:38%">Se o seu projeto é…</th><th style="width:20%">Comece por</th><th>Por quê</th></tr></thead>
+		<tbody>
+			<tr><td>Primeiro projeto, aprendendo</td><td class="destaque">ESP32-S3</td><td>Muita RAM, USB nativo para depurar e o maior ecossistema de exemplos</td></tr>
+			<tr><td>Sensor Wi-Fi simples e barato</td><td class="destaque">ESP32-C3</td><td>Faz o essencial pelo menor preço, com boa maturidade</td></tr>
+			<tr><td>Automação residencial / Matter</td><td class="destaque">ESP32-C6</td><td>Único caminho maduro com Wi-Fi 6 e 802.15.4 juntos</td></tr>
+			<tr><td>Sensor a pilha, sem Wi-Fi</td><td class="destaque">ESP32-H2</td><td>Sem o rádio mais custoso, a autonomia muda de patamar</td></tr>
+			<tr><td>Tela, câmera ou interface gráfica</td><td class="destaque">ESP32-P4 ou S3</td><td>MIPI e RAM suficiente para buffer de vídeo</td></tr>
+			<tr><td>Áudio por Bluetooth Clássico</td><td class="destaque">ESP32</td><td>Praticamente a única série com BR/EDR</td></tr>
+			<tr><td>Visão computacional na borda</td><td class="destaque">ESP32-S3</td><td>Instruções vetoriais e PSRAM para o buffer da câmera</td></tr>
+			<tr><td>Produto em altíssimo volume</td><td class="destaque">ESP32-C2</td><td>O menor custo da família, se os requisitos couberem nele</td></tr>
+		</tbody>
+	</table>
+
+	<h3>ESP-IDF ou Arduino?</h3>
+
+	<p class="junto">
+		Escolhida a série, falta escolher a ferramenta. As duas são oficiais e mantidas pela
+		Espressif; a diferença é o nível de controle.
+	</p>
+
+	<table>
+		<thead><tr><th style="width:22%"></th><th>Core Arduino</th><th>ESP-IDF</th></tr></thead>
+		<tbody>
+			<tr><td class="destaque">Curva de entrada</td><td>Baixa, familiar</td><td>Íngreme: menuconfig, CMake, componentes</td></tr>
+			<tr><td class="destaque">Controle do hardware</td><td>Parcial</td><td>Total</td></tr>
+			<tr><td class="destaque">Acesso a recursos novos</td><td>Chega depois</td><td>Imediato</td></tr>
+			<tr><td class="destaque">Bibliotecas de sensores</td><td>Enorme</td><td>Menor, mais técnica</td></tr>
+			<tr><td class="destaque">Consumo de memória</td><td>Maior</td><td>Ajustável</td></tr>
+			<tr><td class="destaque">Indicado para</td><td>Aprender, prototipar</td><td>Produto, otimização, recursos avançados</td></tr>
+		</tbody>
+	</table>
+
+	<div class="caixa dica">
+		<div class="caixa-titulo">Não é escolha definitiva</div>
+		<p>
+			Dá para usar o core Arduino <em>como componente</em> dentro de um projeto ESP-IDF,
+			misturando os dois. Um caminho comum é começar no Arduino para validar a ideia e migrar
+			para o IDF quando aparecer a necessidade de afinar consumo, segurança ou tempo de boot.
+		</p>
+	</div>
+
+	<div class="caixa dica">
+		<div class="caixa-titulo">Ferramenta de apoio</div>
+		<p>
+			O <strong>ESPDocs</strong> tem um seletor que faz exatamente estas perguntas e devolve
+			uma recomendação justificada, além de comparar até quatro séries lado a lado, com
+			pinagem interativa e ficha de segurança.
+			Em <a href="https://espdocs.cienciaembarcada.com.br/">espdocs.cienciaembarcada.com.br</a>.
+		</p>
+	</div>
+</section>
+
+<!-- ═══════════════════════════ CAPÍTULO 9 ═══════════════════════════ -->
+<section class="capitulo" id="cap9">
+	<div class="capitulo-abertura">
+		<div class="capitulo-numero">9</div>
+		<div>
+			<h2>Prática: lendo um DHT11 com o ESP32-S3</h2>
+			<p class="subtitulo">Do jumper ao terminal mostrando temperatura e umidade.</p>
+		</div>
+	</div>
+
+	<p>
+		Vamos montar o "olá mundo" dos sensores: ler temperatura e umidade do ambiente e imprimir
+		no monitor serial. O DHT11 é barato, comum e usa um protocolo digital próprio de um único
+		fio, o que já ensina algo além de acender um LED.
+	</p>
+
+	<h3>Lista de material</h3>
+
+	<table>
+		<thead><tr><th style="width:46%">Item</th><th style="width:12%">Qtd.</th><th>Observação</th></tr></thead>
+		<tbody>
+			<tr><td class="destaque">ESP32-S3-DevKitC-1</td><td>1</td><td>Qualquer variante de flash/PSRAM serve</td></tr>
+			<tr><td class="destaque">Sensor DHT11</td><td>1</td><td>O componente azul de 4 pinos</td></tr>
+			<tr><td class="destaque">Resistor de 10 kΩ</td><td>1</td><td>Pull-up do dado (marrom, preto, laranja)</td></tr>
+			<tr><td class="destaque">Protoboard</td><td>1</td><td>Meia protoboard basta</td></tr>
+			<tr><td class="destaque">Jumpers</td><td>4</td><td>Vermelho, preto e amarelo, por convenção</td></tr>
+			<tr><td class="destaque">Cabo USB</td><td>1</td><td><strong>De dados</strong>. Cabo só de carga não funciona</td></tr>
+		</tbody>
+	</table>
+
+	<h3>Montagem</h3>
+
+	<table>
+		<thead><tr><th style="width:34%">Ligação</th><th style="width:28%">Cor na figura</th><th>Função</th></tr></thead>
+		<tbody>
+			<tr><td class="destaque">VCC do DHT11 → 3V3</td><td>Vermelho</td><td>Alimentação do sensor</td></tr>
+			<tr><td class="destaque">DATA do DHT11 → GPIO12</td><td>Amarelo</td><td>Linha de dados bidirecional</td></tr>
+			<tr><td class="destaque">GND do DHT11 → GND</td><td>Preto</td><td>Referência de terra</td></tr>
+			<tr><td class="destaque">10 kΩ entre DATA e 3V3</td><td>Resistor</td><td>Mantém a linha em nível alto em repouso</td></tr>
+		</tbody>
+		<caption>O terceiro pino do DHT11 (contando da esquerda) não é usado.</caption>
+	</table>
+
+	<figure>
+		<img src="pratica.png" alt="Esquema de ligação do DHT11 ao ESP32-S3-DevKitC: fio vermelho do VCC ao 3V3, fio amarelo do DATA ao GPIO12, fio preto do GND ao GND, e um resistor de 10 kΩ entre a linha de dados e o 3V3." style="max-height:143mm">
+		<figcaption>
+			Ligação completa. O fio amarelo leva o dado ao <strong>GPIO12</strong>; o resistor de
+			10 kΩ conecta essa mesma linha ao 3V3, funcionando como <em>pull-up</em>. Repare que a
+			placa tem <strong>duas portas USB</strong> na borda inferior, marcadas UART e USB. A
+			diferença entre elas importa e está explicada no passo 4.
+			<br><br>
+			Arquivo editável do Fritzing:
+			<a href="https://espdocs.cienciaembarcada.com.br/apostilas/1/pratica.fzz">baixar pratica.fzz</a>
+		</figcaption>
+	</figure>
+
+	<div class="caixa curiosidade">
+		<div class="caixa-titulo">Por que o resistor de pull-up é necessário</div>
+		<p>
+			A linha de dados do DHT11 é <strong>bidirecional</strong>: ora o ESP32 fala, ora o
+			sensor responde. Para isso funcionar sem que os dois disputem a linha, ambos apenas
+			"puxam para baixo" quando querem enviar um zero, e soltam a linha quando querem enviar
+			um um. Só que uma linha solta não tem nível definido: ela flutua e capta ruído.
+		</p>
+		<p>
+			O resistor de 10 kΩ resolve isso mantendo a linha em nível alto em repouso, com força
+			suficiente para definir o nível, mas fraca o bastante para que qualquer um dos dois
+			consiga puxá-la para baixo. Módulos DHT11 já montados em plaquinha trazem esse resistor
+			embutido; o componente azul sozinho, não.
+		</p>
+	</div>
+
+	<div class="grupo">
+		<h3>Como o sensor conversa</h3>
+
+		<p class="junto">
+			Vale entender o que a biblioteca faz por você. A cada leitura acontece esta troca, toda
+			por um único fio:
+		</p>
+
+		<figure>
+			<svg class="diagrama" viewBox="0 0 640 190" role="img"
+				     aria-label="Diagrama de tempo do protocolo de um fio do DHT11.">
+				<!-- Linhas de referência dos dois níveis lógicos, desenhadas antes da onda
+				     para ficarem atrás dela. O sinal só começa em x=56, depois dos rótulos:
+				     antes, a onda passava por cima da palavra "alto". -->
+				<g stroke="var(--linha)" stroke-width="1" stroke-dasharray="2 4" fill="none">
+					<line x1="56" y1="58" x2="632" y2="58"/>
+					<line x1="56" y1="120" x2="632" y2="120"/>
+				</g>
+				<text class="miudo" x="48" y="61" font-size="8.5" text-anchor="end">alto</text>
+				<text class="miudo" x="48" y="123" font-size="8.5" text-anchor="end">baixo</text>
+
+				<polyline class="onda" points="56,58 81,58 81,120 181,120 181,58 225,58 225,120 273,120 273,58 321,58 321,120 354,120 354,58 379,58 379,120 417,120 417,58 480,58 480,120 517,120 517,58 542,58 542,120 580,120 580,58 632,58"/>
+
+				<g stroke="var(--laranja)" stroke-width="1" fill="none">
+					<path d="M81 36 L81 44 M181 36 L181 44 M81 40 L181 40"/>
+					<path d="M273 36 L273 44 M321 36 L321 44 M273 40 L321 40"/>
+					<path d="M417 36 L417 44 M480 36 L480 44 M417 40 L480 40"/>
+					<path d="M517 36 L517 44 M542 36 L542 44 M517 40 L542 40"/>
+				</g>
+				<text class="rotulo" x="131" y="32" font-size="9" text-anchor="middle" fill="var(--laranja-texto)">18 ms</text>
+				<text class="rotulo" x="297" y="32" font-size="9" text-anchor="middle" fill="var(--laranja-texto)">80 µs</text>
+				<text class="rotulo" x="449" y="32" font-size="9" text-anchor="middle" fill="var(--laranja-texto)">70 µs</text>
+				<text class="rotulo" x="529" y="32" font-size="9" text-anchor="middle" fill="var(--laranja-texto)">26 µs</text>
+
+				<text class="miudo" x="131" y="170" font-size="8.5" text-anchor="middle">o ESP32 pede a leitura</text>
+				<text class="miudo" x="297" y="170" font-size="8.5" text-anchor="middle">o sensor responde</text>
+				<text class="miudo" x="449" y="170" font-size="8.5" text-anchor="middle">bit 1</text>
+				<text class="miudo" x="529" y="170" font-size="8.5" text-anchor="middle">bit 0</text>
+				<text class="miudo" x="606" y="170" font-size="8.5" text-anchor="middle">…40 bits</text>
+
+				<line class="traco" x1="402" y1="14" x2="402" y2="182" stroke-dasharray="2 4"/>
+				<text class="miudo" x="408" y="14" font-size="8.5">a partir daqui, o valor do bit está na largura do pulso alto</text>
+			</svg>
+			<figcaption>
+				O mesmo fio serve para os dois lados conversarem, em momentos diferentes. Um zero e um
+				um se distinguem só pela <strong>duração</strong> do nível alto, e é por isso que a
+				leitura falha quando o pull-up está ausente: sem ele a linha não sobe rápido o bastante
+				e os tempos saem errados.
+			</figcaption>
+		</figure>
+	</div>
+
+	<ol>
+		<li>O ESP32 puxa a linha para baixo por cerca de 18 ms, que é o "acorda" do sensor.</li>
+		<li>Solta a linha; o pull-up a leva para alto.</li>
+		<li>O DHT11 responde puxando para baixo por 80 µs e soltando por mais 80 µs.</li>
+		<li>Em seguida envia <strong>40 bits</strong>: umidade (2 bytes), temperatura (2 bytes) e
+			um byte de verificação.</li>
+		<li>Cada bit é codificado pela <em>duração</em> do nível alto: cerca de 26 µs é zero,
+			cerca de 70 µs é um.</li>
+	</ol>
+
+	<p>
+		A biblioteca mede esses tempos e confere o byte de verificação. Se a soma não bater,
+		seja por ruído, fio solto ou falta de pull-up, ela devolve <code>NaN</code>, e é isso que o
+		nosso código testa.
+	</p>
+
+	<h3>Passo a passo</h3>
+
+	<div class="passo">
+		<div class="passo-num">1</div>
+		<div>
+			<h3>Instale o suporte ao ESP32 na IDE</h3>
+			<p class="junto">
+				Na Arduino IDE, abra <em>Arquivo → Preferências</em> e adicione em "URLs adicionais
+				para gerenciadores de placas":
+			</p>
+
+	<pre><code>https://espressif.github.io/arduino-esp32/package_esp32_index.json</code></pre>
+			<p>
+				Depois vá em <em>Ferramentas → Placa → Gerenciador de placas</em>, procure por
+				<strong>esp32</strong> e instale o pacote da Espressif Systems. São alguns minutos
+				de download.
+			</p>
+		</div>
+	</div>
+
+	<div class="passo">
+		<div class="passo-num">2</div>
+		<div>
+			<h3>Instale a biblioteca do sensor</h3>
+			<p>
+				Em <em>Ferramentas → Gerenciar bibliotecas</em>, procure por
+				<strong>DHT sensor library</strong>, da Adafruit, e instale. A IDE vai perguntar se
+				quer instalar as dependências. Aceite, porque ela precisa da
+				<strong>Adafruit Unified Sensor</strong> junto.
+			</p>
+		</div>
+	</div>
+
+	<div class="passo">
+		<div class="passo-num">3</div>
+		<div>
+			<h3>Escreva o programa</h3>
+			<pre><code><span class="c-pre">#include</span> <span class="c-str">&lt;DHT.h&gt;</span>
+
+<span class="c-pre">#define</span> PINO_DHT  <span class="c-num">12</span>       <span class="c-com">// fio amarelo</span>
+<span class="c-pre">#define</span> TIPO_DHT  DHT11
+
+DHT dht(PINO_DHT, TIPO_DHT);
+
+<span class="c-key">void</span> <span class="c-fun">setup</span>() {
+  Serial.<span class="c-fun">begin</span>(<span class="c-num">115200</span>);
+  <span class="c-fun">delay</span>(<span class="c-num">1000</span>);              <span class="c-com">// tempo para a USB enumerar</span>
+  dht.<span class="c-fun">begin</span>();
+  Serial.<span class="c-fun">println</span>(<span class="c-str">"Leitor DHT11 - ESP32-S3"</span>);
+}
+
+<span class="c-key">void</span> <span class="c-fun">loop</span>() {
+  <span class="c-key">float</span> umidade     = dht.<span class="c-fun">readHumidity</span>();
+  <span class="c-key">float</span> temperatura = dht.<span class="c-fun">readTemperature</span>();
+
+  <span class="c-key">if</span> (<span class="c-fun">isnan</span>(umidade) || <span class="c-fun">isnan</span>(temperatura)) {
+    Serial.<span class="c-fun">println</span>(<span class="c-str">"Falha na leitura do sensor"</span>);
+  } <span class="c-key">else</span> {
+    Serial.<span class="c-fun">printf</span>(<span class="c-str">"Temperatura: %.1f C | Umidade: %.1f %%\n"</span>,
+                  temperatura, umidade);
+  }
+
+  <span class="c-fun">delay</span>(<span class="c-num">2000</span>);              <span class="c-com">// DHT11 nao aceita leitura mais rapida</span>
+}</code></pre>
+			<p class="legenda-codigo">
+				O <code>delay(2000)</code> não é enfeite: o DHT11 leva cerca de um segundo para
+				fazer uma medição e responde com erro se for consultado antes disso.
+			</p>
+		</div>
+	</div>
+
+	<div class="passo">
+		<div class="passo-num">4</div>
+		<div>
+			<h3>Configure a placa: o passo onde todo mundo tropeça</h3>
+			<p>
+				Em <em>Ferramentas</em>, selecione a placa <strong>ESP32S3 Dev Module</strong>.
+				Agora, o detalhe importante: o DevKitC tem <strong>duas portas USB</strong>.
+			</p>
+			<p>
+				A porta marcada <strong>UART</strong> passa por um conversor USB-serial e funciona
+				como em qualquer Arduino. A porta marcada <strong>USB</strong> é o USB nativo do
+				próprio ESP32-S3.
+			</p>
+			<p>
+				Se você ligar o cabo na porta <strong>USB</strong>, precisa habilitar
+				<em>USB CDC On Boot → Enabled</em>, senão o monitor serial fica mudo mesmo com o
+				programa rodando. Ligando na porta <strong>UART</strong>, deixe essa opção como
+				<em>Disabled</em>.
+			</p>
+		</div>
+	</div>
+
+	<div class="passo">
+		<div class="passo-num">5</div>
+		<div>
+			<h3>Grave e observe</h3>
+			<p class="junto">
+				Selecione a porta em <em>Ferramentas → Porta</em>, clique em carregar e abra o
+				monitor serial em <strong>115200 baud</strong>. Depois de alguns segundos:
+			</p>
+
+	<pre><code>Leitor DHT11 - ESP32-S3
+Temperatura: 26.0 C | Umidade: 61.0 %
+Temperatura: 26.0 C | Umidade: 61.0 %
+Temperatura: 26.1 C | Umidade: 62.0 %</code></pre>
+			<p>
+				Segure o sensor entre os dedos e sopre nele: a umidade sobe rápido e a temperatura
+				acompanha devagar. Essa diferença de velocidade é real: o elemento de umidade
+				responde muito mais rápido que o termistor.
+			</p>
+		</div>
+	</div>
+
+	<h3>Quando não funciona</h3>
+
+	<table>
+		<thead><tr><th style="width:32%">Sintoma</th><th>Causa provável e solução</th></tr></thead>
+		<tbody>
+			<tr>
+				<td class="destaque">Monitor serial vazio</td>
+				<td>Cabo na porta USB nativa sem <em>USB CDC On Boot</em> habilitado. Veja o passo
+					4. Confira também a velocidade em 115200.</td>
+			</tr>
+			<tr>
+				<td class="destaque">"Falha na leitura" sempre</td>
+				<td>Fio de dados no pino errado, VCC não conectado, ou resistor de pull-up ausente
+					ou mal encaixado na protoboard.</td>
+			</tr>
+			<tr>
+				<td class="destaque">Leitura falha às vezes</td>
+				<td>Jumper com mau contato, fio de dados muito longo, ou <code>delay</code> menor
+					que 2 segundos.</td>
+			</tr>
+			<tr>
+				<td class="destaque">A porta não aparece</td>
+				<td>Cabo só de carga (troque por um de dados) ou driver do conversor USB-serial
+					faltando.</td>
+			</tr>
+			<tr>
+				<td class="destaque">Erro ao gravar, timeout</td>
+				<td>Placa não entrou em modo de gravação: segure BOOT, pressione e solte RESET,
+					solte BOOT e tente de novo.</td>
+			</tr>
+			<tr>
+				<td class="destaque">Temperatura sempre inteira</td>
+				<td>Não é defeito. O DHT11 tem resolução de 1 °C. O DHT22 dá 0,1 °C.</td>
+			</tr>
+			<tr>
+				<td class="destaque">Valores absurdos e constantes</td>
+				<td>Sensor invertido na alimentação. Confira VCC e GND antes de energizar de novo.</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<div class="caixa curiosidade">
+		<div class="caixa-titulo">Por que o GPIO12?</div>
+		<p>
+			No ESP32-S3, o GPIO12 é um pino comum: não participa do boot, não conversa com a flash
+			e não é usado para depuração. Ele até tem funções alternativas de touch e ADC2, mas
+			nenhuma delas atrapalha o uso como entrada e saída digital.
+		</p>
+		<p>
+			Em outras séries, cuidado: no ESP32 original o GPIO12 é <strong>pino de strapping</strong>:
+			ele seleciona a tensão da flash, e um nível alto durante o reset impede a placa de
+			iniciar. Mesmo número de pino, comportamento completamente diferente.
+		</p>
+		<p>
+			Se você montasse este mesmo circuito num ESP32 clássico sem trocar o pino, o resistor
+			de pull-up de 10 kΩ que o DHT11 exige seguraria o GPIO12 em nível alto exatamente
+			durante o reset. A placa simplesmente não iniciaria, e o sintoma não apontaria para o
+			sensor em momento algum. É o grupo 2 do capítulo 2 acontecendo na prática.
+		</p>
+	</div>
+
+	<h3>Desafios</h3>
+
+	<p class="junto">Se sobrar tempo na formação, ou para praticar depois:</p>
+
+	<ol>
+		<li>Acenda o LED RGB da placa em vermelho quando a temperatura passar de 28 °C e em azul
+			abaixo disso.</li>
+		<li>Calcule e imprima a média das últimas dez leituras, para suavizar o ruído.</li>
+		<li>Troque o <code>delay</code> por controle de tempo com <code>millis()</code>, de modo
+			que o programa continue respondendo enquanto espera.</li>
+		<li>Detecte e conte quantas vezes a umidade subiu mais de 5 % entre leituras consecutivas.</li>
+		<li>Publique a leitura numa página web servida pelo próprio ESP32, acessível por qualquer
+			aparelho na mesma rede.</li>
+	</ol>
+</section>
+
+<!-- ═══════════════════════════ CAPÍTULO 10 ═══════════════════════════ -->
+<section class="capitulo" id="cap10">
+	<div class="capitulo-abertura">
+		<div class="capitulo-numero">10</div>
+		<div>
+			<h2>Glossário e próximos passos</h2>
+			<p class="subtitulo">Os termos que aparecem o tempo todo, e para onde seguir.</p>
+		</div>
+	</div>
+
+	<h3>Glossário</h3>
+
+	<table>
+		<thead><tr><th style="width:24%">Termo</th><th>Significado</th></tr></thead>
+		<tbody>
+			<tr><td class="destaque">SoC</td><td><em>System on Chip</em>: um único chip reunindo processador, memória, rádio e periféricos.</td></tr>
+			<tr><td class="destaque">GPIO</td><td>Pino de entrada e saída de uso geral.</td></tr>
+			<tr><td class="destaque">Strapping</td><td>Pino lido no reset para definir o modo de boot.</td></tr>
+			<tr><td class="destaque">Pull-up / pull-down</td><td>Resistor que define o nível de uma linha em repouso.</td></tr>
+			<tr><td class="destaque">ULP / LP core</td><td>Coprocessador de baixíssimo consumo que roda com o chip principal dormindo.</td></tr>
+			<tr><td class="destaque">PSRAM</td><td>Memória RAM externa opcional, para buffers grandes.</td></tr>
+			<tr><td class="destaque">eFuse</td><td>Memória que só pode ser gravada uma vez, usada para chaves e configurações permanentes.</td></tr>
+			<tr><td class="destaque">Deep sleep</td><td>Modo em que quase tudo desliga, mantendo só o mínimo para acordar depois.</td></tr>
+			<tr><td class="destaque">OTA</td><td><em>Over-The-Air</em>: atualização de firmware pela rede.</td></tr>
+			<tr><td class="destaque">FreeRTOS</td><td>Sistema operacional de tempo real que gerencia as tarefas do ESP32.</td></tr>
+			<tr><td class="destaque">Watchdog</td><td>Temporizador que reinicia o chip se uma tarefa travar.</td></tr>
+			<tr><td class="destaque">TWAI</td><td>Nome que a Espressif dá ao controlador compatível com CAN.</td></tr>
+			<tr><td class="destaque">Matter</td><td>Padrão de interoperabilidade para casa conectada, sobre Wi-Fi ou Thread.</td></tr>
+			<tr><td class="destaque">Thread / Zigbee</td><td>Protocolos de rede em malha de baixo consumo sobre IEEE 802.15.4.</td></tr>
+			<tr><td class="destaque">Secure Boot</td><td>Mecanismo que impede o chip de executar firmware não assinado.</td></tr>
+			<tr><td class="destaque">Errata</td><td>Documento com os defeitos conhecidos de uma revisão do silício.</td></tr>
+		</tbody>
+	</table>
+
+	<h3>Onde consultar</h3>
+
+	<table>
+		<thead><tr><th style="width:32%">Fonte</th><th>Para quê</th></tr></thead>
+		<tbody>
+			<tr><td class="destaque"><a href="https://espdocs.cienciaembarcada.com.br/">ESPDocs</a></td><td>Especificações, pinagem, segurança e comparação das séries em português. Em <code>espdocs.cienciaembarcada.com.br</code></td></tr>
+			<tr><td class="destaque">Datasheet da série</td><td>Verdade final sobre limites elétricos, pinagem e encapsulamento</td></tr>
+			<tr><td class="destaque">Technical Reference Manual</td><td>Detalhe de registradores e comportamento de cada periférico</td></tr>
+			<tr><td class="destaque">ESP-IDF Programming Guide</td><td>API oficial, exemplos e guias de Wi-Fi, BLE, OTA e segurança</td></tr>
+			<tr><td class="destaque">Errata do chip</td><td>Defeitos conhecidos daquela revisão. Leia antes de fechar projeto</td></tr>
+			<tr><td class="destaque">Fórum esp32.com</td><td>Dúvidas específicas, com participação de engenheiros da Espressif</td></tr>
+			<tr><td class="destaque">GitHub da Espressif</td><td>Código-fonte, exemplos e issues abertas</td></tr>
+		</tbody>
+	</table>
+
+	<h3>Por onde continuar</h3>
+	<p class="junto">
+		Com o sensor funcionando, o caminho natural é tirar o dado da bancada. Na ordem que
+		costuma render mais aprendizado por hora investida:
+	</p>
+
+	<ol>
+		<li><strong>Conectar ao Wi-Fi</strong> e servir uma página com a leitura. É o exercício que
+			mais amarra os conceitos: rede, memória e o laço principal disputando espaço.</li>
+		<li><strong>Publicar em um broker MQTT</strong>, que é o protocolo padrão de IoT e o que
+			permite o dado chegar a um painel ou a outro dispositivo.</li>
+		<li><strong>Economizar energia com deep sleep</strong>, medindo de verdade quanto tempo uma
+			bateria aguenta.</li>
+		<li><strong>Atualizar o firmware pelo ar</strong> com OTA, fechando o ciclo de um produto
+			que não precisa mais de cabo depois de instalado.</li>
+		<li><strong>Migrar um projeto para o ESP-IDF</strong>, para enxergar o que o core Arduino
+			estava escondendo.</li>
+	</ol>
+
+	<div class="caixa dica">
+		<div class="caixa-titulo">Um conselho para levar</div>
+		<p>
+			Quando algo não funcionar, resista à vontade de trocar linhas de código no chute.
+			Pergunte antes: o hardware está certo? A alimentação aguenta? Esse pino tem restrição?
+			A biblioteca é a certa para esta série? A maior parte dos problemas em sistemas
+			embarcados não está no algoritmo, e sim na fronteira entre o software e o mundo físico.
+		</p>
+	</div>
+
+	<p style="margin-top:10mm;padding-top:4mm;border-top:0.8pt solid var(--linha);font-size:8.5pt;color:var(--tinta-3)">
+		Material produzido para a <strong>LASER</strong>, Liga Acadêmica de Sistemas Embarcados do Centro de Informática
+		da UFPE. Dados técnicos conferidos nos datasheets oficiais da
+		Espressif e nas definições de hardware do ESP-IDF. Este é um material independente, sem
+		vínculo com a Espressif Systems.
+	</p>
+</section>
+
+<script>
+	// Tira o aviso do fluxo antes da paginação começar, senão o Paged.js o
+	// trataria como conteúdo e ele apareceria impresso na primeira página.
+	window.PagedConfig = {
+		before: () => document.querySelector(".aviso-carregando")?.remove(),
+	};
+</script>
+<script src="../assets/paged.polyfill.js"></script>
+</body>
+</html>

@@ -41,7 +41,7 @@ export default function Glossario() {
                 },
                 {
                     termo: "Aceleradores Criptográficos",
-                    definicao: "Blocos de hardware dedicados que executam algoritmos de criptografia muito mais rápido e com menor consumo do que a CPU. Praticamente toda série tem algum, mas o conjunto varia bastante — por isso vale olhar item por item.",
+                    definicao: "Blocos de hardware dedicados que executam algoritmos de criptografia muito mais rápido e com menor consumo do que a CPU. Praticamente toda série tem algum, mas o conjunto varia bastante, por isso vale olhar item por item.",
                     exemplo: "ESP32-C2 e ESP32-C61 não têm acelerador AES: só SHA e curvas elípticas.",
                 },
                 {
@@ -51,7 +51,7 @@ export default function Glossario() {
                 },
                 {
                     termo: "ECDSA",
-                    definicao: "Algoritmo de assinatura digital baseado em curvas elípticas. Ter o periférico ECDSA no silício significa assinar e verificar sem carregar a CPU — é o que o Matter exige para o atestado de dispositivo.",
+                    definicao: "Algoritmo de assinatura digital baseado em curvas elípticas. Ter o periférico ECDSA no silício significa assinar e verificar sem carregar a CPU. É o que o Matter exige para o atestado de dispositivo.",
                     exemplo: "Só ESP32-S31, C5, C61, P4, H2 e H4 têm ECDSA em hardware.",
                 },
                 {

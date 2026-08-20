@@ -1,4 +1,4 @@
-# Diretrizes de tema — claro e escuro
+# Diretrizes de tema: claro e escuro
 
 Regras para manter os dois temas consistentes. Não tratam da identidade visual
 (degradê da marca, arredondamentos, hierarquia): essas decisões já estão tomadas
@@ -10,7 +10,7 @@ e não mudam.
 
 A escala do Tailwind anda de 100 em 100: `50, 100, 200, 300 … 900, 950`.
 Os meios-tons (`150, 250, 350, 450, 550, 650, 750, 850`) **não existem por
-padrão** — uma classe como `text-slate-350` não gera CSS nenhum, e o elemento
+padrão**. Uma classe como `text-slate-350` não gera CSS nenhum, e o elemento
 herda silenciosamente a cor do pai. Era a causa da maior parte das
 inconsistências: o mesmo texto ficava certo num tema e lavado no outro.
 
@@ -38,9 +38,9 @@ classe com um valor que não está na escala.
 No tema escuro o fundo é escuro, então o texto precisa **clarear**.
 
 - **Texto:** o número do `dark:` é sempre **menor** que o do claro.
-  `text-slate-800 dark:text-slate-200` ✅ — `text-slate-400 dark:text-slate-500` ❌
+  `text-slate-800 dark:text-slate-200` ✅ · `text-slate-400 dark:text-slate-500` ❌
 - **Fundo e borda:** o número do `dark:` é sempre **maior**.
-  `bg-white dark:bg-slate-900` ✅ — `border-slate-200 dark:border-slate-800` ✅
+  `bg-white dark:bg-slate-900` ✅ · `border-slate-200 dark:border-slate-800` ✅
 
 Um par invertido não quebra o build e não aparece em revisão de código: só
 enfraquece o contraste justamente onde ele deveria aumentar. Havia 71 deles.
@@ -63,7 +63,7 @@ elemento gráfico, **3:1**.
 | Menor ênfase | `text-slate-500 dark:text-slate-450` | 4.8 | 5.2 |
 
 `text-slate-500 dark:text-slate-400` é o par mais usado do projeto (100
-ocorrências) — é o rótulo em caixa alta, a legenda, o texto de apoio.
+ocorrências): é o rótulo em caixa alta, a legenda, o texto de apoio.
 
 **Não use** `slate-400` como cor de texto no tema claro: sobre branco dá 2.56:1.
 Era o erro mais repetido.
@@ -72,7 +72,7 @@ Era o erro mais repetido.
 
 ## 4. Exceção: superfícies escuras nos dois temas
 
-Alguns blocos são escuros independente do tema — painéis de CTA com degradê,
+Alguns blocos são escuros independente do tema: painéis de CTA com degradê,
 bloco de código, tooltip do diagrama de pinos. Dentro deles:
 
 - **Não use variante `dark:`.** O fundo não muda, então o texto também não deve.
@@ -101,11 +101,11 @@ aparência entre os temas. Botão carrega a **própria cor**, igual nos dois tem
 
 | Papel | Classe | Contraste com texto branco |
 |-------|--------|---------------------------|
-| Ação principal | `bg-gradient-to-r from-purple-600 to-indigo-600 text-white` | 5.4 – 6.3 |
+| Ação principal | `bg-gradient-to-r from-purple-600 to-indigo-600 text-white` | 5.4 a 6.3 |
 | Ação secundária | `bg-blue-600 hover:bg-blue-700 text-white` | 5.2 |
-| Ação terciária | `bg-white dark:bg-slate-900` + borda + texto neutro | — |
+| Ação terciária | `bg-white dark:bg-slate-900` + borda + texto neutro | · |
 
-Como a cor é a mesma nos dois temas, o texto branco também é — sem variante
+Como a cor é a mesma nos dois temas, o texto branco também é, sem variante
 `dark:`. Isso vale inclusive dentro de painel escuro: o botão de gradiente
 funciona sobre fundo claro e escuro.
 
@@ -130,17 +130,17 @@ Com o conteúdo pareado: título `text-slate-900 dark:text-white`, corpo
 
 ## 4.3. Separação de superfície no tema claro
 
-Entre near-whites o contraste é sempre baixo — quem separa o card do fundo é a
+Entre near-whites o contraste é sempre baixo. Quem separa o card do fundo é a
 **borda**, não o fundo. Por isso:
 
 | Camada | Valor | Contraste |
 |--------|-------|-----------|
-| Fundo da página | `from-slate-100 via-slate-50 to-purple-100/40` | — |
+| Fundo da página | `from-slate-100 via-slate-50 to-purple-100/40` | · |
 | Card | `bg-white` (sólido, sem `/70` ou `/80`) | 1.10 vs fundo |
 | Borda do card | `border-slate-300` | 1.48 vs card |
 | Divisória interna | `border-slate-200` | mais sutil |
 
-`border-slate-200/60` sobre card branco dava 1.14 — imperceptível. Não use borda
+`border-slate-200/60` sobre card branco dava 1.14, praticamente imperceptível. Não use borda
 com opacidade para delimitar card.
 
 ---
@@ -155,12 +155,12 @@ Cada série tem sua cor em [`public/series.json`](public/series.json) (campo
 ```
 
 Esses valores são iguais nos dois temas. Ao usá-los como **fundo**, mantenha o
-alfa baixo (`18`–`30` em hex) para que funcione sobre superfície clara e escura.
-Como **texto**, só sobre superfície neutra — nunca sobre outra cor de série.
+alfa baixo (de `18` a `30` em hex) para que funcione sobre superfície clara e escura.
+Como **texto**, só sobre superfície neutra, nunca sobre outra cor de série.
 
 ### Nunca escreva cor fixa em `style` inline
 
-`style` inline vence qualquer classe — inclusive as variantes `dark:` e
+`style` inline vence qualquer classe, inclusive as variantes `dark:` e
 `hover:`, que deixam de existir para aquele elemento. Só cor **vinda do dado**
 pode ir no inline.
 
@@ -178,7 +178,7 @@ style={{ borderColor: isSelected ? serie.cor : undefined }}
 
 Esse bug é traiçoeiro porque **some depois do primeiro hover**: o
 `onMouseLeave` faz `style.borderColor = ''`, que apaga o inline e devolve o
-controle à classe. A borda passa a aparecer e nunca mais some — dando a
+controle à classe. A borda passa a aparecer e nunca mais some, dando a
 impressão de que só falha "antes de passar o mouse".
 
 ---

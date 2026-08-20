@@ -13,8 +13,8 @@
 	   Meios-tons de slate.
 
 	   A escala do Tailwind anda de 100 em 100 (50, 100, 200 ... 950), então
-	   classes como text-slate-350 ou border-slate-850 — usadas em ~190 pontos
-	   do projeto — não geravam CSS nenhum: o elemento herdava a cor do pai e
+	   classes como text-slate-350 ou border-slate-850, usadas em cerca de 190
+	   pontos do projeto, não geravam CSS nenhum: o elemento herdava a cor do pai e
 	   ficava diferente em cada tema, sem padrão.
 
 	   Cada valor abaixo é o ponto médio exato entre os dois degraus oficiais

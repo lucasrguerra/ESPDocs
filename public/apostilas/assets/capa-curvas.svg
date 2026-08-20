@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 210 297" width="210mm" height="297mm" aria-hidden="true">
+<defs>
+  <linearGradient id="feixe" x1="0" y1="260" x2="210" y2="80" gradientUnits="userSpaceOnUse">
+    <stop offset="0" stop-color="#003049"/>
+    <stop offset="0.45" stop-color="#EAE2B7"/>
+    <stop offset="0.68" stop-color="#FCBF49"/>
+    <stop offset="0.85" stop-color="#F77F00"/>
+    <stop offset="1" stop-color="#D62828"/>
+  </linearGradient>
+  <radialGradient id="brilho" cx="0.72" cy="0.24" r="0.62">
+    <stop offset="0" stop-color="#FCBF49" stop-opacity="0.20"/>
+    <stop offset="0.55" stop-color="#F77F00" stop-opacity="0.06"/>
+    <stop offset="1" stop-color="#F77F00" stop-opacity="0"/>
+  </radialGradient>
+  <radialGradient id="frio" cx="0.12" cy="0.86" r="0.6">
+    <stop offset="0" stop-color="#003049" stop-opacity="0.13"/>
+    <stop offset="1" stop-color="#003049" stop-opacity="0"/>
+  </radialGradient>
+</defs>
+<rect width="210" height="297" fill="url(#frio)"/>
+<rect width="210" height="297" fill="url(#brilho)"/>
+<g fill="none" stroke="url(#feixe)" stroke-linecap="round">
+  <path d="M -14 232.0 C 62.0 214.0, 132.0 128.0, 224 96.0" stroke-width="0.35" opacity="0.16"/>
+  <path d="M -14 239.8 C 65.2 210.8, 129.2 133.8, 224 91.0" stroke-width="0.61" opacity="0.27"/>
+  <path d="M -14 247.5 C 68.5 207.5, 126.5 139.5, 224 86.0" stroke-width="0.88" opacity="0.37"/>
+  <path d="M -14 255.2 C 71.8 204.2, 123.8 145.2, 224 81.0" stroke-width="1.14" opacity="0.47"/>
+  <path d="M -14 263.0 C 75.0 201.0, 121.0 151.0, 224 76.0" stroke-width="1.40" opacity="0.58"/>
+  <path d="M -14 270.8 C 78.2 197.8, 118.2 156.8, 224 71.0" stroke-width="1.14" opacity="0.47"/>
+  <path d="M -14 278.5 C 81.5 194.5, 115.5 162.5, 224 66.0" stroke-width="0.88" opacity="0.37"/>
+  <path d="M -14 286.2 C 84.8 191.2, 112.8 168.2, 224 61.0" stroke-width="0.61" opacity="0.27"/>
+  <path d="M -14 294.0 C 88.0 188.0, 110.0 174.0, 224 56.0" stroke-width="0.35" opacity="0.16"/>
+</g>
+</svg>

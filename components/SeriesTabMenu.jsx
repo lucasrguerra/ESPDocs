@@ -9,7 +9,7 @@ export default function SeriesTabMenu({ tabs, color }) {
 
 	// Troca manual limpa o hash. Sem isso, depois de abrir o diagrama pelo link e
 	// mudar de aba na mão, o hash continuaria em #connections e um novo clique no
-	// link não dispararia hashchange — o botão pareceria quebrado.
+	// link não dispararia hashchange e o botão pareceria quebrado.
 	const trocarAba = (id) => {
 		setActiveTab(id);
 		if (window.location.hash) {

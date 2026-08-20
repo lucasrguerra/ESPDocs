@@ -77,7 +77,7 @@ export default function CodeExample({ framework }) {
 						<Code className="w-5 h-5" style={{ color }} />
 						<span>Demonstração de Código</span>
 					</h3>
-					<p className="text-xs text-slate-500 dark:text-slate-400 font-semibold">Trecho de inicialização rápida — copie e personalize em seu projeto.</p>
+					<p className="text-xs text-slate-500 dark:text-slate-400 font-semibold">Trecho de inicialização rápida. Copie e personalize em seu projeto.</p>
 				</div>
 
 				<div className="flex flex-wrap items-center gap-2.5 mt-4 md:mt-0 select-none">

@@ -4,15 +4,15 @@
  *
  * Verifica quatro coisas nos arquivos .jsx do projeto:
  *
- *   1. TOM INEXISTENTE  — classe usando um valor fora da escala declarada.
+ *   1. TOM INEXISTENTE: classe usando um valor fora da escala declarada.
  *                         Não gera CSS: o elemento herda a cor do pai.
- *   2. PAR INVERTIDO    — no tema escuro o texto deveria clarear (número menor)
+ *   2. PAR INVERTIDO: no tema escuro o texto deveria clarear (número menor)
  *                         e o fundo/borda deveria escurecer (número maior).
- *   3. CONTRASTE BAIXO  — par abaixo de 4.5:1 (AA para texto).
- *   4. COR FIXA INLINE  — style={{ borderColor: 'rgba(...)' }} com valor literal.
+ *   3. CONTRASTE BAIXO: par abaixo de 4.5:1 (AA para texto).
+ *   4. COR FIXA INLINE: style={{ borderColor: 'rgba(...)' }} com valor literal.
  *                         Style inline vence classe, então anula a cor do tema
  *                         (inclusive as variantes dark: e hover:). Cor vinda do
- *                         dado (serie.cor) é permitida — ver DESIGN.md seção 5.
+ *                         dado (serie.cor) é permitida, ver DESIGN.md seção 5.
  *
  * Uso:  npm run auditar-temas
  * Sai com código 1 se encontrar problema. Ver DESIGN.md.
@@ -74,7 +74,7 @@ const RX_TEXTO = /\btext-slate-(\d+) dark:text-slate-(\d+)\b/g;
 const RX_SUPERFICIE = /\b(bg|border)-slate-(\d+)(?:\/\d+)? dark:\1-slate-(\d+)(?:\/\d+)?\b/g;
 // texto que acompanha um componente invertido: claro -> escuro (sem /g: usado com .test)
 const RX_TEXTO_INVERTIDO = /\btext-white dark:text-slate-(?:[5-9]\d0|950)\b/;
-// Blocos style={{ ... }} — só dentro deles uma cor literal é problema.
+// Blocos style={{ ... }}: só dentro deles uma cor literal é problema.
 // Fora disso, `color: "#6366f1"` costuma ser tabela de dados (categorias de pino).
 const RX_BLOCO_STYLE = /style=\{\{([\s\S]*?)\}\}/g;
 // Cor literal: aspas seguidas de #, rgb(), hsl() ou nome de cor.
@@ -132,16 +132,16 @@ function main() {
 				if (!(claro in ESCALA) || !(escuro in ESCALA)) continue;
 				if (Number(escuro) > Number(claro)) continue;
 				// Inversão deliberada (DESIGN.md seção 4): superfície escura nos DOIS
-				// temas — tooltip, bloco de código, botão escuro secundário.
+				// temas: tooltip, bloco de código, botão escuro secundário.
 				if (Number(claro) >= 800 && Number(escuro) >= 800) continue;
 				// Botão que inverte preto<->branco NÃO é exceção: é bug.
-				// Ver DESIGN.md 4.1 — botão carrega a própria cor.
+				// Ver DESIGN.md 4.1: botão carrega a própria cor.
 				const textoInverte =
 					RX_TEXTO_INVERTIDO.test(linha) ||
 					[...linha.matchAll(RX_TEXTO)].some((t) => Number(t[2]) > Number(t[1]));
 				if (textoInverte) {
 					invertidos.push([arq, n, m[0],
-						"botão invertendo preto/branco — use cor própria (DESIGN.md 4.1)"]);
+						"botão invertendo preto/branco, use cor própria (DESIGN.md 4.1)"]);
 					continue;
 				}
 				invertidos.push([arq, n, m[0], "fundo/borda não escurece no tema escuro"]);
@@ -157,7 +157,7 @@ function main() {
 	if (inexistentes.size) {
 		const total = [...inexistentes.values()].reduce((a, b) => a + b, 0);
 		console.log(`\nTONS FORA DA ESCALA: ${total}`);
-		console.log("   (não geram CSS — declare em globals.css ou troque por um tom válido)");
+		console.log("   (não geram CSS: declare em globals.css ou troque por um tom válido)");
 		for (const [k, v] of [...inexistentes].sort((a, b) => b[1] - a[1])) {
 			console.log(`    ${v}x  ${k}`);
 		}
@@ -170,7 +170,7 @@ function main() {
 	const total =
 		[...inexistentes.values()].reduce((a, b) => a + b, 0) +
 		invertidos.length + fracos.length + fixas.length;
-	console.log(`\n${total === 0 ? "OK — nenhum problema." : `${total} problema(s).`}`);
+	console.log(`\n${total === 0 ? "OK, nenhum problema." : `${total} problema(s).`}`);
 	console.log("Exceção legítima: painel escuro nos DOIS temas (tooltip, bloco de código).");
 	console.log("Nesses casos não use variante dark:. Ver DESIGN.md seção 4.");
 	return total ? 1 : 0;

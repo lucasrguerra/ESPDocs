@@ -100,11 +100,11 @@ export default async function SerieDetail({ params }) {
 	];
 
 	const ferramentasSpecs = [
-		{ label: "ESP-IDF mínimo", value: serie.esp_idf_minimo || "—", icon: <Code className="w-5 h-5 text-amber-500" /> },
-		{ label: "Core Arduino", value: serie.arduino_core || "—", icon: <Terminal className="w-5 h-5 text-amber-500" /> },
-		{ label: "Depuração", value: serie.depuracao || "—", icon: <Bug className="w-5 h-5 text-amber-500" /> },
-		{ label: "Encapsulamento", value: serie.encapsulamento || "—", icon: <Box className="w-5 h-5 text-amber-500" /> },
-		{ label: "Módulos disponíveis", value: serie.modulos || "—", icon: <Package className="w-5 h-5 text-amber-500" /> },
+		{ label: "ESP-IDF mínimo", value: serie.esp_idf_minimo || "Não informado", icon: <Code className="w-5 h-5 text-amber-500" /> },
+		{ label: "Core Arduino", value: serie.arduino_core || "Não informado", icon: <Terminal className="w-5 h-5 text-amber-500" /> },
+		{ label: "Depuração", value: serie.depuracao || "Não informado", icon: <Bug className="w-5 h-5 text-amber-500" /> },
+		{ label: "Encapsulamento", value: serie.encapsulamento || "Não informado", icon: <Box className="w-5 h-5 text-amber-500" /> },
+		{ label: "Módulos disponíveis", value: serie.modulos || "Não informado", icon: <Package className="w-5 h-5 text-amber-500" /> },
 	];
 
 	const conectividadeSpecs = [
