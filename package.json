@@ -6,7 +6,8 @@
     "dev": "next dev --turbopack",
     "build": "next build --turbopack",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "auditar-temas": "node scripts/auditar-temas.mjs"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",

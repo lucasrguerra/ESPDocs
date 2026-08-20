@@ -31,7 +31,7 @@ export default async function FrameworkDetail({ params }) {
 	const useCases = framework.casos_uso || [];
 
 	return (
-		<div className="bg-gradient-to-br from-slate-50 via-white to-purple-50/40 dark:from-slate-950 dark:via-slate-950 dark:to-slate-900 min-h-screen text-slate-900 dark:text-slate-100 transition-colors duration-300">
+		<div className="bg-gradient-to-br from-slate-100 via-slate-50 to-purple-100/40 dark:from-slate-950 dark:via-slate-950 dark:to-slate-900 min-h-screen text-slate-900 dark:text-slate-100 transition-colors duration-300">
 			<Header />
 
 			<main className="px-6 pt-16 pb-24 max-w-7xl mx-auto">
@@ -47,7 +47,7 @@ export default async function FrameworkDetail({ params }) {
 
 					{/* Top Info Banner Panel */}
 					<div 
-						className="bg-white/80 dark:bg-slate-900/40 backdrop-blur-xl rounded-3xl p-6 md:p-8 shadow-2xl border relative overflow-hidden"
+						className="bg-white dark:bg-slate-900/40 backdrop-blur-xl rounded-3xl p-6 md:p-8 shadow-2xl border relative overflow-hidden"
 						style={{ borderColor: `${framework.cor}40` }}
 					>
 						<div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8">
@@ -57,7 +57,7 @@ export default async function FrameworkDetail({ params }) {
 									<h1 className="text-4xl font-display font-extrabold text-slate-850 dark:text-slate-100 tracking-tight leading-none mb-3">
 										{framework.nome}
 									</h1>
-									<p className="text-sm font-semibold text-slate-400 dark:text-slate-500 mb-4">{framework.nome_completo}</p>
+									<p className="text-sm font-semibold text-slate-500 dark:text-slate-400 mb-4">{framework.nome_completo}</p>
 									<span 
 										className="inline-block px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest select-none"
 										style={{ backgroundColor: `${framework.cor}18`, color: framework.cor, border: `1px solid ${framework.cor}30` }}
@@ -74,7 +74,7 @@ export default async function FrameworkDetail({ params }) {
 										href={framework.documentacao}
 										target="_blank"
 										rel="noopener noreferrer"
-										className="inline-flex items-center justify-center gap-2 bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-950 px-5 py-3 rounded-xl font-bold text-xs uppercase tracking-wider hover:opacity-90 transition-opacity shadow-lg"
+										className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-5 py-3 rounded-xl font-bold text-xs uppercase tracking-wider hover:opacity-90 transition-opacity shadow-lg"
 									>
 										<BookOpen className="w-4 h-4" />
 										<span>Documentação Oficial</span>
@@ -104,10 +104,10 @@ export default async function FrameworkDetail({ params }) {
 				{/* Framework Core Specifications Grid */}
 				<div className="grid md:grid-cols-3 gap-6 mb-8 select-none animate-fadeIn">
 					<div 
-						className="bg-white/80 dark:bg-slate-900/40 backdrop-blur-xl rounded-2xl shadow-lg p-6 border-l-4" 
+						className="bg-white dark:bg-slate-900/40 backdrop-blur-xl rounded-2xl shadow-lg p-6 border-l-4" 
 						style={{ borderColor: framework.cor }}
 					>
-						<h3 className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-1.5 flex items-center gap-1.5">
+						<h3 className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-1.5 flex items-center gap-1.5">
 							<Code className="w-3.5 h-3.5 text-blue-500" />
 							<span>LINGUAGEM DE DESENVOLVIMENTO</span>
 						</h3>
@@ -116,10 +116,10 @@ export default async function FrameworkDetail({ params }) {
 					</div>
 
 					<div 
-						className="bg-white/80 dark:bg-slate-900/40 backdrop-blur-xl rounded-2xl shadow-lg p-6 border-l-4" 
+						className="bg-white dark:bg-slate-900/40 backdrop-blur-xl rounded-2xl shadow-lg p-6 border-l-4" 
 						style={{ borderColor: framework.cor }}
 					>
-						<h3 className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-1.5 flex items-center gap-1.5">
+						<h3 className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-1.5 flex items-center gap-1.5">
 							<Layers className="w-3.5 h-3.5 text-purple-500" />
 							<span>CATEGORIA DO FRAMEWORK</span>
 						</h3>
@@ -128,10 +128,10 @@ export default async function FrameworkDetail({ params }) {
 					</div>
 
 					<div 
-						className="bg-white/80 dark:bg-slate-900/40 backdrop-blur-xl rounded-2xl shadow-lg p-6 border-l-4" 
+						className="bg-white dark:bg-slate-900/40 backdrop-blur-xl rounded-2xl shadow-lg p-6 border-l-4" 
 						style={{ borderColor: framework.cor }}
 					>
-						<h3 className="text-[10px] font-bold text-slate-400 dark:text-slate-450 mb-1.5 flex items-center gap-1.5">
+						<h3 className="text-[10px] font-bold text-slate-500 dark:text-slate-400 mb-1.5 flex items-center gap-1.5">
 							<Target className="w-3.5 h-3.5 text-emerald-500" />
 							<span>OBJETIVO PRINCIPAL</span>
 						</h3>
@@ -142,7 +142,7 @@ export default async function FrameworkDetail({ params }) {
 				{/* side-by-side details block */}
 				<div className="grid lg:grid-cols-3 gap-6 mb-8 items-start">
 					{/* Left specs card */}
-					<div className="lg:col-span-2 bg-white/80 dark:bg-slate-900/45 backdrop-blur-xl rounded-3xl p-8 border border-slate-200/60 dark:border-slate-800/80 shadow-2xl space-y-8">
+					<div className="lg:col-span-2 bg-white dark:bg-slate-900/45 backdrop-blur-xl rounded-3xl p-8 border border-slate-300 dark:border-slate-800/80 shadow-2xl space-y-8">
 						<div>
 							<h2 
 								className="text-lg font-display font-extrabold text-slate-850 dark:text-slate-100 mb-6 pb-3 border-b flex items-center gap-2.5 select-none" 
@@ -183,7 +183,7 @@ export default async function FrameworkDetail({ params }) {
 					</div>
 
 					{/* Right summary metadata card */}
-					<div className="bg-white/80 dark:bg-slate-900/45 backdrop-blur-xl rounded-3xl p-8 border border-slate-200/60 dark:border-slate-800/80 shadow-2xl select-none">
+					<div className="bg-white dark:bg-slate-900/45 backdrop-blur-xl rounded-3xl p-8 border border-slate-300 dark:border-slate-800/80 shadow-2xl select-none">
 						<h2 
 							className="text-lg font-display font-extrabold text-slate-850 dark:text-slate-100 mb-6 pb-3 border-b flex items-center gap-2.5" 
 							style={{ borderBottomColor: `${framework.cor}30` }}
@@ -193,20 +193,20 @@ export default async function FrameworkDetail({ params }) {
 						</h2>
 						
 						<div className="space-y-4 text-xs font-bold text-slate-650 dark:text-slate-200">
-							<div className="flex justify-between items-center py-2 border-b border-slate-100 dark:border-slate-850/45">
-								<span className="text-slate-400 dark:text-slate-500 uppercase tracking-wider text-[9px]">Nome Oficial</span>
+							<div className="flex justify-between items-center py-2 border-b border-slate-200 dark:border-slate-850/45">
+								<span className="text-slate-500 dark:text-slate-400 uppercase tracking-wider text-[9px]">Nome Oficial</span>
 								<span className="text-slate-800 dark:text-slate-200 font-extrabold">{framework.nome}</span>
 							</div>
-							<div className="flex justify-between items-center py-2 border-b border-slate-100 dark:border-slate-850/45">
-								<span className="text-slate-400 dark:text-slate-500 uppercase tracking-wider text-[9px]">Linguagem</span>
+							<div className="flex justify-between items-center py-2 border-b border-slate-200 dark:border-slate-850/45">
+								<span className="text-slate-500 dark:text-slate-400 uppercase tracking-wider text-[9px]">Linguagem</span>
 								<span className="text-slate-800 dark:text-slate-200 font-extrabold">{framework.linguagem}</span>
 							</div>
-							<div className="flex justify-between items-center py-2 border-b border-slate-100 dark:border-slate-850/45">
-								<span className="text-slate-400 dark:text-slate-500 uppercase tracking-wider text-[9px]">Tipo / Suite</span>
+							<div className="flex justify-between items-center py-2 border-b border-slate-200 dark:border-slate-850/45">
+								<span className="text-slate-500 dark:text-slate-400 uppercase tracking-wider text-[9px]">Tipo / Suite</span>
 								<span className="text-slate-800 dark:text-slate-200 font-extrabold">{framework.tipo}</span>
 							</div>
 							<div className="flex justify-between items-center py-2">
-								<span className="text-slate-400 dark:text-slate-500 uppercase tracking-wider text-[9px]">Cor Temática</span>
+								<span className="text-slate-500 dark:text-slate-400 uppercase tracking-wider text-[9px]">Cor Temática</span>
 								<div className="flex items-center gap-2">
 									<code className="text-[10px] text-slate-500 uppercase">{framework.cor}</code>
 									<span className="inline-block w-4 h-4 rounded-md shadow-xs border border-white/20" style={{ backgroundColor: framework.cor }} />
@@ -230,7 +230,7 @@ export default async function FrameworkDetail({ params }) {
 							href={framework.documentacao}
 							target="_blank"
 							rel="noopener noreferrer"
-							className="inline-flex items-center justify-center gap-2 bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-950 px-6 py-3.5 rounded-xl font-bold text-xs uppercase tracking-wider hover:opacity-90 transition-opacity shadow-lg"
+							className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-6 py-3.5 rounded-xl font-bold text-xs uppercase tracking-wider hover:opacity-90 transition-opacity shadow-lg"
 						>
 							<BookOpen className="w-4 h-4" />
 							<span>Documentação do Desenvolvedor</span>

@@ -85,7 +85,7 @@ export default function Home() {
 	];
 
 	return (
-		<div className="bg-gradient-to-br from-slate-50 via-white to-purple-50/40 dark:from-slate-950 dark:via-slate-950 dark:to-slate-900 min-h-screen text-slate-900 dark:text-slate-100 transition-colors duration-300">
+		<div className="bg-gradient-to-br from-slate-100 via-slate-50 to-purple-100/40 dark:from-slate-950 dark:via-slate-950 dark:to-slate-900 min-h-screen text-slate-900 dark:text-slate-100 transition-colors duration-300">
 			<Header />
 
 			<main className="px-6 pt-16 pb-24 max-w-7xl mx-auto">
@@ -115,7 +115,7 @@ export default function Home() {
 						</Link>
 
 						<Link
-							className="group inline-flex items-center gap-2.5 bg-slate-900 hover:bg-slate-800 dark:bg-slate-800 dark:hover:bg-slate-700 text-white px-7 py-3.5 rounded-xl font-bold text-sm shadow-md hover:-translate-y-0.5 transition-all duration-300 cursor-pointer active:scale-95"
+							className="group inline-flex items-center gap-2.5 bg-blue-600 hover:bg-blue-700 text-white px-7 py-3.5 rounded-xl font-bold text-sm shadow-md hover:-translate-y-0.5 transition-all duration-300 cursor-pointer active:scale-95"
 							href="/series"
 						>
 							<Cpu className="w-4 h-4" />
@@ -123,7 +123,7 @@ export default function Home() {
 						</Link>
 
 						<Link
-							className="group inline-flex items-center gap-2.5 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 px-7 py-3.5 rounded-xl font-bold text-sm shadow-xs border border-slate-200 dark:border-slate-800 hover:border-purple-500 dark:hover:border-purple-400 hover:text-purple-600 dark:hover:text-purple-400 hover:-translate-y-0.5 transition-all duration-300 cursor-pointer active:scale-95"
+							className="group inline-flex items-center gap-2.5 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 px-7 py-3.5 rounded-xl font-bold text-sm shadow-xs border border-slate-300 dark:border-slate-800 hover:border-purple-500 dark:hover:border-purple-400 hover:text-purple-600 dark:hover:text-purple-400 hover:-translate-y-0.5 transition-all duration-300 cursor-pointer active:scale-95"
 							href="/frameworks"
 						>
 							<Terminal className="w-4 h-4" />
@@ -131,7 +131,7 @@ export default function Home() {
 						</Link>
 
 						<Link
-							className="group inline-flex items-center gap-2.5 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 px-7 py-3.5 rounded-xl font-bold text-sm shadow-xs border border-slate-200 dark:border-slate-800 hover:border-purple-500 dark:hover:border-purple-400 hover:text-purple-600 dark:hover:text-purple-400 hover:-translate-y-0.5 transition-all duration-300 cursor-pointer active:scale-95"
+							className="group inline-flex items-center gap-2.5 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 px-7 py-3.5 rounded-xl font-bold text-sm shadow-xs border border-slate-300 dark:border-slate-800 hover:border-purple-500 dark:hover:border-purple-400 hover:text-purple-600 dark:hover:text-purple-400 hover:-translate-y-0.5 transition-all duration-300 cursor-pointer active:scale-95"
 							href="/catalogo"
 						>
 							<ShoppingBag className="w-4 h-4" />
@@ -155,7 +155,7 @@ export default function Home() {
 						{resources.map((resource) => (
 							<div 
 								key={resource.name} 
-								className="group bg-white/70 dark:bg-slate-900/40 backdrop-blur-md p-6 rounded-2xl border border-slate-200/60 dark:border-slate-800/80 hover:border-purple-500/40 dark:hover:border-purple-400/40 shadow-xs hover:shadow-xl hover:shadow-purple-500/5 hover:-translate-y-1 transition-all duration-300"
+								className="group bg-white dark:bg-slate-900/40 backdrop-blur-md p-6 rounded-2xl border border-slate-300 dark:border-slate-800/80 hover:border-purple-500/40 dark:hover:border-purple-400/40 shadow-xs hover:shadow-xl hover:shadow-purple-500/5 hover:-translate-y-1 transition-all duration-300"
 							>
 								<div className="flex items-start gap-4">
 									<div className={`w-12 h-12 rounded-xl flex items-center justify-center shrink-0 transform group-hover:scale-105 transition-transform duration-300 shadow-xs ${resource.colorClass}`}>
@@ -177,7 +177,7 @@ export default function Home() {
 
 				{/* Ciência Embarcada Section */}
 				<section className="mb-8">
-					<div className="bg-gradient-to-br from-white to-purple-50/50 dark:from-slate-900/40 dark:to-purple-950/10 rounded-3xl shadow-xs border border-slate-200/80 dark:border-slate-800/80 p-8 md:p-12 relative overflow-hidden">
+					<div className="bg-gradient-to-br from-white to-purple-50/50 dark:from-slate-900/40 dark:to-purple-950/10 rounded-3xl shadow-xs border border-slate-300 dark:border-slate-800/80 p-8 md:p-12 relative overflow-hidden">
 						{/* Background soft glow decoration */}
 						<div className="absolute right-0 bottom-0 w-80 h-80 bg-purple-500/5 rounded-full blur-3xl pointer-events-none" />
 
@@ -223,7 +223,7 @@ export default function Home() {
 						</div>
 
 						{/* Disclaimer */}
-						<div className="border-t border-slate-200/80 dark:border-slate-800/80 pt-8 mt-10">
+						<div className="border-t border-slate-300 dark:border-slate-800/80 pt-8 mt-10">
 							<div className="bg-slate-100/60 dark:bg-slate-900/60 border-l-4 border-purple-500 p-5 rounded-r-2xl">
 								<div className="flex gap-4">
 									<Info className="w-5 h-5 text-purple-600 dark:text-purple-400 mt-0.5 shrink-0" />

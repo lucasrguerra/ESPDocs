@@ -70,7 +70,7 @@ export default function CodeExample({ framework }) {
 	}
 
 	return (
-		<div className="bg-white/80 dark:bg-slate-900/40 backdrop-blur-xl rounded-3xl p-6 md:p-8 border border-slate-200/60 dark:border-slate-800/80 shadow-2xl mb-8 animate-fadeIn">
+		<div className="bg-white dark:bg-slate-900/40 backdrop-blur-xl rounded-3xl p-6 md:p-8 border border-slate-300 dark:border-slate-800/80 shadow-2xl mb-8 animate-fadeIn">
 			<div className="md:flex items-center justify-between gap-6 mb-6">
 				<div className="select-none">
 					<h3 className="text-xl font-display font-extrabold text-slate-850 dark:text-slate-100 mb-1 flex items-center gap-2">
@@ -94,7 +94,7 @@ export default function CodeExample({ framework }) {
 
 					<button
 						onClick={handleCopy}
-						className="inline-flex items-center gap-1.5 bg-slate-50 dark:bg-slate-850 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-250 px-3.5 py-2 rounded-xl font-bold text-xs shadow-xs border border-slate-200/60 dark:border-slate-800/80 cursor-pointer transition active:scale-95"
+						className="inline-flex items-center gap-1.5 bg-slate-50 dark:bg-slate-850 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-250 px-3.5 py-2 rounded-xl font-bold text-xs shadow-xs border border-slate-300 dark:border-slate-800/80 cursor-pointer transition active:scale-95"
 						title="Copiar código para a área de transferência"
 					>
 						{copied ? (
@@ -129,16 +129,16 @@ export default function CodeExample({ framework }) {
 				</div>
 			</div>
 
-			<div className="rounded-2xl overflow-hidden border border-slate-200/60 dark:border-slate-800/80 shadow-md">
+			<div className="rounded-2xl overflow-hidden border border-slate-300 dark:border-slate-800/80 shadow-md">
 				<div className="select-none">
-					<div className="flex items-center justify-between bg-slate-100/80 dark:bg-slate-950/70 border-b border-slate-200/60 dark:border-slate-850/60 px-4 py-3.5">
+					<div className="flex items-center justify-between bg-slate-100/80 dark:bg-slate-950/70 border-b border-slate-300 dark:border-slate-850/60 px-4 py-3.5">
 						<div className="text-xs font-bold text-slate-750 dark:text-slate-250 flex items-center gap-1.5">
 							<span className="w-2.5 h-2.5 rounded-full bg-red-500/80" />
 							<span className="w-2.5 h-2.5 rounded-full bg-yellow-500/80" />
 							<span className="w-2.5 h-2.5 rounded-full bg-green-500/80" />
 							<span className="ml-2 font-mono text-[10px] text-slate-500 dark:text-slate-400">{framework?.nome} example</span>
 						</div>
-						<div className="text-[9px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">
+						<div className="text-[9px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest">
 							{loading ? 'Buscando exemplo...' : (framework?.exemplo ? 'Local Source' : 'External GitHub')}
 						</div>
 					</div>
@@ -151,7 +151,7 @@ export default function CodeExample({ framework }) {
 					>
 						{lines.map((line, idx) => (
 							<div key={idx} className="flex">
-								<span className="text-slate-600 dark:text-slate-650 pr-4 text-right w-8 select-none border-r border-slate-900/60 mr-4 font-semibold">{idx + 1}</span>
+								<span className="text-slate-500 pr-4 text-right w-8 select-none border-r border-slate-900/60 mr-4 font-semibold">{idx + 1}</span>
 								<code className="whitespace-pre flex-1 text-left">{line === '' ? '\u00A0' : line}</code>
 							</div>
 						))}

@@ -22,7 +22,8 @@ import {
 	Activity,
 	HelpCircle,
 	Thermometer,
-	ShieldCheck
+	ShieldCheck,
+	Package
 } from "lucide-react";
 
 // Category to Icon mapping
@@ -34,9 +35,15 @@ const categoryIcons = {
 	"Periféricos Digitais": <Sliders className="w-4 h-4 text-sky-500" />,
 	"Periféricos Analógicos": <Activity className="w-4 h-4 text-emerald-500" />,
 	"Segurança": <ShieldCheck className="w-4 h-4 text-teal-500" />,
+	"Disponibilidade e Ferramentas": <Package className="w-4 h-4 text-amber-500" />,
 	"Interfaces Especiais": <Activity className="w-4 h-4 text-cyan-500" />,
 	"Especificações Ambientais": <Thermometer className="w-4 h-4 text-red-500" />,
 };
+
+/* Lê "seguranca.ecc" além de chaves simples. */
+function valorDe(objeto, caminho) {
+	return caminho.split(".").reduce((atual, parte) => atual?.[parte], objeto);
+}
 
 export default function Comparacao() {
 	const [selectedSeries, setSelectedSeries] = useState(["ESP32", "ESP32-S3"]);
@@ -71,6 +78,13 @@ export default function Comparacao() {
 			{ key: "nome_completo", label: "Nome Completo" },
 			{ key: "descricao", label: "Descrição" },
 		]},
+		{ category: "Disponibilidade e Ferramentas", fields: [
+			{ key: "esp_idf_minimo", label: "ESP-IDF mínimo" },
+			{ key: "arduino_core", label: "Core Arduino" },
+			{ key: "depuracao", label: "Depuração / JTAG" },
+			{ key: "encapsulamento", label: "Encapsulamento" },
+			{ key: "modulos", label: "Módulos disponíveis" },
+		]},
 		{ category: "Processador", fields: [
 			{ key: "arquitetura", label: "Arquitetura" },
 			{ key: "nucleos", label: "Núcleos" },
@@ -101,6 +115,7 @@ export default function Comparacao() {
 			{ key: "pwm", label: "PWM" },
 			{ key: "can", label: "CAN" },
 			{ key: "usb", label: "USB" },
+			{ key: "depuracao", label: "Depuração / JTAG" },
 			{ key: "sdio", label: "SDIO" },
 		]},
 		{ category: "Periféricos Analógicos", fields: [
@@ -111,7 +126,18 @@ export default function Comparacao() {
 			{ key: "sensor_temperatura", label: "Sensor de Temperatura" },
 		]},
 		{ category: "Segurança", fields: [
-			{ key: "aceleradores_cripto", label: "Aceleradores Criptográficos" },
+			{ key: "seguranca.aes", label: "AES" },
+			{ key: "seguranca.sha", label: "SHA" },
+			{ key: "seguranca.rsa", label: "RSA / MPI" },
+			{ key: "seguranca.ecc", label: "ECC (curvas elípticas)" },
+			{ key: "seguranca.ecdsa", label: "ECDSA em hardware" },
+			{ key: "seguranca.hmac", label: "HMAC" },
+			{ key: "seguranca.assinatura_digital", label: "Assinatura Digital (DS)" },
+			{ key: "seguranca.key_manager", label: "Key Manager" },
+			{ key: "seguranca.rng", label: "Gerador aleatório (RNG)" },
+			{ key: "seguranca.criptografia_flash", label: "Criptografia de flash" },
+			{ key: "seguranca.secure_boot", label: "Secure Boot" },
+			{ key: "seguranca.protecao_dpa", label: "Proteção contra DPA" },
 		]},
 		{ category: "Interfaces Especiais", fields: [
 			{ key: "lcd", label: "LCD" },
@@ -128,7 +154,7 @@ export default function Comparacao() {
 
 	const renderValue = (value) => {
 		if (!value || value === "Não") {
-			return <span className="text-slate-400 dark:text-slate-600 font-medium select-none">—</span>;
+			return <span className="text-slate-500 dark:text-slate-400 font-medium select-none">—</span>;
 		}
 		if (value === "Sim") {
 			return (
@@ -141,7 +167,7 @@ export default function Comparacao() {
 	};
 
 	return (
-		<div className="bg-gradient-to-br from-slate-50 via-white to-purple-50/40 dark:from-slate-950 dark:via-slate-950 dark:to-slate-900 min-h-screen text-slate-900 dark:text-slate-100 transition-colors duration-300">
+		<div className="bg-gradient-to-br from-slate-100 via-slate-50 to-purple-100/40 dark:from-slate-950 dark:via-slate-950 dark:to-slate-900 min-h-screen text-slate-900 dark:text-slate-100 transition-colors duration-300">
 			<Header />
 
 			<main id="conteudo" className="px-6 pt-16 pb-24 max-w-7xl mx-auto">
@@ -163,13 +189,13 @@ export default function Comparacao() {
 
 				{/* Model Selector Card */}
 				<section className="mb-12">
-					<div className="bg-white/80 dark:bg-slate-900/40 backdrop-blur-xl border border-slate-200/60 dark:border-slate-800/80 rounded-3xl p-6 md:p-8 shadow-2xl relative overflow-hidden">
+					<div className="bg-white dark:bg-slate-900/40 backdrop-blur-xl border border-slate-300 dark:border-slate-800/80 rounded-3xl p-6 md:p-8 shadow-2xl relative overflow-hidden">
 						<div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
 							<div>
 								<h2 className="text-lg font-bold text-slate-800 dark:text-slate-100 mb-1">
 									Escolha as Séries
 								</h2>
-								<p className="text-xs text-slate-400 dark:text-slate-500">
+								<p className="text-xs text-slate-500 dark:text-slate-400">
 									Selecione de 2 a até 4 modelos simultâneos para montar sua planilha de comparação.
 								</p>
 							</div>
@@ -189,12 +215,12 @@ export default function Comparacao() {
 										key={key}
 										onClick={() => toggleSeries(key)}
 										style={{
-											borderColor: isSelected ? seriesItem.cor : 'transparent'
+											borderColor: isSelected ? seriesItem.cor : undefined
 										}}
 										className={`p-4 border rounded-2xl transition-all duration-300 cursor-pointer active:scale-95 text-center flex flex-col items-center justify-center shadow-xs ${
 											isSelected
 												? 'bg-slate-100 dark:bg-slate-950 shadow-md scale-[1.02] border-2'
-												: 'border-slate-200/60 dark:border-slate-800/80 bg-white/70 dark:bg-slate-900/30 hover:border-purple-400/50 hover:bg-purple-500/5'
+												: 'border-slate-300 dark:border-slate-800/80 bg-white dark:bg-slate-900/30 hover:border-purple-400/50 hover:bg-purple-500/5'
 										}`}
 									>
 										<div className="text-3xl mb-2 select-none transform hover:scale-110 transition-transform">{seriesItem.icone}</div>
@@ -214,7 +240,7 @@ export default function Comparacao() {
 				</section>
 
 				{/* Side by side interactive Table */}
-				<div className="bg-white/80 dark:bg-slate-900/40 backdrop-blur-xl border border-slate-200/60 dark:border-slate-800/80 rounded-3xl overflow-hidden shadow-2xl">
+				<div className="bg-white dark:bg-slate-900/40 backdrop-blur-xl border border-slate-300 dark:border-slate-800/80 rounded-3xl overflow-hidden shadow-2xl">
 					<div className="overflow-x-auto scrollbar-thin">
 						<table className="w-full border-collapse">
 							<thead>
@@ -267,14 +293,14 @@ export default function Comparacao() {
 											{!isCollapsed && fields.map(({ key, label }) => (
 												<tr 
 													key={key} 
-													className="border-b border-slate-100 dark:border-slate-800/40 hover:bg-purple-500/5 dark:hover:bg-purple-400/5 transition-colors group"
+													className="border-b border-slate-200 dark:border-slate-800/40 hover:bg-purple-500/5 dark:hover:bg-purple-400/5 transition-colors group"
 												>
 													<td className="px-6 py-4 font-bold text-slate-600 dark:text-slate-400 text-xs bg-white dark:bg-slate-900/10 sticky left-0 border-r border-slate-150/60 dark:border-slate-800/60 shrink-0 z-10">
 														{label}
 													</td>
 													{selectedSeries.map(seriesKey => {
 														const seriesItem = seriesData[seriesKey];
-														const value = seriesItem[key];
+														const value = valorDe(seriesItem, key);
 														return (
 															<td key={seriesKey} className="px-6 py-4 text-center text-xs">
 																{renderValue(value)}
@@ -292,26 +318,26 @@ export default function Comparacao() {
 				</div>
 
 				{/* Professional CTA Banner for the Catalog */}
-				<div className="my-20 bg-gradient-to-br from-slate-900 to-indigo-950 dark:from-slate-950 dark:to-purple-950/20 border border-slate-800/80 rounded-3xl p-8 md:p-12 shadow-2xl relative overflow-hidden">
+				<div className="my-20 bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-slate-950 dark:to-purple-950/20 border border-indigo-200 dark:border-slate-800/80 rounded-3xl p-8 md:p-12 shadow-2xl relative overflow-hidden">
 					<div className="absolute right-0 bottom-0 w-96 h-96 bg-purple-500/5 rounded-full blur-3xl pointer-events-none" />
 
 					<div className="flex flex-col md:flex-row items-center justify-between gap-8 relative z-10">
 						<div className="flex-1 max-w-2xl text-center md:text-left">
-							<div className="inline-flex items-center gap-2 bg-white/10 text-slate-350 px-3 py-1 rounded-full mb-4 text-xs font-semibold select-none">
+							<div className="inline-flex items-center gap-2 bg-indigo-500/10 text-indigo-700 dark:bg-white/10 dark:text-slate-350 px-3 py-1 rounded-full mb-4 text-xs font-semibold select-none">
 								<ShoppingBag className="w-3.5 h-3.5" />
 								<span>Hardware Adicional</span>
 							</div>
-							<h3 className="text-2xl md:text-3xl font-display font-extrabold text-white mb-4">
+							<h3 className="text-2xl md:text-3xl font-display font-extrabold text-slate-900 dark:text-white mb-4">
 								Catálogo de Placas de Desenvolvimento
 							</h3>
-							<p className="text-sm text-slate-400 leading-relaxed">
+							<p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
 								Quer testar o chip selecionado na bancada? Compare placas de desenvolvimento com layouts de pinos mapeados, conexões de periféricos e links oficiais dos melhores fornecedores.
 							</p>
 						</div>
 						
 						<Link
 							href="/catalogo"
-							className="inline-flex items-center justify-center gap-2 bg-white text-slate-900 px-6 py-3.5 rounded-xl font-bold text-sm hover:bg-slate-100 transition-all duration-300 shrink-0 shadow-md active:scale-95"
+							className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-6 py-3.5 rounded-xl font-bold text-sm hover:opacity-90 transition-all duration-300 shrink-0 shadow-md active:scale-95"
 						>
 							<span>Acessar Catálogo</span>
 							<ArrowRight className="w-4 h-4" />
@@ -330,7 +356,7 @@ export default function Comparacao() {
 							return (
 								<div
 									key={seriesKey}
-									className="bg-white/70 dark:bg-slate-900/40 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800/80 p-5 rounded-2xl hover:border-purple-500/50 dark:hover:border-purple-400/50 hover:shadow-lg transition-all duration-300 flex flex-col justify-between"
+									className="bg-white dark:bg-slate-900/40 backdrop-blur-xl border border-slate-300 dark:border-slate-800/80 p-5 rounded-2xl hover:border-purple-500/50 dark:hover:border-purple-400/50 hover:shadow-lg transition-all duration-300 flex flex-col justify-between"
 								>
 									<div className="flex gap-4 items-start mb-4">
 										<div className="text-4xl select-none">{seriesItem.icone}</div>
@@ -340,7 +366,7 @@ export default function Comparacao() {
 													{seriesKey}
 												</h4>
 											</Link>
-											<p className="text-[10px] text-slate-400 dark:text-slate-500 font-bold uppercase tracking-wider mt-1">Guia de Hardware</p>
+											<p className="text-[10px] text-slate-500 dark:text-slate-400 font-bold uppercase tracking-wider mt-1">Guia de Hardware</p>
 										</div>
 									</div>
 
@@ -349,13 +375,13 @@ export default function Comparacao() {
 											href={seriesItem.datasheet}
 											target="_blank"
 											rel="noopener noreferrer"
-											className="inline-flex items-center justify-center gap-1.5 w-full text-center py-2 bg-slate-100 dark:bg-slate-950 hover:bg-purple-500/10 dark:hover:bg-purple-400/10 border border-slate-200 dark:border-slate-800 rounded-xl text-xs font-bold text-slate-650 dark:text-slate-350 hover:text-purple-600 dark:hover:text-purple-400 transition-colors"
+											className="inline-flex items-center justify-center gap-1.5 w-full text-center py-2 bg-slate-100 dark:bg-slate-950 hover:bg-purple-500/10 dark:hover:bg-purple-400/10 border border-slate-300 dark:border-slate-800 rounded-xl text-xs font-bold text-slate-650 dark:text-slate-350 hover:text-purple-600 dark:hover:text-purple-400 transition-colors"
 										>
 											<span>Datasheet Oficial</span>
 											<ExternalLink className="w-3.5 h-3.5" />
 										</a>
 									) : (
-										<span className="inline-flex items-center justify-center gap-1.5 w-full text-center py-2 bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl text-xs font-bold text-slate-400 dark:text-slate-500 select-none">
+										<span className="inline-flex items-center justify-center gap-1.5 w-full text-center py-2 bg-slate-100 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 rounded-xl text-xs font-bold text-slate-500 dark:text-slate-400 select-none">
 											<span>Datasheet ainda não publicado</span>
 										</span>
 									)}

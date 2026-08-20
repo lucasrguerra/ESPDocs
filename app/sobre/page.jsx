@@ -27,7 +27,7 @@ export default function Sobre() {
 	];
 
 	return (
-		<div className="bg-gradient-to-br from-slate-50 via-white to-purple-50/40 dark:from-slate-950 dark:via-slate-950 dark:to-slate-900 min-h-screen text-slate-900 dark:text-slate-100 transition-colors duration-300">
+		<div className="bg-gradient-to-br from-slate-100 via-slate-50 to-purple-100/40 dark:from-slate-950 dark:via-slate-950 dark:to-slate-900 min-h-screen text-slate-900 dark:text-slate-100 transition-colors duration-300">
 			<a href="#conteudo" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:bg-white focus:px-4 focus:py-2 focus:rounded-md focus:shadow focus:ring-2 focus:ring-purple-500">
 				Ir para o conteúdo
 			</a>
@@ -75,7 +75,7 @@ export default function Sobre() {
 				<div className="mt-12 grid grid-cols-1 lg:grid-cols-3 gap-8">
 					<section className="lg:col-span-2 space-y-8">
 						{/* Missao article */}
-						<article className="bg-white/80 dark:bg-slate-900/40 backdrop-blur-xl rounded-3xl p-8 shadow-xl border border-slate-200/60 dark:border-slate-800/80 hover:border-purple-500/20 dark:hover:border-purple-400/20 transition-all">
+						<article className="bg-white dark:bg-slate-900/40 backdrop-blur-xl rounded-3xl p-8 shadow-xl border border-slate-300 dark:border-slate-800/80 hover:border-purple-500/20 dark:hover:border-purple-400/20 transition-all">
 							<div className="flex items-center gap-3.5 mb-5 select-none">
 								<div className="w-12 h-12 bg-purple-500/10 border border-purple-500/20 rounded-2xl flex items-center justify-center text-purple-500">
 									<Target className="w-6 h-6" />
@@ -91,7 +91,7 @@ export default function Sobre() {
 						</article>
 
 						{/* Por que o ESPDocs article */}
-						<article className="bg-white/80 dark:bg-slate-900/40 backdrop-blur-xl rounded-3xl p-8 shadow-xl border border-slate-200/60 dark:border-slate-800/80">
+						<article className="bg-white dark:bg-slate-900/40 backdrop-blur-xl rounded-3xl p-8 shadow-xl border border-slate-300 dark:border-slate-800/80">
 							<div className="flex items-center gap-3.5 mb-5 select-none">
 								<div className="w-12 h-12 bg-blue-500/10 border border-blue-500/20 rounded-2xl flex items-center justify-center text-blue-500">
 									<HelpCircle className="w-6 h-6" />
@@ -120,7 +120,7 @@ export default function Sobre() {
 						</article>
 
 						{/* Contribuir article */}
-						<article className="bg-white/80 dark:bg-slate-900/40 backdrop-blur-xl rounded-3xl p-8 shadow-xl border border-slate-200/60 dark:border-slate-800/80">
+						<article className="bg-white dark:bg-slate-900/40 backdrop-blur-xl rounded-3xl p-8 shadow-xl border border-slate-300 dark:border-slate-800/80">
 							<div className="flex items-center gap-3.5 mb-5 select-none">
 								<div className="w-12 h-12 bg-emerald-500/10 border border-emerald-500/20 rounded-2xl flex items-center justify-center text-emerald-500">
 									<Users className="w-6 h-6" />
@@ -160,7 +160,7 @@ export default function Sobre() {
 					{/* Sidebar area */}
 					<aside className="space-y-6">
 						{/* Author Card */}
-						<div className="bg-white/80 dark:bg-slate-900/40 backdrop-blur-xl border border-slate-200/60 dark:border-slate-800/80 rounded-3xl p-8 shadow-xl">
+						<div className="bg-white dark:bg-slate-900/40 backdrop-blur-xl border border-slate-300 dark:border-slate-800/80 rounded-3xl p-8 shadow-xl">
 							<div className="flex flex-col items-center mb-6 select-none">
 								<div className="w-20 h-20 bg-gradient-to-br from-purple-500/10 to-pink-500/10 rounded-2xl flex items-center justify-center mb-4 border border-purple-500/20 shadow-inner">
 									<img 
@@ -206,7 +206,7 @@ export default function Sobre() {
 						</div>
 
 						{/* Repository / Contributions card */}
-						<div className="bg-white/80 dark:bg-slate-900/40 backdrop-blur-xl border border-slate-200/60 dark:border-slate-800/80 rounded-3xl p-6 shadow-xl">
+						<div className="bg-white dark:bg-slate-900/40 backdrop-blur-xl border border-slate-300 dark:border-slate-800/80 rounded-3xl p-6 shadow-xl">
 							<div className="flex items-center justify-between mb-4 select-none">
 								<h3 className="text-sm font-display font-extrabold text-slate-800 dark:text-slate-200">Contribua</h3>
 								<span className="text-[9px] bg-emerald-500/10 text-emerald-600 dark:text-emerald-450 px-2.5 py-0.5 rounded-full font-bold uppercase tracking-wider border border-emerald-500/20">Open Source</span>
@@ -220,7 +220,7 @@ export default function Sobre() {
 								href="https://github.com/lucasrguerra/ESPDocs"
 								target="_blank"
 								rel="noopener noreferrer"
-								className="inline-flex items-center justify-center gap-2 w-full px-4 py-3 rounded-xl bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-950 font-bold text-xs uppercase tracking-wider shadow-md hover:opacity-90 active:scale-98 transition-all"
+								className="inline-flex items-center justify-center gap-2 w-full px-4 py-3 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold text-xs uppercase tracking-wider shadow-md hover:opacity-90 active:scale-98 transition-all"
 								aria-label="Abrir repositório no GitHub"
 							>
 								<svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -229,13 +229,13 @@ export default function Sobre() {
 								<span>Ver Repositório</span>
 							</a>
 
-							<div className="mt-4 text-[10px] text-slate-450 dark:text-slate-500 leading-relaxed font-semibold border-t border-slate-100 dark:border-slate-850/45 pt-4">
+							<div className="mt-4 text-[10px] text-slate-500 dark:text-slate-450 leading-relaxed font-semibold border-t border-slate-200 dark:border-slate-850/45 pt-4">
 								<strong>Aviso Legal:</strong> O ESPDocs é um agregador e organizador. Manuais técnicos detalhados e repositórios oficiais referenciados são de propriedade exclusiva da Espressif Systems. Para projetos críticos comerciais, consulte sempre a documentação nativa oficial.
 							</div>
 						</div>
 
 						{/* Summary sidebar card */}
-						<div className="bg-white/80 dark:bg-slate-900/40 backdrop-blur-xl border border-slate-200/60 dark:border-slate-800/80 rounded-3xl p-6 shadow-xl select-none">
+						<div className="bg-white dark:bg-slate-900/40 backdrop-blur-xl border border-slate-300 dark:border-slate-800/80 rounded-3xl p-6 shadow-xl select-none">
 							<h4 className="text-xs font-display font-extrabold text-slate-800 dark:text-slate-200 mb-3 uppercase tracking-wider">Conteúdo Técnico</h4>
 							<ul className="text-xs text-slate-600 dark:text-slate-400 space-y-2.5 font-bold">
 								<li className="flex items-center gap-2">

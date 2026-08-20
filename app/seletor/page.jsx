@@ -33,7 +33,9 @@ import {
 	BookOpen,
 	Compass,
 	Smartphone,
-	ShieldCheck
+	ShieldCheck,
+	KeyRound,
+	Lock
 } from "lucide-react";
 
 // Dynamic icon mapper to convert choices to sleek Lucide vectors
@@ -48,7 +50,7 @@ const iconMap = {
 	"connectivity_wifi-ble": <Wifi className="w-6 h-6 text-blue-500" />,
 	"connectivity_mesh": <Network className="w-6 h-6 text-orange-500" />,
 	"connectivity_ethernet": <Cable className="w-6 h-6 text-emerald-500" />,
-	"connectivity_none": <Ban className="w-6 h-6 text-slate-450 dark:text-slate-500" />,
+	"connectivity_none": <Ban className="w-6 h-6 text-slate-500 dark:text-slate-450" />,
 	
 	// Alimentacao
 	"power_battery": <Battery className="w-6 h-6 text-green-500" />,
@@ -63,15 +65,15 @@ const iconMap = {
 	),
 	"hardware_usb-native": <Cable className="w-6 h-6 text-teal-500" />,
 	"hardware_many-gpios": <Sliders className="w-6 h-6 text-sky-500" />,
-	"hardware_basic": <HelpCircle className="w-6 h-6 text-slate-450 dark:text-slate-550" />,
+	"hardware_basic": <HelpCircle className="w-6 h-6 text-slate-500 dark:text-slate-400" />,
 	
 	// IA
 	"ai_ai-ml": <Bot className="w-6 h-6 text-pink-500" />,
-	"ai_standard": <Ban className="w-6 h-6 text-slate-450 dark:text-slate-550" />,
+	"ai_standard": <Ban className="w-6 h-6 text-slate-500 dark:text-slate-400" />,
 
 	// Segurança
 	"security_critical": <ShieldCheck className="w-6 h-6 text-teal-500" />,
-	"security_standard": <HelpCircle className="w-6 h-6 text-slate-450 dark:text-slate-550" />,
+	"security_standard": <HelpCircle className="w-6 h-6 text-slate-500 dark:text-slate-400" />,
 };
 
 const getOptionIcon = (questionId, value) => {
@@ -147,11 +149,13 @@ export default function Seletor() {
 		},
 		{
 			id: "security",
-			question: "Qual o nível de segurança criptográfica exigido pelo produto?",
-			description: "Aceleradores criptográficos no silício executam AES, SHA, RSA e curvas elípticas em hardware, viabilizando Secure Boot, criptografia de flash e provisionamento seguro de chaves sem penalizar a CPU.",
+			question: "Qual requisito de segurança o produto precisa atender?",
+			description: "As séries diferem bastante aqui: nem todas têm curvas elípticas (ECC), ECDSA em hardware ou Key Manager, e duas delas sequer têm acelerador AES. Escolha o requisito mais forte do seu projeto.",
 			options: [
-				{ value: "critical", label: "Crítico (Matter, pagamentos, provisionamento seguro de chaves)", icon: "security_critical" },
-				{ value: "standard", label: "Padrão (TLS comum e projetos sem requisitos regulatórios)", icon: "security_standard" },
+				{ value: "matter", label: "Atestado de dispositivo para Matter ou assinatura digital (ECDSA)", icon: "security_matter" },
+				{ value: "chaves", label: "Chave privada que nunca pode ser lida pelo firmware (Key Manager)", icon: "security_chaves" },
+				{ value: "boot", label: "Boot seguro e flash criptografada contra cópia do firmware", icon: "security_boot" },
+				{ value: "tls", label: "Só TLS/HTTPS comum, sem requisito regulatório", icon: "security_tls" },
 			]
 		}
 	];
@@ -372,24 +376,54 @@ export default function Seletor() {
 			}
 
 			// 6. SEGURANÇA CRIPTOGRÁFICA (security)
-			if (answers.security === "critical") {
-				const cripto = serie.aceleradores_cripto || "";
+			// Agora lê os campos destrinchados, então cada requisito pontua o
+			// bloco de hardware que realmente o atende.
+			const seg = serie.seguranca || {};
+			const temECDSA = String(seg.ecdsa).startsWith("Sim");
+			const temECC = String(seg.ecc).startsWith("Sim");
+			const temAES = String(seg.aes).startsWith("AES");
 
-				if (cripto.includes("Key Manager")) {
+			if (answers.security === "matter") {
+				if (temECDSA) {
 					scores[key] += 30;
-					reasons[key].push("Suíte criptográfica completa em hardware com Key Manager (provisionamento e uso de chaves sem exposição ao firmware)");
-				} else if (cripto.includes("ECDSA")) {
-					scores[key] += 20;
-					reasons[key].push("Aceleradores criptográficos com ECC/ECDSA dedicados (assinatura digital e Secure Boot eficientes)");
-				} else if (cripto) {
+					reasons[key].push(`ECDSA em hardware (${seg.ecc}) — atestado de dispositivo Matter assinado sem custo de CPU`);
+				} else if (temECC) {
 					scores[key] += 10;
-					reasons[key].push("Aceleradores criptográficos básicos em hardware (AES, SHA, Secure Boot e criptografia de flash)");
+					reasons[key].push(`Tem ECC (${seg.ecc}) mas não o periférico ECDSA: a assinatura roda parcialmente em software`);
+				} else {
+					scores[key] -= 25;
+					reasons[key].push("Sem curvas elípticas em hardware: assinatura ECDSA inteiramente por software, lenta no provisionamento");
+				}
+			} else if (answers.security === "chaves") {
+				if (seg.key_manager === "Sim") {
+					scores[key] += 30;
+					reasons[key].push("Key Manager: a chave é provisionada e usada sem nunca ficar legível para o firmware");
+				} else if (seg.assinatura_digital === "Sim") {
+					scores[key] += 15;
+					reasons[key].push("Periférico Digital Signature protege a chave RSA via eFuse, mas sem Key Manager para as demais");
 				} else {
 					scores[key] -= 20;
-					reasons[key].push("Sem aceleração criptográfica dedicada: operações de segurança ficam a cargo da CPU");
+					reasons[key].push("Sem Key Manager nem Digital Signature: a chave privada fica exposta na memória do firmware");
 				}
-			} else if (answers.security === "standard") {
-				scores[key] += 5;
+			} else if (answers.security === "boot") {
+				if (String(seg.secure_boot).includes("V2")) {
+					scores[key] += 20;
+					reasons[key].push(`Secure Boot ${seg.secure_boot} com criptografia de flash ${seg.criptografia_flash}`);
+				} else if (String(seg.secure_boot).includes("V1")) {
+					scores[key] += 5;
+					reasons[key].push("Secure Boot apenas na versão V1 (legada), sem as proteções do esquema V2");
+				} else {
+					scores[key] -= 20;
+					reasons[key].push(`Secure Boot indisponível: ${seg.secure_boot}`);
+				}
+			} else if (answers.security === "tls") {
+				if (temAES) {
+					scores[key] += 10;
+					reasons[key].push(`Handshake e tráfego TLS acelerados por hardware (${seg.aes}, ${seg.sha})`);
+				} else {
+					scores[key] -= 10;
+					reasons[key].push(`Sem acelerador AES (só ${seg.sha}): o tráfego TLS é cifrado pela CPU e pesa no desempenho`);
+				}
 			}
 		});
 		
@@ -418,7 +452,7 @@ export default function Seletor() {
 	const progress = ((currentStep + 1) / questions.length) * 100;
 
 	return (
-		<div className="bg-gradient-to-br from-slate-50 via-white to-purple-50/40 dark:from-slate-950 dark:via-slate-950 dark:to-slate-900 min-h-screen text-slate-900 dark:text-slate-100 transition-colors duration-300">
+		<div className="bg-gradient-to-br from-slate-100 via-slate-50 to-purple-100/40 dark:from-slate-950 dark:via-slate-950 dark:to-slate-900 min-h-screen text-slate-900 dark:text-slate-100 transition-colors duration-300">
 			<Header />
 
 			<main id="conteudo" className="px-6 pt-16 pb-24 max-w-7xl mx-auto">
@@ -442,7 +476,7 @@ export default function Seletor() {
 				{!showResults && !showSummary && (
 					<div className="max-w-2xl mx-auto mb-10">
 						<div className="flex justify-between items-center mb-3">
-							<span className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">
+							<span className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest">
 								Etapa {currentStep + 1} de {questions.length}
 							</span>
 							<span className="text-xs font-extrabold text-purple-600 dark:text-purple-400">
@@ -463,12 +497,12 @@ export default function Seletor() {
 
 				{/* STEP 1: Quiz Card Interface */}
 				{currentStep < questions.length && !showResults && !showSummary && (
-					<div className="bg-white/80 dark:bg-slate-900/40 backdrop-blur-xl rounded-3xl border border-slate-200/60 dark:border-slate-800/80 p-6 md:p-10 max-w-2xl mx-auto shadow-2xl transition-all duration-300">
+					<div className="bg-white dark:bg-slate-900/40 backdrop-blur-xl rounded-3xl border border-slate-300 dark:border-slate-800/80 p-6 md:p-10 max-w-2xl mx-auto shadow-2xl transition-all duration-300">
 						<div className="text-center mb-8">
 							<h2 className="text-xl md:text-2xl font-display font-extrabold text-slate-850 dark:text-slate-100 mb-3 leading-snug">
 								{questions[currentStep].question}
 							</h2>
-							<p className="text-xs md:text-sm text-slate-450 dark:text-slate-400 max-w-xl mx-auto leading-relaxed">
+							<p className="text-xs md:text-sm text-slate-500 dark:text-slate-400 max-w-xl mx-auto leading-relaxed">
 								{questions[currentStep].description}
 							</p>
 						</div>
@@ -483,7 +517,7 @@ export default function Seletor() {
 										className={`group flex items-center gap-4 text-left border rounded-2xl p-4 transition-all duration-300 cursor-pointer hover:shadow-md active:scale-[0.99] ${
 											isSelected
 												? 'bg-purple-500/10 dark:bg-purple-400/10 border-purple-500 dark:border-purple-400 shadow-xs'
-												: 'bg-slate-50/50 dark:bg-slate-900/20 hover:bg-purple-500/5 dark:hover:bg-purple-400/5 border-slate-200 dark:border-slate-800/80 hover:border-purple-400/50'
+												: 'bg-slate-50/50 dark:bg-slate-900/20 hover:bg-purple-500/5 dark:hover:bg-purple-400/5 border-slate-300 dark:border-slate-800/80 hover:border-purple-400/50'
 										}`}
 									>
 										{/* Icon Badge */}
@@ -514,13 +548,13 @@ export default function Seletor() {
 						</div>
 
 						{/* Bottom Navigation Buttons */}
-						<div className="flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-3 mt-8 pt-6 border-t border-slate-200/60 dark:border-slate-800/60">
+						<div className="flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-3 mt-8 pt-6 border-t border-slate-300 dark:border-slate-800/60">
 							<button
 								onClick={goBack}
 								disabled={currentStep === 0}
 								className={`inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition-all duration-300 cursor-pointer ${
 									currentStep === 0
-										? 'bg-slate-100 dark:bg-slate-900 text-slate-400 dark:text-slate-600 cursor-not-allowed border border-transparent'
+										? 'bg-slate-100 dark:bg-slate-900 text-slate-500 dark:text-slate-400 cursor-not-allowed border border-transparent'
 										: 'bg-slate-200/60 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-250 dark:hover:bg-slate-700 hover:shadow-xs'
 								}`}
 							>
@@ -541,7 +575,7 @@ export default function Seletor() {
 								disabled={currentAnswer === null}
 								className={`inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition-all duration-300 cursor-pointer ${
 									currentAnswer === null
-										? 'bg-slate-100 dark:bg-slate-900 text-slate-400 dark:text-slate-600 cursor-not-allowed border border-transparent'
+										? 'bg-slate-100 dark:bg-slate-900 text-slate-500 dark:text-slate-400 cursor-not-allowed border border-transparent'
 										: 'bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white hover:shadow-lg transform hover:-translate-y-0.5 active:translate-y-0'
 								}`}
 							>
@@ -554,7 +588,7 @@ export default function Seletor() {
 
 				{/* STEP 2: Choice Summary */}
 				{showSummary && !showResults && (
-					<div className="bg-white/80 dark:bg-slate-900/40 backdrop-blur-xl rounded-3xl border border-slate-200/60 dark:border-slate-800/80 p-6 md:p-10 max-w-3xl mx-auto shadow-2xl transition-all duration-300">
+					<div className="bg-white dark:bg-slate-900/40 backdrop-blur-xl rounded-3xl border border-slate-300 dark:border-slate-800/80 p-6 md:p-10 max-w-3xl mx-auto shadow-2xl transition-all duration-300">
 						<div className="text-center mb-8">
 							<div className="inline-flex items-center justify-center w-14 h-14 bg-purple-500/10 text-purple-600 dark:text-purple-400 rounded-full mb-4 border border-purple-500/20">
 								<Award className="w-6 h-6" />
@@ -562,7 +596,7 @@ export default function Seletor() {
 							<h2 className="text-xl md:text-2xl font-display font-extrabold text-slate-850 dark:text-slate-100 mb-2">
 								Resumo das suas Configurações
 							</h2>
-							<p className="text-xs text-slate-450 dark:text-slate-400 max-w-xl mx-auto leading-relaxed">
+							<p className="text-xs text-slate-500 dark:text-slate-400 max-w-xl mx-auto leading-relaxed">
 								Revise suas escolhas de arquitetura abaixo. Você pode ajustar qualquer especificação individual antes de processar as recomendações.
 							</p>
 						</div>
@@ -574,9 +608,9 @@ export default function Seletor() {
 								const selectedOption = question.options.find(opt => opt.value === answer);
 								
 								return (
-									<div key={question.id} className="bg-slate-50/50 dark:bg-slate-900/20 rounded-xl p-4 border border-slate-200/60 dark:border-slate-800/80 hover:shadow-xs transition-all flex justify-between items-center gap-3">
+									<div key={question.id} className="bg-slate-50/50 dark:bg-slate-900/20 rounded-xl p-4 border border-slate-300 dark:border-slate-800/80 hover:shadow-xs transition-all flex justify-between items-center gap-3">
 										<div className="flex-1 min-w-0">
-											<h3 className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-1 truncate select-none">
+											<h3 className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-1 truncate select-none">
 												{question.id.replace('connectivity', 'conectividade').replace('hardware', 'periféricos').replace('power', 'alimentação').toUpperCase()}
 											</h3>
 											{selectedOption && (
@@ -597,7 +631,7 @@ export default function Seletor() {
 												setCurrentAnswer(answers[question.id]);
 												setShowSummary(false);
 											}}
-											className="p-2 border border-slate-200 dark:border-slate-800 hover:border-purple-500 dark:hover:border-purple-400 bg-white dark:bg-slate-900 hover:bg-purple-50 dark:hover:bg-purple-950/20 rounded-lg text-slate-400 hover:text-purple-650 dark:hover:text-purple-400 transition-all cursor-pointer shrink-0"
+											className="p-2 border border-slate-300 dark:border-slate-800 hover:border-purple-500 dark:hover:border-purple-400 bg-white dark:bg-slate-900 hover:bg-purple-50 dark:hover:bg-purple-950/20 rounded-lg text-slate-400 hover:text-purple-650 dark:hover:text-purple-400 transition-all cursor-pointer shrink-0"
 											title="Editar esta resposta"
 										>
 											<Edit2 className="w-3.5 h-3.5" />
@@ -607,7 +641,7 @@ export default function Seletor() {
 							})}
 						</div>
 
-						<div className="flex flex-col sm:flex-row gap-3 justify-center items-stretch sm:items-center border-t border-slate-200/60 dark:border-slate-800/60 pt-6">
+						<div className="flex flex-col sm:flex-row gap-3 justify-center items-stretch sm:items-center border-t border-slate-300 dark:border-slate-800/60 pt-6">
 							<button
 								onClick={() => {
 									setCurrentStep(questions.length - 1);
@@ -654,7 +688,7 @@ export default function Seletor() {
 										},
 										{
 											badge: "🥈 2º Recomendado",
-											cardClass: "border-slate-200/80 dark:border-slate-800 bg-linear-to-b from-slate-500/5 to-transparent min-h-[540px] opacity-95 hover:opacity-100",
+											cardClass: "border-slate-300 dark:border-slate-800 bg-linear-to-b from-slate-500/5 to-transparent min-h-[540px] opacity-95 hover:opacity-100",
 											badgeClass: "text-slate-650 bg-slate-500/10 border-slate-500/20 dark:text-slate-350 dark:bg-slate-850",
 											scoreClass: "text-slate-500 dark:text-slate-300"
 										},
@@ -669,7 +703,7 @@ export default function Seletor() {
 									return (
 										<div
 											key={seriesKey}
-											className={`relative flex flex-col bg-white/70 dark:bg-slate-900/40 backdrop-blur-xl border rounded-3xl overflow-hidden transition-all duration-500 hover:scale-[1.05] hover:shadow-2xl hover:z-20 ${rankConfig.cardClass}`}
+											className={`relative flex flex-col bg-white dark:bg-slate-900/40 backdrop-blur-xl border rounded-3xl overflow-hidden transition-all duration-500 hover:scale-[1.05] hover:shadow-2xl hover:z-20 ${rankConfig.cardClass}`}
 										>
 											{/* Top Color Band */}
 											<div className="h-1 w-full shrink-0" style={{ backgroundColor: serie.cor }} />
@@ -687,11 +721,11 @@ export default function Seletor() {
 														<h3 className="text-xl font-display font-extrabold text-slate-850 dark:text-slate-100 mb-1 leading-none">
 															{seriesKey}
 														</h3>
-														<p className="text-[10px] text-slate-400 dark:text-slate-500 font-semibold uppercase tracking-wider truncate">
+														<p className="text-[10px] text-slate-500 dark:text-slate-400 font-semibold uppercase tracking-wider truncate">
 															{serie.nome_completo}
 														</p>
 														
-														<div className="mt-3.5 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-50 dark:bg-slate-950 border border-slate-200/60 dark:border-slate-800 shadow-xs">
+														<div className="mt-3.5 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 shadow-xs">
 															<span className="text-[9px] font-bold text-slate-450 uppercase tracking-wider">Afinidade:</span>
 															<span className={`text-xs font-extrabold ${rankConfig.scoreClass}`}>
 																{score} pts
@@ -700,8 +734,8 @@ export default function Seletor() {
 													</div>
 
 													{/* Specifications Checklist */}
-													<div className="space-y-2 border-t border-slate-200/50 dark:border-slate-850/60 pt-4 mb-6 select-none">
-														<h4 className="text-[9px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-2.5">Principais Vantagens</h4>
+													<div className="space-y-2 border-t border-slate-300 dark:border-slate-850/60 pt-4 mb-6 select-none">
+														<h4 className="text-[9px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-2.5">Principais Vantagens</h4>
 														<ul className="space-y-2">
 															{matchReasons.slice(0, 3).map((reason, idx) => (
 																<li key={idx} className="flex items-start gap-2 text-xs leading-normal text-slate-600 dark:text-slate-350">
@@ -710,7 +744,7 @@ export default function Seletor() {
 																</li>
 															))}
 															{matchReasons.length > 3 && (
-																<li className="text-[10px] text-slate-400 dark:text-slate-500 italic pl-5.5">
+																<li className="text-[10px] text-slate-500 dark:text-slate-400 italic pl-5.5">
 																	+{matchReasons.length - 3} outros requisitos atendidos
 																</li>
 															)}
@@ -719,7 +753,7 @@ export default function Seletor() {
 												</div>
 
 												{/* Spec Mini Badges */}
-												<div className="grid grid-cols-2 gap-2 bg-slate-50/50 dark:bg-slate-950/40 p-2.5 rounded-xl border border-slate-100 dark:border-slate-800/40 mb-4 select-none">
+												<div className="grid grid-cols-2 gap-2 bg-slate-50/50 dark:bg-slate-950/40 p-2.5 rounded-xl border border-slate-200 dark:border-slate-800/40 mb-4 select-none">
 													<div className="flex flex-col">
 														<span className="text-[8px] font-bold uppercase text-slate-400 tracking-wider">Frequência</span>
 														<span className="text-xs font-extrabold text-slate-700 dark:text-slate-200 truncate">{serie.frequencia}</span>
@@ -750,7 +784,7 @@ export default function Seletor() {
 
 						{/* Stacked Layout for mobile */}
 						<div className="lg:hidden space-y-6 max-w-xl mx-auto">
-							<h3 className="text-sm font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest text-center select-none mb-1">Grade de Resultados</h3>
+							<h3 className="text-sm font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest text-center select-none mb-1">Grade de Resultados</h3>
 							{topThree.map(([seriesKey, score], index) => {
 								const serie = seriesData[seriesKey];
 								const matchReasons = allReasons[seriesKey] || [];
@@ -760,8 +794,8 @@ export default function Seletor() {
 								return (
 									<div
 										key={seriesKey}
-										className={`bg-white/70 dark:bg-slate-900/40 backdrop-blur-xl border rounded-3xl overflow-hidden shadow-xl flex flex-col ${
-											isFirst ? "border-amber-500 dark:border-amber-400" : "border-slate-200/80 dark:border-slate-800"
+										className={`bg-white dark:bg-slate-900/40 backdrop-blur-xl border rounded-3xl overflow-hidden shadow-xl flex flex-col ${
+											isFirst ? "border-amber-500 dark:border-amber-400" : "border-slate-300 dark:border-slate-800"
 										}`}
 									>
 										<div className="p-5 flex-1">
@@ -780,7 +814,7 @@ export default function Seletor() {
 												<span className="text-4xl select-none shrink-0">{serie.icone}</span>
 												<div>
 													<h4 className="text-base font-bold text-slate-850 dark:text-slate-100 leading-tight">{seriesKey}</h4>
-													<p className="text-xs text-slate-450 dark:text-slate-400 leading-snug line-clamp-2 mt-1">{serie.descricao}</p>
+													<p className="text-xs text-slate-500 dark:text-slate-400 leading-snug line-clamp-2 mt-1">{serie.descricao}</p>
 												</div>
 											</div>
 
@@ -808,7 +842,7 @@ export default function Seletor() {
 
 						{/* Other options */}
 						{otherRecommendations.length > 0 && (
-							<div className="bg-slate-50/50 dark:bg-slate-900/10 backdrop-blur-xl rounded-3xl p-6 md:p-8 border border-slate-200/50 dark:border-slate-850/50 max-w-6xl mx-auto shadow-inner">
+							<div className="bg-slate-50/50 dark:bg-slate-900/10 backdrop-blur-xl rounded-3xl p-6 md:p-8 border border-slate-300 dark:border-slate-850/50 max-w-6xl mx-auto shadow-inner">
 								<h3 className="text-lg font-display font-extrabold text-slate-850 dark:text-slate-150 mb-6 text-center select-none">
 									Outras Opções Compatíveis
 								</h3>
@@ -818,12 +852,12 @@ export default function Seletor() {
 										return (
 											<div
 												key={seriesKey}
-												className="bg-white/80 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800/80 rounded-2xl p-4 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 flex flex-col justify-between"
+												className="bg-white dark:bg-slate-900/60 border border-slate-300 dark:border-slate-800/80 rounded-2xl p-4 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 flex flex-col justify-between"
 											>
 												<div className="text-center mb-4">
 													<div className="text-3xl mb-2 select-none">{serie.icone}</div>
 													<h4 className="text-xs font-bold text-slate-850 dark:text-slate-250 truncate leading-none">{seriesKey}</h4>
-													<span className="text-[10px] text-slate-450 dark:text-slate-500 font-semibold">Afinidade: {score} pts</span>
+													<span className="text-[10px] text-slate-500 dark:text-slate-450 font-semibold">Afinidade: {score} pts</span>
 												</div>
 												<Link
 													href={`/series/${seriesKey}`}
@@ -840,10 +874,10 @@ export default function Seletor() {
 						)}
 
 						{/* Bottom navigation buttons */}
-						<div className="flex flex-col sm:flex-row gap-3 justify-center items-center max-w-2xl mx-auto border-t border-slate-200 dark:border-slate-850/60 pt-8 select-none">
+						<div className="flex flex-col sm:flex-row gap-3 justify-center items-center max-w-2xl mx-auto border-t border-slate-300 dark:border-slate-850/60 pt-8 select-none">
 							<Link
 								href="/comparacao"
-								className="inline-flex items-center justify-center gap-2 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 px-6 py-3 rounded-xl font-bold text-xs uppercase tracking-wider shadow-xs border border-slate-200 dark:border-slate-800 hover:border-purple-500 dark:hover:border-purple-400 hover:text-purple-600 dark:hover:text-purple-400 hover:-translate-y-0.5 transition-all duration-300 cursor-pointer w-full sm:w-auto"
+								className="inline-flex items-center justify-center gap-2 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 px-6 py-3 rounded-xl font-bold text-xs uppercase tracking-wider shadow-xs border border-slate-300 dark:border-slate-800 hover:border-purple-500 dark:hover:border-purple-400 hover:text-purple-600 dark:hover:text-purple-400 hover:-translate-y-0.5 transition-all duration-300 cursor-pointer w-full sm:w-auto"
 							>
 								<SlidersHorizontal className="w-3.5 h-3.5" />
 								<span>Comparar Lado a Lado</span>
@@ -859,7 +893,7 @@ export default function Seletor() {
 						</div>
 
 						{/* Secondary showcase tools */}
-						<div className="bg-white/80 dark:bg-slate-900/40 backdrop-blur-xl border border-slate-200/60 dark:border-slate-800/80 rounded-3xl p-6 md:p-8 max-w-6xl mx-auto shadow-2xl">
+						<div className="bg-white dark:bg-slate-900/40 backdrop-blur-xl border border-slate-300 dark:border-slate-800/80 rounded-3xl p-6 md:p-8 max-w-6xl mx-auto shadow-2xl">
 							<h3 className="text-lg font-display font-extrabold text-slate-850 dark:text-slate-100 mb-6 text-center select-none">
 								Próximos Passos de Desenvolvimento
 							</h3>
@@ -915,7 +949,7 @@ export default function Seletor() {
 
 				{/* STEP 3B: No Results Found */}
 				{showResults && recommendations.length === 0 && (
-					<div className="bg-white/80 dark:bg-slate-900/40 backdrop-blur-xl rounded-3xl border border-slate-200/60 dark:border-slate-800/80 p-8 md:p-10 max-w-2xl mx-auto shadow-2xl transition-all duration-300">
+					<div className="bg-white dark:bg-slate-900/40 backdrop-blur-xl rounded-3xl border border-slate-300 dark:border-slate-800/80 p-8 md:p-10 max-w-2xl mx-auto shadow-2xl transition-all duration-300">
 						<div className="text-center mb-8">
 							<div className="inline-flex items-center justify-center w-16 h-16 bg-amber-500/10 text-amber-600 dark:text-amber-400 rounded-full mb-4 border border-amber-500/20">
 								<HelpCircle className="w-8 h-8" />
@@ -927,7 +961,7 @@ export default function Seletor() {
 								Não foi possível encontrar um único microcontrolador ESP32 que atenda simultaneamente a todos os critérios. Isso ocorre quando requisitamos combinações extremas (ex: Ethernet industrial cabeada + BLE portátil com economia de bateria ultra-baixa).
 							</p>
 
-							<div className="bg-slate-50/50 dark:bg-slate-950/40 border border-slate-200/60 dark:border-slate-850 p-5 rounded-2xl max-w-xl mx-auto mb-6 text-left select-none">
+							<div className="bg-slate-50/50 dark:bg-slate-950/40 border border-slate-300 dark:border-slate-850 p-5 rounded-2xl max-w-xl mx-auto mb-6 text-left select-none">
 								<h3 className="text-xs font-bold text-slate-800 dark:text-slate-200 mb-2">💡 Dicas Rápidas de Seleção:</h3>
 								<ul className="space-y-2 text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
 									<li className="flex items-start gap-2">
@@ -952,7 +986,7 @@ export default function Seletor() {
 								
 								<Link
 									href="/comparacao"
-									className="inline-flex items-center justify-center gap-2 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-350 px-6 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider border border-slate-200 dark:border-slate-800 hover:border-purple-500 dark:hover:border-purple-400 hover:text-purple-600 dark:hover:text-purple-400 transition-all duration-300 cursor-pointer"
+									className="inline-flex items-center justify-center gap-2 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-350 px-6 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider border border-slate-300 dark:border-slate-800 hover:border-purple-500 dark:hover:border-purple-400 hover:text-purple-600 dark:hover:text-purple-400 transition-all duration-300 cursor-pointer"
 								>
 									<SlidersHorizontal className="w-4 h-4" />
 									<span>Ver Grade Completa</span>

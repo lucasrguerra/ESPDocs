@@ -21,11 +21,11 @@ export default function BoardCard({ board }) {
 	);
 
 	return (
-		<div className="bg-white/80 dark:bg-slate-900/40 backdrop-blur-xl border border-slate-200/60 dark:border-slate-800/80 rounded-3xl shadow-lg hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-300 overflow-hidden group flex flex-col h-full animate-fadeIn select-none">
+		<div className="bg-white dark:bg-slate-900/40 backdrop-blur-xl border border-slate-300 dark:border-slate-800/80 rounded-3xl shadow-lg hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-300 overflow-hidden group flex flex-col h-full animate-fadeIn select-none">
 			{/* Image Container with premium glass background */}
 			{board.Imagem && (
 				<div 
-					className="mx-auto w-full p-4 flex justify-center bg-white dark:bg-white border-b border-slate-100 dark:border-slate-850/40 shrink-0"
+					className="mx-auto w-full p-4 flex justify-center bg-white dark:bg-white border-b border-slate-200 dark:border-slate-850/40 shrink-0"
 					dangerouslySetInnerHTML={{ __html: board.Imagem }}
 				/>
 			)}
@@ -50,7 +50,7 @@ export default function BoardCard({ board }) {
 					{/* Características Técnicas */}
 					{availableFeatures.length > 0 && (
 						<div className="mb-6">
-							<h4 className="text-[9px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest flex items-center gap-1.5 mb-2.5">
+							<h4 className="text-[9px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest flex items-center gap-1.5 mb-2.5">
 								<CheckCircle className="w-3.5 h-3.5 text-emerald-500" />
 								<span>Recursos Embarcados</span>
 							</h4>
@@ -87,7 +87,7 @@ export default function BoardCard({ board }) {
 						href={board.Link}
 						target="_blank"
 						rel="noopener noreferrer"
-						className="block w-full bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-950 text-center px-4 py-3 rounded-xl font-bold text-xs uppercase tracking-wider hover:opacity-90 active:scale-98 transition-all shadow-md mt-auto flex items-center justify-center gap-1.5"
+						className="block w-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white text-center px-4 py-3 rounded-xl font-bold text-xs uppercase tracking-wider hover:opacity-90 active:scale-98 transition-all shadow-md mt-auto flex items-center justify-center gap-1.5"
 					>
 						<span>Adquirir no AliExpress</span>
 						<ExternalLink className="w-3.5 h-3.5" />

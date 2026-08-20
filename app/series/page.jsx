@@ -24,7 +24,7 @@ export default function Series() {
 	const series = Object.entries(seriesData);
 
 	return (
-		<div className="bg-gradient-to-br from-slate-50 via-white to-purple-50/40 dark:from-slate-950 dark:via-slate-950 dark:to-slate-900 min-h-screen text-slate-900 dark:text-slate-100 transition-colors duration-300">
+		<div className="bg-gradient-to-br from-slate-100 via-slate-50 to-purple-100/40 dark:from-slate-950 dark:via-slate-950 dark:to-slate-900 min-h-screen text-slate-900 dark:text-slate-100 transition-colors duration-300">
 			<Header />
 
 			<main id="conteudo" className="px-6 pt-16 pb-24 max-w-7xl mx-auto">
@@ -57,9 +57,8 @@ export default function Series() {
 							>
 								{/* Glassmorphic card container with dynamic color borders and shadows */}
 								<div 
-									className="bg-white/80 dark:bg-slate-900/40 backdrop-blur-xl rounded-3xl p-6 md:p-8 border border-slate-200/60 dark:border-slate-800/80 hover:shadow-2xl transition-all duration-500 h-full flex flex-col justify-between"
+									className="bg-white dark:bg-slate-900/40 backdrop-blur-xl rounded-3xl p-6 md:p-8 border border-slate-300 dark:border-slate-800/80 hover:shadow-2xl transition-all duration-500 h-full flex flex-col justify-between"
 									style={{
-										borderColor: 'rgba(148, 163, 184, 0.1)',
 										transition: 'border-color 0.3s, box-shadow 0.3s, transform 0.3s'
 									}}
 									onMouseEnter={(e) => {
@@ -90,14 +89,14 @@ export default function Series() {
 											{key}
 										</h2>
 										
-										<p className="text-xs text-slate-450 dark:text-slate-500 line-clamp-2 leading-relaxed mb-6">
+										<p className="text-xs text-slate-500 dark:text-slate-450 line-clamp-2 leading-relaxed mb-6">
 											{serie.descricao}
 										</p>
 
 										{/* Detailed specs micro-grid */}
-										<div className="space-y-3.5 border-t border-slate-100 dark:border-slate-800/60 pt-6">
+										<div className="space-y-3.5 border-t border-slate-200 dark:border-slate-800/60 pt-6">
 											<div className="flex items-center justify-between text-xs">
-												<div className="flex items-center gap-2 text-slate-400 dark:text-slate-500 font-semibold select-none">
+												<div className="flex items-center gap-2 text-slate-500 dark:text-slate-400 font-semibold select-none">
 													<Cpu className="w-3.5 h-3.5 text-blue-500/80" />
 													<span>Núcleos:</span>
 												</div>
@@ -105,7 +104,7 @@ export default function Series() {
 											</div>
 											
 											<div className="flex items-center justify-between text-xs">
-												<div className="flex items-center gap-2 text-slate-400 dark:text-slate-500 font-semibold select-none">
+												<div className="flex items-center gap-2 text-slate-500 dark:text-slate-400 font-semibold select-none">
 													<Activity className="w-3.5 h-3.5 text-amber-500/80" />
 													<span>Frequência:</span>
 												</div>
@@ -113,7 +112,7 @@ export default function Series() {
 											</div>
 											
 											<div className="flex items-center justify-between text-xs">
-												<div className="flex items-center gap-2 text-slate-400 dark:text-slate-500 font-semibold select-none">
+												<div className="flex items-center gap-2 text-slate-500 dark:text-slate-400 font-semibold select-none">
 													<Database className="w-3.5 h-3.5 text-pink-500/80" />
 													<span>SRAM:</span>
 												</div>
@@ -121,13 +120,13 @@ export default function Series() {
 											</div>
 											
 											<div className="flex items-center justify-between text-xs">
-												<div className="flex items-center gap-2 text-slate-400 dark:text-slate-500 font-semibold select-none">
+												<div className="flex items-center gap-2 text-slate-500 dark:text-slate-400 font-semibold select-none">
 													<Wifi className="w-3.5 h-3.5 text-emerald-500/80" />
 													<span>Wi-Fi:</span>
 												</div>
 												<span className="font-bold text-slate-800 dark:text-slate-200">
 													{String(serie.wifi).includes("Não") ? (
-														<span className="text-slate-350 dark:text-slate-650">—</span>
+														<span className="text-slate-500 dark:text-slate-400">—</span>
 													) : (
 														<span className="text-emerald-500 dark:text-emerald-400 font-extrabold">Sim</span>
 													)}
@@ -135,13 +134,13 @@ export default function Series() {
 											</div>
 											
 											<div className="flex items-center justify-between text-xs">
-												<div className="flex items-center gap-2 text-slate-400 dark:text-slate-500 font-semibold select-none">
+												<div className="flex items-center gap-2 text-slate-500 dark:text-slate-400 font-semibold select-none">
 													<Bluetooth className="w-3.5 h-3.5 text-indigo-500/80" />
 													<span>Bluetooth:</span>
 												</div>
 												<span className="font-bold text-slate-800 dark:text-slate-200">
 													{serie.bluetooth === "Não" ? (
-														<span className="text-slate-350 dark:text-slate-650">—</span>
+														<span className="text-slate-500 dark:text-slate-400">—</span>
 													) : (
 														<span className="text-indigo-500 dark:text-indigo-400 font-extrabold">Sim</span>
 													)}
@@ -150,7 +149,7 @@ export default function Series() {
 
 											{serie.consumo_energia?.deep_sleep && (
 												<div className="flex items-center justify-between text-xs">
-													<div className="flex items-center gap-2 text-slate-400 dark:text-slate-500 font-semibold select-none">
+													<div className="flex items-center gap-2 text-slate-500 dark:text-slate-400 font-semibold select-none">
 														<Battery className="w-3.5 h-3.5 text-green-500/80" />
 														<span>Deep Sleep:</span>
 													</div>
@@ -177,12 +176,23 @@ export default function Series() {
 												</span>
 											)}
 
-											{serie.aceleradores_cripto && (
-												<span className="inline-flex items-center gap-1 px-2.5 py-1 bg-teal-500/10 text-teal-600 dark:text-teal-400 text-[10px] font-bold uppercase rounded-lg border border-teal-500/20 shadow-xs select-none">
-													<ShieldCheck className="w-3 h-3" />
-													<span>Cripto por Hardware</span>
-												</span>
-											)}
+											{/* Marcador de segurança: mostra o recurso que DIFERENCIA a série,
+											    não o que todas têm. Ordem = do mais raro ao mais comum. */}
+											{(() => {
+												const seg = serie.seguranca || {};
+												const nivel =
+													seg.key_manager === "Sim" ? "Key Manager"
+													: String(seg.ecdsa).startsWith("Sim") ? "ECDSA em hardware"
+													: String(seg.ecc).startsWith("Sim") ? "ECC em hardware"
+													: String(seg.aes).startsWith("AES") ? "AES + SHA"
+													: "Só SHA";
+												return (
+													<span className="inline-flex items-center gap-1 px-2.5 py-1 bg-teal-500/10 text-teal-600 dark:text-teal-400 text-[10px] font-bold uppercase rounded-lg border border-teal-500/20 select-none">
+														<ShieldCheck className="w-3 h-3" />
+														<span>{nivel}</span>
+													</span>
+												);
+											})()}
 
 											{serie.matter === "Sim" && (
 												<span className="inline-flex items-center gap-1 px-2.5 py-1 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-[10px] font-bold uppercase rounded-lg border border-emerald-500/20 shadow-xs select-none">
@@ -192,7 +202,7 @@ export default function Series() {
 											)}
 										</div>
 
-										<div className="flex items-center justify-between text-xs font-bold text-slate-500 group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors uppercase tracking-wider select-none border-t border-slate-100 dark:border-slate-800/60 pt-4">
+										<div className="flex items-center justify-between text-xs font-bold text-slate-500 group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors uppercase tracking-wider select-none border-t border-slate-200 dark:border-slate-800/60 pt-4">
 											<span>Ver Detalhes</span>
 											<ArrowRight className="w-4 h-4 transform group-hover:translate-x-2 transition-transform duration-300" />
 										</div>
@@ -204,26 +214,26 @@ export default function Series() {
 				</div>
 
 				{/* Quick comparison CTA Box */}
-				<div className="mt-20 bg-gradient-to-br from-slate-900 to-indigo-950 dark:from-slate-950 dark:to-purple-950/20 rounded-3xl p-8 md:p-12 shadow-2xl relative overflow-hidden border border-slate-800/80">
+				<div className="mt-20 bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-slate-950 dark:to-purple-950/20 rounded-3xl p-8 md:p-12 shadow-2xl relative overflow-hidden border border-indigo-200 dark:border-slate-800/80">
 					<div className="absolute right-0 bottom-0 w-96 h-96 bg-purple-500/5 rounded-full blur-3xl pointer-events-none" />
 
 					<div className="flex flex-col md:flex-row items-center justify-between gap-8 relative z-10">
 						<div className="flex-1 max-w-2xl text-center md:text-left">
-							<div className="inline-flex items-center gap-2 bg-white/10 text-slate-350 px-3 py-1 rounded-full mb-4 text-xs font-semibold select-none animate-pulse">
+							<div className="inline-flex items-center gap-2 bg-indigo-500/10 text-indigo-700 dark:bg-white/10 dark:text-slate-350 px-3 py-1 rounded-full mb-4 text-xs font-semibold select-none animate-pulse">
 								<Scale className="w-3.5 h-3.5" />
 								<span>Decisão Técnica</span>
 							</div>
-							<h3 className="text-2xl md:text-3xl font-display font-extrabold text-white mb-4">
+							<h3 className="text-2xl md:text-3xl font-display font-extrabold text-slate-900 dark:text-white mb-4">
 								Ficou em dúvida de qual escolher?
 							</h3>
-							<p className="text-sm text-slate-400 leading-relaxed">
+							<p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
 								Use nosso comparador técnico dinâmico para posicionar as especificações de conectividade RF, potência de rádio e suporte a barramentos de periféricos lado a lado.
 							</p>
 						</div>
 						
 						<Link
 							href="/comparacao"
-							className="inline-flex items-center justify-center gap-2 bg-white text-slate-900 px-6 py-3.5 rounded-xl font-bold text-sm hover:bg-slate-100 transition-all duration-300 shrink-0 shadow-md active:scale-95"
+							className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-6 py-3.5 rounded-xl font-bold text-sm hover:opacity-90 transition-all duration-300 shrink-0 shadow-md active:scale-95"
 						>
 							<span>Comparar Séries</span>
 							<ArrowRight className="w-4 h-4" />

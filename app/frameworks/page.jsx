@@ -23,13 +23,13 @@ export default function Frameworks() {
 	const frameworks = Object.entries(frameworksData);
 
 	return (
-		<div className="bg-gradient-to-br from-slate-50 via-white to-purple-50/40 dark:from-slate-950 dark:via-slate-950 dark:to-slate-900 min-h-screen text-slate-900 dark:text-slate-100 transition-colors duration-300">
+		<div className="bg-gradient-to-br from-slate-100 via-slate-50 to-purple-100/40 dark:from-slate-950 dark:via-slate-950 dark:to-slate-900 min-h-screen text-slate-900 dark:text-slate-100 transition-colors duration-300">
 			<Header />
 
 			<main id="conteudo" className="px-6 pt-16 pb-24 max-w-7xl mx-auto">
 				{/* Top Hero Section */}
 				<section className="text-center mb-16 select-none">
-					<div className="inline-flex items-center gap-2 bg-white/70 dark:bg-slate-900/50 backdrop-blur-md px-4 py-2 rounded-full mb-6 border border-slate-200/60 dark:border-slate-800/60 shadow-xs">
+					<div className="inline-flex items-center gap-2 bg-white dark:bg-slate-900/50 backdrop-blur-md px-4 py-2 rounded-full mb-6 border border-slate-300 dark:border-slate-800/60 shadow-xs">
 						<Layers className="w-4 h-4 text-purple-500" />
 						<span className="text-xs font-bold text-slate-700 dark:text-slate-350 uppercase tracking-wider">Ferramentas de Desenvolvimento</span>
 					</div>
@@ -53,11 +53,11 @@ export default function Frameworks() {
 							className="group flex"
 						>
 							<div 
-								className="bg-white/70 dark:bg-slate-900/40 backdrop-blur-xl border border-slate-200/60 dark:border-slate-800/80 rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-1.5 flex flex-col justify-between overflow-hidden w-full"
+								className="bg-white dark:bg-slate-900/40 backdrop-blur-xl border border-slate-300 dark:border-slate-800/80 rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-1.5 flex flex-col justify-between overflow-hidden w-full"
 								style={{ borderTop: `4px solid ${framework.cor}` }}
 							>
 								
-								<div className="p-6 pb-4 border-b border-slate-100 dark:border-slate-850/40 flex-1">
+								<div className="p-6 pb-4 border-b border-slate-200 dark:border-slate-850/40 flex-1">
 									<div className="flex items-center justify-between mb-4">
 										<span className="text-5xl select-none filter drop-shadow-md">{framework.icone}</span>
 										<div className="flex flex-col gap-1 items-end select-none">
@@ -78,7 +78,7 @@ export default function Frameworks() {
 										{framework.nome}
 									</h2>
 									
-									<p className="text-[10px] text-slate-400 dark:text-slate-500 font-bold uppercase tracking-wider mb-4 leading-none select-none">
+									<p className="text-[10px] text-slate-500 dark:text-slate-400 font-bold uppercase tracking-wider mb-4 leading-none select-none">
 										{framework.nome_completo}
 									</p>
 									
@@ -91,7 +91,7 @@ export default function Frameworks() {
 									<div className="space-y-4">
 										{/* Main Feature */}
 										<div>
-											<h4 className="text-[9px] font-bold text-slate-400 dark:text-slate-450 mb-1.5 uppercase tracking-widest flex items-center gap-1.5">
+											<h4 className="text-[9px] font-bold text-slate-500 dark:text-slate-400 mb-1.5 uppercase tracking-widest flex items-center gap-1.5">
 												<Target className="w-3.5 h-3.5 text-blue-500" />
 												<span>Objetivo Principal</span>
 											</h4>
@@ -102,7 +102,7 @@ export default function Frameworks() {
 
 										{/* Key Specs */}
 										<div>
-											<h4 className="text-[9px] font-bold text-slate-400 dark:text-slate-450 mb-2 uppercase tracking-widest flex items-center gap-1.5">
+											<h4 className="text-[9px] font-bold text-slate-500 dark:text-slate-400 mb-2 uppercase tracking-widest flex items-center gap-1.5">
 												<Zap className="w-3.5 h-3.5 text-amber-500" />
 												<span>Recursos Chave</span>
 											</h4>
@@ -118,13 +118,13 @@ export default function Frameworks() {
 
 										{/* Use Cases tags */}
 										<div>
-											<h4 className="text-[9px] font-bold text-slate-400 dark:text-slate-450 mb-2 uppercase tracking-widest flex items-center gap-1.5">
+											<h4 className="text-[9px] font-bold text-slate-500 dark:text-slate-400 mb-2 uppercase tracking-widest flex items-center gap-1.5">
 												<Compass className="w-3.5 h-3.5 text-emerald-500" />
 												<span>Aplicações Ideais</span>
 											</h4>
 											<div className="flex flex-wrap gap-1.5">
 												{framework.casos_uso.slice(0, 3).map((caso, idx) => (
-													<span key={idx} className="text-[9px] font-bold bg-slate-100 dark:bg-slate-900/60 text-slate-650 dark:text-slate-200 px-2.5 py-1 rounded-md border border-slate-200/40 dark:border-slate-800/80">
+													<span key={idx} className="text-[9px] font-bold bg-slate-100 dark:bg-slate-900/60 text-slate-650 dark:text-slate-200 px-2.5 py-1 rounded-md border border-slate-300 dark:border-slate-800/80">
 														{caso}
 													</span>
 												))}
@@ -133,7 +133,7 @@ export default function Frameworks() {
 									</div>
 
 									{/* CTA Link */}
-									<div className="pt-4 border-t border-slate-100 dark:border-slate-850/40 mt-auto flex items-center justify-between text-xs font-bold text-slate-700 dark:text-slate-300 group-hover:text-purple-650 dark:group-hover:text-purple-400 transition-colors">
+									<div className="pt-4 border-t border-slate-200 dark:border-slate-850/40 mt-auto flex items-center justify-between text-xs font-bold text-slate-700 dark:text-slate-300 group-hover:text-purple-650 dark:group-hover:text-purple-400 transition-colors">
 										<span>Acessar Detalhes e Exemplos</span>
 										<ArrowRight className="w-4 h-4 transform group-hover:translate-x-1.5 transition-transform" />
 									</div>
@@ -146,7 +146,7 @@ export default function Frameworks() {
 				{/* Bottom Informative Cards Section */}
 				<div className="mt-16 grid md:grid-cols-2 gap-8 select-none">
 					{/* Card 1: Beginner Guide */}
-					<div className="bg-white/80 dark:bg-slate-900/40 backdrop-blur-xl rounded-3xl shadow-xl p-8 border border-slate-200/60 dark:border-slate-800/80 flex flex-col justify-between relative overflow-hidden">
+					<div className="bg-white dark:bg-slate-900/40 backdrop-blur-xl rounded-3xl shadow-xl p-8 border border-slate-300 dark:border-slate-800/80 flex flex-col justify-between relative overflow-hidden">
 						<div>
 							<div className="flex items-center gap-3.5 mb-5">
 								<div className="w-12 h-12 bg-blue-500/10 border border-blue-500/20 rounded-2xl flex items-center justify-center text-blue-500">
@@ -169,7 +169,7 @@ export default function Frameworks() {
 							</p>
 						</div>
 
-						<div className="flex flex-wrap gap-2.5 pt-4 border-t border-slate-100 dark:border-slate-850/40 mt-auto">
+						<div className="flex flex-wrap gap-2.5 pt-4 border-t border-slate-200 dark:border-slate-850/40 mt-auto">
 							<Link href="/frameworks/Arduino" className="inline-flex items-center gap-1.5 px-4 py-2.5 bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20 rounded-xl text-xs font-bold hover:bg-blue-500/20 transition-all">
 								<span>Arduino</span>
 								<ArrowRight className="w-3.5 h-3.5" />
@@ -186,7 +186,7 @@ export default function Frameworks() {
 					</div>
 
 					{/* Card 2: Specialized Solutions */}
-					<div className="bg-white/80 dark:bg-slate-900/40 backdrop-blur-xl rounded-3xl shadow-xl p-8 border border-slate-200/60 dark:border-slate-800/80 flex flex-col justify-between relative overflow-hidden">
+					<div className="bg-white dark:bg-slate-900/40 backdrop-blur-xl rounded-3xl shadow-xl p-8 border border-slate-300 dark:border-slate-800/80 flex flex-col justify-between relative overflow-hidden">
 						<div>
 							<div className="flex items-center gap-3.5 mb-5">
 								<div className="w-12 h-12 bg-purple-500/10 border border-purple-500/20 rounded-2xl flex items-center justify-center text-purple-500">
@@ -210,20 +210,20 @@ export default function Frameworks() {
 							</p>
 						</div>
 
-						<div className="flex flex-wrap gap-2.5 pt-4 border-t border-slate-100 dark:border-slate-850/40 mt-auto">
-							<Link href="/frameworks/ESP-ADF" className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-slate-150/45 dark:bg-slate-850 text-slate-700 dark:text-slate-300 border border-slate-200/60 dark:border-slate-850/60 rounded-xl text-xs font-bold hover:bg-slate-200 dark:hover:bg-slate-800 transition-all">
+						<div className="flex flex-wrap gap-2.5 pt-4 border-t border-slate-200 dark:border-slate-850/40 mt-auto">
+							<Link href="/frameworks/ESP-ADF" className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-slate-150/45 dark:bg-slate-850 text-slate-700 dark:text-slate-300 border border-slate-300 dark:border-slate-850/60 rounded-xl text-xs font-bold hover:bg-slate-200 dark:hover:bg-slate-800 transition-all">
 								<Music className="w-3.5 h-3.5 text-blue-500" />
 								<span>Áudio</span>
 							</Link>
-							<Link href="/frameworks/ESP-WHO" className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-slate-150/45 dark:bg-slate-850 text-slate-700 dark:text-slate-300 border border-slate-200/60 dark:border-slate-850/60 rounded-xl text-xs font-bold hover:bg-slate-200 dark:hover:bg-slate-800 transition-all">
+							<Link href="/frameworks/ESP-WHO" className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-slate-150/45 dark:bg-slate-850 text-slate-700 dark:text-slate-300 border border-slate-300 dark:border-slate-850/60 rounded-xl text-xs font-bold hover:bg-slate-200 dark:hover:bg-slate-800 transition-all">
 								<Camera className="w-3.5 h-3.5 text-orange-500" />
 								<span>Visão</span>
 							</Link>
-							<Link href="/frameworks/ESP-NN" className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-slate-150/45 dark:bg-slate-850 text-slate-700 dark:text-slate-300 border border-slate-200/60 dark:border-slate-850/60 rounded-xl text-xs font-bold hover:bg-slate-200 dark:hover:bg-slate-800 transition-all">
+							<Link href="/frameworks/ESP-NN" className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-slate-150/45 dark:bg-slate-850 text-slate-700 dark:text-slate-300 border border-slate-300 dark:border-slate-850/60 rounded-xl text-xs font-bold hover:bg-slate-200 dark:hover:bg-slate-800 transition-all">
 								<Brain className="w-3.5 h-3.5 text-teal-500" />
 								<span>Inteligência Artificial</span>
 							</Link>
-							<Link href="/frameworks/ESP-Matter" className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-slate-150/45 dark:bg-slate-850 text-slate-700 dark:text-slate-300 border border-slate-200/60 dark:border-slate-850/60 rounded-xl text-xs font-bold hover:bg-slate-200 dark:hover:bg-slate-800 transition-all">
+							<Link href="/frameworks/ESP-Matter" className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-slate-150/45 dark:bg-slate-850 text-slate-700 dark:text-slate-300 border border-slate-300 dark:border-slate-850/60 rounded-xl text-xs font-bold hover:bg-slate-200 dark:hover:bg-slate-800 transition-all">
 								<Home className="w-3.5 h-3.5 text-yellow-500" />
 								<span>Matter</span>
 							</Link>

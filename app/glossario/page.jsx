@@ -41,8 +41,43 @@ export default function Glossario() {
                 },
                 {
                     termo: "Aceleradores Criptográficos",
-                    definicao: "Blocos de hardware dedicados que executam algoritmos de criptografia (AES, SHA, RSA, ECC/ECDSA, HMAC) muito mais rápido e com menor consumo do que a CPU, além de sustentarem recursos como Secure Boot, criptografia de flash e assinatura digital.",
-                    exemplo: "ESP32-C5 e ESP32-P4 incluem AES, SHA, RSA, ECC/ECDSA e Key Manager para provisionamento seguro de chaves.",
+                    definicao: "Blocos de hardware dedicados que executam algoritmos de criptografia muito mais rápido e com menor consumo do que a CPU. Praticamente toda série tem algum, mas o conjunto varia bastante — por isso vale olhar item por item.",
+                    exemplo: "ESP32-C2 e ESP32-C61 não têm acelerador AES: só SHA e curvas elípticas.",
+                },
+                {
+                    termo: "ECC (Criptografia de Curvas Elípticas)",
+                    definicao: "Família de algoritmos de chave pública que atinge a mesma segurança do RSA com chaves muito menores, o que economiza memória e tempo em microcontrolador. As curvas usadas são identificadas por nome, como P-256.",
+                    exemplo: "ESP32, ESP32-S2, ESP32-S3 e ESP32-C3 não têm ECC em hardware; ESP32-C5, P4, S31 e H4 chegam à curva P-384.",
+                },
+                {
+                    termo: "ECDSA",
+                    definicao: "Algoritmo de assinatura digital baseado em curvas elípticas. Ter o periférico ECDSA no silício significa assinar e verificar sem carregar a CPU — é o que o Matter exige para o atestado de dispositivo.",
+                    exemplo: "Só ESP32-S31, C5, C61, P4, H2 e H4 têm ECDSA em hardware.",
+                },
+                {
+                    termo: "Key Manager",
+                    definicao: "Periférico que provisiona e usa chaves criptográficas sem que elas fiquem legíveis para o firmware. Mesmo que alguém extraia a imagem do firmware, a chave privada não está lá.",
+                    exemplo: "Disponível apenas no ESP32-S31, ESP32-C5 e ESP32-P4.",
+                },
+                {
+                    termo: "Secure Boot",
+                    definicao: "Verificação da assinatura do firmware durante o boot: o chip se recusa a executar código que não tenha sido assinado pela sua chave. A versão V2 usa RSA-3072 ou ECDSA; a V1, do ESP32 original, é um esquema mais antigo.",
+                    exemplo: "ESP32 tem apenas o Secure Boot V1; do ESP32-S2 em diante todos têm V2.",
+                },
+                {
+                    termo: "Criptografia de Flash",
+                    definicao: "Cifra o conteúdo da memória flash externa, impedindo que alguém leia o firmware soldando um gravador no chip de memória. O esquema atual usa XTS-AES.",
+                    exemplo: "XTS-AES-128 na maioria das séries; ESP32-S2, S3, S31, C5, P4 e H4 também suportam XTS-AES-256.",
+                },
+                {
+                    termo: "Assinatura Digital (DS)",
+                    definicao: "Periférico que assina dados usando uma chave RSA guardada em eFuse de forma que o firmware nunca a enxerga. É o antecessor mais simples do Key Manager.",
+                    exemplo: "Ausente no ESP32 original, no C2, no C61 e no H4.",
+                },
+                {
+                    termo: "Proteção contra DPA",
+                    definicao: "Defesa contra Differential Power Analysis, ataque que deduz a chave secreta medindo variações no consumo de energia do chip durante a operação criptográfica. Exige acesso físico ao dispositivo.",
+                    exemplo: "Presente no ESP32-C5, C6, C61 e H2.",
                 },
             ],
         },
@@ -334,7 +369,7 @@ export default function Glossario() {
             <main id="conteudo" className="px-4 pt-16 pb-20 max-w-7xl mx-auto">
                 {/* Hero Section */}
                 <section className="text-center mb-16">
-                    <div className="inline-flex items-center gap-2 bg-white/70 backdrop-blur-sm px-4 py-2 rounded-full mb-6 border border-purple-200 shadow-sm">
+                    <div className="inline-flex items-center gap-2 bg-white backdrop-blur-sm px-4 py-2 rounded-full mb-6 border border-purple-200 shadow-sm">
                         <span className="text-xl">📖</span>
                         <span className="text-sm font-semibold text-gray-700">Aprenda os Conceitos</span>
                     </div>

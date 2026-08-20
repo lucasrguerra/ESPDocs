@@ -6,6 +6,7 @@ import { notFound } from "next/navigation";
 import seriesData from "@/public/series.json";
 import ConnectionsDiagram from "@/components/ConnectionsDiagram";
 import SeriesTabMenu from "@/components/SeriesTabMenu";
+import PinRestrictions from "@/components/PinRestrictions";
 import { 
 	Cpu, 
 	Activity, 
@@ -41,7 +42,17 @@ import {
 	ChevronRight,
 	Lightbulb,
 	ShieldCheck,
-	KeyRound
+	KeyRound,
+	Lock,
+	Hash,
+	Spline,
+	FileSignature,
+	Dices,
+	Waves,
+	Bug,
+	Box,
+	Package,
+	Terminal
 } from "lucide-react";
 
 export default async function SerieDetail({ params }) {
@@ -72,9 +83,28 @@ export default async function SerieDetail({ params }) {
 		{ label: "Aceleradores IA", value: serie.aceleradores_ia || "Não", icon: <Sparkles className="w-5 h-5 text-purple-500" /> },
 	];
 
+	const seg = serie.seguranca || {};
 	const segurancaSpecs = [
-		{ label: "Aceleradores Criptográficos", value: serie.aceleradores_cripto || "Não", icon: <ShieldCheck className="w-5 h-5 text-teal-500" /> },
-		{ label: "Gerador de Números Aleatórios", value: serie.aceleradores_cripto ? "Sim (RNG por hardware)" : "Não", icon: <KeyRound className="w-5 h-5 text-teal-500" /> },
+		{ label: "AES", value: seg.aes || "Não", icon: <Lock className="w-5 h-5 text-teal-500" /> },
+		{ label: "SHA", value: seg.sha || "Não", icon: <Hash className="w-5 h-5 text-teal-500" /> },
+		{ label: "RSA / MPI", value: seg.rsa || "Não", icon: <KeyRound className="w-5 h-5 text-teal-500" /> },
+		{ label: "ECC (curvas elípticas)", value: seg.ecc || "Não", icon: <Spline className="w-5 h-5 text-teal-500" /> },
+		{ label: "ECDSA em hardware", value: seg.ecdsa || "Não", icon: <FileSignature className="w-5 h-5 text-teal-500" /> },
+		{ label: "HMAC", value: seg.hmac || "Não", icon: <Fingerprint className="w-5 h-5 text-teal-500" /> },
+		{ label: "Assinatura Digital (DS)", value: seg.assinatura_digital || "Não", icon: <FileSignature className="w-5 h-5 text-teal-500" /> },
+		{ label: "Key Manager", value: seg.key_manager || "Não", icon: <KeyRound className="w-5 h-5 text-teal-500" /> },
+		{ label: "Gerador aleatório (RNG)", value: seg.rng || "Não", icon: <Dices className="w-5 h-5 text-teal-500" /> },
+		{ label: "Criptografia de flash", value: seg.criptografia_flash || "Não", icon: <HardDrive className="w-5 h-5 text-teal-500" /> },
+		{ label: "Secure Boot", value: seg.secure_boot || "Não", icon: <ShieldCheck className="w-5 h-5 text-teal-500" /> },
+		{ label: "Proteção contra DPA", value: seg.protecao_dpa || "Não", icon: <Waves className="w-5 h-5 text-teal-500" /> },
+	];
+
+	const ferramentasSpecs = [
+		{ label: "ESP-IDF mínimo", value: serie.esp_idf_minimo || "—", icon: <Code className="w-5 h-5 text-amber-500" /> },
+		{ label: "Core Arduino", value: serie.arduino_core || "—", icon: <Terminal className="w-5 h-5 text-amber-500" /> },
+		{ label: "Depuração", value: serie.depuracao || "—", icon: <Bug className="w-5 h-5 text-amber-500" /> },
+		{ label: "Encapsulamento", value: serie.encapsulamento || "—", icon: <Box className="w-5 h-5 text-amber-500" /> },
+		{ label: "Módulos disponíveis", value: serie.modulos || "—", icon: <Package className="w-5 h-5 text-amber-500" /> },
 	];
 
 	const conectividadeSpecs = [
@@ -149,13 +179,13 @@ export default async function SerieDetail({ params }) {
 			label: 'Placa de Desenvolvimento',
 			available: serie.placa,
 			content: (
-				<div className="bg-white/80 dark:bg-slate-900/40 backdrop-blur-xl rounded-3xl p-6 md:p-8 border border-slate-200/60 dark:border-slate-800/80 shadow-2xl">
-					<h2 className="text-xl font-bold text-slate-800 dark:text-slate-100 mb-6 pb-3 border-b border-slate-200/65 dark:border-slate-800/65 flex items-center gap-3">
+				<div className="bg-white dark:bg-slate-900/40 backdrop-blur-xl rounded-3xl p-6 md:p-8 border border-slate-300 dark:border-slate-800/80 shadow-2xl">
+					<h2 className="text-xl font-bold text-slate-800 dark:text-slate-100 mb-6 pb-3 border-b border-slate-300 dark:border-slate-800/65 flex items-center gap-3">
 						<Sliders className="w-5 h-5" style={{ color: serie.cor }} />
 						<span>Kit de Desenvolvimento Oficial</span>
 					</h2>
 					<div className="flex justify-center">
-						<div className="relative w-full max-w-3xl bg-white dark:bg-white overflow-hidden rounded-2xl border border-slate-200/50 dark:border-slate-850/50 shadow-lg p-4">
+						<div className="relative w-full max-w-3xl bg-white dark:bg-white overflow-hidden rounded-2xl border border-slate-300 dark:border-slate-850/50 shadow-lg p-4">
 							<Image
 								src={serie.placa}
 								alt={`${key} DevKit - Placa de Desenvolvimento`}
@@ -177,7 +207,7 @@ export default async function SerieDetail({ params }) {
 			label: 'Diagrama de Conexões',
 			available: conexoes.length > 0,
 			content: (
-				<div className="bg-white/80 dark:bg-slate-900/40 backdrop-blur-xl rounded-3xl p-6 md:p-8 border border-slate-200/60 dark:border-slate-800/80 shadow-2xl">
+				<div className="bg-white dark:bg-slate-900/40 backdrop-blur-xl rounded-3xl p-6 md:p-8 border border-slate-300 dark:border-slate-800/80 shadow-2xl">
 					<div className="bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20 p-5 mb-8 rounded-2xl">
 						<div className="flex items-start gap-3">
 							<AlertTriangle className="w-5 h-5 shrink-0 mt-0.5" />
@@ -192,7 +222,7 @@ export default async function SerieDetail({ params }) {
 
 					<ConnectionsDiagram connections={conexoes} serie={serie} />
 
-					<div className="bg-slate-100/50 dark:bg-slate-950/40 rounded-2xl p-6 border border-slate-200/60 dark:border-slate-800/80 mt-8">
+					<div className="bg-slate-100/50 dark:bg-slate-950/40 rounded-2xl p-6 border border-slate-300 dark:border-slate-800/80 mt-8">
 						<h3 className="text-sm font-bold text-slate-800 dark:text-slate-100 mb-3 flex items-center gap-2 select-none">
 							<Lightbulb className="w-4 h-4 text-purple-500" />
 							<span>Flexibilidade das Portas GPIO</span>
@@ -217,7 +247,7 @@ export default async function SerieDetail({ params }) {
 	];
 
 	return (
-		<div className="bg-gradient-to-br from-slate-50 via-white to-purple-50/40 dark:from-slate-950 dark:via-slate-950 dark:to-slate-900 min-h-screen text-slate-900 dark:text-slate-100 transition-colors duration-300">
+		<div className="bg-gradient-to-br from-slate-100 via-slate-50 to-purple-100/40 dark:from-slate-950 dark:via-slate-950 dark:to-slate-900 min-h-screen text-slate-900 dark:text-slate-100 transition-colors duration-300">
 			<Header />
 
 			<main className="px-6 pt-16 pb-24 max-w-7xl mx-auto">
@@ -234,7 +264,7 @@ export default async function SerieDetail({ params }) {
 					
 					{/* Top Info Banner Card */}
 					<div 
-						className="bg-white/80 dark:bg-slate-900/40 backdrop-blur-xl rounded-3xl p-6 md:p-8 shadow-2xl border relative overflow-hidden"
+						className="bg-white dark:bg-slate-900/40 backdrop-blur-xl rounded-3xl p-6 md:p-8 shadow-2xl border relative overflow-hidden"
 						style={{ borderColor: `${serie.cor}40` }}
 					>
 						<div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8">
@@ -244,7 +274,7 @@ export default async function SerieDetail({ params }) {
 									<h1 className="text-4xl md:text-5xl font-display font-extrabold text-slate-850 dark:text-slate-100 tracking-tight leading-none mb-3">
 										{key}
 									</h1>
-									<p className="text-sm font-semibold text-slate-400 dark:text-slate-500 mb-4">{serie.nome_completo}</p>
+									<p className="text-sm font-semibold text-slate-500 dark:text-slate-400 mb-4">{serie.nome_completo}</p>
 									<span 
 										className="inline-block px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest"
 										style={{ backgroundColor: `${serie.cor}18`, color: serie.cor, border: `1px solid ${serie.cor}30` }}
@@ -261,7 +291,7 @@ export default async function SerieDetail({ params }) {
 										href={serie.datasheet}
 										target="_blank"
 										rel="noopener noreferrer"
-										className="inline-flex items-center justify-center gap-2 bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-950 px-5 py-3 rounded-xl font-bold text-xs uppercase tracking-wider hover:opacity-90 transition-opacity shadow-lg"
+										className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-5 py-3 rounded-xl font-bold text-xs uppercase tracking-wider hover:opacity-90 transition-opacity shadow-lg"
 									>
 										<FileText className="w-4 h-4" />
 										<span>Datasheet Oficial</span>
@@ -318,28 +348,28 @@ export default async function SerieDetail({ params }) {
 				{/* Primary Features Highlight Grid */}
 				<div className="grid md:grid-cols-3 gap-6 mb-8">
 					<div 
-						className="bg-white/80 dark:bg-slate-900/40 backdrop-blur-xl rounded-2xl shadow-lg p-6 border-l-4" 
+						className="bg-white dark:bg-slate-900/40 backdrop-blur-xl rounded-2xl shadow-lg p-6 border-l-4" 
 						style={{ borderColor: serie.cor }}
 					>
-						<h3 className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-1.5 select-none">PROCESSADOR</h3>
+						<h3 className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-1.5 select-none">PROCESSADOR</h3>
 						<p className="text-2xl font-extrabold text-slate-800 dark:text-slate-100">{serie.nucleos.includes("2") ? "Dual-Core" : "Single-Core"}</p>
 						<p className="text-xs text-slate-400 mt-1">{serie.frequencia}</p>
 					</div>
 					
 					<div 
-						className="bg-white/80 dark:bg-slate-900/40 backdrop-blur-xl rounded-2xl shadow-lg p-6 border-l-4" 
+						className="bg-white dark:bg-slate-900/40 backdrop-blur-xl rounded-2xl shadow-lg p-6 border-l-4" 
 						style={{ borderColor: serie.cor }}
 					>
-						<h3 className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-1.5 select-none">MEMÓRIA SRAM</h3>
+						<h3 className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-1.5 select-none">MEMÓRIA SRAM</h3>
 						<p className="text-2xl font-extrabold text-slate-800 dark:text-slate-100">{serie.memoria_sram}</p>
 						<p className="text-xs text-slate-400 mt-1">+ {serie.memoria_sram_rtc} RTC SRAM</p>
 					</div>
 					
 					<div 
-						className="bg-white/80 dark:bg-slate-900/40 backdrop-blur-xl rounded-2xl shadow-lg p-6 border-l-4" 
+						className="bg-white dark:bg-slate-900/40 backdrop-blur-xl rounded-2xl shadow-lg p-6 border-l-4" 
 						style={{ borderColor: serie.cor }}
 					>
-						<h3 className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-1.5 select-none">GPIO DISPONÍVEIS</h3>
+						<h3 className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-1.5 select-none">GPIO DISPONÍVEIS</h3>
 						<p className="text-2xl font-extrabold text-slate-800 dark:text-slate-100">{serie.gpio}</p>
 						<p className="text-xs text-slate-400 mt-1">Pinos I/O programáveis</p>
 					</div>
@@ -348,17 +378,20 @@ export default async function SerieDetail({ params }) {
 				{/* DevBoard and Connections Tabs */}
 				<SeriesTabMenu tabs={tabs} color={serie.cor} />
 
+				<PinRestrictions conexoes={conexoes} serieKey={key} cor={serie.cor} />
+
 				{/* Specs List Cards */}
 				<div className="space-y-6 mt-12">
 					<SpecSection title="Processador" specs={processadorSpecs} cor={serie.cor} icon={<Cpu className="w-5 h-5" style={{ color: serie.cor }} />} />
 					<SpecSection title="Conectividade RF" specs={conectividadeSpecs} cor={serie.cor} icon={<Wifi className="w-5 h-5" style={{ color: serie.cor }} />} />
+					<SpecSection title="Disponibilidade e Ferramentas" specs={ferramentasSpecs} cor={serie.cor} icon={<Package className="w-5 h-5" style={{ color: serie.cor }} />} />
 					<SpecSection title="Segurança e Criptografia" specs={segurancaSpecs} cor={serie.cor} icon={<ShieldCheck className="w-5 h-5" style={{ color: serie.cor }} />} />
 					<SpecSection title="Estrutura de Memória" specs={memoriaSpecs} cor={serie.cor} icon={<Database className="w-5 h-5" style={{ color: serie.cor }} />} />
 					
 					{/* Power Consumption section */}
 					{consumoEnergia.length > 0 && (
-						<div className="bg-white/80 dark:bg-slate-900/40 backdrop-blur-xl rounded-2xl p-6 md:p-8 border border-slate-200/60 dark:border-slate-800/80 shadow-2xl">
-							<h2 className="text-xl font-bold text-slate-800 dark:text-slate-100 mb-6 pb-3 border-b border-slate-200/65 dark:border-slate-800/65 flex items-center gap-3 select-none">
+						<div className="bg-white dark:bg-slate-900/40 backdrop-blur-xl rounded-2xl p-6 md:p-8 border border-slate-300 dark:border-slate-800/80 shadow-2xl">
+							<h2 className="text-xl font-bold text-slate-800 dark:text-slate-100 mb-6 pb-3 border-b border-slate-300 dark:border-slate-800/65 flex items-center gap-3 select-none">
 								<Battery className="w-5 h-5" style={{ color: serie.cor }} />
 								<span>Consumo de Energia</span>
 							</h2>
@@ -375,11 +408,11 @@ export default async function SerieDetail({ params }) {
 							<div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
 								{consumoEnergia.map((spec, index) => (
 									<div key={index} className="flex items-center gap-3.5 p-3.5 bg-slate-50/50 dark:bg-slate-950/20 rounded-xl hover:bg-purple-500/5 dark:hover:bg-purple-400/5 border border-slate-150/40 dark:border-slate-850/40 transition-colors">
-										<div className="p-2 bg-white dark:bg-slate-900 rounded-lg shadow-xs border border-slate-200/30 dark:border-slate-850/30 shrink-0">
+										<div className="p-2 bg-white dark:bg-slate-900 rounded-lg shadow-xs border border-slate-300 dark:border-slate-850/30 shrink-0">
 											{spec.icon}
 										</div>
 										<div className="min-w-0">
-											<p className="text-[10px] text-slate-400 dark:text-slate-500 font-bold uppercase tracking-wider">{spec.label}</p>
+											<p className="text-[10px] text-slate-500 dark:text-slate-400 font-bold uppercase tracking-wider">{spec.label}</p>
 											<p className="text-sm font-extrabold text-slate-800 dark:text-slate-200 mt-0.5">{spec.value}</p>
 										</div>
 									</div>
@@ -406,26 +439,26 @@ export default async function SerieDetail({ params }) {
 				</div>
 
 				{/* DevBoard CTA Panel */}
-				<div className="my-20 bg-gradient-to-br from-slate-900 to-indigo-950 dark:from-slate-950 dark:to-purple-950/20 border border-slate-800/80 rounded-3xl p-8 md:p-12 shadow-2xl relative overflow-hidden">
+				<div className="my-20 bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-slate-950 dark:to-purple-950/20 border border-indigo-200 dark:border-slate-800/80 rounded-3xl p-8 md:p-12 shadow-2xl relative overflow-hidden">
 					<div className="absolute right-0 bottom-0 w-96 h-96 bg-purple-500/5 rounded-full blur-3xl pointer-events-none" />
 
 					<div className="flex flex-col md:flex-row items-center justify-between gap-8 relative z-10">
 						<div className="flex-1 max-w-2xl text-center md:text-left">
-							<div className="inline-flex items-center gap-2 bg-white/10 text-slate-350 px-3 py-1 rounded-full mb-4 text-xs font-semibold select-none">
+							<div className="inline-flex items-center gap-2 bg-indigo-500/10 text-indigo-700 dark:bg-white/10 dark:text-slate-350 px-3 py-1 rounded-full mb-4 text-xs font-semibold select-none">
 								<Home className="w-3.5 h-3.5" />
 								<span>Hardware Fisico</span>
 							</div>
-							<h3 className="text-2xl md:text-3xl font-display font-extrabold text-white mb-4">
+							<h3 className="text-2xl md:text-3xl font-display font-extrabold text-slate-900 dark:text-white mb-4">
 								Pronto para começar a prototipar?
 							</h3>
-							<p className="text-sm text-slate-400 leading-relaxed">
+							<p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
 								Explore toda a nossa grade de placas de desenvolvimento de parceiros oficiais para a série {key}. Compare dimensões, conversores USB-serial e pinagens prontas para protoboards.
 							</p>
 						</div>
 						
 						<Link
 							href="/catalogo"
-							className="inline-flex items-center justify-center gap-2 bg-white text-slate-900 px-6 py-3.5 rounded-xl font-bold text-sm hover:bg-slate-100 transition-all duration-300 shrink-0 shadow-md active:scale-95"
+							className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-6 py-3.5 rounded-xl font-bold text-sm hover:opacity-90 transition-all duration-300 shrink-0 shadow-md active:scale-95"
 						>
 							<span>Ver Placas Disponíveis</span>
 							<ArrowRight className="w-4 h-4" />
@@ -438,11 +471,11 @@ export default async function SerieDetail({ params }) {
 					{previousKey ? (
 						<Link
 							href={`/series/${previousKey}`}
-							className="flex items-center gap-3 bg-white/70 dark:bg-slate-900/40 backdrop-blur-xl px-5 py-3.5 rounded-2xl shadow-lg border border-slate-200/60 dark:border-slate-800/80 hover:border-purple-500/55 dark:hover:border-purple-400/55 transition-all group shrink-0"
+							className="flex items-center gap-3 bg-white dark:bg-slate-900/40 backdrop-blur-xl px-5 py-3.5 rounded-2xl shadow-lg border border-slate-300 dark:border-slate-800/80 hover:border-purple-500/55 dark:hover:border-purple-400/55 transition-all group shrink-0"
 						>
 							<ArrowLeft className="w-4 h-4 text-slate-400 group-hover:-translate-x-1.5 transition-transform" />
 							<div className="text-left">
-								<p className="text-[10px] text-slate-400 dark:text-slate-500 font-bold uppercase tracking-wider">Anterior</p>
+								<p className="text-[10px] text-slate-500 dark:text-slate-400 font-bold uppercase tracking-wider">Anterior</p>
 								<p className="text-sm font-extrabold text-slate-800 dark:text-slate-200">{previousKey}</p>
 							</div>
 						</Link>
@@ -452,7 +485,7 @@ export default async function SerieDetail({ params }) {
 
 					<Link
 						href="/comparacao"
-						className="inline-flex items-center justify-center gap-2 bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-950 px-6 py-3.5 rounded-xl font-bold text-xs uppercase tracking-wider hover:opacity-90 transition-opacity shadow-md"
+						className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-6 py-3.5 rounded-xl font-bold text-xs uppercase tracking-wider hover:opacity-90 transition-opacity shadow-md"
 					>
 						<Scale className="w-4 h-4" />
 						<span>Comparar Séries</span>
@@ -461,10 +494,10 @@ export default async function SerieDetail({ params }) {
 					{nextKey ? (
 						<Link
 							href={`/series/${nextKey}`}
-							className="flex items-center gap-3 bg-white/70 dark:bg-slate-900/40 backdrop-blur-xl px-5 py-3.5 rounded-2xl shadow-lg border border-slate-200/60 dark:border-slate-800/80 hover:border-purple-500/55 dark:hover:border-purple-400/55 transition-all group shrink-0"
+							className="flex items-center gap-3 bg-white dark:bg-slate-900/40 backdrop-blur-xl px-5 py-3.5 rounded-2xl shadow-lg border border-slate-300 dark:border-slate-800/80 hover:border-purple-500/55 dark:hover:border-purple-400/55 transition-all group shrink-0"
 						>
 							<div className="text-right">
-								<p className="text-[10px] text-slate-400 dark:text-slate-500 font-bold uppercase tracking-wider">Próximo</p>
+								<p className="text-[10px] text-slate-500 dark:text-slate-400 font-bold uppercase tracking-wider">Próximo</p>
 								<p className="text-sm font-extrabold text-slate-800 dark:text-slate-200">{nextKey}</p>
 							</div>
 							<ArrowRight className="w-4 h-4 text-slate-400 group-hover:translate-x-1.5 transition-transform" />
@@ -482,19 +515,19 @@ export default async function SerieDetail({ params }) {
 
 function SpecSection({ title, specs, cor, icon }) {
 	return (
-		<div className="bg-white/80 dark:bg-slate-900/40 backdrop-blur-xl rounded-2xl p-6 md:p-8 border border-slate-200/60 dark:border-slate-800/80 shadow-2xl">
-			<h2 className="text-xl font-bold text-slate-800 dark:text-slate-100 mb-6 pb-3 border-b border-slate-200/65 dark:border-slate-800/65 flex items-center gap-3 select-none">
+		<div className="bg-white dark:bg-slate-900/40 backdrop-blur-xl rounded-2xl p-6 md:p-8 border border-slate-300 dark:border-slate-800/80 shadow-2xl">
+			<h2 className="text-xl font-bold text-slate-800 dark:text-slate-100 mb-6 pb-3 border-b border-slate-300 dark:border-slate-800/65 flex items-center gap-3 select-none">
 				{icon}
 				<span>{title}</span>
 			</h2>
 			<div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
 				{specs.map((spec, index) => (
 					<div key={index} className="flex items-center gap-3.5 p-3.5 bg-slate-50/50 dark:bg-slate-950/20 rounded-xl hover:bg-purple-500/5 dark:hover:bg-purple-400/5 border border-slate-150/40 dark:border-slate-850/40 transition-colors">
-						<div className="p-2 bg-white dark:bg-slate-900 rounded-lg shadow-xs border border-slate-200/30 dark:border-slate-850/30 shrink-0">
+						<div className="p-2 bg-white dark:bg-slate-900 rounded-lg shadow-xs border border-slate-300 dark:border-slate-850/30 shrink-0">
 							{spec.icon}
 						</div>
 						<div className="min-w-0">
-							<p className="text-[10px] text-slate-400 dark:text-slate-500 font-bold uppercase tracking-wider">{spec.label}</p>
+							<p className="text-[10px] text-slate-500 dark:text-slate-400 font-bold uppercase tracking-wider">{spec.label}</p>
 							<p className="text-sm font-extrabold text-slate-800 dark:text-slate-200 mt-0.5">{spec.value}</p>
 						</div>
 					</div>

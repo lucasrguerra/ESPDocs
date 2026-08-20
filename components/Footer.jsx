@@ -133,7 +133,7 @@ export default function Footer() {
 				</div>
 
 				{/* Divisor & Isenção */}
-				<div className="mt-12 pt-8 border-t border-slate-205/60 dark:border-slate-800/80 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-slate-400 dark:text-slate-500">
+				<div className="mt-12 pt-8 border-t border-slate-300 dark:border-slate-800/80 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-slate-500 dark:text-slate-400">
 					<p className="text-center md:text-left leading-relaxed">
 						© {year} ESPDocs. Esta plataforma independente de código aberto não possui afiliação com a Espressif Systems.
 					</p>

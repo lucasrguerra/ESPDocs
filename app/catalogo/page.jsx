@@ -149,13 +149,13 @@ export default function PlacasPage() {
 
 	if (loading) {
 		return (
-			<div className="bg-gradient-to-br from-slate-50 via-white to-purple-50/40 dark:from-slate-950 dark:via-slate-950 dark:to-slate-900 min-h-screen text-slate-900 dark:text-slate-100 flex flex-col justify-between">
+			<div className="bg-gradient-to-br from-slate-100 via-slate-50 to-purple-100/40 dark:from-slate-950 dark:via-slate-950 dark:to-slate-900 min-h-screen text-slate-900 dark:text-slate-100 flex flex-col justify-between">
 				<Header />
 
 				<main className="max-w-7xl mx-auto px-6 py-24 flex-1 flex items-center justify-center">
 					<div className="text-center select-none animate-pulse">
 						<RefreshCw className="w-12 h-12 text-purple-500 animate-spin mx-auto mb-4" />
-						<p className="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">Consultando banco de placas...</p>
+						<p className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest">Consultando banco de placas...</p>
 					</div>
 				</main>
 
@@ -166,20 +166,20 @@ export default function PlacasPage() {
 
 	if (error) {
 		return (
-			<div className="bg-gradient-to-br from-slate-50 via-white to-purple-50/40 dark:from-slate-950 dark:via-slate-950 dark:to-slate-900 min-h-screen text-slate-900 dark:text-slate-100 flex flex-col justify-between">
+			<div className="bg-gradient-to-br from-slate-100 via-slate-50 to-purple-100/40 dark:from-slate-950 dark:via-slate-950 dark:to-slate-900 min-h-screen text-slate-900 dark:text-slate-100 flex flex-col justify-between">
 				<Header />
 
 				<main className="max-w-7xl mx-auto px-6 py-24 flex-1 flex items-center justify-center">
-					<div className="text-center bg-white/80 dark:bg-slate-900/40 backdrop-blur-xl border border-slate-200/60 dark:border-slate-800/80 rounded-3xl p-8 max-w-md shadow-2xl select-none">
+					<div className="text-center bg-white dark:bg-slate-900/40 backdrop-blur-xl border border-slate-300 dark:border-slate-800/80 rounded-3xl p-8 max-w-md shadow-2xl select-none">
 						<div className="w-12 h-12 bg-red-500/10 border border-red-500/20 rounded-2xl flex items-center justify-center text-red-500 mx-auto mb-4">
 							<AlertTriangle className="w-6 h-6" />
 						</div>
 						<p className="text-sm font-bold text-red-600 dark:text-red-400 mb-2 uppercase tracking-widest">Falha ao sincronizar dados</p>
-						<p className="text-xs text-slate-450 dark:text-slate-550 mb-6 leading-relaxed">{error}</p>
+						<p className="text-xs text-slate-500 dark:text-slate-400 mb-6 leading-relaxed">{error}</p>
 
 						<button
 							onClick={fetchBoards}
-							className="inline-flex items-center gap-2 bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-950 px-5 py-3 rounded-xl font-bold text-xs uppercase tracking-wider hover:opacity-90 active:scale-95 transition-all shadow-md cursor-pointer"
+							className="inline-flex items-center gap-2 bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-5 py-3 rounded-xl font-bold text-xs uppercase tracking-wider hover:opacity-90 active:scale-95 transition-all shadow-md cursor-pointer"
 						>
 							<RefreshCw className="w-4 h-4" />
 							<span>Tentar Novamente</span>
@@ -195,13 +195,13 @@ export default function PlacasPage() {
 	const filterableColumns = headers.filter(h => !excludedColumns.includes(h));
 
 	return (
-		<div className="bg-gradient-to-br from-slate-50 via-white to-purple-50/40 dark:from-slate-950 dark:via-slate-950 dark:to-slate-900 min-h-screen text-slate-900 dark:text-slate-100 transition-colors duration-300">
+		<div className="bg-gradient-to-br from-slate-100 via-slate-50 to-purple-100/40 dark:from-slate-950 dark:via-slate-950 dark:to-slate-900 min-h-screen text-slate-900 dark:text-slate-100 transition-colors duration-300">
 			<Header />
 
 			<main id="conteudo" className="max-w-7xl mx-auto px-6 pt-16 pb-24">
 				{/* Top Hero Heading Block */}
 				<section className="text-center mb-16 select-none">
-					<div className="inline-flex items-center gap-2 bg-white/70 dark:bg-slate-900/50 backdrop-blur-md px-4 py-2 rounded-full mb-6 border border-slate-200/60 dark:border-slate-800/60 shadow-xs">
+					<div className="inline-flex items-center gap-2 bg-white dark:bg-slate-900/50 backdrop-blur-md px-4 py-2 rounded-full mb-6 border border-slate-300 dark:border-slate-800/60 shadow-xs">
 						<ShoppingCart className="w-4 h-4 text-purple-500" />
 						<span className="text-xs font-bold text-slate-700 dark:text-slate-350 uppercase tracking-wider">Encontre sua placa ideal</span>
 					</div>
@@ -225,7 +225,7 @@ export default function PlacasPage() {
 				<div className="grid lg:grid-cols-4 gap-8">
 					{/* Left Filters Sidebar */}
 					<div className="lg:col-span-1">
-						<div className="bg-white/80 dark:bg-slate-900/40 backdrop-blur-xl border border-slate-200/60 dark:border-slate-800/80 rounded-3xl shadow-xl overflow-hidden sticky top-4">
+						<div className="bg-white dark:bg-slate-900/40 backdrop-blur-xl border border-slate-300 dark:border-slate-800/80 rounded-3xl shadow-xl overflow-hidden sticky top-4">
 							
 							{/* Sidebar Banner Header */}
 							<div className="bg-gradient-to-r from-blue-600 to-purple-600 p-6 text-white select-none">
@@ -257,7 +257,7 @@ export default function PlacasPage() {
 							<div className="p-6 space-y-6">
 								{/* Text search by name */}
 								<div>
-									<label className="block text-[9px] font-bold text-slate-400 dark:text-slate-500 mb-2.5 uppercase tracking-widest select-none">
+									<label className="block text-[9px] font-bold text-slate-500 dark:text-slate-400 mb-2.5 uppercase tracking-widest select-none">
 										Buscar Placa
 									</label>
 									<div className="relative">
@@ -266,13 +266,13 @@ export default function PlacasPage() {
 											placeholder="Digite o nome da placa..."
 											value={searchTerm}
 											onChange={(e) => setSearchTerm(e.target.value)}
-											className="w-full px-4 py-3 pl-10 border border-slate-200 dark:border-slate-800 rounded-2xl focus:ring-2 focus:ring-purple-500 dark:focus:ring-purple-500 focus:outline-none transition-colors text-xs bg-slate-50/50 dark:bg-slate-950/20 text-slate-800 dark:text-slate-100"
+											className="w-full px-4 py-3 pl-10 border border-slate-300 dark:border-slate-800 rounded-2xl focus:ring-2 focus:ring-purple-500 dark:focus:ring-purple-500 focus:outline-none transition-colors text-xs bg-slate-50/50 dark:bg-slate-950/20 text-slate-800 dark:text-slate-100"
 										/>
-										<Search className="absolute left-3.5 top-3.5 w-4 h-4 text-slate-400 dark:text-slate-500" />
+										<Search className="absolute left-3.5 top-3.5 w-4 h-4 text-slate-500 dark:text-slate-400" />
 									</div>
 								</div>
 
-								<div className="border-t border-slate-100 dark:border-slate-850/45 my-2"></div>
+								<div className="border-t border-slate-200 dark:border-slate-850/45 my-2"></div>
 
 								{/* Dinamic filters container with customized scrollbar */}
 								<div className="space-y-4 max-h-[calc(100vh-450px)] overflow-y-auto pr-2 custom-scrollbar">
@@ -283,7 +283,7 @@ export default function PlacasPage() {
 										const isActive = activeFilters[column]?.length > 0;
 										
 										return (
-											<div key={column} className={`pb-3 border-b border-slate-100 dark:border-slate-850/30 last:border-b-0 ${isActive ? 'bg-purple-500/5 dark:bg-purple-400/5 p-3 rounded-2xl border border-purple-500/10 dark:border-purple-400/10' : ''}`}>
+											<div key={column} className={`pb-3 border-b border-slate-200 dark:border-slate-850/30 last:border-b-0 ${isActive ? 'bg-purple-500/5 dark:bg-purple-400/5 p-3 rounded-2xl border border-purple-500/10 dark:border-purple-400/10' : ''}`}>
 												{filterData.isBinary ? (
 													// Binary filter (checkbox inside title wrapper)
 													<label className="flex justify-between items-center cursor-pointer p-1 rounded-lg transition-all group select-none">
@@ -341,14 +341,14 @@ export default function PlacasPage() {
 					{/* Right Catalog Boards Grid */}
 					<div className="lg:col-span-3">
 						<div className="mb-6 flex justify-between items-center select-none">
-							<p className="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">
+							<p className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest">
 								Total Encontrado: <span className="text-purple-650 dark:text-purple-400">{filteredBoards.length}</span> Placa(s)
 							</p>
 						</div>
 
 						{filteredBoards.length === 0 ? (
-							<div className="text-center py-20 bg-white/80 dark:bg-slate-900/40 backdrop-blur-xl border border-slate-200/60 dark:border-slate-800/80 rounded-3xl p-8 shadow-md select-none">
-								<Search className="w-12 h-12 text-slate-300 dark:text-slate-700 mx-auto mb-4" />
+							<div className="text-center py-20 bg-white dark:bg-slate-900/40 backdrop-blur-xl border border-slate-300 dark:border-slate-800/80 rounded-3xl p-8 shadow-md select-none">
+								<Search className="w-12 h-12 text-slate-450 mx-auto mb-4" />
 								<p className="text-base font-display font-extrabold text-slate-800 dark:text-slate-200 mb-1">Nenhuma Placa Correspondente</p>
 								<p className="text-xs text-slate-500 dark:text-slate-400">Tente ajustar ou redefinir seus filtros laterais para expandir a busca.</p>
 							</div>

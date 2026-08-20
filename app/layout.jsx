@@ -23,7 +23,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
 	return (
 		<html lang="pt-BR" className={`${outfit.variable} ${inter.variable}`} suppressHydrationWarning>
-			<body className="font-sans antialiased bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-50 transition-colors duration-300">
+			<body className="font-sans antialiased bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-50 transition-colors duration-300" suppressHydrationWarning>
 				<Providers>
 					{children}
 				</Providers>

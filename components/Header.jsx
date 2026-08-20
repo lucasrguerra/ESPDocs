@@ -62,7 +62,7 @@ export default function Header() {
 	}, [drawerOpen]);
 
 	return (
-		<header className="bg-white/80 dark:bg-slate-950/80 backdrop-blur-md py-4 px-4 md:px-8 shadow-xs border-b border-slate-100 dark:border-slate-800/60 sticky top-0 z-50 transition-colors duration-300">
+		<header className="bg-white dark:bg-slate-950/80 backdrop-blur-md py-4 px-4 md:px-8 shadow-xs border-b border-slate-200 dark:border-slate-800/60 sticky top-0 z-50 transition-colors duration-300">
 			<div className="flex justify-between max-w-7xl mx-auto items-center gap-8">
 				{/* LOGO */}
 				<Link href="/" className="group shrink-0">
@@ -103,7 +103,7 @@ export default function Header() {
 					{/* Full Menu Burger Trigger */}
 					<button
 						onClick={() => setDrawerOpen(true)}
-						className="p-2.5 rounded-xl border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-900/80 hover:border-purple-500 dark:hover:border-purple-400 hover:text-purple-600 dark:hover:text-purple-400 transition-all cursor-pointer"
+						className="p-2.5 rounded-xl border border-slate-300 dark:border-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-900/80 hover:border-purple-500 dark:hover:border-purple-400 hover:text-purple-600 dark:hover:text-purple-400 transition-all cursor-pointer"
 						aria-label="Abrir menu completo"
 						aria-expanded={drawerOpen}
 					>
@@ -116,7 +116,7 @@ export default function Header() {
 					<ThemeToggle />
 					<button
 						onClick={() => setDrawerOpen(true)}
-						className="p-2.5 rounded-xl border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-900/80 hover:border-purple-500 dark:hover:border-purple-400 transition-all cursor-pointer"
+						className="p-2.5 rounded-xl border border-slate-300 dark:border-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-900/80 hover:border-purple-500 dark:hover:border-purple-400 transition-all cursor-pointer"
 						aria-label="Abrir menu de navegação"
 						aria-expanded={drawerOpen}
 					>
@@ -136,12 +136,12 @@ export default function Header() {
 					)}
 
 					<div
-						className={`fixed top-0 right-0 h-screen w-80 max-w-[85vw] bg-white dark:bg-slate-900 shadow-2xl z-[101] transform transition-transform duration-300 ease-in-out flex flex-col border-l border-slate-200 dark:border-slate-800 ${
+						className={`fixed top-0 right-0 h-screen w-80 max-w-[85vw] bg-white dark:bg-slate-900 shadow-2xl z-[101] transform transition-transform duration-300 ease-in-out flex flex-col border-l border-slate-300 dark:border-slate-800 ${
 							drawerOpen ? "translate-x-0" : "translate-x-full"
 						}`}
 					>
 						{/* Drawer Header */}
-						<div className="flex items-center justify-between p-6 border-b border-slate-100 dark:border-slate-800/80">
+						<div className="flex items-center justify-between p-6 border-b border-slate-200 dark:border-slate-800/80">
 							<h2 className="text-xl font-display font-bold bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent">
 								Menu Navegação
 							</h2>
@@ -181,8 +181,8 @@ export default function Header() {
 						</nav>
 
 						{/* Drawer Footer Info */}
-						<div className="p-6 border-t border-slate-100 dark:border-slate-800/80 bg-slate-50/50 dark:bg-slate-900/50">
-							<p className="text-center text-xs text-slate-400 dark:text-slate-500 font-medium">
+						<div className="p-6 border-t border-slate-200 dark:border-slate-800/80 bg-slate-50/50 dark:bg-slate-900/50">
+							<p className="text-center text-xs text-slate-500 dark:text-slate-400 font-medium">
 								ESPDocs • Plataforma Não Oficial
 							</p>
 						</div>

@@ -130,15 +130,15 @@ export default function ConnectionsDiagram({ connections, serie }) {
 	if (!connections || connections.length === 0) {
 		return (
 			<div className="flex flex-col items-center justify-center py-16 px-4">
-				<div className="w-20 h-20 mb-6 rounded-2xl bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center justify-center shadow-lg">
-					<Sliders className="w-10 h-10 text-slate-400 dark:text-slate-600" />
+				<div className="w-20 h-20 mb-6 rounded-2xl bg-slate-100 dark:bg-slate-900 border border-slate-300 dark:border-slate-800 flex items-center justify-center shadow-lg">
+					<Sliders className="w-10 h-10 text-slate-500 dark:text-slate-400" />
 				</div>
 
 				<p className="text-lg font-bold text-slate-800 dark:text-slate-200">
 					Diagrama de conexões indisponível
 				</p>
 
-				<p className="text-xs text-slate-400 dark:text-slate-500 mt-2">
+				<p className="text-xs text-slate-500 dark:text-slate-400 mt-2">
 					Este modelo ainda não possui um mapa detalhado de conexões e barramentos.
 				</p>
 			</div>
@@ -150,7 +150,7 @@ export default function ConnectionsDiagram({ connections, serie }) {
 			
 			{/* Header info */}
 			<div className="space-y-3">
-				<h2 className="text-xl font-bold text-slate-850 dark:text-slate-100 mb-4 pb-3 border-b border-slate-200/60 dark:border-slate-800/65 flex items-center gap-3 select-none">
+				<h2 className="text-xl font-bold text-slate-850 dark:text-slate-100 mb-4 pb-3 border-b border-slate-300 dark:border-slate-800/65 flex items-center gap-3 select-none">
 					<Sliders className="w-5 h-5" style={{ color: serie.color }} />
 					<span>Diagrama de Conexões Interativo</span>
 				</h2>
@@ -160,16 +160,16 @@ export default function ConnectionsDiagram({ connections, serie }) {
 			</div>
 
 			{/* Search Panel */}
-			<div className="bg-white/60 dark:bg-slate-900/30 backdrop-blur-xl rounded-2xl border border-slate-200/60 dark:border-slate-800/80 p-5 space-y-4 shadow-xl">
+			<div className="bg-white/60 dark:bg-slate-900/30 backdrop-blur-xl rounded-2xl border border-slate-300 dark:border-slate-800/80 p-5 space-y-4 shadow-xl">
 				<div className="flex flex-col sm:flex-row gap-4">
 					<div className="flex-1 relative">
-						<Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4.5 h-4.5 text-slate-400 dark:text-slate-500" />
+						<Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4.5 h-4.5 text-slate-500 dark:text-slate-400" />
 						<input
 							type="text"
 							placeholder="Buscar por nome ou número da conexão (Ex: GPIO1, TXD, XTAL)..."
 							value={searchQuery}
 							onChange={(e) => setSearchQuery(e.target.value)}
-							className="w-full pl-12 pr-10 py-3 rounded-xl border border-slate-200/60 dark:border-slate-800 bg-white dark:bg-slate-950/40 focus:border-purple-500/80 focus:ring-4 focus:ring-purple-500/10 text-slate-800 dark:text-slate-200 transition-all outline-none text-sm font-semibold"
+							className="w-full pl-12 pr-10 py-3 rounded-xl border border-slate-300 dark:border-slate-800 bg-white dark:bg-slate-950/40 focus:border-purple-500/80 focus:ring-4 focus:ring-purple-500/10 text-slate-800 dark:text-slate-200 transition-all outline-none text-sm font-semibold"
 							aria-label="Search connections"
 						/>
 						{searchQuery && (
@@ -217,14 +217,14 @@ export default function ConnectionsDiagram({ connections, serie }) {
 			</div>
 
 			{/* Filters Panel */}
-			<div className="bg-white/60 dark:bg-slate-900/30 backdrop-blur-xl rounded-2xl border border-slate-200/60 dark:border-slate-800/80 p-5 shadow-xl">
+			<div className="bg-white/60 dark:bg-slate-900/30 backdrop-blur-xl rounded-2xl border border-slate-300 dark:border-slate-800/80 p-5 shadow-xl">
 				<div className="flex items-center gap-3 mb-5 border-b border-slate-150/40 dark:border-slate-850/45 pb-3">
 					<Filter className="w-4 h-4 text-purple-500" />
 					<h4 className="text-sm font-bold text-slate-800 dark:text-slate-100 select-none">
 						Filtre por Função do Pino
 					</h4>
 
-					<span className="ml-auto text-[10px] font-bold text-slate-400 dark:text-slate-500 bg-slate-100 dark:bg-slate-950 px-3 py-1 rounded-full border border-slate-200/30 dark:border-slate-850/30 shadow-xs select-none">
+					<span className="ml-auto text-[10px] font-bold text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-950 px-3 py-1 rounded-full border border-slate-300 dark:border-slate-850/30 shadow-xs select-none">
 						{visibleConnections.length} de {connections.length} ativos
 					</span>
 				</div>
@@ -247,7 +247,7 @@ export default function ConnectionsDiagram({ connections, serie }) {
 								className={`group relative px-4 py-2 rounded-xl text-xs font-extrabold transition-all duration-300 focus:outline-none cursor-pointer active:scale-95 ${
 									isActive
 										? "shadow-lg text-white"
-										: "bg-slate-50/70 dark:bg-slate-950/20 text-slate-650 dark:text-slate-350 hover:bg-slate-100/50 dark:hover:bg-slate-850/30 border border-slate-200/40 dark:border-slate-850/40"
+										: "bg-slate-50/70 dark:bg-slate-950/20 text-slate-650 dark:text-slate-350 hover:bg-slate-100/50 dark:hover:bg-slate-850/30 border border-slate-300 dark:border-slate-850/40"
 								}`}
 								style={{
 									backgroundColor: isActive ? filter.color : undefined,
@@ -257,7 +257,7 @@ export default function ConnectionsDiagram({ connections, serie }) {
 								<span className="flex items-center gap-2">
 									<span>{filter.name}</span>
 									<span className={`text-[9px] px-1.5 py-0.5 rounded-full shrink-0 font-bold ${
-										isActive ? "bg-white/20 text-white" : "bg-slate-200/50 dark:bg-slate-800/80 text-slate-555 dark:text-slate-400"
+										isActive ? "bg-white/20 text-white" : "bg-slate-200/50 dark:bg-slate-800/80 text-slate-600 dark:text-slate-400"
 									}`}>
 										{count}
 									</span>
@@ -269,8 +269,8 @@ export default function ConnectionsDiagram({ connections, serie }) {
 
 				{/* Active Categories badges */}
 				{activeFilter !== "All" && activeCategories.length > 0 && (
-					<div className="mt-5 pt-5 border-t border-slate-100 dark:border-slate-850/40 select-none">
-						<p className="text-[10px] font-bold text-slate-400 dark:text-slate-500 mb-3 uppercase tracking-wider">Subcategorias ativadas por esse filtro:</p>
+					<div className="mt-5 pt-5 border-t border-slate-200 dark:border-slate-850/40 select-none">
+						<p className="text-[10px] font-bold text-slate-500 dark:text-slate-400 mb-3 uppercase tracking-wider">Subcategorias ativadas por esse filtro:</p>
 						<div className="flex flex-wrap gap-2">
 							{activeCategories.map(cat => (
 								<span
@@ -289,7 +289,7 @@ export default function ConnectionsDiagram({ connections, serie }) {
 
 			{/* Diagram Workspace */}
 			{visibleConnections.length === 0 ? (
-				<div className="bg-slate-50/50 dark:bg-slate-900/10 backdrop-blur-xl rounded-2xl p-12 border-2 border-dashed border-slate-200 dark:border-slate-850/80 text-center shadow-inner">
+				<div className="bg-slate-50/50 dark:bg-slate-900/10 backdrop-blur-xl rounded-2xl p-12 border-2 border-dashed border-slate-300 dark:border-slate-850/80 text-center shadow-inner">
 					<div className="w-16 h-16 mx-auto mb-4 rounded-full bg-slate-100 dark:bg-slate-950 flex items-center justify-center shadow-md">
 						<Search className="w-6 h-6 text-slate-400" />
 					</div>
@@ -301,14 +301,14 @@ export default function ConnectionsDiagram({ connections, serie }) {
 							setActiveFilter("All");
 							setSearchQuery("");
 						}}
-						className="mt-5 px-6 py-2.5 bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-950 rounded-xl hover:opacity-90 transition-all font-bold text-xs uppercase tracking-wider cursor-pointer active:scale-95 shadow-lg"
+						className="mt-5 px-6 py-2.5 bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-xl hover:opacity-90 transition-all font-bold text-xs uppercase tracking-wider cursor-pointer active:scale-95 shadow-lg"
 					>
 						Limpar Filtros e Busca
 					</button>
 				</div>
 			) : viewMode === "grid" ? (
 				/* Grid View Mode: Futuristic Electronic Chip Sockets */
-				<div className="bg-slate-100/50 dark:bg-slate-950/20 backdrop-blur-xl rounded-3xl p-6 md:p-8 border border-slate-200/50 dark:border-slate-850/60 shadow-inner">
+				<div className="bg-slate-100/50 dark:bg-slate-950/20 backdrop-blur-xl rounded-3xl p-6 md:p-8 border border-slate-300 dark:border-slate-850/60 shadow-inner">
 					<div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
 						{visibleConnections.map((connection, index) => {
 							const isHovered = hoveredConnection === index;
@@ -367,7 +367,7 @@ export default function ConnectionsDiagram({ connections, serie }) {
 												/>
 											))}
 											{connection.categorias.length > 5 && (
-												<span className="text-[9px] text-slate-400 dark:text-slate-500 font-bold ml-0.5 leading-none">
+												<span className="text-[9px] text-slate-500 dark:text-slate-400 font-bold ml-0.5 leading-none">
 													+{connection.categorias.length - 5}
 												</span>
 											)}
@@ -419,11 +419,11 @@ export default function ConnectionsDiagram({ connections, serie }) {
 				</div>
 			) : (
 				/* List View Mode: Interactive Zebra Table */
-				<div className="bg-white/80 dark:bg-slate-900/40 backdrop-blur-xl rounded-2xl border border-slate-200/60 dark:border-slate-800/80 overflow-hidden shadow-xl">
+				<div className="bg-white dark:bg-slate-900/40 backdrop-blur-xl rounded-2xl border border-slate-300 dark:border-slate-800/80 overflow-hidden shadow-xl">
 					<div className="overflow-x-auto scrollbar-thin">
 						<table className="w-full text-left">
 							<thead>
-								<tr className="bg-slate-100/50 dark:bg-slate-950/50 border-b border-slate-200/60 dark:border-slate-850/60 select-none">
+								<tr className="bg-slate-100/50 dark:bg-slate-950/50 border-b border-slate-300 dark:border-slate-850/60 select-none">
 									<th className="px-6 py-4 text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest">Pino</th>
 									<th className="px-6 py-4 text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest">Nome do Pad</th>
 									<th className="px-6 py-4 text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest">Categorias</th>
@@ -532,11 +532,11 @@ export default function ConnectionsDiagram({ connections, serie }) {
 					aria-labelledby="modal-title"
 				>
 					<div
-						className="bg-white/95 dark:bg-slate-950/95 backdrop-blur-xl border border-slate-200/50 dark:border-slate-800/80 rounded-3xl shadow-2xl max-w-2xl w-full max-h-[85vh] overflow-hidden flex flex-col animate-slideUp"
+						className="bg-white/95 dark:bg-slate-950/95 backdrop-blur-xl border border-slate-300 dark:border-slate-800/80 rounded-3xl shadow-2xl max-w-2xl w-full max-h-[85vh] overflow-hidden flex flex-col animate-slideUp"
 						onClick={(e) => e.stopPropagation()}
 					>
 						{/* Dialog Header */}
-						<div className="sticky top-0 bg-white/50 dark:bg-slate-950/50 border-b border-slate-200/60 dark:border-slate-850/60 p-6 md:p-8 z-10">
+						<div className="sticky top-0 bg-white/50 dark:bg-slate-950/50 border-b border-slate-300 dark:border-slate-850/60 p-6 md:p-8 z-10">
 							<div className="flex items-start justify-between gap-6">
 								<div className="flex items-center gap-4 flex-1">
 									<div
@@ -551,7 +551,7 @@ export default function ConnectionsDiagram({ connections, serie }) {
 										<h3 id="modal-title" className="text-2xl font-display font-extrabold text-slate-850 dark:text-slate-100 mb-1 leading-none tracking-tight">
 											{selectedConnection.nome}
 										</h3>
-										<p className="text-xs text-slate-400 dark:text-slate-500 font-bold uppercase tracking-wider">
+										<p className="text-xs text-slate-500 dark:text-slate-400 font-bold uppercase tracking-wider">
 											Pino Físico {selectedConnection.numero}
 										</p>
 									</div>
@@ -573,7 +573,7 @@ export default function ConnectionsDiagram({ connections, serie }) {
 							{/* Categories */}
 							{selectedConnection.categorias.length > 0 && (
 								<div>
-									<h4 className="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-3 flex items-center gap-2 select-none">
+									<h4 className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-3 flex items-center gap-2 select-none">
 										<Tag className="w-4 h-4 text-purple-500" />
 										<span>Categorias de Multiplexação</span>
 									</h4>
@@ -595,11 +595,11 @@ export default function ConnectionsDiagram({ connections, serie }) {
 							{/* Power Source */}
 							{selectedConnection.alimentacao && (
 								<div>
-									<h4 className="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-3 flex items-center gap-2 select-none">
+									<h4 className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-3 flex items-center gap-2 select-none">
 										<Zap className="w-4 h-4 text-red-500" />
 										<span>Domínio de Alimentação Interna</span>
 									</h4>
-									<div className="bg-slate-50 dark:bg-slate-900/30 rounded-2xl p-5 border border-slate-200/50 dark:border-slate-850/50">
+									<div className="bg-slate-50 dark:bg-slate-900/30 rounded-2xl p-5 border border-slate-300 dark:border-slate-850/50">
 										<ul className="space-y-2.5">
 											{selectedConnection.alimentacao.map((source, index) => (
 												<li key={index} className="flex items-center gap-3 text-xs font-bold text-slate-700 dark:text-slate-300">
@@ -617,12 +617,12 @@ export default function ConnectionsDiagram({ connections, serie }) {
 
 							{/* Function Multiplexation */}
 							<div>
-								<h4 className="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-3 flex items-center gap-2 select-none">
+								<h4 className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-3 flex items-center gap-2 select-none">
 									<Sliders className="w-4 h-4 text-emerald-500" />
 									<span>Barramentos de Funções Disponíveis</span>
 								</h4>
 
-								<div className="bg-slate-50 dark:bg-slate-900/30 rounded-2xl p-5 border border-slate-200/50 dark:border-slate-850/50">
+								<div className="bg-slate-50 dark:bg-slate-900/30 rounded-2xl p-5 border border-slate-300 dark:border-slate-850/50">
 									<ul className="grid grid-cols-1 sm:grid-cols-2 gap-3">
 										{selectedConnection.funcoes.map((func, index) => (
 											<li key={index} className="flex items-center gap-3 text-xs font-bold text-slate-700 dark:text-slate-300">
@@ -663,7 +663,7 @@ export default function ConnectionsDiagram({ connections, serie }) {
 						</div>
 
 						{/* Dialog Footer */}
-						<div className="sticky bottom-0 bg-white/50 dark:bg-slate-950/50 border-t border-slate-200/60 dark:border-slate-850/60 p-5">
+						<div className="sticky bottom-0 bg-white/50 dark:bg-slate-950/50 border-t border-slate-300 dark:border-slate-850/60 p-5">
 							<button
 								onClick={() => setSelectedConnection(null)}
 								className="w-full py-3.5 rounded-xl font-bold text-white text-xs uppercase tracking-wider shadow-lg hover:opacity-90 active:scale-98 transition-all cursor-pointer"

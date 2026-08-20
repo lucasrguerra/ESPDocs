@@ -1,24 +1,55 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ChevronDown } from 'lucide-react';
 
 export default function SeriesTabMenu({ tabs, color }) {
 	const availableTabs = tabs.filter(tab => tab.available);
 	const [activeTab, setActiveTab] = useState(availableTabs[0]?.id || 'specs');
 
+	// Troca manual limpa o hash. Sem isso, depois de abrir o diagrama pelo link e
+	// mudar de aba na mão, o hash continuaria em #connections e um novo clique no
+	// link não dispararia hashchange — o botão pareceria quebrado.
+	const trocarAba = (id) => {
+		setActiveTab(id);
+		if (window.location.hash) {
+			history.replaceState(null, '', window.location.pathname + window.location.search);
+		}
+	};
+
+	// Abas endereçáveis por hash: #connections abre o diagrama de pinos direto.
+	// É o que permite a seção de restrições apontar para cá.
+	useEffect(() => {
+		const abrirPeloHash = () => {
+			const alvo = window.location.hash.replace('#', '');
+			if (alvo && availableTabs.some(t => t.id === alvo)) {
+				setActiveTab(alvo);
+				// Nenhum elemento tem id="connections", então o navegador não rola
+				// sozinho: levamos até as abas na mão.
+				const semAnimacao = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+				document.getElementById('diagrama-abas')?.scrollIntoView({
+					behavior: semAnimacao ? 'auto' : 'smooth',
+					block: 'start',
+				});
+			}
+		};
+		abrirPeloHash();
+		window.addEventListener('hashchange', abrirPeloHash);
+		return () => window.removeEventListener('hashchange', abrirPeloHash);
+	}, [availableTabs]);
+
 	const activeTabContent = availableTabs.find(tab => tab.id === activeTab)?.content;
 
 	return (
-		<div className="mb-12">
+		<div className="mb-12" id="diagrama-abas">
 			{/* Desktop Tabs */}
-			<div className="hidden md:flex bg-white/70 dark:bg-slate-900/40 backdrop-blur-xl rounded-2xl shadow-xl py-2 px-3 mb-6 border border-slate-200/60 dark:border-slate-800/80 gap-3">
+			<div className="hidden md:flex bg-white dark:bg-slate-900/40 backdrop-blur-xl rounded-2xl shadow-xl py-2 px-3 mb-6 border border-slate-300 dark:border-slate-800/80 gap-3">
 				{availableTabs.map((tab) => {
 					const isActive = activeTab === tab.id;
 					return (
 						<button
 							key={tab.id}
-							onClick={() => setActiveTab(tab.id)}
+							onClick={() => trocarAba(tab.id)}
 							className={`flex-1 flex items-center justify-center gap-2 py-3 px-5 rounded-xl font-bold text-xs uppercase tracking-wider transition-all duration-300 cursor-pointer active:scale-98 ${
 								isActive
 									? 'text-white shadow-lg scale-[1.02]'
@@ -38,7 +69,7 @@ export default function SeriesTabMenu({ tabs, color }) {
 
 			{/* Mobile Dropdown Tab Selector */}
 			<div className="md:hidden mb-6">
-				<div className="bg-white/70 dark:bg-slate-900/40 backdrop-blur-xl rounded-2xl shadow-lg border border-slate-200/60 dark:border-slate-800/80 overflow-hidden">
+				<div className="bg-white dark:bg-slate-900/40 backdrop-blur-xl rounded-2xl shadow-lg border border-slate-300 dark:border-slate-800/80 overflow-hidden">
 					<button
 						onClick={() => {
 							const dropdown = document.getElementById('mobile-tab-dropdown');
@@ -61,10 +92,10 @@ export default function SeriesTabMenu({ tabs, color }) {
 								<button
 									key={tab.id}
 									onClick={() => {
-										setActiveTab(tab.id);
+										trocarAba(tab.id);
 										document.getElementById('mobile-tab-dropdown').classList.add('hidden');
 									}}
-									className="w-full flex items-center gap-3 py-4 px-6 text-slate-700 dark:text-slate-300 hover:bg-slate-150/40 dark:hover:bg-slate-800/30 transition-colors border-t border-slate-200/60 dark:border-slate-800/60 font-semibold text-xs uppercase tracking-wider text-left"
+									className="w-full flex items-center gap-3 py-4 px-6 text-slate-700 dark:text-slate-300 hover:bg-slate-150/40 dark:hover:bg-slate-800/30 transition-colors border-t border-slate-300 dark:border-slate-800/60 font-semibold text-xs uppercase tracking-wider text-left"
 								>
 									<span>{tab.label}</span>
 								</button>

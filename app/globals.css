@@ -8,6 +8,26 @@
 	--color-brand-purple: #8b5cf6;
 	--color-brand-blue: #3b82f6;
 	--color-brand-pink: #ec4899;
+
+	/* ---------------------------------------------------------------------
+	   Meios-tons de slate.
+
+	   A escala do Tailwind anda de 100 em 100 (50, 100, 200 ... 950), então
+	   classes como text-slate-350 ou border-slate-850 — usadas em ~190 pontos
+	   do projeto — não geravam CSS nenhum: o elemento herdava a cor do pai e
+	   ficava diferente em cada tema, sem padrão.
+
+	   Cada valor abaixo é o ponto médio exato entre os dois degraus oficiais
+	   vizinhos, então a intenção original de cada classe é preservada.
+	   --------------------------------------------------------------------- */
+	--color-slate-150: #eaeef4;   /* entre 100 e 200 */
+	--color-slate-250: #d6dee8;   /* entre 200 e 300 */
+	--color-slate-350: #b0bccc;   /* entre 300 e 400 */
+	--color-slate-450: #7c8ca2;   /* entre 400 e 500 */
+	--color-slate-550: #56647a;   /* entre 500 e 600 */
+	--color-slate-650: #3d4b5f;   /* entre 600 e 700 */
+	--color-slate-750: #283548;   /* entre 700 e 800 */
+	--color-slate-850: #162032;   /* entre 800 e 900 */
 }
 
 /* Enable class-based dark mode selector in Tailwind v4 */
@@ -21,14 +41,22 @@
 	body {
 		@apply bg-slate-50 text-slate-900 transition-colors duration-300;
 	}
-	
-	body.dark {
+
+	/* next-themes aplica a classe .dark no <html>, não no <body>.
+	   O seletor body.dark nunca casava, então o fundo escuro do body vinha
+	   só das classes utilitárias do layout. */
+	.dark body {
 		@apply bg-slate-950 text-slate-50;
 	}
 
-	/* Sleek selection highlighting */
+	/* Seleção de texto: o texto precisa de contraste contra o realce em cada
+	   tema. Roxo claro sobre fundo claro era ilegível no tema claro. */
 	::selection {
-		@apply bg-purple-500/30 text-purple-200;
+		@apply bg-purple-500/30 text-purple-950;
+	}
+
+	.dark ::selection {
+		@apply bg-purple-500/40 text-purple-50;
 	}
 
 	/* Scrollbar customization for a premium, non-default OS look */
