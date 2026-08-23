@@ -1961,126 +1961,112 @@ Temperatura: 26.1 C | Umidade: 62.0 %</code></pre>
 	</p>
 </section>
 
-<!-- ══════════════════════ PAINEL DE EXPORTAÇÃO ══════════════════════ -->
-<div class="painel-exportacao" id="painelExportacao" style="position: fixed !important; top: 18px !important; right: 20px !important; z-index: 999999 !important; display: flex !important;">
-	<span class="painel-exportacao-titulo">
-		<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-			<polyline points="6 9 6 2 18 2 18 9"></polyline>
-			<path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
-			<rect x="6" y="14" width="12" height="8"></rect>
-		</svg>
-		Apostila:
-	</span>
-	<button type="button" class="btn-exportar btn-exportar-rgb" id="btnExportarRgb" title="Imprimir ou Salvar em PDF (padrão RGB do navegador)">
-		<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-			<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-			<polyline points="14 2 14 8 20 8"></polyline>
-			<line x1="16" y1="13" x2="8" y2="13"></line>
-			<line x1="16" y1="17" x2="8" y2="17"></line>
-			<polyline points="10 9 9 9 8 9"></polyline>
-		</svg>
-		<span>Exportar PDF</span>
-	</button>
-	<button type="button" class="btn-exportar btn-exportar-cmyk" id="btnExportarCmyk" title="Exportar PDF em CMYK (ISO Coated) para gráfica">
-		<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-			<circle cx="12" cy="12" r="10"></circle>
-			<path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path>
-			<path d="M2 12h20"></path>
-		</svg>
-		<span>Exportar em CMYK</span>
-	</button>
-</div>
-
-<div class="toast-exportacao" id="toastExportacao" style="position: fixed !important; bottom: 24px !important; right: 24px !important; z-index: 1000000 !important;"></div>
-
 <script>
-	let paginacaoConcluida = false;
-	const painelExportacao = document.getElementById("painelExportacao");
-	const toastExportacao = document.getElementById("toastExportacao");
-
-	function fixarPainelNaTela() {
-		if (painelExportacao) {
-			painelExportacao.style.cssText = "position: fixed !important; top: 18px !important; right: 20px !important; z-index: 999999 !important; display: flex !important;";
-			if (!document.body.contains(painelExportacao)) {
-				document.body.appendChild(painelExportacao);
-			}
-		}
-		if (toastExportacao) {
-			toastExportacao.style.cssText = "position: fixed !important; bottom: 24px !important; right: 24px !important; z-index: 1000000 !important;";
-			if (!document.body.contains(toastExportacao)) {
-				document.body.appendChild(toastExportacao);
-			}
-		}
-	}
-
 	window.PagedConfig = {
-		before: () => {
-			document.querySelector(".aviso-carregando")?.remove();
-			// Remove do fluxo do DOM para o Paged.js não paginar como conteúdo
-			painelExportacao?.remove();
-			toastExportacao?.remove();
-		},
-		after: () => {
-			paginacaoConcluida = true;
-			document.body.classList.add("pagedjs-pronto");
-			fixarPainelNaTela();
-		}
+		before: () => document.querySelector(".aviso-carregando")?.remove(),
 	};
 
-	// Oculta painel na impressão nativa
-	window.addEventListener("beforeprint", () => {
-		if (painelExportacao) painelExportacao.style.setProperty("display", "none", "important");
-		if (toastExportacao) toastExportacao.style.setProperty("display", "none", "important");
-	});
-	window.addEventListener("afterprint", () => {
-		if (painelExportacao) painelExportacao.style.setProperty("display", "flex", "important");
-	});
+	function montarPainelFlutuante() {
+		if (document.getElementById("painelExportacao")) return;
 
-	function exibirToast(mensagem, tipo = "info", duracao = 4000) {
-		const toast = document.getElementById("toastExportacao") || toastExportacao;
-		if (!toast) return;
-		if (!document.body.contains(toast)) document.body.appendChild(toast);
-		toast.textContent = mensagem;
-		toast.className = `toast-exportacao ativo ${tipo}`;
-		clearTimeout(toast._timer);
-		toast._timer = setTimeout(() => {
-			toast.classList.remove("ativo");
-		}, duracao);
-	}
-
-	document.addEventListener("click", (e) => {
-		const btnRgb = e.target.closest("#btnExportarRgb");
-		const btnCmyk = e.target.closest("#btnExportarCmyk");
-
-		if (btnRgb) {
-			if (!paginacaoConcluida) {
-				exibirToast("Aguarde a paginação terminar antes de exportar...", "info", 2500);
-				return;
+		// Injeta estilo para position fixed sem ser sanitizado pelo parser do Paged.js
+		const style = document.createElement("style");
+		style.textContent = `
+			#painelExportacao {
+				position: fixed !important;
+				top: 18px !important;
+				right: 20px !important;
+				z-index: 999999 !important;
+				display: flex !important;
 			}
-			window.print();
-		}
+			#toastExportacao {
+				position: fixed !important;
+				bottom: 24px !important;
+				right: 24px !important;
+				z-index: 1000000 !important;
+			}
+			@media print {
+				#painelExportacao, #toastExportacao {
+					display: none !important;
+				}
+			}
+		`;
+		document.head.appendChild(style);
 
-		if (btnCmyk) {
-			const textoOriginal = btnCmyk.innerHTML;
-			btnCmyk.disabled = true;
-			btnCmyk.classList.add("carregando");
-			btnCmyk.innerHTML = `<span class="spinner-exportar"></span><span>Processando CMYK...</span>`;
+		const painel = document.createElement("div");
+		painel.id = "painelExportacao";
+		painel.className = "painel-exportacao";
+		painel.innerHTML = `
+			<span class="painel-exportacao-titulo">
+				<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+				Apostila:
+			</span>
+			<button type="button" class="btn-exportar btn-exportar-rgb" id="btnExportarRgb" title="Imprimir ou Salvar em PDF (padrão RGB)">
+				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+				<span>Exportar PDF</span>
+			</button>
+			<button type="button" class="btn-exportar btn-exportar-cmyk" id="btnExportarCmyk" title="Exportar PDF em CMYK (ISO Coated) para gráfica">
+				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path><path d="M2 12h20"></path></svg>
+				<span>Exportar em CMYK</span>
+			</button>
+		`;
+
+		const toast = document.createElement("div");
+		toast.id = "toastExportacao";
+		toast.className = "toast-exportacao";
+
+		document.body.appendChild(painel);
+		document.body.appendChild(toast);
+
+		document.getElementById("btnExportarRgb").onclick = () => window.print();
+
+		document.getElementById("btnExportarCmyk").onclick = async () => {
+			const btn = document.getElementById("btnExportarCmyk");
+			const txt = btn.innerHTML;
+			btn.disabled = true;
+			btn.innerHTML = `<span class="spinner-exportar"></span><span>Baixando CMYK...</span>`;
 			exibirToast("Gerando PDF em CMYK (ISO Coated)... O download iniciará em instantes.", "info", 15000);
 
-			const iframe = document.createElement("iframe");
-			iframe.style.display = "none";
-			iframe.src = "/api/export-cmyk?modulo=1";
-			document.body.appendChild(iframe);
+			try {
+				const res = await fetch("/api/export-cmyk?modulo=1");
+				if (!res.ok) throw new Error("Erro no servidor (" + res.status + ")");
+				const blob = await res.blob();
+				const url = URL.createObjectURL(blob);
+				const a = document.createElement("a");
+				a.style.display = "none";
+				a.href = url;
+				a.download = "LASER-ESP32-Modulo-1-CMYK.pdf";
+				document.body.appendChild(a);
+				a.click();
+				setTimeout(() => { a.remove(); URL.revokeObjectURL(url); }, 1000);
+				exibirToast("✅ PDF em CMYK baixado com sucesso!", "sucesso", 4000);
+			} catch (err) {
+				console.error("Erro CMYK:", err);
+				exibirToast("❌ Erro ao baixar PDF: " + err.message, "erro", 6000);
+			} finally {
+				btn.disabled = false;
+				btn.innerHTML = txt;
+			}
+		};
+	}
 
-			setTimeout(() => {
-				btnCmyk.disabled = false;
-				btnCmyk.classList.remove("carregando");
-				btnCmyk.innerHTML = textoOriginal;
-				setTimeout(() => iframe.remove(), 60000);
-			}, 8000);
-		}
-	});
+	function exibirToast(msg, tipo = "info", dur = 4000) {
+		const t = document.getElementById("toastExportacao");
+		if (!t) return;
+		t.textContent = msg;
+		t.className = "toast-exportacao ativo " + tipo;
+		clearTimeout(t._timer);
+		t._timer = setTimeout(() => t.classList.remove("ativo"), dur);
+	}
 </script>
 <script src="../assets/paged.polyfill.js"></script>
+<script>
+	class ExportHandler extends window.Paged.Handler {
+		afterRendered() {
+			montarPainelFlutuante();
+		}
+	}
+	window.Paged.registerHandlers(ExportHandler);
+</script>
 </body>
 </html>

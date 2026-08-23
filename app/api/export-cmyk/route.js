@@ -23,10 +23,28 @@ export async function GET(request) {
 	}
 
 	const tmpDir = os.tmpdir();
-	const tmpRgbPdf = path.join(tmpDir, `espdocs-mod-${modulo}-${Date.now()}-rgb.pdf`);
-	const tmpCmykPdf = path.join(tmpDir, `espdocs-mod-${modulo}-${Date.now()}-cmyk.pdf`);
+	const cachedCmykPdf = path.join(tmpDir, `espdocs-cached-cmyk-mod-${modulo}.pdf`);
+	const htmlMtime = fs.statSync(htmlFile).mtimeMs;
 
+	// Se já foi gerado no /tmp e o HTML não mudou, entrega instantaneamente
+	if (fs.existsSync(cachedCmykPdf)) {
+		const cachedMtime = fs.statSync(cachedCmykPdf).mtimeMs;
+		if (cachedMtime >= htmlMtime) {
+			const cachedBuffer = fs.readFileSync(cachedCmykPdf);
+			return new NextResponse(cachedBuffer, {
+				status: 200,
+				headers: {
+					"Content-Type": "application/pdf",
+					"Content-Disposition": `attachment; filename="LASER-ESP32-Modulo-${modulo}-CMYK.pdf"`,
+					"Content-Length": cachedBuffer.length.toString()
+				}
+			});
+		}
+	}
+
+	const tmpRgbPdf = path.join(tmpDir, `espdocs-tmp-${modulo}-${Date.now()}-rgb.pdf`);
 	let browser = null;
+
 	try {
 		browser = await puppeteer.launch({
 			headless: "new",
@@ -40,15 +58,15 @@ export async function GET(request) {
 
 		const page = await browser.newPage();
 		await page.setViewport({ width: 1200, height: 1600, deviceScaleFactor: 2 });
-		await page.goto(`file://${htmlFile}`, { waitUntil: "networkidle0", timeout: 60000 });
+		await page.goto(`file://${htmlFile}`, { waitUntil: "load", timeout: 30000 });
 
 		// Aguarda o Paged.js concluir a montagem
 		await page.waitForFunction(() => {
 			const pages = document.querySelectorAll(".pagedjs_page");
 			return pages.length > 0 && !document.querySelector(".aviso-carregando");
-		}, { timeout: 30000 });
+		}, { timeout: 25000 });
 
-		await new Promise((r) => setTimeout(r, 1000));
+		await new Promise((r) => setTimeout(r, 600));
 
 		await page.pdf({
 			path: tmpRgbPdf,
@@ -62,10 +80,10 @@ export async function GET(request) {
 		browser = null;
 
 		// Converte para CMYK (DeviceCMYK / ISO Coated)
-		const gsCmd = `gs -dSAFER -dBATCH -dNOPAUSE -sDEVICE=pdfwrite -sColorConversionStrategy=CMYK -dProcessColorModel=/DeviceCMYK -dCompatibilityLevel=1.4 -sOutputFile="${tmpCmykPdf}" "${tmpRgbPdf}"`;
+		const gsCmd = `gs -dSAFER -dBATCH -dNOPAUSE -sDEVICE=pdfwrite -sColorConversionStrategy=CMYK -dProcessColorModel=/DeviceCMYK -dCompatibilityLevel=1.4 -sOutputFile="${cachedCmykPdf}" "${tmpRgbPdf}"`;
 		execSync(gsCmd, { stdio: "pipe" });
 
-		const pdfBuffer = fs.readFileSync(tmpCmykPdf);
+		const pdfBuffer = fs.readFileSync(cachedCmykPdf);
 
 		return new NextResponse(pdfBuffer, {
 			status: 200,
@@ -84,7 +102,6 @@ export async function GET(request) {
 	} finally {
 		if (browser) await browser.close();
 		if (fs.existsSync(tmpRgbPdf)) fs.unlinkSync(tmpRgbPdf);
-		if (fs.existsSync(tmpCmykPdf)) fs.unlinkSync(tmpCmykPdf);
 	}
 }
 
