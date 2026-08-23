@@ -66,9 +66,13 @@ export default function Header() {
 			<div className="flex justify-between max-w-7xl mx-auto items-center gap-8">
 				{/* LOGO */}
 				<Link href="/" className="group shrink-0">
-					<h1 className="text-2xl md:text-3xl font-display font-extrabold bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 bg-clip-text text-transparent transition-all duration-300 group-hover:scale-[1.02]">
+					<span className="flex items-center gap-2.5">
+						{/* eslint-disable-next-line @next/next/no-img-element */}
+						<img src="/marca/espdocs-marca.svg" alt="" aria-hidden="true" className="w-7 h-7 md:w-8 md:h-8 shrink-0" />
+						<h1 className="text-2xl md:text-3xl font-display font-extrabold bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 bg-clip-text text-transparent transition-all duration-300 group-hover:scale-[1.02]">
 						ESPDocs
 					</h1>
+					</span>
 				</Link>
 
 				{/* Menu Desktop */}

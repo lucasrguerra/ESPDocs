@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 64" role="img" aria-label="ESPDocs">
+  <title>ESPDocs</title>
+  <defs>
+    <linearGradient id="gl" x1="6" y1="58" x2="250" y2="6" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#3b82f6"/>
+      <stop offset="0.55" stop-color="#8b5cf6"/>
+      <stop offset="1" stop-color="#ec4899"/>
+    </linearGradient>
+  </defs>
+  <g stroke="url(#gl)" stroke-width="3.4" stroke-linecap="round">
+    <path d="M2 21h7"/><path d="M2 32h7"/><path d="M2 43h7"/>
+  </g>
+  <rect x="9.25" y="9.25" width="45.5" height="45.5" rx="13" fill="none" stroke="url(#gl)" stroke-width="4.5"/>
+  <g stroke="url(#gl)" stroke-width="4.5" stroke-linecap="round">
+    <path d="M19 21h26"/><path d="M19 32h21"/><path d="M19 43h15"/>
+  </g>
+  <text x="72" y="43" font-family="Outfit, Inter, system-ui, sans-serif" font-size="34"
+        font-weight="800" letter-spacing="-0.5" fill="url(#gl)">ESPDocs</text>
+</svg>

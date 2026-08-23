@@ -1,11 +1,15 @@
+import { paginaMeta, jsonLd } from "@/lib/seo";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Link from "next/link";
 
-export const metadata = {
-    title: "ESPDocs - Glossário Técnico",
-    description: "Glossário técnico em português com termos e conceitos do ecossistema ESP32",
-};
+
+export const metadata = paginaMeta({
+    titulo: "Glossário técnico do ESP32",
+    descricao: "Mais de 40 termos do ecossistema ESP32 explicados em português: GPIO, strapping, ULP, PSRAM, eFuse, deep sleep, OTA, Secure Boot, ECDSA, TWAI, Matter e Thread.",
+    caminho: "/glossario",
+    keywords: ["glossário ESP32", "o que é GPIO", "o que é strapping", "o que é ULP", "termos ESP32"],
+});
 
 export default function Glossario() {
     const categorias = [
@@ -364,6 +368,13 @@ export default function Glossario() {
 
     return (
         <div className="min-h-screen bg-linear-to-br from-slate-100 via-slate-50 to-purple-100/40 dark:from-slate-950 dark:via-slate-950 dark:to-slate-900 transition-colors">
+            {/* Cada verbete vira um DefinedTerm: ajuda o Google a responder
+                buscas do tipo "o que é strapping ESP32" apontando para cá. */}
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd.glossario(categorias)) }}
+            />
+
             <Header />
 
             <main id="conteudo" className="px-4 pt-16 pb-20 max-w-7xl mx-auto">

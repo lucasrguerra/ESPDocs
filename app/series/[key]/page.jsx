@@ -1,3 +1,4 @@
+import { paginaMeta, jsonLd } from "@/lib/seo";
 import Link from "next/link";
 import Image from "next/image";
 import Header from "@/components/Header";
@@ -376,6 +377,22 @@ export default async function SerieDetail({ params }) {
 				</div>
 
 				{/* DevBoard and Connections Tabs */}
+				{/* Ficha do produto e trilha de navegação para o Google. */}
+				<script
+					type="application/ld+json"
+					dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd.serie(key, serie)) }}
+				/>
+				<script
+					type="application/ld+json"
+					dangerouslySetInnerHTML={{
+						__html: JSON.stringify(jsonLd.trilha([
+							{ nome: "Início", caminho: "/" },
+							{ nome: "Séries", caminho: "/series" },
+							{ nome: serie.nome_completo, caminho: `/series/${key}` },
+						])),
+					}}
+				/>
+
 				<SeriesTabMenu tabs={tabs} color={serie.cor} />
 
 				<PinRestrictions conexoes={conexoes} serieKey={key} cor={serie.cor} />
@@ -542,15 +559,51 @@ export async function generateMetadata({ params }) {
 	const serie = seriesData[key];
 
 	if (!serie) {
-		return {
-			title: "Série não encontrada",
-		};
+		return { title: "Série não encontrada", robots: { index: false, follow: false } };
 	}
 
-	return {
-		title: `ESPDocs - ${serie.nome_completo}`,
-		description: serie.descricao,
+	// A descrição usa as especificações reais em vez de texto genérico: é o que
+	// aparece no resultado de busca e o que faz alguém clicar.
+	const radio = [
+		String(serie.wifi).startsWith("Não") ? null : serie.wifi.split(" (")[0],
+		String(serie.bluetooth).startsWith("Não") ? null : serie.bluetooth.split(" (")[0],
+		serie.zigbee_thread && !String(serie.zigbee_thread).startsWith("Não") ? "802.15.4" : null,
+	].filter(Boolean).join(", ");
+
+	const descricao =
+		`${serie.nome_completo}: ${serie.arquitetura}, ${serie.frequencia.replace("Até ", "até ")}, ` +
+		`${serie.memoria_sram} de SRAM e ${serie.gpio} GPIOs` +
+		(radio ? `. Rádio: ${radio}` : "") +
+		`. Pinagem completa, periféricos, segurança em hardware e pinos com restrição, em português.`;
+
+	// A pinagem da placa é a melhor prévia possível para uma série: quem
+	// compartilha o link já mostra o diagrama. Séries sem placa publicada caem
+	// na imagem padrão do site.
+	// Definir openGraph explicitamente impede a herança automática da imagem do
+	// site, então séries sem placa publicada (o H4) precisam do fallback aqui.
+	const imagem = serie.placa
+		? [{ url: serie.placa, width: 1600, height: 1091, alt: `Pinagem do ${serie.nome_completo}` }]
+		: [{ url: "/opengraph-image.png", width: 1200, height: 630, alt: "ESPDocs" }];
+
+	const meta = {
+		...paginaMeta({
+			titulo: `${serie.nome_completo}: especificações e pinagem`,
+			descricao,
+			caminho: `/series/${key}`,
+			tipo: "article",
+			keywords: [
+				serie.nome_completo, `${serie.nome_completo} pinout`,
+				`${serie.nome_completo} datasheet`, `${serie.nome_completo} especificações`,
+				`${serie.nome_completo} português`, "ESP32", "Espressif", "microcontrolador",
+			],
+		}),
+		other: { "article:section": "Séries ESP32" },
 	};
+
+	meta.openGraph = { ...meta.openGraph, images: imagem };
+	meta.twitter = { ...meta.twitter, images: imagem };
+
+	return meta;
 }
 
 export async function generateStaticParams() {

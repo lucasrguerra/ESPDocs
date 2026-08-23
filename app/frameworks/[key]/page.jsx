@@ -1,3 +1,4 @@
+import { paginaMeta } from "@/lib/seo";
 import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -261,12 +262,22 @@ export async function generateMetadata({ params }) {
 	const framework = frameworksData[key];
 
 	if (!framework) {
-		return { title: "Framework não encontrado" };
+		return { title: "Framework não encontrado", robots: { index: false, follow: false } };
 	}
 
 	return {
-		title: `ESPDocs - ${framework.nome_completo}`,
-		description: framework.descricao,
+		...paginaMeta({
+			titulo: `${framework.nome} para ESP32`,
+			descricao: `${framework.nome_completo}: ${framework.descricao} Guia em português com exemplo de código e quando usar.`,
+			caminho: `/frameworks/${encodeURIComponent(key)}`,
+			tipo: "article",
+			keywords: [
+				framework.nome, framework.nome_completo,
+				`${framework.nome} ESP32`, `programar ESP32 com ${framework.nome}`,
+				"ESP32", "framework ESP32",
+			],
+		}),
+		other: { "article:section": "Frameworks" },
 	};
 }
 

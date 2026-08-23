@@ -1,3 +1,4 @@
+import { paginaMeta } from "@/lib/seo";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Link from "next/link";
@@ -17,6 +18,14 @@ import {
 	Terminal,
 	Layers
 } from "lucide-react";
+
+
+export const metadata = paginaMeta({
+	titulo: "Sobre o projeto",
+	descricao: "O ESPDocs é uma plataforma independente que reúne a documentação do ecossistema ESP32 em português brasileiro. Saiba como o projeto nasceu e como contribuir.",
+	caminho: "/sobre",
+	keywords: ["ESPDocs", "documentação ESP32 português", "projeto open source ESP32"],
+});
 
 export default function Sobre() {
 	const features = [

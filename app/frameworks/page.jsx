@@ -1,3 +1,4 @@
+import { paginaMeta } from "@/lib/seo";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Link from "next/link";
@@ -18,6 +19,14 @@ import {
 	Brain,
 	Home
 } from "lucide-react";
+
+
+export const metadata = paginaMeta({
+	titulo: "Frameworks para ESP32",
+	descricao: "ESP-IDF, Arduino, MicroPython, ESP-ADF, ESP-DSP, ESP-WHO, ESP-NN e ESP-Matter: para que serve cada framework do ESP32, com exemplo de código e quando usar.",
+	caminho: "/frameworks",
+	keywords: ["ESP-IDF", "Arduino ESP32", "MicroPython ESP32", "frameworks ESP32", "programar ESP32"],
+});
 
 export default function Frameworks() {
 	const frameworks = Object.entries(frameworksData);
