@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="../../marca/espdocs-marca.svg">
 <link rel="stylesheet" href="../assets/apostila.css">
 </head>
 <body>
@@ -1980,7 +1981,7 @@ Temperatura: 26.1 C | Umidade: 62.0 %</code></pre>
 		</svg>
 		<span>Exportar PDF</span>
 	</button>
-	<button type="button" class="btn-exportar btn-exportar-cmyk" id="btnExportarCmyk" title="Exportar PDF convertido para espaço de cor CMYK (ISO Coated) para gráfica">
+	<button type="button" class="btn-exportar btn-exportar-cmyk" id="btnExportarCmyk" title="Exportar PDF em CMYK (ISO Coated) para gráfica">
 		<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
 			<circle cx="12" cy="12" r="10"></circle>
 			<path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path>
@@ -2047,7 +2048,7 @@ Temperatura: 26.1 C | Umidade: 62.0 %</code></pre>
 		}, duracao);
 	}
 
-	document.addEventListener("click", async (e) => {
+	document.addEventListener("click", (e) => {
 		const btnRgb = e.target.closest("#btnExportarRgb");
 		const btnCmyk = e.target.closest("#btnExportarCmyk");
 
@@ -2061,44 +2062,22 @@ Temperatura: 26.1 C | Umidade: 62.0 %</code></pre>
 
 		if (btnCmyk) {
 			const textoOriginal = btnCmyk.innerHTML;
+			btnCmyk.disabled = true;
+			btnCmyk.classList.add("carregando");
+			btnCmyk.innerHTML = `<span class="spinner-exportar"></span><span>Processando CMYK...</span>`;
+			exibirToast("Gerando PDF em CMYK (ISO Coated)... O download iniciará em instantes.", "info", 15000);
 
-			try {
-				btnCmyk.disabled = true;
-				btnCmyk.classList.add("carregando");
-				btnCmyk.innerHTML = `<span class="spinner-exportar"></span><span>Convertendo CMYK...</span>`;
-				exibirToast("Gerando PDF e convertendo para CMYK (ISO Coated)... Aguarde alguns segundos.", "info", 8000);
+			const iframe = document.createElement("iframe");
+			iframe.style.display = "none";
+			iframe.src = "/api/export-cmyk?modulo=1";
+			document.body.appendChild(iframe);
 
-				const resposta = await fetch("/api/export-cmyk?modulo=1");
-
-				if (!resposta.ok) {
-					const erroJson = await resposta.json().catch(() => null);
-					throw new Error(erroJson?.error || "Serviço de conversão indisponível no momento.");
-				}
-
-				const blob = await resposta.blob();
-				const url = window.URL.createObjectURL(blob);
-				const a = document.createElement("a");
-				a.style.display = "none";
-				a.href = url;
-				a.download = "LASER-ESP32-Modulo-1-CMYK.pdf";
-				document.body.appendChild(a);
-				a.click();
-				window.URL.revokeObjectURL(url);
-				a.remove();
-
-				exibirToast("✅ PDF em CMYK gerado e baixado com sucesso!", "sucesso", 5000);
-			} catch (erro) {
-				console.warn("Erro ao gerar CMYK via API:", erro);
-				exibirToast(
-					"💡 Dica: execute 'npm run exportar-cmyk 1' no terminal para gerar o arquivo CMYK imediatamente!",
-					"erro",
-					7000
-				);
-			} finally {
+			setTimeout(() => {
 				btnCmyk.disabled = false;
 				btnCmyk.classList.remove("carregando");
 				btnCmyk.innerHTML = textoOriginal;
-			}
+				setTimeout(() => iframe.remove(), 60000);
+			}, 8000);
 		}
 	});
 </script>

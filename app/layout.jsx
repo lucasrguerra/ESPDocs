@@ -72,7 +72,7 @@ export const metadata = {
 		},
 	},
 
-	icons: { icon: "/logo.png", apple: "/logo.png" },
+	icons: { icon: "/marca/espdocs-marca.svg", apple: "/marca/espdocs-marca.svg" },
 	formatDetection: { telephone: false, address: false, email: false },
 };
 
