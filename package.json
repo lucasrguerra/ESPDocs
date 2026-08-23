@@ -7,7 +7,8 @@
     "build": "next build --turbopack",
     "start": "next start",
     "lint": "eslint",
-    "auditar-temas": "node scripts/auditar-temas.mjs"
+    "auditar-temas": "node scripts/auditar-temas.mjs",
+    "exportar-cmyk": "node scripts/exportar-cmyk.mjs"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
@@ -27,6 +28,7 @@
     "@tailwindcss/postcss": "^4",
     "eslint": "^9",
     "eslint-config-next": "15.5.6",
+    "puppeteer": "^25.8.0",
     "tailwindcss": "^4"
   }
 }
