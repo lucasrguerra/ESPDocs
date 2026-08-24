@@ -1,0 +1,477 @@
+{
+  "app/api/placas/route.js": {
+    "mtime": 1787208875.1094453,
+    "ast_hash": "292fa5aae92458ae0098d7fa41ccba72",
+    "semantic_hash": ""
+  },
+  "app/catalogo/layout.jsx": {
+    "mtime": 1787492776.0956094,
+    "ast_hash": "f228a345868fa3e409f80133c29aa737",
+    "semantic_hash": ""
+  },
+  "app/catalogo/page.jsx": {
+    "mtime": 1787212450.0282295,
+    "ast_hash": "f1734aa31b6e84da295b6e2ee670b333",
+    "semantic_hash": ""
+  },
+  "app/comparacao/layout.jsx": {
+    "mtime": 1787492776.089609,
+    "ast_hash": "288273a48c04bbdc124c62848e9d7ca9",
+    "semantic_hash": ""
+  },
+  "app/comparacao/page.jsx": {
+    "mtime": 1787227734.6678472,
+    "ast_hash": "5e2c544715404ab174ce3d54c969f93b",
+    "semantic_hash": ""
+  },
+  "app/frameworks/[key]/page.jsx": {
+    "mtime": 1787492933.9300845,
+    "ast_hash": "a5ed16ece919880c8300d897424c49a2",
+    "semantic_hash": ""
+  },
+  "app/frameworks/page.jsx": {
+    "mtime": 1787493006.3313804,
+    "ast_hash": "f878cabb7d4a27e83262d95b769b8dc9",
+    "semantic_hash": ""
+  },
+  "app/glossario/page.jsx": {
+    "mtime": 1787493006.3354793,
+    "ast_hash": "6a02ace0ab551d91794fce1a0b19c753",
+    "semantic_hash": ""
+  },
+  "app/layout.jsx": {
+    "mtime": 1787499080.3362017,
+    "ast_hash": "78e4dcb798d3806a4a37071ecfc9ef0d",
+    "semantic_hash": ""
+  },
+  "app/page.jsx": {
+    "mtime": 1787212450.023114,
+    "ast_hash": "31690989ba2c2ed800f1fb7fb78a0ed8",
+    "semantic_hash": ""
+  },
+  "app/robots.js": {
+    "mtime": 1787492747.5210466,
+    "ast_hash": "75bc90966a10439d6485dd11454fccbd",
+    "semantic_hash": ""
+  },
+  "app/seletor/layout.jsx": {
+    "mtime": 1787492776.0926092,
+    "ast_hash": "73da1dea1a6b930897053dda83e27f4f",
+    "semantic_hash": ""
+  },
+  "app/seletor/page.jsx": {
+    "mtime": 1787227734.668592,
+    "ast_hash": "4ad52df27f6742b5a6302e694593164c",
+    "semantic_hash": ""
+  },
+  "app/series/[key]/page.jsx": {
+    "mtime": 1787493839.4458327,
+    "ast_hash": "ade633944e6605b43b3279859e5031c7",
+    "semantic_hash": ""
+  },
+  "app/series/layout.jsx": {
+    "mtime": 1787493098.9029381,
+    "ast_hash": "eb809632a02c5731c37fba793c2c6a4a",
+    "semantic_hash": ""
+  },
+  "app/series/page.jsx": {
+    "mtime": 1787227734.6664312,
+    "ast_hash": "a2271ce4a77e45d5e03feeec3196c496",
+    "semantic_hash": ""
+  },
+  "app/sitemap.js": {
+    "mtime": 1787492747.5170462,
+    "ast_hash": "906d69e855c533c8937646cfe386121e",
+    "semantic_hash": ""
+  },
+  "app/sobre/page.jsx": {
+    "mtime": 1787493098.9036343,
+    "ast_hash": "85a3aaa744cb6b2226616bc3c88d60a4",
+    "semantic_hash": ""
+  },
+  "components/BoardCard.jsx": {
+    "mtime": 1787212419.8479488,
+    "ast_hash": "50130a57d076ea247a341801685faf14",
+    "semantic_hash": ""
+  },
+  "components/CodeExample.jsx": {
+    "mtime": 1787227734.670659,
+    "ast_hash": "ed46db1f388eaf2170e383722cd988ec",
+    "semantic_hash": ""
+  },
+  "components/ConnectionsDiagram.jsx": {
+    "mtime": 1787212419.845745,
+    "ast_hash": "6898b8e25e23d506512e6a9f634a8424",
+    "semantic_hash": ""
+  },
+  "components/Footer.jsx": {
+    "mtime": 1787212419.85472,
+    "ast_hash": "bd7ffbe86c0b3815a27e5e90f56848c7",
+    "semantic_hash": ""
+  },
+  "components/Header.jsx": {
+    "mtime": 1787493839.49114,
+    "ast_hash": "65796747b210fb0313ea5e2b41234c0a",
+    "semantic_hash": ""
+  },
+  "components/PinRestrictions.jsx": {
+    "mtime": 1787227759.6538575,
+    "ast_hash": "10907f1e0fb249f497ed4fc365303ef9",
+    "semantic_hash": ""
+  },
+  "components/Providers.jsx": {
+    "mtime": 1787208875.111169,
+    "ast_hash": "d31db26b58629a807b7df4c4a3189772",
+    "semantic_hash": ""
+  },
+  "components/SeriesTabMenu.jsx": {
+    "mtime": 1787227734.6712155,
+    "ast_hash": "20947d45331bd3be7cb858246746f45c",
+    "semantic_hash": ""
+  },
+  "eslint.config.mjs": {
+    "mtime": 1787208875.111688,
+    "ast_hash": "cd28c192684b52caf16d8d1df068e272",
+    "semantic_hash": ""
+  },
+  "jsconfig.json": {
+    "mtime": 1787208875.115688,
+    "ast_hash": "21306b44064ae42bbbd715b1986abaf8",
+    "semantic_hash": ""
+  },
+  "lib/seo.js": {
+    "mtime": 1787492722.9508429,
+    "ast_hash": "12b829f0078d3fb18cb20f832f498c17",
+    "semantic_hash": ""
+  },
+  "next.config.mjs": {
+    "mtime": 1787208875.115688,
+    "ast_hash": "21958f5752add43cc47ab0ff5172cd46",
+    "semantic_hash": ""
+  },
+  "package.json": {
+    "mtime": 1787577906.3179622,
+    "ast_hash": "4224d3570f8164a9291a49197c690114",
+    "semantic_hash": ""
+  },
+  "postcss.config.mjs": {
+    "mtime": 1787208875.1166883,
+    "ast_hash": "675899342e765a4d16acd75a53389101",
+    "semantic_hash": ""
+  },
+  "public/conexoes/ESP32-C2.json": {
+    "mtime": 1787208875.11729,
+    "ast_hash": "aad3b4f175c3dd386adbf368f15073f7",
+    "semantic_hash": ""
+  },
+  "public/conexoes/ESP32-C3.json": {
+    "mtime": 1787208875.1173952,
+    "ast_hash": "5deecb15a45f0291802077cd24e4051b",
+    "semantic_hash": ""
+  },
+  "public/conexoes/ESP32-C5.json": {
+    "mtime": 1787208875.1173952,
+    "ast_hash": "949d8facf94a56f254872c185a88d2a1",
+    "semantic_hash": ""
+  },
+  "public/conexoes/ESP32-C6.json": {
+    "mtime": 1787208875.1173952,
+    "ast_hash": "84dceb481e501b68643300982832c8c7",
+    "semantic_hash": ""
+  },
+  "public/conexoes/ESP32-C61.json": {
+    "mtime": 1787208875.1173952,
+    "ast_hash": "88aa2cadabff6bbd1ba662531e904df6",
+    "semantic_hash": ""
+  },
+  "public/conexoes/ESP32-H2.json": {
+    "mtime": 1787208875.1173952,
+    "ast_hash": "61e9339e808c87642b618b322de424dd",
+    "semantic_hash": ""
+  },
+  "public/conexoes/ESP32-P4.json": {
+    "mtime": 1787208875.1173952,
+    "ast_hash": "aec6bfdf220455851dea0619fa3954e8",
+    "semantic_hash": ""
+  },
+  "public/conexoes/ESP32-S2.json": {
+    "mtime": 1787208875.1173952,
+    "ast_hash": "4b6b0c563a63a59756227ef096141cd5",
+    "semantic_hash": ""
+  },
+  "public/conexoes/ESP32-S3.json": {
+    "mtime": 1787208875.1176882,
+    "ast_hash": "7d877331595d2677894a926714590c04",
+    "semantic_hash": ""
+  },
+  "public/conexoes/ESP32-S31.json": {
+    "mtime": 1787208875.1176882,
+    "ast_hash": "0f3cd4f8f2741329ea93f18227b9f2a9",
+    "semantic_hash": ""
+  },
+  "public/conexoes/ESP32.json": {
+    "mtime": 1787208875.1176882,
+    "ast_hash": "0d111992e8707f75177cf8ec495519f1",
+    "semantic_hash": ""
+  },
+  "public/exemplos/esp-adf.c": {
+    "mtime": 1787208875.1497247,
+    "ast_hash": "189f598b93c1b130dedce25d07513a30",
+    "semantic_hash": ""
+  },
+  "public/exemplos/esp-dsp.c": {
+    "mtime": 1787208875.1497247,
+    "ast_hash": "f3406d15617cf415888b07d688cdaf34",
+    "semantic_hash": ""
+  },
+  "public/exemplos/esp-idf.c": {
+    "mtime": 1787208875.1497247,
+    "ast_hash": "28d7cf987af6c5d3a54ad1fe06571e91",
+    "semantic_hash": ""
+  },
+  "public/exemplos/esp-matter.c": {
+    "mtime": 1787208875.1497247,
+    "ast_hash": "332c82ce14230250fd828db6e22cae44",
+    "semantic_hash": ""
+  },
+  "public/exemplos/esp-nn.c": {
+    "mtime": 1787208875.1497247,
+    "ast_hash": "186d382f96347dbae8be3b13c0252ad3",
+    "semantic_hash": ""
+  },
+  "public/exemplos/esp-who.c": {
+    "mtime": 1787208875.1497247,
+    "ast_hash": "2abc563b2750f0a823438a3e9b1c56c1",
+    "semantic_hash": ""
+  },
+  "public/exemplos/micropython.py": {
+    "mtime": 1787208875.1497247,
+    "ast_hash": "99c3b78148eee8632bb7772db61bdfdd",
+    "semantic_hash": ""
+  },
+  "public/formacoes/assets/paged.polyfill.js": {
+    "mtime": 1787224680.399874,
+    "ast_hash": "28be5336e03f6072740a5cad2f787314",
+    "semantic_hash": ""
+  },
+  "public/frameworks.json": {
+    "mtime": 1787208875.1497247,
+    "ast_hash": "3595f7219f3fcfd1b8d59ea741fab869",
+    "semantic_hash": ""
+  },
+  "public/series.json": {
+    "mtime": 1787214110.9422739,
+    "ast_hash": "64ba3d2642c83040afda45cccc107736",
+    "semantic_hash": ""
+  },
+  "scripts/auditar-temas.mjs": {
+    "mtime": 1787247985.7048883,
+    "ast_hash": "ab177dc276098ee67cf39504c2c406df",
+    "semantic_hash": ""
+  },
+  "start.config.js": {
+    "mtime": 1787208875.1956916,
+    "ast_hash": "a6a5cda80ac9eea57d50f14872a739d2",
+    "semantic_hash": ""
+  },
+  "CLAUDE.md": {
+    "mtime": 1787208875.1086879,
+    "ast_hash": "0ea9488e278d2efd15e7c0b6e7cdca83",
+    "semantic_hash": ""
+  },
+  "DESIGN.md": {
+    "mtime": 1787227815.9607596,
+    "ast_hash": "227ededb587d6b60a08c9b653ffece7e",
+    "semantic_hash": ""
+  },
+  "README.md": {
+    "mtime": 1787208875.1086879,
+    "ast_hash": "e1c8b99e874c6cddc035c7ac900c9bbd",
+    "semantic_hash": ""
+  },
+  "public/formacoes/1/index.html": {
+    "mtime": 1787576388.0904403,
+    "ast_hash": "d885d27c8e0854573c7596f2f87d90e7",
+    "semantic_hash": ""
+  },
+  "public/formacoes/1/slide.html": {
+    "mtime": 1787578115.8015034,
+    "ast_hash": "63c75c707f55eb060113fc26ad3efd56",
+    "semantic_hash": ""
+  },
+  "public/google21a790a2c23c0ec5.html": {
+    "mtime": 1787208875.1497247,
+    "ast_hash": "c8e349cbe0172dc98e26385e09d67cc3",
+    "semantic_hash": ""
+  },
+  "public/datasheets/ESP32-C2 (ESP8684).pdf": {
+    "mtime": 1787208875.1196883,
+    "ast_hash": "36e6ee1a52e7293510d60c7adfc0fbaf",
+    "semantic_hash": ""
+  },
+  "public/datasheets/ESP32-C3.pdf": {
+    "mtime": 1787208875.1226883,
+    "ast_hash": "25beb64276e6bc6c5d13d032e30847d9",
+    "semantic_hash": ""
+  },
+  "public/datasheets/ESP32-C5.pdf": {
+    "mtime": 1787208875.1246884,
+    "ast_hash": "c1083a9504a574282a09f557e0343d48",
+    "semantic_hash": ""
+  },
+  "public/datasheets/ESP32-C6.pdf": {
+    "mtime": 1787208875.1286886,
+    "ast_hash": "66a7b580c6afff5becf9bd326bb675d4",
+    "semantic_hash": ""
+  },
+  "public/datasheets/ESP32-C61.pdf": {
+    "mtime": 1787208875.1306887,
+    "ast_hash": "2f86d54475a006e9b0e41ba329560c5f",
+    "semantic_hash": ""
+  },
+  "public/datasheets/ESP32-H2.pdf": {
+    "mtime": 1787208875.1326888,
+    "ast_hash": "460ea57a62c32646d12ae0088eb1a073",
+    "semantic_hash": ""
+  },
+  "public/datasheets/ESP32-P4.pdf": {
+    "mtime": 1787208875.137689,
+    "ast_hash": "aa3fc8de7dfa4e7d3ff40dd9e19fdb35",
+    "semantic_hash": ""
+  },
+  "public/datasheets/ESP32-S2.pdf": {
+    "mtime": 1787208875.1406891,
+    "ast_hash": "1e912b14670dde07253da71147ea2ded",
+    "semantic_hash": ""
+  },
+  "public/datasheets/ESP32-S3.pdf": {
+    "mtime": 1787208875.1436894,
+    "ast_hash": "cdb8a18273a761aff071e6a665867205",
+    "semantic_hash": ""
+  },
+  "public/datasheets/ESP32-S31.pdf": {
+    "mtime": 1787208875.1466894,
+    "ast_hash": "b2f7aa8b2cc16c18815abc5a1ddd566a",
+    "semantic_hash": ""
+  },
+  "public/datasheets/ESP32.pdf": {
+    "mtime": 1787208875.1486895,
+    "ast_hash": "2354c04b871b3b6b294076c1fb953522",
+    "semantic_hash": ""
+  },
+  "app/icon.svg": {
+    "mtime": 1787493648.5160885,
+    "ast_hash": "ce4f06e06babeb3ff3c5f06373573625",
+    "semantic_hash": ""
+  },
+  "app/opengraph-image.png": {
+    "mtime": 1787493677.7188504,
+    "ast_hash": "a64c2620cabed2aface6819ea582e76d",
+    "semantic_hash": ""
+  },
+  "public/formacoes/1/esp32-s3-blocos.png": {
+    "mtime": 1787230391.7354066,
+    "ast_hash": "91caddfa7e957735efeeaf51252dd4c9",
+    "semantic_hash": ""
+  },
+  "public/formacoes/1/pratica.png": {
+    "mtime": 1787226071.9687011,
+    "ast_hash": "0041e888c91ab709794602e2a607532b",
+    "semantic_hash": ""
+  },
+  "public/formacoes/assets/capa-curvas.svg": {
+    "mtime": 1787226377.6237059,
+    "ast_hash": "aafa9bdfdede085b9d848684f6420ac6",
+    "semantic_hash": ""
+  },
+  "public/formacoes/assets/laser-escuro.svg": {
+    "mtime": 1787226338.6152956,
+    "ast_hash": "b4b66a35a74c18b6fcdd4e7b5aba60d9",
+    "semantic_hash": ""
+  },
+  "public/formacoes/assets/laser.svg": {
+    "mtime": 1787226268.1520822,
+    "ast_hash": "62d94dd326502e1b0afd280e1f465cf4",
+    "semantic_hash": ""
+  },
+  "public/logo.png": {
+    "mtime": 1787208875.1497247,
+    "ast_hash": "1c0eae14654c8f5427c7141029ecd29e",
+    "semantic_hash": ""
+  },
+  "public/marca/espdocs-lockup.svg": {
+    "mtime": 1787493648.5180027,
+    "ast_hash": "a95424a74b7d5dff1c0a16ee2981bb06",
+    "semantic_hash": ""
+  },
+  "public/marca/espdocs-marca.svg": {
+    "mtime": 1787493553.7360556,
+    "ast_hash": "ce4f06e06babeb3ff3c5f06373573625",
+    "semantic_hash": ""
+  },
+  "public/placas/esp32-c2.png": {
+    "mtime": 1787208875.1506896,
+    "ast_hash": "3480aadf17ef57e93ee5afdfd934d896",
+    "semantic_hash": ""
+  },
+  "public/placas/esp32-c3.png": {
+    "mtime": 1787208875.1516895,
+    "ast_hash": "85df0510a61dee5ffa581d912f5d68c9",
+    "semantic_hash": ""
+  },
+  "public/placas/esp32-c5.png": {
+    "mtime": 1787208875.1526897,
+    "ast_hash": "6a59f4e23ac9ec5e319a77a6600fa343",
+    "semantic_hash": ""
+  },
+  "public/placas/esp32-c6.png": {
+    "mtime": 1787208875.1536896,
+    "ast_hash": "0f836b438f62bb4b6237c9318346cdf2",
+    "semantic_hash": ""
+  },
+  "public/placas/esp32-c61.png": {
+    "mtime": 1787208875.1546898,
+    "ast_hash": "6734034067caa41374f2a4ca5064a7d3",
+    "semantic_hash": ""
+  },
+  "public/placas/esp32-h2.png": {
+    "mtime": 1787208875.1556897,
+    "ast_hash": "7dceb269eb019ce826ef336dd57ab52c",
+    "semantic_hash": ""
+  },
+  "public/placas/esp32-p4.png": {
+    "mtime": 1787208875.1626902,
+    "ast_hash": "c144c171692850ac257d00827dc674f5",
+    "semantic_hash": ""
+  },
+  "public/placas/esp32-s2.png": {
+    "mtime": 1787208875.1646903,
+    "ast_hash": "670c4a12339f32fb32af2eebdc575892",
+    "semantic_hash": ""
+  },
+  "public/placas/esp32-s3.png": {
+    "mtime": 1787208875.1686904,
+    "ast_hash": "52b96040d9c648f7c52aa4c8adac7e47",
+    "semantic_hash": ""
+  },
+  "public/placas/esp32-s31.png": {
+    "mtime": 1787208875.1926913,
+    "ast_hash": "5b970e68abce449015851cd5966525e3",
+    "semantic_hash": ""
+  },
+  "public/placas/esp32.png": {
+    "mtime": 1787208875.1946914,
+    "ast_hash": "6791837138c1c5400db2ee07c9025627",
+    "semantic_hash": ""
+  },
+  "scripts/slides-pdf.mjs": {
+    "mtime": 1787577906.2640111,
+    "ast_hash": "dbf8509a3083d40582dce9d8b29956a9",
+    "semantic_hash": ""
+  },
+  "public/formacoes/1/LASER-ESP32-Modulo-1-Slides.pdf": {
+    "mtime": 1787578140.9017217,
+    "ast_hash": "fe8398321d742b36d93c72b49678b16c",
+    "semantic_hash": ""
+  }
+}

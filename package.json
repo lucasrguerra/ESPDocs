@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "eslint",
     "auditar-temas": "node scripts/auditar-temas.mjs",
-    "exportar-cmyk": "node scripts/exportar-cmyk.mjs"
+    "slides-pdf": "node scripts/slides-pdf.mjs"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",

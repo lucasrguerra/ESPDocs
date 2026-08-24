@@ -1,0 +1,2353 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LASER · Formação em ESP32 · Módulo 1 · Slides</title>
+<meta name="author" content="Lucas Rayan Guerra">
+<meta name="description" content="Slides da formação presencial do módulo 1 da formação em ESP32 da LASER, Liga Acadêmica de Sistemas Embarcados da UFPE.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="../../marca/espdocs-marca.svg">
+<style>
+/* =========================================================================
+   Slides da formação em ESP32 da LASER.
+
+   O palco tem 1280x720 fixos e é escalado por transform, então toda medida
+   aqui é em pixel de projeção: o que você vê na tela é o que sai no projetor,
+   em qualquer resolução.
+
+   O elemento de assinatura é o FEIXE: a linha que atravessa o rodapé de toda
+   página. Ela é ao mesmo tempo o traço da logo da LASER, uma trilha de placa
+   e a barra de progresso da formação. O trecho já percorrido recebe o
+   gradiente da marca; o que falta fica pontilhado.
+   ========================================================================= */
+
+:root {
+	/* Base escura, tirada do prussiano da marca em vez de um preto neutro. */
+	--breu:        #041d2b;
+	--breu-2:      #06283a;
+	--breu-3:      #0a3a53;
+	--prussiano:   #003049;
+	--vermelho:    #D62828;
+	--laranja:     #F77F00;
+	--ambar:       #FCBF49;
+	--creme:       #EAE2B7;
+
+	--gelo:        #f2f8fb;
+	--texto:       #cddde6;
+	--texto-2:     #8fabbb;
+	--linha:       rgba(146, 187, 207, 0.22);
+	--linha-forte: rgba(146, 187, 207, 0.42);
+
+	--painel:      rgba(255, 255, 255, 0.045);
+	--painel-2:    rgba(255, 255, 255, 0.075);
+
+	--feixe: linear-gradient(90deg, #1b6d92, var(--creme), var(--ambar), var(--laranja), var(--vermelho));
+
+	--display: "Outfit", system-ui, sans-serif;
+	--corpo: "Inter", system-ui, sans-serif;
+	--mono: "JetBrains Mono", ui-monospace, monospace;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+	margin: 0;
+	padding: 0;
+	height: 100%;
+	background: var(--breu);
+	color: var(--texto);
+	font-family: var(--corpo);
+	overflow: hidden;
+	-webkit-font-smoothing: antialiased;
+}
+
+/* Brilho ambiente: o mesmo "feixe" da capa da apostila, aqui difuso e parado. */
+body::before {
+	content: "";
+	position: fixed;
+	inset: 0;
+	pointer-events: none;
+	z-index: 0;
+	background:
+		radial-gradient(60% 55% at 78% 12%, rgba(252, 191, 73, 0.10), transparent 70%),
+		radial-gradient(50% 50% at 12% 92%, rgba(0, 48, 73, 0.55), transparent 70%);
+}
+
+/* -------------------------------------------------------------------------
+   1. Palco 16:9
+   ------------------------------------------------------------------------- */
+
+#palco {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 1280px;
+	height: 720px;
+	margin: -360px 0 0 -640px;
+	transform-origin: center center;
+	z-index: 1;
+}
+
+.slide {
+	position: absolute;
+	inset: 0;
+	padding: 48px 76px 70px;
+	display: none;
+	flex-direction: column;
+	opacity: 0;
+	transition: opacity 0.34s ease, transform 0.34s cubic-bezier(0.22, 1, 0.36, 1);
+	transform: translateY(10px);
+}
+
+.slide.ativo {
+	display: flex;
+	opacity: 1;
+	transform: none;
+}
+
+/* -------------------------------------------------------------------------
+   2. Tipografia
+   ------------------------------------------------------------------------- */
+
+.rotulo {
+	font-family: var(--mono);
+	font-size: 13px;
+	font-weight: 600;
+	letter-spacing: 0.2em;
+	text-transform: uppercase;
+	color: var(--ambar);
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	margin-bottom: 16px;
+}
+
+.rotulo::after {
+	content: "";
+	height: 1px;
+	flex: 1;
+	background: linear-gradient(90deg, rgba(252, 191, 73, 0.5), transparent);
+}
+
+h1 {
+	font-family: var(--display);
+	font-size: 76px;
+	font-weight: 300;
+	line-height: 1.02;
+	letter-spacing: -0.028em;
+	color: var(--gelo);
+	margin: 0;
+}
+
+h1 strong { font-weight: 800; display: block; }
+
+h2 {
+	font-family: var(--display);
+	font-size: 44px;
+	font-weight: 700;
+	line-height: 1.1;
+	letter-spacing: -0.022em;
+	color: var(--gelo);
+	margin: 0 0 8px;
+}
+
+h3 {
+	font-family: var(--display);
+	font-size: 25px;
+	font-weight: 700;
+	letter-spacing: -0.01em;
+	color: var(--ambar);
+	margin: 0 0 10px;
+}
+
+.linha-fina {
+	font-size: 21px;
+	line-height: 1.4;
+	color: var(--texto-2);
+	margin: 0 0 21px;
+	max-width: 900px;
+	font-weight: 300;
+}
+
+p { font-size: 22px; line-height: 1.5; margin: 0 0 16px; }
+p:last-child { margin-bottom: 0; }
+
+strong { color: var(--gelo); font-weight: 600; }
+em { color: var(--creme); font-style: italic; }
+
+code {
+	font-family: var(--mono);
+	font-size: 0.88em;
+	background: var(--painel-2);
+	border: 1px solid var(--linha);
+	border-radius: 5px;
+	padding: 1px 6px;
+	color: var(--creme);
+}
+
+a { color: var(--ambar); text-decoration: none; border-bottom: 1px solid rgba(252, 191, 73, 0.4); }
+
+/* -------------------------------------------------------------------------
+   3. O feixe: rodapé, progresso e identidade
+   ------------------------------------------------------------------------- */
+
+.rodape {
+	position: absolute;
+	left: 76px;
+	right: 76px;
+	bottom: 30px;
+	height: 34px;
+	display: flex;
+	align-items: center;
+	font-family: var(--mono);
+	font-size: 12px;
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
+	color: var(--texto-2);
+	pointer-events: none;
+}
+
+.rodape .trilho {
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 0;
+	height: 2px;
+	background-image: linear-gradient(90deg, var(--linha) 0 6px, transparent 6px 12px);
+	background-size: 12px 1px;
+	background-repeat: repeat-x;
+	background-position: 0 1px;
+}
+
+.rodape .percorrido {
+	position: absolute;
+	left: 0;
+	top: 0;
+	height: 2px;
+	background: var(--feixe);
+	background-size: 1204px 2px;
+	transition: width 0.34s cubic-bezier(0.22, 1, 0.36, 1);
+	border-radius: 2px;
+}
+
+/* A estrela da marca viaja na ponta do feixe. */
+.rodape .ponta {
+	position: absolute;
+	top: 1px;
+	width: 11px;
+	height: 11px;
+	margin: -5px 0 0 -5.5px;
+	color: var(--laranja);
+	transition: left 0.34s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.rodape .ponta::before,
+.rodape .ponta::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	background: currentColor;
+	clip-path: polygon(50% 0, 61% 39%, 100% 50%, 61% 61%, 50% 100%, 39% 61%, 0 50%, 39% 39%);
+}
+
+.rodape .ponta::after { filter: blur(4px); opacity: 0.85; }
+
+.rodape-texto {
+	position: absolute;
+	top: 14px;
+	left: 0;
+	right: 0;
+	display: flex;
+	justify-content: space-between;
+	align-items: baseline;
+}
+
+.rodape-num { color: var(--creme); font-weight: 600; letter-spacing: 0.08em; }
+
+/* -------------------------------------------------------------------------
+   4. Capa e aberturas de capítulo
+   ------------------------------------------------------------------------- */
+
+.slide.capa { justify-content: center; }
+
+.capa-marca {
+	display: flex;
+	align-items: center;
+	gap: 18px;
+	margin-bottom: 46px;
+}
+
+.capa-marca img { height: 30px; width: auto; }
+
+.capa-marca span {
+	font-family: var(--mono);
+	font-size: 12.5px;
+	line-height: 1.5;
+	letter-spacing: 0.06em;
+	color: var(--texto-2);
+	border-left: 1px solid var(--linha-forte);
+	padding-left: 18px;
+	text-transform: uppercase;
+}
+
+.capa-selo {
+	font-family: var(--mono);
+	font-size: 13px;
+	font-weight: 700;
+	letter-spacing: 0.24em;
+	text-transform: uppercase;
+	color: var(--ambar);
+	margin-bottom: 22px;
+}
+
+.capa-sub {
+	font-size: 22px;
+	line-height: 1.5;
+	color: var(--texto-2);
+	max-width: 690px;
+	margin: 30px 0 0;
+	font-weight: 300;
+}
+
+.capa-autor {
+	position: absolute;
+	right: 76px;
+	bottom: 96px;
+	text-align: right;
+	font-family: var(--mono);
+	font-size: 12.5px;
+	line-height: 1.7;
+	letter-spacing: 0.06em;
+	color: var(--texto-2);
+	text-transform: uppercase;
+}
+
+.capa-autor strong { display: block; color: var(--creme); letter-spacing: 0.1em; }
+
+/* Abertura de capítulo: o número é a superfície, não um enfeite ao lado. */
+.slide.secao { justify-content: center; }
+
+.secao-num {
+	position: absolute;
+	right: 60px;
+	top: 50%;
+	transform: translateY(-50%);
+	font-family: var(--display);
+	font-size: 340px;
+	font-weight: 800;
+	line-height: 0.8;
+	letter-spacing: -0.05em;
+	color: transparent;
+	-webkit-text-stroke: 2px rgba(252, 191, 73, 0.28);
+	pointer-events: none;
+	user-select: none;
+}
+
+.slide.secao h1 { font-size: 62px; font-weight: 800; max-width: 780px; letter-spacing: -0.03em; }
+.slide.secao .capa-sub { max-width: 620px; }
+
+.secao-itens {
+	margin-top: 34px;
+	display: flex;
+	gap: 12px;
+	flex-wrap: wrap;
+	max-width: 720px;
+}
+
+.secao-itens span {
+	font-family: var(--mono);
+	font-size: 13px;
+	letter-spacing: 0.06em;
+	color: var(--texto);
+	border: 1px solid var(--linha);
+	border-radius: 999px;
+	padding: 7px 15px;
+	background: var(--painel);
+}
+
+/* -------------------------------------------------------------------------
+   5. Corpo dos slides
+   ------------------------------------------------------------------------- */
+
+.corpo { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+h2 + .corpo { margin-top: 14px; }
+
+.duas { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; flex: 1; min-height: 0; }
+.duas.assimetrica { grid-template-columns: 1.15fr 1fr; }
+.duas.assimetrica-inv { grid-template-columns: 1fr 1.3fr; }
+.duas.terco { grid-template-columns: 1fr 2fr; }
+
+.tres { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; flex: 1; min-height: 0; }
+.quatro { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; flex: 1; min-height: 0; }
+
+.centro { display: flex; flex-direction: column; justify-content: center; }
+
+ul.lista { list-style: none; margin: 0; padding: 0; }
+
+ul.lista li {
+	position: relative;
+	padding-left: 30px;
+	font-size: 22px;
+	line-height: 1.42;
+	margin-bottom: 17px;
+}
+
+ul.lista li::before {
+	content: "";
+	position: absolute;
+	left: 0;
+	top: 12px;
+	width: 14px;
+	height: 1.5px;
+	background: var(--laranja);
+}
+
+ul.lista.miuda li { font-size: 19px; margin-bottom: 12px; }
+
+/* Cartão: unidade básica de agrupamento. */
+.cartao {
+	background: var(--painel);
+	border: 1px solid var(--linha);
+	border-radius: 14px;
+	padding: 22px 24px;
+	position: relative;
+	overflow: hidden;
+}
+
+.cartao + .cartao { margin-top: 16px; }
+
+.cartao.compacto { padding: 13px 17px; border-radius: 11px; }
+.cartao.compacto + .cartao.compacto { margin-top: 11px; }
+.cartao.compacto .cartao-titulo { font-size: 18px; margin-bottom: 5px; }
+.cartao.compacto p, .cartao.compacto li { font-size: 16px; line-height: 1.38; }
+
+.cartao-titulo {
+	font-family: var(--display);
+	font-size: 21px;
+	font-weight: 700;
+	color: var(--gelo);
+	margin-bottom: 8px;
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+.cartao p, .cartao li { font-size: 18.5px; line-height: 1.45; }
+.cartao ul.lista li { font-size: 18.5px; margin-bottom: 9px; padding-left: 24px; }
+.cartao ul.lista li::before { top: 11px; width: 11px; }
+
+.cartao.destaque { border-color: rgba(252, 191, 73, 0.4); background: rgba(252, 191, 73, 0.07); }
+.cartao.alerta { border-color: rgba(214, 40, 40, 0.5); background: rgba(214, 40, 40, 0.1); }
+.cartao.alerta .cartao-titulo { color: #ffb3b3; }
+.cartao.dica { border-color: rgba(32, 201, 151, 0.38); background: rgba(32, 201, 151, 0.08); }
+.cartao.dica .cartao-titulo { color: #7ff0cd; }
+
+/* Marcador numérico só onde a ordem é informação de verdade. */
+.etapa { display: flex; gap: 20px; align-items: flex-start; margin-bottom: 20px; }
+
+.etapa-num {
+	flex: none;
+	width: 42px;
+	height: 42px;
+	border-radius: 50%;
+	border: 1.5px solid var(--laranja);
+	color: var(--ambar);
+	font-family: var(--display);
+	font-size: 20px;
+	font-weight: 700;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.etapa h3 { font-size: 22px; margin-bottom: 4px; color: var(--gelo); }
+.etapa p { font-size: 19px; color: var(--texto); }
+
+/* Frase única, quando o slide é uma afirmação e não uma lista. */
+.slide.impacto { justify-content: center; align-items: flex-start; }
+
+.impacto-frase {
+	font-family: var(--display);
+	font-size: 54px;
+	font-weight: 300;
+	line-height: 1.16;
+	letter-spacing: -0.025em;
+	color: var(--gelo);
+	max-width: 1000px;
+	margin: 0;
+}
+
+.impacto-frase strong { font-weight: 800; color: var(--ambar); }
+
+.impacto-nota {
+	margin-top: 30px;
+	font-family: var(--mono);
+	font-size: 15px;
+	letter-spacing: 0.08em;
+	color: var(--texto-2);
+	max-width: 760px;
+	line-height: 1.7;
+	text-transform: none;
+}
+
+/* -------------------------------------------------------------------------
+   6. Tabelas
+   ------------------------------------------------------------------------- */
+
+table {
+	width: 100%;
+	border-collapse: collapse;
+	font-size: 18px;
+	line-height: 1.35;
+}
+
+table.miuda { font-size: 15.5px; }
+table.microscopica { font-size: 13.6px; }
+
+th {
+	font-family: var(--mono);
+	font-size: 0.75em;
+	font-weight: 600;
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
+	color: var(--ambar);
+	text-align: left;
+	padding: 0 12px 8px;
+	border-bottom: 1.5px solid rgba(252, 191, 73, 0.45);
+	white-space: nowrap;
+}
+
+td { padding: 6px 12px; border-bottom: 1px solid var(--linha); vertical-align: top; }
+tbody tr:last-child td { border-bottom: none; }
+tbody tr:nth-child(even) td { background: rgba(255, 255, 255, 0.028); }
+
+td.chave { color: var(--gelo); font-weight: 600; white-space: nowrap; }
+td.mono, .mono { font-family: var(--mono); }
+td.sim { color: #6fdcb0; font-weight: 600; }
+td.nao { color: #ff8b8b; }
+
+caption {
+	caption-side: bottom;
+	text-align: left;
+	padding-top: 12px;
+	font-size: 14px;
+	color: var(--texto-2);
+	font-style: italic;
+}
+
+/* -------------------------------------------------------------------------
+   7. Código
+   ------------------------------------------------------------------------- */
+
+pre {
+	margin: 0;
+	background: rgba(0, 14, 22, 0.62);
+	border: 1px solid var(--linha);
+	border-left: 3px solid var(--laranja);
+	border-radius: 12px;
+	padding: 20px 24px;
+	overflow: hidden;
+	font-family: var(--mono);
+	font-size: 17px;
+	line-height: 1.52;
+	color: #dbeaf2;
+	tab-size: 2;
+}
+
+pre.miuda { font-size: 15px; line-height: 1.5; }
+pre code { background: none; border: none; padding: 0; font-size: inherit; color: inherit; }
+
+.c-com { color: #7c9aab; font-style: italic; }
+.c-key { color: #d9a2ff; font-weight: 600; }
+.c-fun { color: #7fd0ff; font-weight: 600; }
+.c-str { color: #9fe8a8; }
+.c-num { color: var(--ambar); font-weight: 600; }
+.c-pre { color: #ff9f6e; font-weight: 600; }
+
+.legenda {
+	margin-top: 14px;
+	font-size: 16.5px;
+	line-height: 1.45;
+	color: var(--texto-2);
+}
+
+/* -------------------------------------------------------------------------
+   8. Figuras
+   ------------------------------------------------------------------------- */
+
+figure { margin: 0; display: flex; flex-direction: column; min-height: 0; flex: 1; }
+
+figure img {
+	max-width: 100%;
+	min-height: 0;
+	flex: 1 1 auto;
+	object-fit: contain;
+	object-position: center;
+	margin: auto;
+	border-radius: 10px;
+}
+
+figure figcaption { flex: none; }
+
+/* Diagramas de pinagem e blocos vêm em fundo claro: uma moldura clara evita
+   o retângulo branco solto no meio do slide escuro. */
+figure.clara img {
+	background: #fdfdfb;
+	padding: 12px;
+	border: 1px solid var(--linha-forte);
+	box-shadow: 0 18px 48px rgba(0, 0, 0, 0.45);
+}
+
+figcaption { font-size: 15.5px; color: var(--texto-2); margin-top: 12px; line-height: 1.4; }
+
+/* -------------------------------------------------------------------------
+   9. Grade das 12 séries
+   ------------------------------------------------------------------------- */
+
+.grade-chips { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; flex: 1; }
+
+.chip {
+	background: var(--painel);
+	border: 1px solid var(--linha);
+	border-top: 2px solid var(--cor-chip, var(--laranja));
+	border-radius: 10px;
+	padding: 10px 13px 11px;
+	display: flex;
+	flex-direction: column;
+}
+
+.chip-nome {
+	font-family: var(--display);
+	font-size: 18.5px;
+	font-weight: 800;
+	color: var(--gelo);
+	letter-spacing: -0.015em;
+	line-height: 1.1;
+}
+
+.chip-papel {
+	font-family: var(--mono);
+	font-size: 10px;
+	letter-spacing: 0.09em;
+	text-transform: uppercase;
+	color: var(--cor-chip, var(--laranja));
+	margin: 3px 0 7px;
+	filter: brightness(1.35) saturate(0.9);
+}
+
+.chip p { font-size: 12.5px; line-height: 1.32; color: var(--texto-2); margin: 0 0 8px; }
+
+/* Ficha em uma linha só: quatro números soltos não precisam de tabela. */
+.chip-ficha {
+	margin: auto 0 0;
+	font-family: var(--mono);
+	font-size: 10.5px;
+	letter-spacing: 0.02em;
+	color: var(--creme);
+	border-top: 1px solid var(--linha);
+	padding-top: 7px;
+	line-height: 1.5;
+}
+
+.chip-ficha b { color: var(--ambar); font-weight: 600; }
+
+/* Faixa de leituras: uma frase curta por coluna, sem virar cartão. */
+.leituras { margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--linha); gap: 30px; }
+.leituras p { font-size: 16px; line-height: 1.38; color: var(--texto-2); }
+.leituras b { color: var(--ambar); font-weight: 600; }
+
+/* Legenda das letras da nomenclatura. */
+.letras { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 8px; }
+
+.letra { border: 1px solid var(--linha); border-radius: 12px; padding: 18px 20px; background: var(--painel); }
+
+.letra b {
+	font-family: var(--display);
+	font-size: 46px;
+	font-weight: 800;
+	color: var(--ambar);
+	line-height: 1;
+	display: block;
+	margin-bottom: 8px;
+}
+
+.letra span { font-size: 17px; line-height: 1.4; color: var(--texto); display: block; }
+
+/* Números grandes usados como evidência, não como enfeite. */
+.metrica { display: flex; flex-direction: column; }
+.metrica b {
+	font-family: var(--display);
+	font-size: 52px;
+	font-weight: 800;
+	color: var(--ambar);
+	line-height: 1;
+	letter-spacing: -0.03em;
+}
+.metrica span { font-family: var(--mono); font-size: 12.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--texto-2); margin-top: 8px; }
+
+/* -------------------------------------------------------------------------
+   10. Navegação, panorama e ajuda
+   ------------------------------------------------------------------------- */
+
+#panorama {
+	position: fixed;
+	inset: 0;
+	z-index: 20;
+	background: rgba(4, 29, 43, 0.97);
+	backdrop-filter: blur(10px);
+	padding: 40px 48px;
+	overflow-y: auto;
+	display: none;
+	grid-template-columns: repeat(auto-fill, minmax(215px, 1fr));
+	gap: 18px;
+	align-content: start;
+}
+
+#panorama.aberto { display: grid; }
+
+.miniatura {
+	background: var(--painel);
+	border: 1px solid var(--linha);
+	border-radius: 10px;
+	padding: 14px 15px;
+	cursor: pointer;
+	text-align: left;
+	font-family: var(--corpo);
+	color: var(--texto-2);
+	transition: border-color 0.15s, background 0.15s, transform 0.15s;
+	display: flex;
+	flex-direction: column;
+	gap: 7px;
+}
+
+.miniatura:hover, .miniatura:focus-visible {
+	border-color: var(--ambar);
+	background: rgba(252, 191, 73, 0.09);
+	transform: translateY(-2px);
+	outline: none;
+}
+
+.miniatura.atual { border-color: var(--laranja); background: rgba(247, 127, 0, 0.13); }
+.miniatura b { font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em; color: var(--ambar); }
+.miniatura span { font-family: var(--display); font-size: 15.5px; font-weight: 600; color: var(--gelo); line-height: 1.25; }
+.miniatura i { font-style: normal; font-size: 12.5px; color: var(--texto-2); line-height: 1.3; }
+
+#ajuda {
+	position: fixed;
+	left: 50%;
+	bottom: 26px;
+	transform: translateX(-50%);
+	z-index: 25;
+	display: flex;
+	gap: 8px;
+	background: rgba(4, 29, 43, 0.9);
+	border: 1px solid var(--linha-forte);
+	border-radius: 999px;
+	padding: 9px 16px;
+	font-family: var(--mono);
+	font-size: 11.5px;
+	letter-spacing: 0.08em;
+	color: var(--texto-2);
+	opacity: 0;
+	pointer-events: none;
+	transition: opacity 0.3s;
+	white-space: nowrap;
+}
+
+#ajuda.visivel { opacity: 1; }
+#panorama.aberto ~ #ajuda { display: none; }
+#ajuda kbd {
+	background: var(--painel-2);
+	border: 1px solid var(--linha);
+	border-radius: 4px;
+	padding: 1px 6px;
+	color: var(--creme);
+	font-family: inherit;
+}
+#ajuda span + span { margin-left: 6px; }
+
+/* Tela preta para tirar o projetor da frente sem perder o lugar. */
+#cortina {
+	position: fixed;
+	inset: 0;
+	background: #000;
+	z-index: 30;
+	display: none;
+}
+#cortina.aberta { display: block; }
+
+/* -------------------------------------------------------------------------
+   11. Acessibilidade e impressão
+   ------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+	.slide, .rodape .percorrido, .rodape .ponta, .miniatura { transition: none !important; }
+}
+
+@media print {
+	/* 1280 x 720 px a 96 dpi = 338,667 mm x 190,5 mm. Assim a página do PDF
+	   tem exatamente a mesma caixa do palco e nada precisa ser reescalado. */
+	@page { size: 338.667mm 190.5mm; margin: 0; }
+
+	html, body { overflow: visible; height: auto; background: var(--breu); }
+	body::before { display: none; }
+
+	#palco {
+		position: static;
+		width: auto;
+		height: auto;
+		margin: 0;
+		transform: none !important;
+	}
+
+	.slide {
+		position: relative;
+		display: flex !important;
+		opacity: 1 !important;
+		transform: none !important;
+		width: 1280px;
+		height: 720px;
+		overflow: hidden;
+		page-break-after: always;
+		break-after: page;
+		/* O brilho ambiente é fixo na tela; no papel cada página precisa do seu. */
+		background:
+			radial-gradient(60% 55% at 78% 12%, rgba(252, 191, 73, 0.10), transparent 70%),
+			radial-gradient(50% 50% at 12% 92%, rgba(0, 48, 73, 0.55), transparent 70%),
+			var(--breu);
+	}
+
+	/* Sem isto o Chrome fecha o PDF com uma página em branco. */
+	.slide:last-child { page-break-after: auto; break-after: auto; }
+
+	#panorama, #ajuda, #cortina { display: none !important; }
+
+	* { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+}
+
+</style>
+</head>
+<body>
+
+<div id="palco">
+
+<!-- ══════════════════════════════ ABERTURA ══════════════════════════════ -->
+
+<section class="slide capa" data-secao="Abertura" data-titulo="Capa">
+	<div class="capa-marca">
+		<img src="../assets/laser.svg" alt="LASER">
+		<span>Liga Acadêmica de Sistemas Embarcados<br>Centro de Informática · UFPE</span>
+	</div>
+	<div class="capa-selo">Formação em ESP32 · Módulo 1</div>
+	<h1>Conhecendo a<strong>família ESP32</strong></h1>
+	<p class="capa-sub">
+		Do silício à bancada: como esses microcontroladores funcionam por dentro, o que cada série
+		faz e não faz, e como escolher o chip certo antes de fechar um projeto.
+	</p>
+	<div class="capa-autor">
+		<strong>Lucas Rayan Guerra</strong>
+		Ciência Embarcada · ESPDocs<br>
+		linkedin.com/in/lucasrguerra
+	</div>
+</section>
+
+<section class="slide" data-secao="Abertura" data-titulo="O que vamos fazer hoje">
+	<div class="rotulo">Abertura</div>
+	<h2>O que vamos fazer hoje</h2>
+	<p class="linha-fina">Três horas divididas em entender, decidir e montar.</p>
+	<div class="corpo tres">
+		<div class="cartao">
+			<div class="cartao-titulo">Entender</div>
+			<p>O que existe dentro do chip, como ele acorda e por que ele não é um Arduino com Wi-Fi.</p>
+			<p class="mono" style="font-size:13px;letter-spacing:.1em;color:var(--ambar);margin-top:14px">CAPÍTULOS 1 A 3</p>
+		</div>
+		<div class="cartao">
+			<div class="cartao-titulo">Decidir</div>
+			<p>As doze séries, o que cada uma resolve, como ela se compara a outras plataformas e como escolher a sua.</p>
+			<p class="mono" style="font-size:13px;letter-spacing:.1em;color:var(--ambar);margin-top:14px">CAPÍTULOS 4 A 8</p>
+		</div>
+		<div class="cartao destaque">
+			<div class="cartao-titulo">Montar</div>
+			<p>Um DHT11 ligado a um ESP32-S3, lendo temperatura e umidade no monitor serial. Cada pessoa na sua bancada.</p>
+			<p class="mono" style="font-size:13px;letter-spacing:.1em;color:var(--ambar);margin-top:14px">CAPÍTULO 9</p>
+		</div>
+	</div>
+</section>
+
+<section class="slide" data-secao="Abertura" data-titulo="Antes de começar">
+	<div class="rotulo">Abertura</div>
+	<h2>Antes de começar</h2>
+	<div class="corpo duas">
+		<div>
+			<h3>Você precisa saber</h3>
+			<ul class="lista">
+				<li>Já ter ligado um LED em algum microcontrolador.</li>
+				<li>Saber o que é uma porta digital.</li>
+				<li>C ou C++ básico ajuda, mas o código de hoje é curto e comentado.</li>
+			</ul>
+			<div class="cartao dica" style="margin-top:24px">
+				<div class="cartao-titulo">Não precisa saber</div>
+				<p>Wi-Fi, RTOS, RISC-V ou criptografia. Tudo isso aparece explicado no caminho.</p>
+			</div>
+		</div>
+		<div>
+			<h3>Na sua bancada</h3>
+			<table>
+				<tbody>
+					<tr><td class="chave">ESP32-S3-DevKitC-1</td><td>Qualquer variante serve</td></tr>
+					<tr><td class="chave">Sensor DHT11</td><td>O componente azul de 4 pinos</td></tr>
+					<tr><td class="chave">Resistor 10 kΩ</td><td>Marrom, preto, laranja</td></tr>
+					<tr><td class="chave">Protoboard</td><td>Meia protoboard basta</td></tr>
+					<tr><td class="chave">4 jumpers</td><td>Vermelho, preto e amarelo</td></tr>
+					<tr><td class="chave">Cabo USB</td><td class="sim">De dados, não só de carga</td></tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</section>
+
+<!-- ══════════════════════════════ CAPÍTULO 1 ══════════════════════════════ -->
+
+<section class="slide secao" data-secao="Capítulo 1" data-titulo="§1 · O que é o ESP32">
+	<div class="secao-num">1</div>
+	<div class="rotulo">Capítulo um</div>
+	<h1>O que é o ESP32</h1>
+	<p class="capa-sub">De onde ele veio e por que virou padrão de fato em projetos conectados.</p>
+	<div class="secao-itens">
+		<span>Linha do tempo</span>
+		<span>O que explica a adoção</span>
+		<span>SoC, módulo, placa e série</span>
+	</div>
+</section>
+
+<section class="slide" data-secao="Capítulo 1" data-titulo="Linha do tempo">
+	<div class="rotulo">1 · O que é o ESP32</div>
+	<h2>Onze anos em uma tabela</h2>
+	<p class="linha-fina">A Espressif é de 2008, mas a história que interessa começa em 2014.</p>
+	<div class="corpo">
+		<table class="miuda">
+			<thead><tr><th style="width:11%">Ano</th><th style="width:22%">Lançamento</th><th>O que mudou</th></tr></thead>
+			<tbody>
+				<tr><td class="chave mono">2014</td><td class="chave">ESP8266</td><td>Wi-Fi barato ao alcance de qualquer projeto. Ainda muito usado.</td></tr>
+				<tr><td class="chave mono">2016</td><td class="chave">ESP32</td><td>Dois núcleos, Bluetooth e periféricos de verdade. O marco da plataforma.</td></tr>
+				<tr><td class="chave mono">2019</td><td class="chave">ESP32-S2</td><td>Foco em segurança e USB nativo; abre mão do Bluetooth.</td></tr>
+				<tr><td class="chave mono">2020</td><td class="chave">ESP32-C3</td><td>Primeira série RISC-V. Marca a virada de arquitetura da empresa.</td></tr>
+				<tr><td class="chave mono">2021</td><td class="chave">ESP32-S3</td><td>Dois núcleos com instruções vetoriais para IA. Vira o carro-chefe.</td></tr>
+				<tr><td class="chave mono">2022</td><td class="chave">ESP32-C6, H2</td><td>Chega o rádio 802.15.4: Zigbee, Thread e Matter entram na família.</td></tr>
+				<tr><td class="chave mono">2023</td><td class="chave">ESP32-P4</td><td>Alto desempenho sem rádio, com MIPI para câmera e display.</td></tr>
+				<tr><td class="chave mono">2024–25</td><td class="chave">C5, C61, H4, S31</td><td>Wi-Fi 6, dual-band de 5 GHz e a geração seguinte de malha.</td></tr>
+			</tbody>
+			<caption>Datas de anúncio. Disponibilidade comercial e suporte nas ferramentas costumam vir meses depois.</caption>
+		</table>
+	</div>
+</section>
+
+<section class="slide impacto" data-secao="Capítulo 1" data-titulo="O que explica a adoção">
+	<div class="rotulo">1 · O que é o ESP32</div>
+	<p class="impacto-frase">
+		Antes do ESP8266, colocar um projeto na internet custava<br>
+		<strong>um microcontrolador mais um módulo de rede.</strong><br>
+		Depois dele, custa <strong>um chip só.</strong>
+	</p>
+	<p class="impacto-nota">
+		Some a isso documentação pública, framework aberto e versionado, e um preço que cabe no
+		bolso de estudante. É essa combinação, e não um recurso isolado, que explica por que o
+		ESP32 aparece em quase toda frente da LASER: IoT, automação, IA na borda, robótica.
+	</p>
+</section>
+
+<section class="slide" data-secao="Capítulo 1" data-titulo="SoC, módulo, placa e série">
+	<div class="rotulo">1 · O que é o ESP32</div>
+	<h2>Quatro palavras que não são sinônimos</h2>
+	<p class="linha-fina">Trocar uma pela outra causa confusão em compra, em homologação e em projeto.</p>
+	<div class="corpo duas assimetrica-inv">
+		<div>
+			<div class="cartao compacto"><div class="cartao-titulo">SoC</div><p>O chip nu. É o silício, e sozinho ele não faz nada: precisa de flash, cristal, antena e alimentação.</p></div>
+			<div class="cartao compacto"><div class="cartao-titulo">Módulo</div><p>O SoC já montado com flash, cristal, antena e blindagem. É o que tem certificação. <strong>ESP32-S3-WROOM-1</strong>.</p></div>
+			<div class="cartao compacto"><div class="cartao-titulo">Placa</div><p>O módulo numa PCI com USB, regulador e barra de pinos. É o que você compra para prototipar. <strong>ESP32-S3-DevKitC-1</strong>.</p></div>
+			<div class="cartao compacto"><div class="cartao-titulo">Série</div><p>A geração do silício, que define recursos e limitações. <strong>ESP32-S3</strong>.</p></div>
+		</div>
+		<figure class="clara">
+			<img src="../../placas/esp32-s3.png" alt="Diagrama do ESP32-S3-DevKitC-1 com a pinagem completa, com o módulo ESP32-S3-WROOM soldado no centro da placa.">
+			<figcaption>Na placa que está na sua bancada dá para ver os três: o retângulo metálico no centro é o <strong>módulo</strong>, dentro dele está o <strong>SoC</strong>, e tudo isso sobre a <strong>placa</strong>.</figcaption>
+		</figure>
+	</div>
+</section>
+
+<section class="slide" data-secao="Capítulo 1" data-titulo="Homologação pertence ao módulo">
+	<div class="rotulo">1 · O que é o ESP32</div>
+	<h2>Por que essa distinção custa dinheiro</h2>
+	<div class="corpo centro">
+		<div class="cartao alerta" style="max-width:900px">
+			<div class="cartao-titulo">Homologação pertence ao módulo, não ao chip</div>
+			<p>
+				Quem projeta produto para vender usa <strong>módulo</strong>, não SoC nu. As
+				certificações de rádio (Anatel aqui, FCC e CE lá fora) são emitidas para o módulo
+				com sua antena e sua blindagem. Desenhar a própria placa com o chip nu significa
+				refazer toda a homologação por conta própria.
+			</p>
+		</div>
+		<div class="tres" style="margin-top:34px;flex:none">
+			<div class="metrica"><b>SoC</b><span>Sem certificação</span></div>
+			<div class="metrica"><b>Módulo</b><span>Homologado, pronto para produto</span></div>
+			<div class="metrica"><b>Placa</b><span>Bancada e protótipo</span></div>
+		</div>
+	</div>
+</section>
+
+<!-- ══════════════════════════════ CAPÍTULO 2 ══════════════════════════════ -->
+
+<section class="slide secao" data-secao="Capítulo 2" data-titulo="§2 · Anatomia do chip">
+	<div class="secao-num">2</div>
+	<div class="rotulo">Capítulo dois</div>
+	<h1>Anatomia: o que existe dentro do chip</h1>
+	<p class="capa-sub">Cinco blocos que explicam quase todo comportamento estranho que você vai encontrar.</p>
+	<div class="secao-itens">
+		<span>Processador</span>
+		<span>Memória</span>
+		<span>Rádio</span>
+		<span>Periféricos e matriz</span>
+		<span>Pinos com restrição</span>
+	</div>
+</section>
+
+<section class="slide" data-secao="Capítulo 2" data-titulo="Diagrama de blocos">
+	<div class="rotulo">2 · Anatomia</div>
+	<h2>O ESP32-S3 por dentro</h2>
+	<div class="corpo">
+		<figure class="clara" style="max-height:496px">
+			<img src="esp32-s3-blocos.png" alt="Diagrama de blocos oficial do ESP32-S3: CPU principal, memórias, rádio Wi-Fi e Bluetooth, cadeia de RF, periféricos, domínio RTC e bloco de segurança.">
+			<figcaption>Diagrama oficial da Espressif. Repare em quanta área é rádio e segurança: é aí que o ESP32 se separa de um microcontrolador comum.</figcaption>
+		</figure>
+	</div>
+</section>
+
+<section class="slide" data-secao="Capítulo 2" data-titulo="Processador">
+	<div class="rotulo">2 · Anatomia</div>
+	<h2>Processador: Xtensa ou RISC-V</h2>
+	<div class="corpo duas">
+		<div>
+			<div class="cartao">
+				<div class="cartao-titulo">Xtensa</div>
+				<p>Arquitetura licenciada da Cadence, usada nas séries mais antigas e nas de maior desempenho: ESP32, S2 e S3.</p>
+			</div>
+			<div class="cartao">
+				<div class="cartao-titulo">RISC-V</div>
+				<p>Conjunto de instruções aberto e sem royalties. Todas as séries novas nasceram assim. É a direção da empresa.</p>
+			</div>
+			<div class="cartao dica">
+				<div class="cartao-titulo">Para quem programa em Arduino ou IDF</div>
+				<p>A diferença é praticamente invisível: o compilador cuida disso. Ela pesa em depuração de baixo nível e em código em assembly.</p>
+			</div>
+		</div>
+		<div>
+			<h3>Um ou dois núcleos</h3>
+			<p>Dois núcleos permitem separar o que não pode parar do que pode esperar: o rádio de um lado, a sua lógica do outro. Mas exigem cuidado com acesso concorrente à mesma variável.</p>
+			<h3 style="margin-top:26px">O coprocessador de baixo consumo</h3>
+			<p>O <strong>ULP</strong> (ou <strong>LP core</strong> nas séries novas) fica no domínio de energia sempre ligado. Ele acorda, lê um sensor, decide se vale a pena e só então acorda o processador principal.</p>
+			<p class="mono" style="font-size:15px;color:var(--ambar);margin-top:18px">A diferença entre meses e dias de bateria.</p>
+		</div>
+	</div>
+</section>
+
+<section class="slide" data-secao="Capítulo 2" data-titulo="Memória">
+	<div class="rotulo">2 · Anatomia</div>
+	<h2>Memória: quatro tipos, quatro papéis</h2>
+	<div class="corpo">
+		<table class="miuda">
+			<thead><tr><th style="width:16%">Memória</th><th>Para que serve</th><th style="width:20%">Ordem de grandeza</th></tr></thead>
+			<tbody>
+				<tr><td class="chave">SRAM</td><td>Memória de trabalho: variáveis, pilha, buffers. É o recurso que acaba primeiro em projetos com Wi-Fi — a pilha de rede sozinha come dezenas de KB.</td><td class="mono">272 KB a 768 KB</td></tr>
+				<tr><td class="chave">ROM</td><td>Gravada de fábrica. Contém o bootloader inicial. Você não altera, e é por isso que um ESP32 é praticamente impossível de "brickar" de forma permanente.</td><td class="mono">128 KB a 576 KB</td></tr>
+				<tr><td class="chave">Flash externa</td><td>Onde mora o <em>seu</em> programa. Fica fora do núcleo do chip e conversa por SPI.</td><td class="mono">2 MB a 16 MB</td></tr>
+				<tr><td class="chave">PSRAM</td><td>RAM extra externa, opcional: buffer de câmera, tela gráfica, áudio, modelo de rede neural.</td><td class="mono">2 MB a 32 MB</td></tr>
+			</tbody>
+		</table>
+		<div class="cartao alerta" style="margin-top:22px">
+			<div class="cartao-titulo">O detalhe que pega todo mundo</div>
+			<p>A flash é <strong>externa ao núcleo</strong>: alguns pinos já estão ocupados conversando com ela o tempo todo. No ESP32 original são os GPIO 6 a 11. Ligue um LED ali e o chip trava, porque você está interferindo no barramento de onde o programa está sendo lido.</p>
+		</div>
+	</div>
+</section>
+
+<section class="slide" data-secao="Capítulo 2" data-titulo="Rádio">
+	<div class="rotulo">2 · Anatomia</div>
+	<h2>Rádio: o bloco que muda tudo</h2>
+	<p class="linha-fina">É o que distingue o ESP32 da maioria dos microcontroladores. Nem toda série tem todos.</p>
+	<div class="corpo duas assimetrica">
+		<table class="miuda">
+			<thead><tr><th style="width:38%">Tecnologia</th><th>Para quê</th></tr></thead>
+			<tbody>
+				<tr><td class="chave">Wi-Fi 4 · 802.11 b/g/n</td><td>Conexão direta à internet pela rede local. Presente na maioria das séries.</td></tr>
+				<tr><td class="chave">Wi-Fi 6 · 802.11ax</td><td>Melhor desempenho em rede congestionada e menor consumo com Target Wake Time.</td></tr>
+				<tr><td class="chave">Bluetooth LE</td><td>Celular, sensores de baixo consumo, provisionamento de rede.</td></tr>
+				<tr><td class="chave">Bluetooth Clássico</td><td>Áudio (A2DP) e serial sem fio (SPP). Só no ESP32 e no S31.</td></tr>
+				<tr><td class="chave">IEEE 802.15.4</td><td>Base do Zigbee, do Thread e portanto do Matter.</td></tr>
+			</tbody>
+		</table>
+		<div class="cartao alerta centro">
+			<div class="cartao-titulo">O rádio não é de graça</div>
+			<p>Transmitir custa <strong>corrente</strong>, com picos acima de <strong>300 mA</strong>, custa <strong>memória</strong> e custa <strong>tempo de processamento</strong>.</p>
+			<p style="margin-top:12px">Guarde esse número. Ele volta no capítulo 7 explicando reinicializações que parecem bug de software.</p>
+		</div>
+	</div>
+</section>
+
+<section class="slide" data-secao="Capítulo 2" data-titulo="Matriz de roteamento">
+	<div class="rotulo">2 · Anatomia</div>
+	<h2>A matriz de roteamento é ouro</h2>
+	<div class="corpo duas">
+		<div class="centro">
+			<p>Em um microcontrolador tradicional, a UART2 só existe nos pinos que o fabricante escolheu.</p>
+			<p>No ESP32, a <strong>matriz de roteamento</strong> mapeia quase qualquer função para quase qualquer pino, por software.</p>
+			<p class="mono" style="font-size:17px;color:var(--ambar);line-height:1.5;margin-top:20px">
+				Você desenha o traçado da placa da forma mais limpa<br>e depois adapta o firmware. Não o contrário.
+			</p>
+		</div>
+		<div class="centro">
+			<div class="cartao">
+				<div class="cartao-titulo">A matriz tem limite</div>
+				<p>Sinais de alta velocidade — o SPI da flash, o USB, o cristal, algumas linhas de I²S e LCD — não passam por ela. Eles usam <strong>IO_MUX</strong>, um caminho direto disponível só em pinos específicos.</p>
+				<p style="margin-top:10px">Roteie um SPI rápido por um pino qualquer: funciona, mas a frequência máxima cai.</p>
+			</div>
+		</div>
+	</div>
+</section>
+
+<section class="slide impacto" data-secao="Capítulo 2" data-titulo="Pinos com restrição">
+	<div class="rotulo">2 · Anatomia</div>
+	<p class="impacto-frase">
+		Num Arduino UNO, os vinte pinos são equivalentes.<br>
+		Num ESP32, <strong>uma parte deles já tem dono.</strong>
+	</p>
+	<p class="impacto-nota">
+		E usar o pino errado não produz um erro de compilação. Produz uma placa que não liga, um
+		firmware que trava, ou pior: um protótipo que funciona na bancada e falha em campo.
+	</p>
+</section>
+
+<section class="slide" data-secao="Capítulo 2" data-titulo="Os cinco grupos de pino">
+	<div class="rotulo">2 · Anatomia</div>
+	<h2>Cinco grupos, cinco formas de quebrar</h2>
+	<div class="corpo">
+		<table class="miuda">
+			<thead><tr><th style="width:20%">Grupo</th><th style="width:42%">Como falha</th><th>No ESP32-S3</th></tr></thead>
+			<tbody>
+				<tr><td class="chave">Flash e PSRAM</td><td>Reinicia em laço ou trava no boot. Não é intermitente e não tem contorno em software.</td><td class="mono">GPIO 26–32</td></tr>
+				<tr><td class="chave">Strapping</td><td>Funciona ligado, mas o que você pendurou ali atrapalha o próximo reset. A placa parece morta.</td><td class="mono">GPIO 0, 45 e 46</td></tr>
+				<tr><td class="chave">Somente entrada</td><td>Silenciosamente. <code>pinMode(OUTPUT)</code> não reclama e o pino não muda de nível.</td><td class="mono">Nenhum nesta série</td></tr>
+				<tr><td class="chave">Gravação e depuração</td><td>Você não perde o projeto, perde a capacidade de trabalhar nele: cada gravação exige desconectar o sensor.</td><td class="mono">39–44</td></tr>
+				<tr><td class="chave">USB nativo</td><td>A porta USB de gravação some do computador. Recuperar exige BOOT + RESET manual.</td><td class="mono">GPIO 19 e 20</td></tr>
+			</tbody>
+		</table>
+		<div class="cartao alerta" style="margin-top:20px">
+			<div class="cartao-titulo">O erro que mais custa caro</div>
+			<p>Descobrir um pino com restrição depois que a placa já foi fabricada. Antes de fechar o roteamento, abra o datasheet da série e liste os pinos proibidos. Leva vinte minutos e evita uma revisão inteira de PCI.</p>
+		</div>
+	</div>
+</section>
+
+<section class="slide" data-secao="Capítulo 2" data-titulo="Pinagem do ESP32 clássico">
+	<div class="rotulo">2 · Anatomia</div>
+	<h2>O mesmo pino, outra série, outro comportamento</h2>
+	<div class="corpo duas terco">
+		<div class="centro">
+			<p>Dos 45 GPIOs do ESP32-S3, <strong>18 têm alguma condição</strong>. Sobram 27 totalmente livres — entre eles o GPIO12, que usaremos na prática.</p>
+			<p>No ESP32 clássico, esse mesmo GPIO12 seleciona a tensão da flash durante o reset.</p>
+			<p class="mono" style="font-size:16px;color:var(--ambar);margin-top:16px">Mesmo número. Comportamento completamente diferente.</p>
+		</div>
+		<figure class="clara">
+			<img src="../../placas/esp32.png" alt="Diagrama de pinagem do ESP32-DevKitC, com legenda indicando pinos de flash, strapping, somente entrada e depuração.">
+		</figure>
+	</div>
+</section>
+
+<!-- ══════════════════════════════ CAPÍTULO 3 ══════════════════════════════ -->
+
+<section class="slide secao" data-secao="Capítulo 3" data-titulo="§3 · Boot e execução">
+	<div class="secao-num">3</div>
+	<div class="rotulo">Capítulo três</div>
+	<h1>Como o chip acorda</h1>
+	<p class="capa-sub">Da energia ao seu <code>setup()</code>. Quatro etapas que explicam os botões da placa e metade das mensagens de erro.</p>
+	<div class="secao-itens">
+		<span>Sequência de partida</span>
+		<span>FreeRTOS</span>
+		<span>Partições e OTA</span>
+	</div>
+</section>
+
+<section class="slide" data-secao="Capítulo 3" data-titulo="A sequência de partida">
+	<div class="rotulo">3 · Boot e execução</div>
+	<h2>A sequência de partida</h2>
+	<div class="corpo duas">
+		<div>
+			<div class="etapa">
+				<div class="etapa-num">1</div>
+				<div><h3>Energização e reset</h3><p>O processador fica parado até as tensões estabilizarem. O pino <code>CHIP_EN</code> precisa estar em nível alto — nunca pode flutuar.</p></div>
+			</div>
+			<div class="etapa">
+				<div class="etapa-num">2</div>
+				<div><h3>Bootloader da ROM</h3><p>Código de fábrica lê os <strong>pinos de strapping</strong> e decide: iniciar pela flash, ou entrar em <strong>modo de gravação</strong> e esperar firmware pela serial.</p></div>
+			</div>
+		</div>
+		<div>
+			<div class="etapa">
+				<div class="etapa-num">3</div>
+				<div><h3>Bootloader de segundo estágio</h3><p>Este você gravou. Lê a tabela de partições, escolhe qual imagem executar, verifica assinatura se o Secure Boot estiver ativo e descriptografa se a flash estiver cifrada.</p></div>
+			</div>
+			<div class="etapa">
+				<div class="etapa-num">4</div>
+				<div><h3>Sua aplicação</h3><p>No ESP-IDF, <code>app_main()</code>. No Arduino, o core cria uma tarefa que chama <code>setup()</code> e depois <code>loop()</code>.</p></div>
+			</div>
+			<div class="cartao dica">
+				<div class="cartao-titulo">Por isso existem BOOT e RESET</div>
+				<p>Segurar <strong>BOOT</strong>, pressionar e soltar <strong>RESET</strong>, soltar BOOT força o modo de gravação. É o truque manual quando a gravação falha com <em>timeout</em>.</p>
+			</div>
+		</div>
+	</div>
+</section>
+
+<section class="slide impacto" data-secao="Capítulo 3" data-titulo="loop() é uma tarefa">
+	<div class="rotulo">3 · Boot e execução</div>
+	<p class="impacto-frase">
+		O <strong>loop()</strong> que você conhece<br>
+		é, por baixo, <strong>uma tarefa do FreeRTOS.</strong>
+	</p>
+	<p class="impacto-nota">
+		No ESP32 há um sistema operacional de tempo real dividindo o processador entre a sua
+		tarefa, as do Wi-Fi, as do Bluetooth, o temporizador de sistema e o coletor de
+		estatísticas. Seu código nunca está sozinho.
+	</p>
+</section>
+
+<section class="slide" data-secao="Capítulo 3" data-titulo="Dois efeitos do RTOS">
+	<div class="rotulo">3 · Boot e execução</div>
+	<h2>Dois efeitos que surpreendem quem vem do Arduino</h2>
+	<div class="corpo duas">
+		<div class="centro">
+			<div class="cartao dica">
+				<div class="cartao-titulo">delay() não trava o chip</div>
+				<p>Ele <strong>cede o processador</strong> para outras tarefas. É por isso que o Wi-Fi continua funcionando enquanto o seu código "espera".</p>
+			</div>
+			<div class="cartao alerta">
+				<div class="cartao-titulo">Laço apertado reinicia o chip</div>
+				<p>Um <code>while(true)</code> sem <code>delay()</code> nem espera nunca cede o processador. O <em>watchdog</em> reinicia, reclamando que a tarefa não alimentou o cão de guarda. Não é bug: é o sistema protegendo as tarefas do rádio.</p>
+			</div>
+		</div>
+		<div class="centro">
+			<div class="rotulo" style="margin-bottom:10px">No monitor serial</div>
+			<pre class="miuda"><code>E (12345) task_wdt: Task watchdog got triggered.
+The following tasks did not reset the watchdog
+in time:
+ - loopTask (CPU 0)</code></pre>
+			<p class="legenda">Quase sempre significa laço apertado. A correção costuma ser um <code>delay(1)</code> ou um <code>vTaskDelay()</code> dentro do laço. Parece contraintuitivo colocar espera para o programa funcionar — em sistema com RTOS é exatamente o que se faz.</p>
+		</div>
+	</div>
+</section>
+
+<section class="slide" data-secao="Capítulo 3" data-titulo="Partições e OTA">
+	<div class="rotulo">3 · Boot e execução</div>
+	<h2>A flash não é um bloco só</h2>
+	<div class="corpo duas">
+		<div class="centro">
+			<p>Um layout típico tem o bootloader, a tabela de partições, uma área <code>nvs</code> para configurações — como a senha do Wi-Fi —, uma ou duas partições de aplicação e às vezes um sistema de arquivos.</p>
+			<p>Duas partições de aplicação existem para permitir <strong>OTA</strong>: o firmware novo é gravado na partição inativa e, só depois de validado, o chip passa a iniciar por ela. Se a imagem nova falhar, ele volta sozinho para a anterior.</p>
+		</div>
+		<div class="centro">
+			<div class="cartao destaque">
+				<div class="cartao-titulo">A conta que todo mundo esquece</div>
+				<p>Um projeto com atualização remota precisa de <strong>mais que o dobro</strong> do espaço do firmware.</p>
+			</div>
+			<pre class="miuda" style="margin-top:18px"><code><span class="c-com"># nome,   tipo, subtipo,  offset,  tamanho</span>
+nvs,      data, nvs,      0x9000,  0x5000
+otadata,  data, ota,      0xe000,  0x2000
+ota_0,    app,  ota_0,   0x10000,  0x1E0000
+ota_1,    app,  ota_1,  0x1F0000,  0x1E0000
+spiffs,   data, spiffs, 0x3D0000,  0x30000</code></pre>
+		</div>
+	</div>
+</section>
+
+<!-- ══════════════════════════════ CAPÍTULO 4 ══════════════════════════════ -->
+
+<section class="slide secao" data-secao="Capítulo 4" data-titulo="§4 · As 12 séries">
+	<div class="secao-num">4</div>
+	<div class="rotulo">Capítulo quatro</div>
+	<h1>A família completa: as 12 séries</h1>
+	<p class="capa-sub">Cada uma nasceu para resolver um problema diferente.</p>
+	<div class="secao-itens">
+		<span>A nomenclatura</span>
+		<span>As doze de uma vez</span>
+		<span>Rádios lado a lado</span>
+		<span>Maturidade</span>
+	</div>
+</section>
+
+<section class="slide" data-secao="Capítulo 4" data-titulo="A letra diz a vocação">
+	<div class="rotulo">4 · As 12 séries</div>
+	<h2>A letra já entrega a vocação</h2>
+	<p class="linha-fina">A nomenclatura da Espressif ajuda mais do que parece.</p>
+	<div class="corpo centro">
+		<div class="letras">
+			<div class="letra"><b>S</b><span><strong>Sensing.</strong> Desempenho, muita RAM e USB nativo.</span></div>
+			<div class="letra"><b>C</b><span><strong>Cost.</strong> Custo reduzido, sempre em RISC-V.</span></div>
+			<div class="letra"><b>H</b><span><strong>802.15.4.</strong> Malha sem Wi-Fi, para viver de pilha.</span></div>
+			<div class="letra"><b>P</b><span><strong>Performance.</strong> Processamento bruto, sem rádio nenhum.</span></div>
+		</div>
+	</div>
+</section>
+
+<section class="slide" data-secao="Capítulo 4" data-titulo="As doze séries">
+	<div class="rotulo">4 · As 12 séries</div>
+	<h2 style="font-size:36px;margin-bottom:10px">As doze, de uma vez</h2>
+	<div class="corpo" style="margin-top:0">
+		<div class="grade-chips">
+			<div class="chip" style="--cor-chip:#3b9bff"><div class="chip-nome">ESP32</div><div class="chip-papel">O clássico</div><p>O original de 2016. Bluetooth Clássico (raro na família), Ethernet e dois DACs.</p><div class="chip-ficha">Xtensa ×2 · <b>240 MHz</b><br>520 KB SRAM · 34 GPIO</div></div>
+			<div class="chip" style="--cor-chip:#3ddc84"><div class="chip-nome">ESP32-S2</div><div class="chip-papel">USB e segurança</div><p>Um núcleo, sem Bluetooth, mas com USB OTG nativo e muitos GPIOs.</p><div class="chip-ficha">Xtensa ×1 · <b>240 MHz</b><br>320 KB SRAM · 43 GPIO</div></div>
+			<div class="chip" style="--cor-chip:#F77F00"><div class="chip-nome">ESP32-S3</div><div class="chip-papel">Cavalo de batalha</div><p>Dois núcleos, BLE 5, USB nativo e instruções vetoriais para IA. É a da nossa prática.</p><div class="chip-ficha">Xtensa ×2 · <b>240 MHz</b><br>512 KB SRAM · 45 GPIO</div></div>
+			<div class="chip" style="--cor-chip:#a97cff"><div class="chip-nome">ESP32-C2</div><div class="chip-papel">Mínimo viável</div><p>Também vendido como ESP8684. Feito para custo: sem I²S e sem acelerador AES.</p><div class="chip-ficha">RISC-V ×1 · <b>120 MHz</b><br>272 KB SRAM · 14 GPIO</div></div>
+			<div class="chip" style="--cor-chip:#2fe0b8"><div class="chip-nome">ESP32-C3</div><div class="chip-papel">Substituto do clássico</div><p>O primeiro RISC-V da casa. Escolha natural para trocar um ESP8266 antigo.</p><div class="chip-ficha">RISC-V ×1 · <b>160 MHz</b><br>400 KB SRAM · 22 GPIO</div></div>
+			<div class="chip" style="--cor-chip:#38c6de"><div class="chip-nome">ESP32-C6</div><div class="chip-papel">Matter e malha</div><p>Wi-Fi 6, BLE 6 e 802.15.4 no mesmo chip: Zigbee, Thread e Matter.</p><div class="chip-ficha">RISC-V + LP · <b>160 MHz</b><br>512 KB SRAM · 30 GPIO</div></div>
+			<div class="chip" style="--cor-chip:#9d7bff"><div class="chip-nome">ESP32-C5</div><div class="chip-papel">Wi-Fi de duas faixas</div><p>O primeiro com Wi-Fi 6 em 2,4 GHz <em>e</em> 5 GHz. Para onde 2,4 está congestionado.</p><div class="chip-ficha">RISC-V + LP · <b>240 MHz</b><br>384 KB SRAM · 29 GPIO</div></div>
+			<div class="chip" style="--cor-chip:#3ed8f5"><div class="chip-nome">ESP32-C61</div><div class="chip-papel">Wi-Fi 6 econômico</div><p>Wi-Fi 6 com foco em custo, flash e PSRAM no encapsulamento. Sem 802.15.4.</p><div class="chip-ficha">RISC-V ×1 · <b>160 MHz</b><br>320 KB SRAM · 30 GPIO</div></div>
+			<div class="chip" style="--cor-chip:#9fb3bf"><div class="chip-nome">ESP32-H2</div><div class="chip-papel">Malha a bateria</div><p>Sem Wi-Fi de propósito. Sem o rádio mais faminto, o consumo despenca.</p><div class="chip-ficha">RISC-V ×1 · <b>96 MHz</b><br>320 KB SRAM · 19 GPIO</div></div>
+			<div class="chip" style="--cor-chip:#ff6fae"><div class="chip-nome">ESP32-H4</div><div class="chip-papel">Malha, 2ª geração</div><p>Sucessor do H2, com BLE 5.4 e LE Audio. Documentação ainda preliminar.</p><div class="chip-ficha">RISC-V ×2 · <b>96 MHz</b><br>384 KB SRAM · 40 GPIO</div></div>
+			<div class="chip" style="--cor-chip:#FCBF49"><div class="chip-nome">ESP32-P4</div><div class="chip-papel">Força bruta, sem rádio</div><p>MIPI para câmera e display, Ethernet. Para interface gráfica e processamento pesado.</p><div class="chip-ficha">RISC-V ×2 · <b>400 MHz</b><br>768 KB SRAM · 55 GPIO</div></div>
+			<div class="chip" style="--cor-chip:#ff4d6d"><div class="chip-nome">ESP32-S31</div><div class="chip-papel">Topo de linha</div><p>Wi-Fi 6, Bluetooth Clássico, 802.15.4, CAN FD e aceleração de IA. Ainda sem IDF estável.</p><div class="chip-ficha">RISC-V ×2 · <b>320 MHz</b><br>512 KB SRAM · 60 GPIO</div></div>
+		</div>
+	</div>
+</section>
+
+<section class="slide" data-secao="Capítulo 4" data-titulo="Rádios lado a lado">
+	<div class="rotulo">4 · As 12 séries</div>
+	<h2>Rádios lado a lado</h2>
+	<p class="linha-fina">Esta é a tabela que mais elimina opções, porque rádio não se acrescenta depois.</p>
+	<div class="corpo">
+		<table class="microscopica">
+			<thead><tr><th>Série</th><th>Wi-Fi</th><th>Bluetooth</th><th>802.15.4</th><th>Matter</th><th>Clock</th><th>SRAM</th><th>GPIO</th><th>ESP-IDF mínimo</th></tr></thead>
+			<tbody>
+				<tr><td class="chave">ESP32</td><td>Wi-Fi 4</td><td>BLE + Clássico</td><td class="nao">Não</td><td class="nao">Não</td><td class="mono">240 MHz</td><td class="mono">520 KB</td><td class="mono">34</td><td class="mono">v3.x</td></tr>
+				<tr><td class="chave">ESP32-S2</td><td>Wi-Fi 4</td><td class="nao">Não</td><td class="nao">Não</td><td class="nao">Não</td><td class="mono">240 MHz</td><td class="mono">320 KB</td><td class="mono">43</td><td class="mono">v4.2</td></tr>
+				<tr><td class="chave">ESP32-S3</td><td>Wi-Fi 4</td><td>BLE 5.4</td><td class="nao">Não</td><td class="nao">Não</td><td class="mono">240 MHz</td><td class="mono">512 KB</td><td class="mono">45</td><td class="mono">v4.4</td></tr>
+				<tr><td class="chave">ESP32-S31</td><td>Wi-Fi 6</td><td>BLE + Clássico</td><td class="sim">Sim</td><td class="sim">Sim</td><td class="mono">320 MHz</td><td class="mono">512 KB</td><td class="mono">60</td><td class="nao mono">master</td></tr>
+				<tr><td class="chave">ESP32-C2</td><td>Wi-Fi 4</td><td>BLE 5.3</td><td class="nao">Não</td><td class="nao">Não</td><td class="mono">120 MHz</td><td class="mono">272 KB</td><td class="mono">14</td><td class="mono">v5.0</td></tr>
+				<tr><td class="chave">ESP32-C3</td><td>Wi-Fi 4</td><td>BLE 5.4</td><td class="nao">Não</td><td class="nao">Não</td><td class="mono">160 MHz</td><td class="mono">400 KB</td><td class="mono">22</td><td class="mono">v4.3</td></tr>
+				<tr><td class="chave">ESP32-C5</td><td>Wi-Fi 6 · 2,4 e 5 GHz</td><td>BLE 6.0</td><td class="sim">Sim</td><td class="sim">Sim</td><td class="mono">240 MHz</td><td class="mono">384 KB</td><td class="mono">29</td><td class="mono">v5.5.2</td></tr>
+				<tr><td class="chave">ESP32-C6</td><td>Wi-Fi 6</td><td>BLE 6.0</td><td class="sim">Sim</td><td class="sim">Sim</td><td class="mono">160 MHz</td><td class="mono">512 KB</td><td class="mono">30</td><td class="mono">v5.1</td></tr>
+				<tr><td class="chave">ESP32-C61</td><td>Wi-Fi 6</td><td>BLE 6.0</td><td class="nao">Não</td><td>Via Wi-Fi</td><td class="mono">160 MHz</td><td class="mono">320 KB</td><td class="mono">30</td><td class="mono">v5.5.2</td></tr>
+				<tr><td class="chave">ESP32-P4</td><td class="nao">Não</td><td class="nao">Não</td><td class="nao">Não</td><td class="nao">Não</td><td class="mono">400 MHz</td><td class="mono">768 KB</td><td class="mono">55</td><td class="mono">v5.3</td></tr>
+				<tr><td class="chave">ESP32-H2</td><td class="nao">Não</td><td>BLE 6.0</td><td class="sim">Sim</td><td class="sim">Sim</td><td class="mono">96 MHz</td><td class="mono">320 KB</td><td class="mono">19</td><td class="mono">v5.1</td></tr>
+				<tr><td class="chave">ESP32-H4</td><td class="nao">Não</td><td>BLE 5.4</td><td class="sim">Sim</td><td class="sim">Sim</td><td class="mono">96 MHz</td><td class="mono">384 KB</td><td class="mono">40</td><td class="nao mono">master</td></tr>
+			</tbody>
+			<caption>"master" indica série que ainda não entrou em versão estável do ESP-IDF.</caption>
+		</table>
+	</div>
+</section>
+
+<section class="slide" data-secao="Capítulo 4" data-titulo="Lançado ≠ utilizável">
+	<div class="rotulo">4 · As 12 séries</div>
+	<h2>Lançado não é o mesmo que utilizável</h2>
+	<div class="corpo duas assimetrica">
+		<div class="centro">
+			<div class="cartao alerta">
+				<div class="cartao-titulo">S31 e H4, hoje</div>
+				<p>Só existem no branch de desenvolvimento do ESP-IDF. Sem suporte no core Arduino, e o H4 sequer tem encapsulamento divulgado.</p>
+			</div>
+			<div class="cartao">
+				<div class="cartao-titulo">Antes de escolher uma série recente</div>
+				<p>Verifique em qual versão do ESP-IDF ela entrou, se já tem módulo à venda e se existe placa de desenvolvimento acessível.</p>
+			</div>
+		</div>
+		<div class="centro">
+			<div class="rotulo">Placas no core arduino-esp32</div>
+			<table class="miuda">
+				<tbody>
+					<tr><td class="chave">ESP32-S3</td><td class="mono sim">158 placas</td></tr>
+					<tr><td class="chave">ESP32</td><td class="mono sim">147 placas</td></tr>
+					<tr><td class="chave">ESP32-C3</td><td class="mono sim">29 placas</td></tr>
+					<tr><td class="chave">ESP32-S2</td><td class="mono">26 placas</td></tr>
+					<tr><td class="chave">ESP32-C6</td><td class="mono">21 placas</td></tr>
+					<tr><td class="chave">ESP32-C5</td><td class="mono">10 placas</td></tr>
+					<tr><td class="chave">ESP32-P4</td><td class="mono">7 placas</td></tr>
+					<tr><td class="chave">ESP32-H2</td><td class="mono">3 placas</td></tr>
+					<tr><td class="chave">C2 · C61</td><td class="mono">1 placa cada</td></tr>
+					<tr><td class="chave">S31 · H4</td><td class="mono nao">Nenhuma</td></tr>
+				</tbody>
+				<caption>Um bom termômetro da maturidade do ecossistema.</caption>
+			</table>
+		</div>
+	</div>
+</section>
+
+<!-- ══════════════════════════════ CAPÍTULO 5 ══════════════════════════════ -->
+
+<section class="slide secao" data-secao="Capítulo 5" data-titulo="§5 · Segurança em hardware">
+	<div class="secao-num">5</div>
+	<div class="rotulo">Capítulo cinco</div>
+	<h1>Segurança em hardware</h1>
+	<p class="capa-sub">O assunto em que as séries mais divergem — e por isso um bom critério de escolha.</p>
+	<div class="secao-itens">
+		<span>Os blocos</span>
+		<span>O que cada série tem</span>
+		<span>eFuse</span>
+	</div>
+</section>
+
+<section class="slide impacto" data-secao="Capítulo 5" data-titulo="Por que segurança é hardware">
+	<div class="rotulo">5 · Segurança em hardware</div>
+	<p class="impacto-frase">
+		Esconder uma chave privada<br>do próprio firmware é<br>
+		<strong>impossível sem apoio do silício.</strong>
+	</p>
+	<p class="impacto-nota">
+		E mesmo o que dá para fazer em software sai caro: criptografia em hardware é dezenas de
+		vezes mais rápida e mais econômica que na CPU.
+	</p>
+</section>
+
+<section class="slide" data-secao="Capítulo 5" data-titulo="Os blocos de segurança">
+	<div class="rotulo">5 · Segurança em hardware</div>
+	<h2>Os blocos e o que cada um resolve</h2>
+	<div class="corpo duas">
+		<table class="miuda">
+			<thead><tr><th style="width:34%">Bloco</th><th>Para que serve</th></tr></thead>
+			<tbody>
+				<tr><td class="chave">AES</td><td>Cifra o tráfego depois que uma conexão TLS é estabelecida.</td></tr>
+				<tr><td class="chave">SHA</td><td>Resumo. Base de assinaturas, integridade e HMAC.</td></tr>
+				<tr><td class="chave">RSA / MPI</td><td>Números grandes. É o que acelera o handshake TLS.</td></tr>
+				<tr><td class="chave">ECC</td><td>Curvas elípticas: mesma segurança do RSA com chaves muito menores.</td></tr>
+				<tr><td class="chave">ECDSA</td><td>Assinatura sobre curvas elípticas. O Matter exige para atestado de dispositivo.</td></tr>
+				<tr><td class="chave">HMAC</td><td>Autenticação de mensagem com chave secreta.</td></tr>
+			</tbody>
+		</table>
+		<table class="miuda">
+			<thead><tr><th style="width:34%">Bloco</th><th>Para que serve</th></tr></thead>
+			<tbody>
+				<tr><td class="chave">Digital Signature</td><td>Assina com chave RSA guardada em eFuse, sem o firmware jamais vê-la.</td></tr>
+				<tr><td class="chave">Key Manager</td><td>Provisiona e usa chaves sem que fiquem legíveis, nem para quem extrair a imagem.</td></tr>
+				<tr><td class="chave">RNG</td><td>Aleatoriedade de verdade. Sem ele, toda a criptografia fica previsível.</td></tr>
+				<tr><td class="chave">Cripto de flash</td><td>Impede que alguém leia o firmware soldando um gravador na memória.</td></tr>
+				<tr><td class="chave">Secure Boot</td><td>O chip se recusa a executar firmware não assinado pela sua chave.</td></tr>
+				<tr><td class="chave">Proteção DPA</td><td>Defesa contra ataque que deduz a chave medindo o consumo de energia.</td></tr>
+			</tbody>
+		</table>
+	</div>
+</section>
+
+<section class="slide" data-secao="Capítulo 5" data-titulo="O que cada série tem">
+	<div class="rotulo">5 · Segurança em hardware</div>
+	<h2>O que cada série tem</h2>
+	<div class="corpo">
+		<table class="microscopica">
+			<thead><tr><th>Série</th><th>AES</th><th>ECC</th><th>ECDSA</th><th>Key Mgr.</th><th>Secure Boot</th></tr></thead>
+			<tbody>
+				<tr><td class="chave">ESP32</td><td>128/192/256</td><td class="nao">Não</td><td class="nao">Não</td><td class="nao">Não</td><td>V1 (legado)</td></tr>
+				<tr><td class="chave">ESP32-S2</td><td>128/192/256 + GCM</td><td class="nao">Não</td><td class="nao">Não</td><td class="nao">Não</td><td>V2 · RSA-3072</td></tr>
+				<tr><td class="chave">ESP32-S3</td><td>128/256</td><td class="nao">Não</td><td class="nao">Não</td><td class="nao">Não</td><td>V2 · RSA-3072</td></tr>
+				<tr><td class="chave">ESP32-S31</td><td>128/256 + GCM</td><td class="sim">P-192/256/384</td><td class="sim">Sim</td><td class="sim">Sim</td><td>V2 · RSA-3072</td></tr>
+				<tr><td class="chave">ESP32-C2</td><td class="nao">Não</td><td>P-192/256</td><td class="nao">Não</td><td class="nao">Não</td><td>V2 · ECDSA</td></tr>
+				<tr><td class="chave">ESP32-C3</td><td>128/256</td><td class="nao">Não</td><td class="nao">Não</td><td class="nao">Não</td><td>V2 · RSA-3072</td></tr>
+				<tr><td class="chave">ESP32-C5</td><td>128/256</td><td class="sim">P-192/256/384</td><td class="sim">Sim</td><td class="sim">Sim</td><td>V2 · RSA/ECDSA</td></tr>
+				<tr><td class="chave">ESP32-C6</td><td>128/256</td><td>P-192/256</td><td class="nao">Não</td><td class="nao">Não</td><td>V2 · RSA/ECDSA</td></tr>
+				<tr><td class="chave">ESP32-C61</td><td class="nao">Não</td><td>P-192/256</td><td class="sim">Sim</td><td class="nao">Não</td><td>V2 · ECDSA</td></tr>
+				<tr><td class="chave">ESP32-P4</td><td>128/256 + GCM</td><td class="sim">P-192/256/384</td><td class="sim">Sim</td><td class="sim">Sim</td><td>V2 · RSA/ECDSA</td></tr>
+				<tr><td class="chave">ESP32-H2</td><td>128/256</td><td>P-192/256</td><td class="sim">Sim</td><td class="nao">Não</td><td>V2 · RSA/ECDSA</td></tr>
+				<tr><td class="chave">ESP32-H4</td><td>128/256</td><td class="sim">P-192/256/384</td><td class="sim">Sim</td><td class="nao">Não</td><td class="nao">Pendente</td></tr>
+			</tbody>
+		</table>
+		<div class="tres leituras" style="flex:none">
+			<p><b>Nem toda série tem AES.</b> C2 e C61 não têm: a cifra roda na CPU.</p>
+			<p><b>ECC é o divisor claro.</b> ESP32, S2, S3 e C3 não têm curvas elípticas em hardware.</p>
+			<p><b>Key Manager é raro.</b> Só S31, C5 e P4.</p>
+		</div>
+	</div>
+</section>
+
+<section class="slide impacto" data-secao="Capítulo 5" data-titulo="eFuse">
+	<div class="rotulo">5 · Segurança em hardware</div>
+	<p class="impacto-frase">
+		<strong>eFuse:</strong> bits que queimam<br>uma única vez e <strong>nunca mais voltam.</strong>
+	</p>
+	<p class="impacto-nota">
+		É assim que se grava a chave do Secure Boot e da criptografia de flash. Uma vez ativado o
+		Secure Boot, aquela placa só executa firmware assinado por você. Para sempre. Em bancada,
+		é uma ótima forma de inutilizar uma placa por engano — ative apenas quando souber
+		exatamente o que está fazendo.
+	</p>
+</section>
+
+<!-- ══════════════════════════════ CAPÍTULO 6 ══════════════════════════════ -->
+
+<section class="slide secao" data-secao="Capítulo 6" data-titulo="§6 · Comparando plataformas">
+	<div class="secao-num">6</div>
+	<div class="rotulo">Capítulo seis</div>
+	<h1>ESP32, ESP8266,<br>Arduino e STM32</h1>
+	<p class="capa-sub">Quatro mundos diferentes, e por que "qual é o melhor" não tem resposta.</p>
+	<div class="secao-itens">
+		<span>Representantes concretos</span>
+		<span>Onde cada um ganha</span>
+		<span>Regra prática</span>
+	</div>
+</section>
+
+<section class="slide" data-secao="Capítulo 6" data-titulo="Quatro representantes">
+	<div class="rotulo">6 · Comparando plataformas</div>
+	<h2>Comparar exige representantes concretos</h2>
+	<p class="linha-fina">"Arduino" é uma marca e um ambiente; "STM32" é uma família que vai de centavos a 480 MHz.</p>
+	<div class="corpo">
+		<table class="miuda">
+			<thead><tr><th style="width:18%"></th><th>Arduino UNO R3</th><th>ESP8266</th><th>ESP32-S3</th><th>STM32F103</th></tr></thead>
+			<tbody>
+				<tr><td class="chave">Núcleo</td><td>AVR 8 bits</td><td>Xtensa L106</td><td>Xtensa LX7 ×2</td><td>Cortex-M3</td></tr>
+				<tr><td class="chave">Clock</td><td class="mono">16 MHz</td><td class="mono">80–160 MHz</td><td class="mono">240 MHz</td><td class="mono">72 MHz</td></tr>
+				<tr><td class="chave">SRAM</td><td class="mono">2 KB</td><td class="mono">~50 KB úteis</td><td class="mono">512 KB</td><td class="mono">20 KB</td></tr>
+				<tr><td class="chave">Flash</td><td class="mono">32 KB</td><td class="mono">Externa, 1–4 MB</td><td class="mono">Externa, 4–16 MB</td><td class="mono">64–128 KB</td></tr>
+				<tr><td class="chave">Wi-Fi</td><td class="nao">Não</td><td class="sim">Sim</td><td class="sim">Sim</td><td class="nao">Não</td></tr>
+				<tr><td class="chave">Bluetooth</td><td class="nao">Não</td><td class="nao">Não</td><td class="sim">BLE 5</td><td class="nao">Não</td></tr>
+				<tr><td class="chave">Tensão de E/S</td><td>5 V</td><td>3,3 V</td><td>3,3 V</td><td>3,3 V (alguns 5 V)</td></tr>
+				<tr><td class="chave">ADC</td><td>10 bits, linear</td><td>1 canal, 10 bits</td><td>12 bits, calibrar</td><td>12 bits, bom</td></tr>
+				<tr><td class="chave">GPIO úteis</td><td class="mono">20</td><td class="mono">~9</td><td class="mono">45</td><td class="mono">37</td></tr>
+				<tr><td class="chave">Dormindo</td><td class="mono">~35 µA</td><td class="mono">~20 µA</td><td class="mono">~7 µA</td><td class="mono">~2 µA</td></tr>
+			</tbody>
+			<caption>Valores típicos para ordem de grandeza. Confira sempre o datasheet da peça exata.</caption>
+		</table>
+	</div>
+</section>
+
+<section class="slide" data-secao="Capítulo 6" data-titulo="Onde cada um ganha">
+	<div class="rotulo">6 · Comparando plataformas</div>
+	<h2>Onde cada um ganha</h2>
+	<div class="corpo quatro">
+		<div class="cartao">
+			<div class="cartao-titulo">Arduino UNO</div>
+			<p><strong>Simplicidade e previsibilidade.</strong> Sem SO, sem pilha de rede: o que você escreve é o que executa, na ordem que escreveu. Trabalha em 5 V.</p>
+			<p style="margin-top:auto;color:var(--texto-2)">Perde feio em memória — 2 KB acabam rápido — e não tem conectividade nenhuma.</p>
+		</div>
+		<div class="cartao">
+			<div class="cartao-titulo">ESP8266</div>
+			<p><strong>Preço puro.</strong> Ainda é o jeito mais barato de colocar algo simples no Wi-Fi, com uma base gigante de tutoriais.</p>
+			<p style="margin-top:auto;color:var(--texto-2)">Para projeto novo, o C3 custa quase o mesmo e é melhor em tudo.</p>
+		</div>
+		<div class="cartao destaque">
+			<div class="cartao-titulo">ESP32</div>
+			<p><strong>Conectividade por real gasto.</strong> Centenas de KB de RAM, dois núcleos, Wi-Fi, Bluetooth e cripto em hardware pelo preço de um micro simples.</p>
+			<p style="margin-top:auto;color:var(--texto-2)">Perde em tempo real rígido e na qualidade do conversor analógico.</p>
+		</div>
+		<div class="cartao">
+			<div class="cartao-titulo">STM32</div>
+			<p><strong>Controle fino e diversidade.</strong> De 8 pinos a centenas, com variantes de consumo, desempenho e segurança. Padrão industrial.</p>
+			<p style="margin-top:auto;color:var(--texto-2)">Perde na curva de aprendizado, e não tem rádio salvo nas séries WB e WL.</p>
+		</div>
+	</div>
+</section>
+
+<section class="slide" data-secao="Capítulo 6" data-titulo="Regra prática">
+	<div class="rotulo">6 · Comparando plataformas</div>
+	<h2>Regra prática para decidir</h2>
+	<div class="corpo centro">
+		<table>
+			<tbody>
+				<tr><td>Precisa falar com a internet ou com um celular?</td><td class="chave" style="color:var(--ambar);text-align:right">ESP32, quase sempre</td></tr>
+				<tr><td>É controle de tempo real crítico — motor, inversor, malha rápida?</td><td class="chave" style="color:var(--ambar);text-align:right">STM32</td></tr>
+				<tr><td>É para ensinar eletrônica ou um protótipo simples em 5 V?</td><td class="chave" style="color:var(--ambar);text-align:right">Arduino</td></tr>
+				<tr><td>É produto comercial com certificação e vida longa?</td><td class="chave" style="color:var(--ambar);text-align:right">Avalie os dois juntos</td></tr>
+			</tbody>
+		</table>
+		<div class="cartao dica" style="margin-top:28px">
+			<div class="cartao-titulo">"Programar em Arduino" não é o mesmo que "usar um Arduino"</div>
+			<p>O ambiente Arduino é só uma camada de software. Você pode programar um ESP32 ou um STM32 pela IDE do Arduino — e é exatamente o que faremos daqui a pouco. Placa e linguagem são escolhas independentes.</p>
+		</div>
+	</div>
+</section>
+
+<!-- ══════════════════════════════ CAPÍTULO 7 ══════════════════════════════ -->
+
+<section class="slide secao" data-secao="Capítulo 7" data-titulo="§7 · Fortes e limitações">
+	<div class="secao-num">7</div>
+	<div class="rotulo">Capítulo sete</div>
+	<h1>Pontos fortes e limitações reais</h1>
+	<p class="capa-sub">O que ninguém conta no vídeo de unboxing.</p>
+	<div class="secao-itens">
+		<span>Onde ele é muito bom</span>
+		<span>Onde ele decepciona</span>
+	</div>
+</section>
+
+<section class="slide" data-secao="Capítulo 7" data-titulo="Onde ele é muito bom">
+	<div class="rotulo">7 · Fortes e limitações</div>
+	<h2>Onde o ESP32 é muito bom</h2>
+	<div class="corpo tres">
+		<div>
+			<div class="cartao"><div class="cartao-titulo">Conectividade sem dor</div><p>MQTT com TLS, servidor HTTP ou conexão BLE são tarefas de dezenas de linhas, sobre pilhas maduras.</p></div>
+			<div class="cartao"><div class="cartao-titulo">Recursos por real gasto</div><p>Nenhuma outra plataforma entrega tanta memória, clock e rádio nessa faixa de preço.</p></div>
+		</div>
+		<div>
+			<div class="cartao"><div class="cartao-titulo">Segurança de verdade</div><p>Boot seguro, criptografia de flash e aceleradores estão até nas séries baratas — em outras famílias isso é linha premium.</p></div>
+			<div class="cartao"><div class="cartao-titulo">Flexibilidade de pinos</div><p>A matriz de roteamento simplifica o traçado da placa: você adapta o firmware ao layout, não o contrário.</p></div>
+		</div>
+		<div>
+			<div class="cartao"><div class="cartao-titulo">Atualização remota</div><p>OTA com partição dupla e reversão automática vem pronto no framework.</p></div>
+			<div class="cartao"><div class="cartao-titulo">Documentação aberta</div><p>Datasheets, manuais, erratas e o código-fonte do framework são públicos e versionados.</p></div>
+		</div>
+	</div>
+</section>
+
+<section class="slide" data-secao="Capítulo 7" data-titulo="Onde ele decepciona">
+	<div class="rotulo">7 · Fortes e limitações</div>
+	<h2>Onde ele decepciona</h2>
+	<div class="corpo duas">
+		<div>
+			<div class="cartao alerta compacto">
+				<div class="cartao-titulo">O conversor analógico é fraco</div>
+				<p>Não-linearidade perceptível, ruído e variação entre unidades. Pior: em várias séries o <strong>ADC2</strong> fica indisponível com o Wi-Fi ligado. Medida analógica séria pede ADC externo por I²C ou SPI.</p>
+			</div>
+			<div class="cartao alerta compacto">
+				<div class="cartao-titulo">O rádio consome muito</div>
+				<p>Picos acima de 300 mA. Regulador subdimensionado ou bateria com resistência interna alta provoca reinicializações que parecem bug de software — e não são.</p>
+			</div>
+			<div class="cartao alerta compacto">
+				<div class="cartao-titulo">Tempo real é aproximado</div>
+				<p>O rádio tem tarefas de alta prioridade. Isso introduz variação de microssegundos a milissegundos no seu laço. Há soluções — fixar tarefa em um núcleo, usar o RMT —, mas todas exigem planejamento.</p>
+			</div>
+		</div>
+		<div>
+			<div class="cartao alerta compacto">
+				<div class="cartao-titulo">Só 3,3 V</div>
+				<p>Os pinos não toleram 5 V. Sensor ou display antigo exige conversor de nível; ligar direto degrada ou destrói a entrada.</p>
+			</div>
+			<div class="cartao alerta compacto">
+				<div class="cartao-titulo">Documentação viva demais</div>
+				<p>Erratas, diferenças entre revisões de silício e comportamentos que mudam entre versões do IDF. Ler a errata do seu chip antes de fechar o projeto é hábito recomendado.</p>
+			</div>
+			<div class="cartao alerta compacto">
+				<div class="cartao-titulo">Consumo em repouso não é mágico</div>
+				<p>Os 7 µA de <em>deep sleep</em> valem para o chip nu. Numa DevKit, o regulador, o LED de energia e o conversor USB-serial consomem muito mais que o próprio ESP32.</p>
+			</div>
+		</div>
+	</div>
+</section>
+
+<section class="slide impacto" data-secao="Capítulo 7" data-titulo="Erro clássico de bancada">
+	<div class="rotulo">7 · Fortes e limitações</div>
+	<p class="impacto-frase">
+		Parece software travando.<br><strong>É alimentação.</strong>
+	</p>
+	<p class="impacto-nota">
+		Alimentar a placa pela USB do notebook e pendurar nela um motor, uma fita de LED ou um
+		display grande. Na hora em que o Wi-Fi transmite, a corrente ultrapassa o que a porta
+		fornece, a tensão cai e o chip reinicia. Use fonte externa adequada para as cargas.
+	</p>
+</section>
+
+<!-- ══════════════════════════════ CAPÍTULO 8 ══════════════════════════════ -->
+
+<section class="slide secao" data-secao="Capítulo 8" data-titulo="§8 · Escolhendo a série">
+	<div class="secao-num">8</div>
+	<div class="rotulo">Capítulo oito</div>
+	<h1>Como escolher a série do seu projeto</h1>
+	<p class="capa-sub">Cinco perguntas, na ordem que elimina mais opções primeiro.</p>
+	<div class="secao-itens">
+		<span>As cinco perguntas</span>
+		<span>Atalhos por perfil</span>
+		<span>ESP-IDF ou Arduino</span>
+	</div>
+</section>
+
+<section class="slide" data-secao="Capítulo 8" data-titulo="As cinco perguntas">
+	<div class="rotulo">8 · Escolhendo a série</div>
+	<h2>Comece pelo que é impossível contornar depois</h2>
+	<div class="corpo duas">
+		<div>
+			<div class="etapa"><div class="etapa-num">1</div><div><h3>Como ele se comunica?</h3><p>Rádio não se acrescenta depois. Esta pergunta sozinha elimina a maior parte da família.</p></div></div>
+			<div class="etapa"><div class="etapa-num">2</div><div><h3>De onde vem a energia?</h3><p>Vivendo de bateria, o consumo em repouso manda em tudo. C5, C6, P4 e S31 têm processador de baixo consumo; H2 e H4 economizam por não carregarem Wi-Fi.</p></div></div>
+			<div class="etapa"><div class="etapa-num">3</div><div><h3>O que vai ligado nele?</h3><p>Conte os pinos e desconte os com restrição. Display grande ou câmera pedem S3 ou P4.</p></div></div>
+		</div>
+		<div>
+			<div class="etapa"><div class="etapa-num">4</div><div><h3>Que exigência de segurança existe?</h3><p>Para protótipo, qualquer série. Para produto: atestado Matter pede ECDSA em hardware; chave que o firmware nunca pode ler pede Key Manager.</p></div></div>
+			<div class="etapa"><div class="etapa-num">5</div><div><h3>Quando precisa estar pronto?</h3><p>A pergunta esquecida. Série recém-anunciada pode não ter IDF estável, core Arduino, módulo à venda nem placa acessível. Com prazo, prefira séries com pelo menos um ano de estrada.</p></div></div>
+		</div>
+	</div>
+</section>
+
+<section class="slide" data-secao="Capítulo 8" data-titulo="Rádio elimina primeiro">
+	<div class="rotulo">8 · Escolhendo a série · Pergunta 1</div>
+	<h2>O rádio elimina primeiro</h2>
+	<div class="corpo centro">
+		<table>
+			<thead><tr><th style="width:40%">Necessidade</th><th>Séries que atendem</th></tr></thead>
+			<tbody>
+				<tr><td class="chave">Wi-Fi + Bluetooth LE</td><td class="mono">ESP32 · S3 · C3 · C6 · C5 · C61 · S31</td></tr>
+				<tr><td class="chave">Bluetooth Clássico (áudio, SPP)</td><td class="mono">ESP32 · S31</td></tr>
+				<tr><td class="chave">Zigbee / Thread / Matter em malha</td><td class="mono">C6 · C5 · H2 · H4 · S31</td></tr>
+				<tr><td class="chave">Wi-Fi 5 GHz</td><td class="mono">C5</td></tr>
+				<tr><td class="chave">Ethernet cabeada</td><td class="mono">ESP32 · P4</td></tr>
+				<tr><td class="chave">Sem rádio, só processamento</td><td class="mono">P4</td></tr>
+			</tbody>
+		</table>
+	</div>
+</section>
+
+<section class="slide" data-secao="Capítulo 8" data-titulo="Atalhos por perfil">
+	<div class="rotulo">8 · Escolhendo a série</div>
+	<h2>Atalhos por perfil de projeto</h2>
+	<div class="corpo">
+		<table class="miuda">
+			<thead><tr><th style="width:32%">Se o seu projeto é…</th><th style="width:18%">Comece por</th><th>Por quê</th></tr></thead>
+			<tbody>
+				<tr><td>Primeiro projeto, aprendendo</td><td class="chave" style="color:var(--ambar)">ESP32-S3</td><td>Muita RAM, USB nativo para depurar e o maior ecossistema de exemplos</td></tr>
+				<tr><td>Sensor Wi-Fi simples e barato</td><td class="chave" style="color:var(--ambar)">ESP32-C3</td><td>Faz o essencial pelo menor preço, com boa maturidade</td></tr>
+				<tr><td>Automação residencial / Matter</td><td class="chave" style="color:var(--ambar)">ESP32-C6</td><td>Único caminho maduro com Wi-Fi 6 e 802.15.4 juntos</td></tr>
+				<tr><td>Sensor a pilha, sem Wi-Fi</td><td class="chave" style="color:var(--ambar)">ESP32-H2</td><td>Sem o rádio mais custoso, a autonomia muda de patamar</td></tr>
+				<tr><td>Tela, câmera ou interface gráfica</td><td class="chave" style="color:var(--ambar)">ESP32-P4 ou S3</td><td>MIPI e RAM suficiente para buffer de vídeo</td></tr>
+				<tr><td>Áudio por Bluetooth Clássico</td><td class="chave" style="color:var(--ambar)">ESP32</td><td>Praticamente a única série com BR/EDR</td></tr>
+				<tr><td>Visão computacional na borda</td><td class="chave" style="color:var(--ambar)">ESP32-S3</td><td>Instruções vetoriais e PSRAM para o buffer da câmera</td></tr>
+				<tr><td>Produto em altíssimo volume</td><td class="chave" style="color:var(--ambar)">ESP32-C2</td><td>O menor custo da família, se os requisitos couberem nele</td></tr>
+			</tbody>
+		</table>
+	</div>
+</section>
+
+<section class="slide" data-secao="Capítulo 8" data-titulo="ESP-IDF ou Arduino">
+	<div class="rotulo">8 · Escolhendo a série</div>
+	<h2>ESP-IDF ou Arduino?</h2>
+	<p class="linha-fina">As duas são oficiais e mantidas pela Espressif. A diferença é o nível de controle.</p>
+	<div class="corpo duas assimetrica">
+		<table class="miuda">
+			<thead><tr><th style="width:30%"></th><th>Core Arduino</th><th>ESP-IDF</th></tr></thead>
+			<tbody>
+				<tr><td class="chave">Curva de entrada</td><td>Baixa, familiar</td><td>Íngreme: menuconfig, CMake, componentes</td></tr>
+				<tr><td class="chave">Controle do hardware</td><td>Parcial</td><td class="sim">Total</td></tr>
+				<tr><td class="chave">Recursos novos</td><td>Chegam depois</td><td class="sim">Imediato</td></tr>
+				<tr><td class="chave">Bibliotecas de sensores</td><td class="sim">Enorme</td><td>Menor, mais técnica</td></tr>
+				<tr><td class="chave">Consumo de memória</td><td>Maior</td><td>Ajustável</td></tr>
+				<tr><td class="chave">Indicado para</td><td>Aprender, prototipar</td><td>Produto, otimização</td></tr>
+			</tbody>
+		</table>
+		<div class="centro">
+			<div class="cartao dica">
+				<div class="cartao-titulo">Não é escolha definitiva</div>
+				<p>Dá para usar o core Arduino <em>como componente</em> dentro de um projeto ESP-IDF. Um caminho comum é começar no Arduino para validar a ideia e migrar quando aparecer a necessidade de afinar consumo, segurança ou tempo de boot.</p>
+			</div>
+			<div class="cartao destaque">
+				<div class="cartao-titulo">Ferramenta de apoio</div>
+				<p>O <strong>ESPDocs</strong> faz exatamente estas perguntas e devolve uma recomendação justificada, compara até quatro séries lado a lado, com pinagem interativa e ficha de segurança.</p>
+				<p class="mono" style="font-size:15px;color:var(--ambar);margin-top:10px">espdocs.cienciaembarcada.com.br</p>
+			</div>
+		</div>
+	</div>
+</section>
+
+<!-- ══════════════════════════════ CAPÍTULO 9 ══════════════════════════════ -->
+
+<section class="slide secao" data-secao="Capítulo 9" data-titulo="§9 · Prática: DHT11">
+	<div class="secao-num">9</div>
+	<div class="rotulo">Capítulo nove · Mão na massa</div>
+	<h1>Prática: lendo um DHT11 com o ESP32-S3</h1>
+	<p class="capa-sub">Do jumper ao terminal mostrando temperatura e umidade.</p>
+	<div class="secao-itens">
+		<span>Montagem</span>
+		<span>O protocolo</span>
+		<span>Código</span>
+		<span>Configuração da placa</span>
+		<span>Quando não funciona</span>
+	</div>
+</section>
+
+<section class="slide" data-secao="Capítulo 9" data-titulo="Montagem">
+	<div class="rotulo">9 · Prática</div>
+	<h2>Quatro ligações</h2>
+	<div class="corpo duas assimetrica-inv">
+		<div>
+			<table class="miuda">
+				<thead><tr><th style="width:44%">Ligação</th><th style="width:22%">Cor</th><th>Função</th></tr></thead>
+				<tbody>
+					<tr><td class="chave">VCC do DHT11 → 3V3</td><td>Vermelho</td><td>Alimentação do sensor</td></tr>
+					<tr><td class="chave">DATA do DHT11 → GPIO12</td><td>Amarelo</td><td>Linha de dados bidirecional</td></tr>
+					<tr><td class="chave">GND do DHT11 → GND</td><td>Preto</td><td>Referência de terra</td></tr>
+					<tr><td class="chave">10 kΩ entre DATA e 3V3</td><td>Resistor</td><td>Mantém a linha alta em repouso</td></tr>
+				</tbody>
+				<caption>O terceiro pino do DHT11, contando da esquerda, não é usado.</caption>
+			</table>
+			<div class="cartao alerta" style="margin-top:18px">
+				<div class="cartao-titulo">A placa tem duas portas USB</div>
+				<p>Na borda inferior, marcadas <strong>UART</strong> e <strong>USB</strong>. A diferença entre elas importa e está no passo 4.</p>
+			</div>
+		</div>
+		<figure class="clara">
+			<img src="pratica.png" alt="Esquema de ligação do DHT11 ao ESP32-S3-DevKitC: fio vermelho do VCC ao 3V3, fio amarelo do DATA ao GPIO12, fio preto do GND ao GND, e um resistor de 10 kΩ entre a linha de dados e o 3V3.">
+		</figure>
+	</div>
+</section>
+
+<section class="slide" data-secao="Capítulo 9" data-titulo="Por que o pull-up">
+	<div class="rotulo">9 · Prática</div>
+	<h2>Por que o resistor de pull-up é necessário</h2>
+	<div class="corpo duas">
+		<div class="centro">
+			<p>A linha de dados do DHT11 é <strong>bidirecional</strong>: ora o ESP32 fala, ora o sensor responde.</p>
+			<p>Para isso funcionar sem que os dois disputem a linha, ambos apenas "puxam para baixo" quando querem enviar um zero, e soltam a linha quando querem enviar um um.</p>
+			<p>Só que uma linha solta não tem nível definido: ela flutua e capta ruído.</p>
+		</div>
+		<div class="centro">
+			<div class="cartao destaque">
+				<div class="cartao-titulo">O que o 10 kΩ faz</div>
+				<p>Mantém a linha em nível alto em repouso, com força suficiente para definir o nível, mas fraca o bastante para que qualquer um dos dois consiga puxá-la para baixo.</p>
+			</div>
+			<div class="cartao">
+				<div class="cartao-titulo">Módulo em plaquinha</div>
+				<p>Módulos DHT11 já montados trazem esse resistor embutido. O componente azul sozinho, não.</p>
+			</div>
+		</div>
+	</div>
+</section>
+
+<section class="slide" data-secao="Capítulo 9" data-titulo="Como o sensor conversa">
+	<div class="rotulo">9 · Prática</div>
+	<h2>Como o sensor conversa, num fio só</h2>
+	<div class="corpo">
+		<figure>
+			<svg viewBox="0 0 640 200" role="img" aria-label="Diagrama de tempo do protocolo de um fio do DHT11." style="width:100%;height:auto;max-height:330px;margin:6px 0 0">
+				<g stroke="rgba(146,187,207,0.3)" stroke-width="1" stroke-dasharray="2 4" fill="none">
+					<line x1="56" y1="58" x2="632" y2="58"/>
+					<line x1="56" y1="120" x2="632" y2="120"/>
+				</g>
+				<text x="48" y="61" font-size="9" text-anchor="end" fill="#8fabbb" font-family="JetBrains Mono, monospace">alto</text>
+				<text x="48" y="123" font-size="9" text-anchor="end" fill="#8fabbb" font-family="JetBrains Mono, monospace">baixo</text>
+
+				<polyline fill="none" stroke="#FCBF49" stroke-width="2.2" stroke-linejoin="round"
+					points="56,58 81,58 81,120 181,120 181,58 225,58 225,120 273,120 273,58 321,58 321,120 354,120 354,58 379,58 379,120 417,120 417,58 480,58 480,120 517,120 517,58 542,58 542,120 580,120 580,58 632,58"/>
+
+				<g stroke="#F77F00" stroke-width="1" fill="none">
+					<path d="M81 36 L81 44 M181 36 L181 44 M81 40 L181 40"/>
+					<path d="M273 36 L273 44 M321 36 L321 44 M273 40 L321 40"/>
+					<path d="M417 36 L417 44 M480 36 L480 44 M417 40 L480 40"/>
+					<path d="M517 36 L517 44 M542 36 L542 44 M517 40 L542 40"/>
+				</g>
+				<g font-family="JetBrains Mono, monospace" font-size="10" fill="#F77F00" text-anchor="middle">
+					<text x="131" y="31">18 ms</text>
+					<text x="297" y="31">80 µs</text>
+					<text x="449" y="31">70 µs</text>
+					<text x="529" y="31">26 µs</text>
+				</g>
+				<g font-family="Inter, sans-serif" font-size="10.5" fill="#cddde6" text-anchor="middle">
+					<text x="131" y="172">o ESP32 pede a leitura</text>
+					<text x="297" y="172">o sensor responde</text>
+					<text x="449" y="172">bit 1</text>
+					<text x="529" y="172">bit 0</text>
+					<text x="606" y="172" fill="#8fabbb">…40 bits</text>
+				</g>
+				<line x1="402" y1="14" x2="402" y2="188" stroke="rgba(146,187,207,0.45)" stroke-dasharray="2 4"/>
+				<text x="632" y="15" font-size="10" fill="#8fabbb" font-family="Inter, sans-serif" text-anchor="end">daqui em diante, o bit está na largura do pulso alto</text>
+			</svg>
+			<figcaption>
+				Um zero e um um se distinguem só pela <strong>duração</strong> do nível alto. É por
+				isso que a leitura falha sem o pull-up: a linha não sobe rápido o bastante e os
+				tempos saem errados.
+			</figcaption>
+		</figure>
+	</div>
+</section>
+
+<section class="slide" data-secao="Capítulo 9" data-titulo="Passos 1 e 2: IDE e biblioteca">
+	<div class="rotulo">9 · Prática · Passos 1 e 2</div>
+	<h2>Preparando a IDE</h2>
+	<div class="corpo duas">
+		<div class="centro">
+			<div class="etapa"><div class="etapa-num">1</div><div><h3>Suporte ao ESP32</h3><p>Em <em>Arquivo → Preferências</em>, adicione em "URLs adicionais para gerenciadores de placas":</p></div></div>
+			<pre class="miuda" style="font-size:13.5px"><code>https://espressif.github.io/arduino-esp32/
+package_esp32_index.json</code></pre>
+			<p class="legenda">Depois em <em>Ferramentas → Placa → Gerenciador de placas</em>, procure por <strong>esp32</strong> e instale o pacote da Espressif Systems. São alguns minutos de download.</p>
+		</div>
+		<div class="centro">
+			<div class="etapa"><div class="etapa-num">2</div><div><h3>Biblioteca do sensor</h3><p>Em <em>Ferramentas → Gerenciar bibliotecas</em>, procure por <strong>DHT sensor library</strong>, da Adafruit, e instale.</p></div></div>
+			<div class="cartao dica">
+				<div class="cartao-titulo">Aceite as dependências</div>
+				<p>A IDE vai perguntar se quer instalar as dependências. Aceite: ela precisa da <strong>Adafruit Unified Sensor</strong> junto.</p>
+			</div>
+		</div>
+	</div>
+</section>
+
+<section class="slide" data-secao="Capítulo 9" data-titulo="Passo 3: o programa">
+	<div class="rotulo">9 · Prática · Passo 3</div>
+	<h2>O programa</h2>
+	<div class="corpo duas assimetrica" style="margin-top:2px">
+		<pre class="miuda" style="font-size:12.6px;line-height:1.44"><code><span class="c-pre">#include</span> <span class="c-str">&lt;DHT.h&gt;</span>
+
+<span class="c-pre">#define</span> PINO_DHT  <span class="c-num">12</span>       <span class="c-com">// fio amarelo</span>
+<span class="c-pre">#define</span> TIPO_DHT  DHT11
+
+DHT dht(PINO_DHT, TIPO_DHT);
+
+<span class="c-key">void</span> <span class="c-fun">setup</span>() {
+  Serial.<span class="c-fun">begin</span>(<span class="c-num">115200</span>);
+  <span class="c-fun">delay</span>(<span class="c-num">1000</span>);              <span class="c-com">// tempo para a USB enumerar</span>
+  dht.<span class="c-fun">begin</span>();
+  Serial.<span class="c-fun">println</span>(<span class="c-str">"Leitor DHT11 - ESP32-S3"</span>);
+}
+
+<span class="c-key">void</span> <span class="c-fun">loop</span>() {
+  <span class="c-key">float</span> umidade     = dht.<span class="c-fun">readHumidity</span>();
+  <span class="c-key">float</span> temperatura = dht.<span class="c-fun">readTemperature</span>();
+
+  <span class="c-key">if</span> (<span class="c-fun">isnan</span>(umidade) || <span class="c-fun">isnan</span>(temperatura)) {
+    Serial.<span class="c-fun">println</span>(<span class="c-str">"Falha na leitura do sensor"</span>);
+  } <span class="c-key">else</span> {
+    Serial.<span class="c-fun">printf</span>(<span class="c-str">"Temperatura: %.1f C | Umidade: %.1f %%\n"</span>,
+                  temperatura, umidade);
+  }
+
+  <span class="c-fun">delay</span>(<span class="c-num">2000</span>);              <span class="c-com">// DHT11 nao aceita leitura mais rapida</span>
+}</code></pre>
+		<div class="centro">
+			<div class="cartao destaque">
+				<div class="cartao-titulo">O delay(2000) não é enfeite</div>
+				<p>O DHT11 leva cerca de um segundo para fazer uma medição e responde com erro se for consultado antes disso.</p>
+			</div>
+			<div class="cartao">
+				<div class="cartao-titulo">isnan()</div>
+				<p>A biblioteca devolve <em>not a number</em> quando a leitura falha. Verificar isso é o que separa um valor real de lixo impresso no terminal.</p>
+			</div>
+		</div>
+	</div>
+</section>
+
+<section class="slide" data-secao="Capítulo 9" data-titulo="Passo 4: duas portas USB">
+	<div class="rotulo">9 · Prática · Passo 4</div>
+	<h2>O passo onde todo mundo tropeça</h2>
+	<p class="linha-fina">Selecione a placa <strong>ESP32S3 Dev Module</strong>. Agora, o detalhe importante: o DevKitC tem duas portas USB.</p>
+	<div class="corpo duas">
+		<div class="cartao centro">
+			<div class="cartao-titulo">Porta <span class="mono" style="color:var(--ambar)">UART</span></div>
+			<p>Passa por um conversor USB-serial e funciona como em qualquer Arduino.</p>
+			<p style="margin-top:14px"><strong>USB CDC On Boot</strong></p>
+			<p class="mono" style="font-size:24px;color:#ff8b8b;margin-top:4px">Disabled</p>
+		</div>
+		<div class="cartao centro">
+			<div class="cartao-titulo">Porta <span class="mono" style="color:var(--ambar)">USB</span></div>
+			<p>É o USB nativo do próprio ESP32-S3.</p>
+			<p style="margin-top:14px"><strong>USB CDC On Boot</strong></p>
+			<p class="mono" style="font-size:24px;color:#6fdcb0;margin-top:4px">Enabled</p>
+		</div>
+	</div>
+	<p class="legenda" style="margin-top:16px">Errar isso deixa o monitor serial mudo mesmo com o programa rodando perfeitamente.</p>
+</section>
+
+<section class="slide" data-secao="Capítulo 9" data-titulo="Passo 5: grave e observe">
+	<div class="rotulo">9 · Prática · Passo 5</div>
+	<h2>Grave e observe</h2>
+	<div class="corpo duas">
+		<div class="centro">
+			<p>Selecione a porta em <em>Ferramentas → Porta</em>, clique em carregar e abra o monitor serial em <strong>115200 baud</strong>.</p>
+			<pre class="miuda" style="margin-top:18px"><code>Leitor DHT11 - ESP32-S3
+Temperatura: 26.0 C | Umidade: 61.0 %
+Temperatura: 26.0 C | Umidade: 61.0 %
+Temperatura: 26.1 C | Umidade: 62.0 %</code></pre>
+		</div>
+		<div class="centro">
+			<div class="cartao destaque">
+				<div class="cartao-titulo">Agora faça o teste</div>
+				<p>Segure o sensor entre os dedos e sopre nele: a <strong>umidade sobe rápido</strong> e a <strong>temperatura acompanha devagar</strong>.</p>
+				<p style="margin-top:10px">Essa diferença de velocidade é real: o elemento de umidade responde muito mais rápido que o termistor.</p>
+			</div>
+		</div>
+	</div>
+</section>
+
+<section class="slide" data-secao="Capítulo 9" data-titulo="Quando não funciona">
+	<div class="rotulo">9 · Prática</div>
+	<h2>Quando não funciona</h2>
+	<div class="corpo">
+		<table class="miuda">
+			<thead><tr><th style="width:28%">Sintoma</th><th>Causa provável e solução</th></tr></thead>
+			<tbody>
+				<tr><td class="chave">Monitor serial vazio</td><td>Cabo na porta USB nativa sem <em>USB CDC On Boot</em> habilitado. Confira também a velocidade em 115200.</td></tr>
+				<tr><td class="chave">"Falha na leitura" sempre</td><td>Fio de dados no pino errado, VCC não conectado, ou pull-up ausente ou mal encaixado na protoboard.</td></tr>
+				<tr><td class="chave">Leitura falha às vezes</td><td>Jumper com mau contato, fio de dados muito longo, ou <code>delay</code> menor que 2 segundos.</td></tr>
+				<tr><td class="chave">A porta não aparece</td><td>Cabo só de carga — troque por um de dados — ou driver do conversor USB-serial faltando.</td></tr>
+				<tr><td class="chave">Erro ao gravar, timeout</td><td>Placa não entrou em modo de gravação: segure BOOT, pressione e solte RESET, solte BOOT e tente de novo.</td></tr>
+				<tr><td class="chave">Temperatura sempre inteira</td><td>Não é defeito. O DHT11 tem resolução de 1 °C. O DHT22 dá 0,1 °C.</td></tr>
+				<tr><td class="chave">Valores absurdos e constantes</td><td>Sensor invertido na alimentação. Confira VCC e GND antes de energizar de novo.</td></tr>
+			</tbody>
+		</table>
+	</div>
+</section>
+
+<section class="slide" data-secao="Capítulo 9" data-titulo="Por que o GPIO12">
+	<div class="rotulo">9 · Prática</div>
+	<h2>O capítulo 2 acontecendo na prática</h2>
+	<div class="corpo duas">
+		<div class="centro">
+			<p>No ESP32-S3, o GPIO12 é um pino comum: não participa do boot, não conversa com a flash e não é usado para depuração.</p>
+			<p>No ESP32 original, o GPIO12 é <strong>pino de strapping</strong>: ele seleciona a tensão da flash, e um nível alto durante o reset impede a placa de iniciar.</p>
+		</div>
+		<div class="centro">
+			<div class="cartao alerta">
+				<div class="cartao-titulo">Se você montasse isso num ESP32 clássico</div>
+				<p>O resistor de pull-up de 10 kΩ que o DHT11 exige seguraria o GPIO12 em nível alto <strong>exatamente durante o reset</strong>.</p>
+				<p style="margin-top:10px">A placa simplesmente não iniciaria — e o sintoma não apontaria para o sensor em momento algum.</p>
+			</div>
+		</div>
+	</div>
+</section>
+
+<section class="slide" data-secao="Capítulo 9" data-titulo="Desafios">
+	<div class="rotulo">9 · Prática</div>
+	<h2>Desafios</h2>
+	<p class="linha-fina">Se sobrar tempo agora, ou para praticar durante a semana.</p>
+	<div class="corpo duas">
+		<ul class="lista">
+			<li>Acenda o LED RGB da placa em vermelho quando a temperatura passar de 28 °C e em azul abaixo disso.</li>
+			<li>Calcule e imprima a média das últimas dez leituras, para suavizar o ruído.</li>
+			<li>Troque o <code>delay</code> por controle de tempo com <code>millis()</code>, de modo que o programa continue respondendo enquanto espera.</li>
+		</ul>
+		<ul class="lista">
+			<li>Detecte e conte quantas vezes a umidade subiu mais de 5 % entre leituras consecutivas.</li>
+			<li>Publique a leitura numa página web servida pelo próprio ESP32, acessível por qualquer aparelho na mesma rede.</li>
+		</ul>
+	</div>
+</section>
+
+<!-- ══════════════════════════════ FECHAMENTO ══════════════════════════════ -->
+
+<section class="slide secao" data-secao="Capítulo 10" data-titulo="§10 · Próximos passos">
+	<div class="secao-num">10</div>
+	<div class="rotulo">Capítulo dez</div>
+	<h1>Por onde continuar</h1>
+	<p class="capa-sub">O que levar deste módulo e onde consultar quando a apostila não bastar.</p>
+</section>
+
+<section class="slide" data-secao="Fechamento" data-titulo="O que você leva daqui">
+	<div class="rotulo">Fechamento</div>
+	<h2>O que você leva daqui</h2>
+	<div class="corpo duas">
+		<ul class="lista">
+			<li>O que existe dentro de um ESP32 e por que ele não é um Arduino com Wi-Fi.</li>
+			<li>Como navegar as doze séries sem se perder na nomenclatura.</li>
+			<li>Um método objetivo para escolher a série de um projeto novo.</li>
+		</ul>
+		<ul class="lista">
+			<li>As limitações reais da plataforma, antes de esbarrar nelas.</li>
+			<li>Um sensor real lendo temperatura e umidade na sua bancada.</li>
+		</ul>
+	</div>
+</section>
+
+<section class="slide" data-secao="Fechamento" data-titulo="Onde consultar">
+	<div class="rotulo">Fechamento</div>
+	<h2>Onde consultar</h2>
+	<div class="corpo duas">
+		<div>
+			<h3>Referência primária</h3>
+			<ul class="lista miuda">
+				<li><strong>Datasheet</strong> da série: características elétricas, pinagem e limites.</li>
+				<li><strong>Technical Reference Manual</strong>: registradores e periféricos em detalhe.</li>
+				<li><strong>Errata</strong>: o que a revisão de silício que você tem faz de errado.</li>
+				<li><strong>docs.espressif.com</strong>: documentação do ESP-IDF, versionada.</li>
+			</ul>
+		</div>
+		<div>
+			<h3>Atalhos do dia a dia</h3>
+			<ul class="lista miuda">
+				<li><strong>ESPDocs</strong> — seletor de série, comparação lado a lado e pinagem interativa, em português.</li>
+				<li><strong>arduino-esp32</strong> — exemplos oficiais do core, o melhor ponto de partida para bibliotecas.</li>
+				<li><strong>esp32.com</strong> — fórum oficial, onde os engenheiros da Espressif respondem.</li>
+			</ul>
+			<div class="cartao destaque" style="margin-top:18px">
+				<div class="cartao-titulo">Um conselho para levar</div>
+				<p>Quando algo não funcionar, desconfie do hardware antes do código. Alimentação, pino com restrição e cabo sem dados explicam a maior parte dos "bugs" desta plataforma.</p>
+			</div>
+		</div>
+	</div>
+</section>
+
+<section class="slide capa" data-secao="Fechamento" data-titulo="Obrigado">
+	<div class="capa-marca">
+		<img src="../assets/laser.svg" alt="LASER">
+		<span>Liga Acadêmica de Sistemas Embarcados<br>Centro de Informática · UFPE</span>
+	</div>
+	<div class="capa-selo">Módulo 1 · Encerramento</div>
+	<h1>Obrigado.<strong>Perguntas?</strong></h1>
+	<p class="capa-sub">
+		A apostila completa deste módulo, com o glossário, os capítulos que não couberam no tempo
+		e o arquivo do Fritzing, está em <strong>index.html</strong>, na mesma pasta.
+	</p>
+	<div class="capa-autor">
+		<strong>Lucas Rayan Guerra</strong>
+		contato@lucasrguerra.dev.br<br>
+		linkedin.com/in/lucasrguerra<br>
+		espdocs.cienciaembarcada.com.br
+	</div>
+</section>
+
+</div><!-- /#palco -->
+
+<div id="panorama" role="dialog" aria-label="Panorama dos slides" aria-modal="true"></div>
+
+<div id="cortina" aria-hidden="true"></div>
+
+<div id="ajuda">
+	<span><kbd>←</kbd> <kbd>→</kbd> navegar</span>
+	<span><kbd>O</kbd> panorama</span>
+	<span><kbd>F</kbd> tela cheia</span>
+	<span><kbd>B</kbd> tela preta</span>
+</div>
+
+<script>
+(function () {
+	"use strict";
+
+	var palco     = document.getElementById("palco");
+	var panorama  = document.getElementById("panorama");
+	var cortina   = document.getElementById("cortina");
+	var ajuda     = document.getElementById("ajuda");
+	var slides    = Array.prototype.slice.call(palco.querySelectorAll(".slide"));
+	var atual     = 0;
+	var timerAjuda;
+
+	/* ---------------------------------------------------------------------
+	   Rodapé: o feixe. Montado por script para não repetir markup em cada
+	   slide, e porque a posição da ponta depende do índice.
+	   --------------------------------------------------------------------- */
+
+	slides.forEach(function (slide, i) {
+		var rodape = document.createElement("div");
+		rodape.className = "rodape";
+		rodape.setAttribute("aria-hidden", "true");
+		rodape.innerHTML =
+			'<div class="trilho"></div>' +
+			'<div class="percorrido"></div>' +
+			'<div class="ponta"></div>' +
+			'<div class="rodape-texto">' +
+				'<span>' + (slide.dataset.secao || "") + '</span>' +
+				'<span class="rodape-num">' + String(i + 1).padStart(2, "0") +
+					' <span style="color:var(--texto-2)">/ ' + slides.length + '</span></span>' +
+			'</div>';
+		slide.appendChild(rodape);
+
+		slide.setAttribute("role", "group");
+		slide.setAttribute("aria-label", (i + 1) + " de " + slides.length + ": " + (slide.dataset.titulo || ""));
+	});
+
+	/* Cada slide desenha o seu próprio trecho de feixe uma vez, na carga. Não dá
+	   para desenhar só o ativo: na impressão todos aparecem de uma vez, e os
+	   outros 59 sairiam sem barra de progresso. */
+	function desenharFeixe() {
+		slides.forEach(function (slide, i) {
+			/* No primeiro slide já aparece um toque de feixe, senão a ponta
+			   fica solta no canto. */
+			var fracao = slides.length > 1 ? i / (slides.length - 1) : 1;
+			var largura = (0.04 + fracao * 0.96) * 100;
+			var barra = slide.querySelector(".percorrido");
+			var ponta = slide.querySelector(".ponta");
+			if (barra) barra.style.width = largura + "%";
+			if (ponta) ponta.style.left = largura + "%";
+		});
+	}
+
+	/* ---------------------------------------------------------------------
+	   Escala do palco
+	   --------------------------------------------------------------------- */
+
+	function ajustarEscala() {
+		var escala = Math.min(window.innerWidth / 1280, window.innerHeight / 720);
+		palco.style.transform = "scale(" + escala + ")";
+	}
+
+	/* ---------------------------------------------------------------------
+	   Navegação
+	   --------------------------------------------------------------------- */
+
+	function ir(indice, semHash) {
+		indice = Math.max(0, Math.min(slides.length - 1, indice));
+		slides[atual].classList.remove("ativo");
+		atual = indice;
+		slides[atual].classList.add("ativo");
+		if (!semHash) history.replaceState(null, "", "#" + (atual + 1));
+		if (panorama.classList.contains("aberto")) marcarMiniatura();
+	}
+
+	var avancar  = function () { ir(atual + 1); };
+	var recuar   = function () { ir(atual - 1); };
+
+	/* ---------------------------------------------------------------------
+	   Panorama
+	   --------------------------------------------------------------------- */
+
+	slides.forEach(function (slide, i) {
+		var b = document.createElement("button");
+		b.className = "miniatura";
+		b.type = "button";
+		b.innerHTML =
+			'<b>' + String(i + 1).padStart(2, "0") + '</b>' +
+			'<span>' + (slide.dataset.titulo || "Slide " + (i + 1)) + '</span>' +
+			'<i>' + (slide.dataset.secao || "") + '</i>';
+		b.addEventListener("click", function () { fecharPanorama(); ir(i); });
+		panorama.appendChild(b);
+	});
+
+	function marcarMiniatura() {
+		var minis = panorama.querySelectorAll(".miniatura");
+		for (var i = 0; i < minis.length; i++) minis[i].classList.toggle("atual", i === atual);
+		var ativa = minis[atual];
+		if (ativa) ativa.scrollIntoView({ block: "nearest" });
+	}
+
+	function abrirPanorama() {
+		panorama.classList.add("aberto");
+		marcarMiniatura();
+		panorama.querySelectorAll(".miniatura")[atual].focus();
+	}
+
+	function fecharPanorama() { panorama.classList.remove("aberto"); }
+
+	function alternarPanorama() {
+		panorama.classList.contains("aberto") ? fecharPanorama() : abrirPanorama();
+	}
+
+	/* ---------------------------------------------------------------------
+	   Teclado, toque e ponteiro
+	   --------------------------------------------------------------------- */
+
+	document.addEventListener("keydown", function (e) {
+		if (e.metaKey || e.ctrlKey || e.altKey) return;
+		var k = e.key;
+
+		if (cortina.classList.contains("aberta")) {
+			cortina.classList.remove("aberta");
+			e.preventDefault();
+			return;
+		}
+
+		if (k === "Escape") {
+			if (panorama.classList.contains("aberto")) { fecharPanorama(); e.preventDefault(); }
+			return;
+		}
+
+		if (k === "ArrowRight" || k === "ArrowDown" || k === "PageDown" || k === " " || k === "Enter") {
+			avancar(); e.preventDefault();
+		} else if (k === "ArrowLeft" || k === "ArrowUp" || k === "PageUp" || k === "Backspace") {
+			recuar(); e.preventDefault();
+		} else if (k === "Home") {
+			ir(0); e.preventDefault();
+		} else if (k === "End") {
+			ir(slides.length - 1); e.preventDefault();
+		} else if (k === "o" || k === "O") {
+			alternarPanorama(); e.preventDefault();
+		} else if (k === "f" || k === "F") {
+			if (document.fullscreenElement) document.exitFullscreen();
+			else document.documentElement.requestFullscreen().catch(function () {});
+			e.preventDefault();
+		} else if (k === "b" || k === "B" || k === ".") {
+			cortina.classList.add("aberta"); e.preventDefault();
+		}
+	});
+
+	cortina.addEventListener("click", function () { cortina.classList.remove("aberta"); });
+
+	/* Clique na metade direita avança, na esquerda recua. Não vale sobre o
+	   panorama nem sobre links. */
+	document.addEventListener("click", function (e) {
+		if (panorama.contains(e.target) || cortina.classList.contains("aberta")) return;
+		if (e.target.closest("a, button")) return;
+		(e.clientX > window.innerWidth * 0.5) ? avancar() : recuar();
+	});
+
+	var toqueX = null;
+	document.addEventListener("touchstart", function (e) { toqueX = e.changedTouches[0].clientX; }, { passive: true });
+	document.addEventListener("touchend", function (e) {
+		if (toqueX === null) return;
+		var d = e.changedTouches[0].clientX - toqueX;
+		if (Math.abs(d) > 55) (d < 0) ? avancar() : recuar();
+		toqueX = null;
+	}, { passive: true });
+
+	/* A ajuda aparece ao mexer o mouse e some sozinha, para não poluir a
+	   projeção. */
+	document.addEventListener("mousemove", function () {
+		ajuda.classList.add("visivel");
+		clearTimeout(timerAjuda);
+		timerAjuda = setTimeout(function () { ajuda.classList.remove("visivel"); }, 2600);
+	});
+
+	window.addEventListener("resize", ajustarEscala);
+	window.addEventListener("hashchange", function () {
+		var n = parseInt(location.hash.slice(1), 10);
+		if (n && n - 1 !== atual) ir(n - 1, true);
+	});
+
+	/* --------------------------------------------------------------------- */
+
+	/* -----------------------------------------------------------------------
+	   Rede de segurança do 16:9
+
+	   O palco tem 1280x720 fixos, mas o conteúdo é texto: uma fonte que não
+	   carregou, um zoom de navegador ou uma correção de texto podem empurrar
+	   um slide para fora da caixa. Em vez de deixar o excesso vazar (na tela
+	   ele seria cortado, no PDF viraria página extra), cada slide que não
+	   couber encolhe o próprio corpo até caber.
+	   ----------------------------------------------------------------------- */
+
+	function medirSobra(slide) {
+		var caixa = slide.getBoundingClientRect();
+		var esc = caixa.width / 1280 || 1;
+		var st = getComputedStyle(slide);
+		var limite = 720 - parseFloat(st.paddingBottom);
+		var pior = 0;
+		var filhos = slide.querySelectorAll("*");
+		for (var i = 0; i < filhos.length; i++) {
+			var el = filhos[i];
+			if (el.closest(".rodape") || el.classList.contains("secao-num") || el.ownerSVGElement) continue;
+			var b = el.getBoundingClientRect();
+			if (!b.height && !b.width) continue;
+			var d = (b.bottom - caixa.top) / esc - limite;
+			if (d > pior) pior = d;
+		}
+		return pior;
+	}
+
+	function encaixarSlides() {
+		var visivel = slides[atual];
+		slides.forEach(function (slide) {
+			var corpo = slide.querySelector(".corpo");
+			if (!corpo) return;
+			var eraAtivo = slide.classList.contains("ativo");
+			if (!eraAtivo) slide.classList.add("ativo");
+			corpo.style.zoom = "";
+
+			var sobra = medirSobra(slide);
+			if (sobra > 1) {
+				var altura = corpo.getBoundingClientRect().height / (slide.getBoundingClientRect().width / 1280 || 1);
+				/* Nunca abaixo de 0,8: menor que isso o texto deixa de ser
+				   legível projetado, e o problema é de conteúdo, não de escala. */
+				var fator = Math.max(0.8, (altura - sobra) / altura);
+				corpo.style.zoom = fator.toFixed(3);
+				if (medirSobra(slide) > 1) corpo.style.zoom = (fator - 0.02).toFixed(3);
+			}
+			if (!eraAtivo) slide.classList.remove("ativo");
+		});
+		visivel.classList.add("ativo");
+	}
+
+	ajustarEscala();
+	var inicial = parseInt(location.hash.slice(1), 10);
+	slides[0].classList.add("ativo");
+	if (inicial && inicial >= 1 && inicial <= slides.length) ir(inicial - 1);
+
+	ajuda.classList.add("visivel");
+	timerAjuda = setTimeout(function () { ajuda.classList.remove("visivel"); }, 4200);
+
+	/* As fontes chegam depois do primeiro layout; medir antes disso dá número
+	   errado. O segundo passe cobre a impressão, que reflui tudo de uma vez. */
+	function conferir() { desenharFeixe(); encaixarSlides(); }
+	conferir();
+	if (document.fonts && document.fonts.ready) document.fonts.ready.then(conferir);
+	window.addEventListener("beforeprint", conferir);
+})();
+</script>
+
+</body>
+</html>
