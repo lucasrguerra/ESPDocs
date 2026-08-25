@@ -374,6 +374,15 @@ export default function Glossario() {
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd.glossario(categorias)) }}
             />
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{
+                    __html: JSON.stringify(jsonLd.trilha([
+                        { nome: "Início", caminho: "/" },
+                        { nome: "Glossário", caminho: "/glossario" },
+                    ])),
+                }}
+            />
 
             <Header />
 

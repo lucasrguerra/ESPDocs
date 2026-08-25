@@ -1,8 +1,7 @@
-"use client";
-
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Link from "next/link";
+import Image from "next/image";
 import { 
 	SlidersHorizontal, 
 	ShoppingBag, 
@@ -188,10 +187,12 @@ export default function Home() {
 								rel="noopener noreferrer"
 								className="group mb-6"
 							>
-								<img 
+								<Image 
 									src="/logo.png" 
 									alt="Ciência Embarcada Logo" 
-									className="h-16 md:h-20 mb-2 transition-transform duration-300 group-hover:scale-105"
+									width={80}
+									height={80}
+									className="h-16 w-16 md:h-20 md:w-20 mb-2 transition-transform duration-300 group-hover:scale-105 object-contain"
 								/>
 							</a>
 							

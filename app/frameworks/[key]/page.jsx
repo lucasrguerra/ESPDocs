@@ -1,4 +1,4 @@
-import { paginaMeta } from "@/lib/seo";
+import { paginaMeta, jsonLd } from "@/lib/seo";
 import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -33,6 +33,22 @@ export default async function FrameworkDetail({ params }) {
 
 	return (
 		<div className="bg-gradient-to-br from-slate-100 via-slate-50 to-purple-100/40 dark:from-slate-950 dark:via-slate-950 dark:to-slate-900 min-h-screen text-slate-900 dark:text-slate-100 transition-colors duration-300">
+			{/* Ficha técnica do framework e trilha de navegação para o Google */}
+			<script
+				type="application/ld+json"
+				dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd.framework(key, framework)) }}
+			/>
+			<script
+				type="application/ld+json"
+				dangerouslySetInnerHTML={{
+					__html: JSON.stringify(jsonLd.trilha([
+						{ nome: "Início", caminho: "/" },
+						{ nome: "Frameworks", caminho: "/frameworks" },
+						{ nome: framework.nome, caminho: `/frameworks/${encodeURIComponent(key)}` },
+					])),
+				}}
+			/>
+
 			<Header />
 
 			<main className="px-6 pt-16 pb-24 max-w-7xl mx-auto">

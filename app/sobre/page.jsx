@@ -2,6 +2,7 @@ import { paginaMeta } from "@/lib/seo";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Link from "next/link";
+import Image from "next/image";
 import { 
 	Languages, 
 	GitCompare, 
@@ -172,9 +173,11 @@ export default function Sobre() {
 						<div className="bg-white dark:bg-slate-900/40 backdrop-blur-xl border border-slate-300 dark:border-slate-800/80 rounded-3xl p-8 shadow-xl">
 							<div className="flex flex-col items-center mb-6 select-none">
 								<div className="w-20 h-20 bg-gradient-to-br from-purple-500/10 to-pink-500/10 rounded-2xl flex items-center justify-center mb-4 border border-purple-500/20 shadow-inner">
-									<img 
+									<Image 
 										src="/logo.png" 
 										alt="Ciência Embarcada Logo" 
+										width={64}
+										height={64}
 										className="h-16 w-16 object-contain"
 									/>
 								</div>
