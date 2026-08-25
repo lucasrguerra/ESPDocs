@@ -21,6 +21,7 @@ export default function sitemap() {
 		{ caminho: "/diagnostico", prioridade: 0.9, frequencia: "weekly", lastModified: dataRevisao },
 		{ caminho: "/seletor", prioridade: 0.8, frequencia: "monthly", lastModified: dataRevisao },
 		{ caminho: "/frameworks", prioridade: 0.8, frequencia: "monthly", lastModified: dataRevisao },
+		{ caminho: "/componentes", prioridade: 0.8, frequencia: "weekly", lastModified: dataRevisao },
 		{ caminho: "/glossario", prioridade: 0.7, frequencia: "monthly", lastModified: dataRevisao },
 		{ caminho: "/catalogo", prioridade: 0.6, frequencia: "weekly", lastModified: dataRevisao },
 		{ caminho: "/sobre", prioridade: 0.4, frequencia: "yearly", lastModified: dataRevisao },

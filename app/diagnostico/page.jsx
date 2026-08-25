@@ -526,7 +526,11 @@ export default function DiagnosticoPage() {
 							const estaAberto = cardAberto === erro.id;
 							const lang = linguagemCodigo[erro.id] || "arduino";
 							const codigoAtual =
-								lang === "arduino" ? erro.codigoArduino : erro.codigoEspIdf;
+								lang === "arduino"
+									? erro.codigoArduino
+									: lang === "espidf"
+									? erro.codigoEspIdf
+									: erro.codigoMicroPython || "# Exemplo não aplicável";
 
 							const catInfo = categoriasDiagnostico.find(
 								(c) => c.id === erro.categoria
@@ -702,6 +706,17 @@ export default function DiagnosticoPage() {
 															}`}
 														>
 															ESP-IDF (C)
+														</button>
+														<button
+															type="button"
+															onClick={() => setLang(erro.id, "micropython")}
+															className={`text-xs px-3 py-1 rounded-lg font-bold transition-all cursor-pointer ${
+																lang === "micropython"
+																	? "bg-white dark:bg-slate-900 text-amber-600 dark:text-amber-400 shadow-xs"
+																	: "text-slate-600 dark:text-slate-400 hover:text-slate-900"
+															}`}
+														>
+															MicroPython
 														</button>
 													</div>
 

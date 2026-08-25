@@ -17,7 +17,11 @@ import {
 	FileText, 
 	Sliders,
 	Award,
-	Target
+	Target,
+	Box,
+	Sparkles,
+	ExternalLink,
+	ArrowRight
 } from "lucide-react";
 
 export default async function FrameworkDetail({ params }) {
@@ -30,6 +34,7 @@ export default async function FrameworkDetail({ params }) {
 
 	const features = framework.caracteristicas || [];
 	const useCases = framework.casos_uso || [];
+	const isEspIdf = key === "ESP-IDF";
 
 	return (
 		<div className="bg-gradient-to-br from-slate-100 via-slate-50 to-purple-100/40 dark:from-slate-950 dark:via-slate-950 dark:to-slate-900 min-h-screen text-slate-900 dark:text-slate-100 transition-colors duration-300">
@@ -51,7 +56,7 @@ export default async function FrameworkDetail({ params }) {
 
 			<Header />
 
-			<main className="px-6 pt-16 pb-24 max-w-7xl mx-auto">
+			<main className="px-4 md:px-6 pt-12 md:pt-16 pb-24 max-w-7xl mx-auto">
 				{/* Back navigation link */}
 				<div className="mb-8">
 					<Link 
@@ -112,7 +117,7 @@ export default async function FrameworkDetail({ params }) {
 							</div>
 						</div>
 
-						<p className="text-sm text-slate-500 dark:text-slate-200 mt-6 leading-relaxed max-w-4xl font-semibold">
+						<p className="text-sm text-slate-600 dark:text-slate-200 mt-6 leading-relaxed max-w-4xl font-semibold">
 							{framework.descricao}
 						</p>
 					</div>
@@ -129,7 +134,7 @@ export default async function FrameworkDetail({ params }) {
 							<span>LINGUAGEM DE DESENVOLVIMENTO</span>
 						</h3>
 						<p className="text-2xl font-extrabold text-slate-800 dark:text-slate-100">{framework.linguagem}</p>
-						<p className="text-xs text-slate-400 mt-1">Sintaxe principal do ecossistema</p>
+						<p className="text-xs text-slate-400 mt-1">Sintaxe e ecossistema</p>
 					</div>
 
 					<div 
@@ -233,9 +238,39 @@ export default async function FrameworkDetail({ params }) {
 					</div>
 				</div>
 
-				{/* Coding examples container (renders only if framework has examples defined) */}
-				{framework.exemplos && (
-					<div className="mt-12">
+				{/* Special Section: ESP Component Registry Callout for ESP-IDF */}
+				{isEspIdf && (
+					<div className="bg-gradient-to-r from-purple-900/90 to-indigo-900/90 rounded-3xl p-6 md:p-8 text-white shadow-2xl border border-purple-500/40 mb-12 relative overflow-hidden">
+						<div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 relative z-10">
+							<div className="space-y-2 max-w-2xl">
+								<div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-purple-500/20 border border-purple-400/30 text-purple-300 text-xs font-bold">
+									<Box className="w-3.5 h-3.5" />
+									<span>Arquitetura Moderna ESP-IDF</span>
+								</div>
+								<h3 className="text-2xl font-display font-extrabold text-white">
+									Gerenciamento Modular com ESP Component Registry
+								</h3>
+								<p className="text-xs md:text-sm text-slate-200 leading-relaxed font-medium">
+									Nos projetos ESP-IDF v4.4+ e v5.x+, as bibliotecas não precisam mais ser adicionadas como submódulos Git.
+									Utilize o <code>idf_component.yml</code> e o comando <code>idf.py add-dependency</code> para baixar automaticamente drivers de displays (LVGL), pilhas industriais (Modbus), RainMaker e mais.
+								</p>
+							</div>
+
+							<Link
+								href="/componentes"
+								className="inline-flex items-center gap-2 bg-white text-purple-900 hover:bg-slate-100 font-extrabold text-xs uppercase tracking-wider px-6 py-3.5 rounded-xl shadow-lg transition-all active:scale-95 shrink-0"
+							>
+								<Sparkles className="w-4 h-4 text-purple-600" />
+								<span>Explorar Componentes ESP-IDF</span>
+								<ArrowRight className="w-4 h-4 text-purple-600" />
+							</Link>
+						</div>
+					</div>
+				)}
+
+				{/* Coding examples container */}
+				{framework.exemplo && (
+					<div className="mt-8">
 						<CodeExample framework={framework} />
 					</div>
 				)}
@@ -283,8 +318,8 @@ export async function generateMetadata({ params }) {
 
 	return {
 		...paginaMeta({
-			titulo: `${framework.nome} para ESP32`,
-			descricao: `${framework.nome_completo}: ${framework.descricao} Guia em português com exemplo de código e quando usar.`,
+			titulo: `${framework.nome} para ESP32 · Guia Técnico`,
+			descricao: `${framework.nome_completo}: ${framework.descricao} Guia com exemplos práticos de código e casos de uso.`,
 			caminho: `/frameworks/${encodeURIComponent(key)}`,
 			tipo: "article",
 			keywords: [

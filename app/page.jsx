@@ -21,16 +21,17 @@ import {
 	Radio,
 	ShieldCheck,
 	Code,
-	HelpCircle
+	HelpCircle,
+	Box
 } from "lucide-react";
 
 export default function Home() {
 	// Estatísticas da Plataforma
 	const stats = [
 		{ value: "12", label: "Séries Documentadas", desc: "Do ESP32 clássico ao P4 e C61" },
-		{ value: "8", label: "Frameworks & SDKs", desc: "ESP-IDF, Arduino, MicroPython, etc." },
+		{ value: "14", label: "Frameworks & SDKs", desc: "ESP-IDF, RainMaker, Rust, Matter, etc." },
+		{ value: "20+", label: "Componentes Curados", desc: "ESP Component Registry & idf_component.yml" },
 		{ value: "30+", label: "Guias de Diagnóstico", desc: "Soluções para bootloops, brownouts e WDT" },
-		{ value: "60+", label: "Termos Técnicos", desc: "Glossário completo de arquitetura e IoT" },
 	];
 
 	// Ferramentas da Plataforma (100% Clicáveis)
@@ -44,6 +45,16 @@ export default function Home() {
 			icon: <SlidersHorizontal className="w-6 h-6" />,
 			iconBg: "text-purple-600 bg-purple-50 dark:bg-purple-950/40 dark:text-purple-400",
 			ctaText: "Iniciar Quiz de Seleção",
+		},
+		{
+			title: "ESP Component Registry",
+			badge: "Oficial & Modular",
+			badgeColor: "bg-purple-100 text-purple-700 dark:bg-purple-950/60 dark:text-purple-300",
+			description: "Explore o catálogo oficial de pacotes modulares da Espressif (LVGL, RainMaker, ESP-SR, BSPs) e gere manifestos idf_component.yml.",
+			href: "/componentes",
+			icon: <Box className="w-6 h-6" />,
+			iconBg: "text-purple-600 bg-purple-50 dark:bg-purple-950/40 dark:text-purple-400",
+			ctaText: "Explorar Componentes",
 		},
 		{
 			title: "Diagnóstico de Falhas",
@@ -87,9 +98,9 @@ export default function Home() {
 		},
 		{
 			title: "Frameworks & SDKs",
-			badge: "C++, Python & Rust",
+			badge: "14 Frameworks",
 			badgeColor: "bg-teal-100 text-teal-700 dark:bg-teal-950/60 dark:text-teal-300",
-			description: "Documentação de frameworks oficiais e comunitários: ESP-IDF, Arduino Core, MicroPython, ESP-Matter, ESP-WHO e mais.",
+			description: "Documentação completa de frameworks oficiais: ESP-IDF, RainMaker, Rust, Matter, ESP-SR, Arduino, MicroPython e mais.",
 			href: "/frameworks",
 			icon: <Terminal className="w-6 h-6" />,
 			iconBg: "text-teal-600 bg-teal-50 dark:bg-teal-950/40 dark:text-teal-400",

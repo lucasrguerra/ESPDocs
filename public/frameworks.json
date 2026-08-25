@@ -3,214 +3,364 @@
         "nome": "ESP-IDF",
         "icone": "⚙️",
         "nome_completo": "Espressif IoT Development Framework",
-        "descricao": "Framework oficial de desenvolvimento da Espressif para ESP32, baseado em FreeRTOS",
-        "linguagem": "C/C++",
-        "tipo": "Framework Base",
-        "funcao_principal": "Desenvolvimento de aplicações IoT de propósito geral com acesso completo ao hardware",
+        "descricao": "Framework oficial nativo da Espressif para todos os SoCs ESP32. Baseado em FreeRTOS multicore e CMake, oferece controle total do silício, periféricos, rádio e arquitetura de componentes modulares.",
+        "linguagem": "C / C++",
+        "tipo": "Framework Base Oficial",
+        "funcao_principal": "Desenvolvimento industrial e de alta performance com acesso direto aos registradores, RTOS em tempo real e pilha completa de protocolos",
         "caracteristicas": [
-            "Sistema operacional em tempo real (FreeRTOS)",
-            "Pilha completa de Wi-Fi e Bluetooth",
-            "Suporte a todos os periféricos do ESP32",
-            "Ferramentas de build e debug integradas",
-            "Gerenciamento de energia avançado",
-            "Suporte OTA (Over-The-Air updates)",
-            "Biblioteca de componentes extensível"
+            "Sistema operacional de tempo real (FreeRTOS SMP multicore)",
+            "Suporte nativo ao ESP Component Registry via idf_component.yml",
+            "Pilha completa de conectividade Wi-Fi 4/6, BLE 5.x, Zigbee e Thread",
+            "Suporte a todos os SoCs (ESP32, S2, S3, C2, C3, C6, H2, P4)",
+            "Gerenciamento avançado de energia e modos Deep Sleep",
+            "Segurança robusta: Secure Boot v2, Flash Encryption e Crypto HW",
+            "Atualizações OTA criptografadas com rollback automático",
+            "Toolchain moderna Clang/GCC, suporte a C++23 e debug via JTAG OpenOCD"
         ],
         "casos_uso": [
-            "Dispositivos IoT conectados",
-            "Automação residencial e industrial",
-            "Wearables e dispositivos vestíveis",
-            "Gateways e hubs de comunicação",
-            "Sistemas embarcados em tempo real"
+            "Produtos comerciais e industriais de IoT",
+            "Dispositivos com requisitos rigorosos de bateria e consumo",
+            "Aplicações em tempo real com controle de interrupções",
+            "Sistemas de segurança com criptografia de hardware",
+            "Gateways multiprotocolo de alto desempenho"
         ],
         "exemplo": "/exemplos/esp-idf.c",
         "exemplos": "https://github.com/espressif/esp-idf/tree/master/examples",
-        "documentacao": "https://docs.espressif.com/projects/esp-idf/",
+        "documentacao": "https://docs.espressif.com/projects/esp-idf/en/latest/",
         "repositorio": "https://github.com/espressif/esp-idf",
         "cor": "#E74C3C"
     },
-    "ESP-ADF": {
-        "nome": "ESP-ADF",
-        "icone": "🎵",
-        "nome_completo": "ESP Audio Development Framework",
-        "descricao": "Framework especializado para aplicações de áudio no ESP32",
-        "linguagem": "C/C++",
-        "tipo": "Framework Especializado",
-        "funcao_principal": "Desenvolvimento de aplicações de áudio com suporte a codecs, streaming e processamento",
+    "ESP-RainMaker": {
+        "nome": "ESP-RainMaker",
+        "icone": "☁️",
+        "nome_completo": "ESP RainMaker AIoT Cloud Platform",
+        "descricao": "Plataforma completa de nuvem e firmware da Espressif para produtos conectados. Permite criar dispositivos IoT sem precisar desenvolver backend ou aplicativos móveis do zero.",
+        "linguagem": "C / C++",
+        "tipo": "Cloud & AIoT Framework",
+        "funcao_principal": "Construção acelerada de produtos inteligentes com aplicativo móvel (iOS/Android), nuvem AWS Serverless e controle por voz (Alexa/Google Home)",
         "caracteristicas": [
-            "Suporte a múltiplos codecs de áudio (MP3, AAC, FLAC, WAV, etc.)",
-            "Pipeline de áudio configurável",
-            "Streaming de áudio via HTTP, HTTPS, HLS",
-            "Integração com serviços de nuvem (AWS, Google, Baidu)",
-            "Reconhecimento de voz e wake word",
-            "Equalização e efeitos de áudio",
-            "Suporte a Bluetooth A2DP e HFP"
+            "Provisionamento Wi-Fi e BLE assistido via aplicativo oficial",
+            "Geração dinâmica de interface no app com base nos parâmetros do firmware",
+            "Integração nativa com Amazon Alexa e Google Assistant",
+            "Suporte a controle local (Local Control via mDNS/HTTP) e nuvem simultâneos",
+            "Painel administrativo (RainMaker Dashboard) para gerenciamento de frotas e OTA",
+            "Compatibilidade nativa com nós Matter e Bridge de dispositivos",
+            "Biblioteca integrada via ESP Component Registry (espressif/esp_rainmaker)"
         ],
         "casos_uso": [
-            "Alto-falantes inteligentes",
-            "Assistentes de voz",
-            "Rádios de internet",
-            "Players de música",
-            "Interfones e intercomunicadores",
-            "Sistemas de PA (Public Address)"
+            "Eletrodomésticos e iluminação inteligente para consumidor final",
+            "Produtos IoT com prazo reduzido de lançamento no mercado (Time-to-Market)",
+            "Dispositivos que exigem controle por app móvel sem custo de infraestrutura própria",
+            "Sistemas de monitoramento remoto com atualização OTA centralizada"
         ],
-        "exemplo": "/exemplos/esp-adf.c",
-        "exemplos": "https://github.com/espressif/esp-adf/tree/master/examples",
-        "documentacao": "https://docs.espressif.com/projects/esp-adf/",
-        "repositorio": "https://github.com/espressif/esp-adf",
-        "cor": "#3498DB"
-    },
-    "ESP-DSP": {
-        "nome": "ESP-DSP",
-        "icone": "📊",
-        "nome_completo": "ESP Digital Signal Processing Library",
-        "descricao": "Biblioteca otimizada para processamento digital de sinais no ESP32",
-        "linguagem": "C/C++",
-        "tipo": "Biblioteca Especializada",
-        "funcao_principal": "Processamento de sinais digitais com algoritmos otimizados para arquitetura ESP32",
-        "caracteristicas": [
-            "Operações matemáticas otimizadas (FFT, convolução, correlação)",
-            "Filtros digitais (FIR, IIR, Kalman)",
-            "Transformadas (FFT, DCT, DWT)",
-            "Operações de matriz e vetores",
-            "Suporte a ponto fixo e ponto flutuante",
-            "Otimizações específicas para Xtensa e RISC-V"
-        ],
-        "casos_uso": [
-            "Análise de sinais de áudio",
-            "Processamento de sinais de sensores",
-            "Filtros adaptativos",
-            "Análise espectral",
-            "Compressão de dados",
-            "Reconhecimento de padrões"
-        ],
-        "exemplo": "/exemplos/esp-dsp.c",
-        "exemplos": "https://github.com/espressif/esp-dsp/tree/master/examples",
-        "documentacao": "https://docs.espressif.com/projects/esp-dsp/",
-        "repositorio": "https://github.com/espressif/esp-dsp",
-        "cor": "#9B59B6"
-    },
-    "ESP-WHO": {
-        "nome": "ESP-WHO",
-        "icone": "📷",
-        "nome_completo": "ESP Image Processing Framework",
-        "descricao": "Framework para processamento de imagens e visão computacional no ESP32",
-        "linguagem": "C/C++",
-        "tipo": "Framework Especializado",
-        "funcao_principal": "Detecção facial, reconhecimento facial e processamento de imagens",
-        "caracteristicas": [
-            "Detecção de faces em tempo real",
-            "Reconhecimento facial",
-            "Detecção de pontos faciais (landmarks)",
-            "Rastreamento de objetos",
-            "Otimizado para ESP32-S3 com aceleradores de IA",
-            "Suporte a câmeras via interface DVP",
-            "Modelos de rede neural otimizados"
-        ],
-        "casos_uso": [
-            "Sistemas de reconhecimento facial",
-            "Controle de acesso inteligente",
-            "Câmeras de segurança com IA",
-            "Detecção de presença",
-            "Análise de expressões faciais",
-            "Contagem de pessoas"
-        ],
-        "exemplo": "/exemplos/esp-who.c",
-        "exemplos": "https://github.com/espressif/esp-who/tree/master/examples",
-        "documentacao": "https://github.com/espressif/esp-who",
-        "repositorio": "https://github.com/espressif/esp-who",
-        "cor": "#E67E22"
-    },
-    "ESP-NN": {
-        "nome": "ESP-NN",
-        "icone": "🧠",
-        "nome_completo": "ESP Neural Network Library",
-        "descricao": "Biblioteca de redes neurais otimizada para ESP32",
-        "linguagem": "C/C++",
-        "tipo": "Biblioteca Especializada",
-        "funcao_principal": "Inferência de redes neurais com otimizações específicas para ESP32",
-        "caracteristicas": [
-            "Operações de rede neural otimizadas",
-            "Suporte a convolução, pooling, fully connected",
-            "Quantização de 8 e 16 bits",
-            "Otimizações SIMD para Xtensa e RISC-V",
-            "Compatível com TensorFlow Lite",
-            "Baixo consumo de memória",
-            "Aceleração via instruções vetoriais"
-        ],
-        "casos_uso": [
-            "Classificação de imagens",
-            "Detecção de objetos",
-            "Reconhecimento de voz",
-            "Predição de séries temporais",
-            "Detecção de anomalias",
-            "IA na borda (Edge AI)"
-        ],
-        "exemplo": "/exemplos/esp-nn.c",
-        "exemplos": "https://github.com/espressif/esp-nn/tree/master/test_app",
-        "documentacao": "https://github.com/espressif/esp-nn",
-        "repositorio": "https://github.com/espressif/esp-nn",
-        "cor": "#1ABC9C"
+        "exemplo": "/exemplos/esp-rainmaker.c",
+        "exemplos": "https://github.com/espressif/esp-rainmaker/tree/master/examples",
+        "documentacao": "https://rainmaker.espressif.com/docs/",
+        "repositorio": "https://github.com/espressif/esp-rainmaker",
+        "cor": "#3B82F6"
     },
     "ESP-Matter": {
         "nome": "ESP-Matter",
         "icone": "🏠",
         "nome_completo": "ESP Matter SDK",
-        "descricao": "SDK para desenvolvimento de dispositivos compatíveis com o padrão Matter",
-        "linguagem": "C/C++",
-        "tipo": "Framework Especializado",
-        "funcao_principal": "Criar dispositivos smart home interoperáveis usando o padrão Matter",
+        "descricao": "SDK oficial da Espressif para o padrão universal de casa inteligente Matter (antigo Project CHIP). Permite que seus dispositivos operem de forma interoperável com Apple HomeKit, Google Home, Amazon Alexa e Home Assistant.",
+        "linguagem": "C++",
+        "tipo": "Smart Home Framework",
+        "funcao_principal": "Desenvolvimento de dispositivos e pontes inteligentes compatíveis com o padrão unificado Matter sobre Wi-Fi e Thread",
         "caracteristicas": [
-            "Compatibilidade com padrão Matter (ex-Project CHIP)",
-            "Interoperabilidade entre ecossistemas (Apple, Google, Amazon)",
-            "Suporte a Thread e Wi-Fi",
-            "Comissionamento simplificado",
-            "Segurança robusta (PKI, criptografia)",
-            "Modelos de dispositivos pré-definidos",
-            "Integração com ESP-IDF"
+            "Implementação completa dos clusters da especificação Matter",
+            "Suporte a transporte sobre Wi-Fi e Thread (802.15.4 em ESP32-H2 e ESP32-C6)",
+            "Comissionamento simplificado via BLE ou On-Network",
+            "Compatibilidade simultânea com Apple Home, Google Home, Alexa e SmartThings",
+            "Segurança baseada em certificados de autenticação de dispositivo (DAC)",
+            "Suporte a Matter Bridge (conectando dispositivos legados Zigbee/BLE ao Matter)",
+            "Integração direta ao ESP-IDF e ESP Component Registry"
         ],
         "casos_uso": [
-            "Lâmpadas inteligentes",
-            "Tomadas e interruptores smart",
-            "Sensores de temperatura e umidade",
-            "Fechaduras inteligentes",
-            "Termostatos",
-            "Dispositivos de controle de cortinas"
+            "Lâmpadas, tomadas, interruptores e dimmers interoperáveis",
+            "Sensores de presença, temperatura, umidade e contato",
+            "Fechaduras eletrônicas e atuadores de cortinas",
+            "Matter Border Routers e Bridges residenciais"
         ],
         "exemplo": "/exemplos/esp-matter.c",
         "exemplos": "https://github.com/espressif/esp-matter/tree/main/examples",
-        "documentacao": "https://docs.espressif.com/projects/esp-matter/",
+        "documentacao": "https://docs.espressif.com/projects/esp-matter/en/latest/",
         "repositorio": "https://github.com/espressif/esp-matter",
-        "cor": "#F39C12"
+        "cor": "#F59E0B"
     },
-    "Arduino": {
-        "nome": "Arduino",
-        "icone": "🛠️",
-        "nome_completo": "Arduino Core for ESP32",
-        "descricao": "Implementação do framework Arduino para ESP32, facilitando o desenvolvimento",
-        "linguagem": "C++",
-        "tipo": "Framework Alternativo",
-        "funcao_principal": "Desenvolvimento rápido e simplificado usando a API familiar do Arduino",
+    "ESP-ADF": {
+        "nome": "ESP-ADF",
+        "icone": "🎵",
+        "nome_completo": "ESP Audio Development Framework",
+        "descricao": "Framework especializado para processamento, streaming e reprodução de áudio digital de alta qualidade em SoCs ESP32.",
+        "linguagem": "C / C++",
+        "tipo": "Framework de Áudio & Voz",
+        "funcao_principal": "Criação de pipelines de áudio flexíveis com decodificadores, streaming de rede, equalização e efeitos acústicos",
         "caracteristicas": [
-            "API simples e intuitiva",
-            "Grande comunidade e bibliotecas",
-            "IDE Arduino integrada",
-            "Suporte a Wi-Fi e Bluetooth",
-            "Compatibilidade com bibliotecas Arduino",
-            "Ideal para prototipagem rápida",
-            "Curva de aprendizado suave"
+            "Arquitetura de pipeline de áudio modular (Audio Elements & Audio Stream)",
+            "Suporte a múltiplos codecs: MP3, AAC, FLAC, WAV, OGG, Opus e AMR",
+            "Streaming de áudio via HTTP, HTTPS, HLS, RTSP e WebSockets",
+            "Suporte a Bluetooth A2DP (Sink/Source) e Bluetooth Handsfree (HFP)",
+            "Algoritmos de processamento acústico (AEC, AGC, NS, equalizadores paramétricos)",
+            "Suporte a placas dedicadas como ESP32-LyraT e ESP32-S3-Korvo"
         ],
         "casos_uso": [
-            "Prototipagem rápida",
-            "Projetos educacionais",
-            "Makers e hobistas",
-            "IoT simples",
-            "Sensores e atuadores básicos",
-            "Projetos DIY"
+            "Caixas de som inteligentes e internet radios",
+            "Intercomunicadores, walkie-talkies e sistemas de interfonia VoIP",
+            "Aparelhos de reprodução musical com PSRAM",
+            "Sistemas de som ambiente para automação predial"
+        ],
+        "exemplo": "/exemplos/esp-adf.c",
+        "exemplos": "https://github.com/espressif/esp-adf/tree/master/examples",
+        "documentacao": "https://docs.espressif.com/projects/esp-adf/en/latest/",
+        "repositorio": "https://github.com/espressif/esp-adf",
+        "cor": "#0284C7"
+    },
+    "ESP-SR": {
+        "nome": "ESP-SR",
+        "icone": "🎙️",
+        "nome_completo": "ESP Speech Recognition Framework",
+        "descricao": "Framework de reconhecimento de fala local e processamento de áudio com IA na borda (Edge AI), permitindo comandos de voz sem depender de conexão à internet.",
+        "linguagem": "C / C++",
+        "tipo": "Framework de Voz & IA",
+        "funcao_principal": "Processamento de voz local, detecção de palavra de ativação (Wake Word) e reconhecimento de comandos de fala em tempo real",
+        "caracteristicas": [
+            "WakeNet: Detecção precisa de Wake Words locais (como 'Hi, ESP' e palavras personalizadas)",
+            "MultiNet: Reconhecimento de até centenas de comandos de voz locais offline em português, inglês e mandarim",
+            "AFE (Audio Front-End): Cancelamento acústico de eco (AEC), supressão de ruído (BSS/NS) e controle automático de ganho (AGC)",
+            "Suporte a múltiplos microfones com formação de feixe direcional (Beamforming)",
+            "Otimizado com aceleração vetorial SIMD para ESP32-S3 e ESP32-P4",
+            "Componente disponível no ESP Component Registry (espressif/esp-sr)"
+        ],
+        "casos_uso": [
+            "Eletrodomésticos com controle por voz 100% offline e privativo",
+            "Painéis de automação residencial acionados por fala",
+            "Brinquedos interativos e robótica educacional",
+            "Equipamentos hospitalares e industriais com comando sem as mãos"
+        ],
+        "exemplo": "/exemplos/esp-sr.c",
+        "exemplos": "https://github.com/espressif/esp-sr/tree/master/examples",
+        "documentacao": "https://docs.espressif.com/projects/esp-sr/en/latest/",
+        "repositorio": "https://github.com/espressif/esp-sr",
+        "cor": "#6366F1"
+    },
+    "ESP-IoT-Solution": {
+        "nome": "ESP-IoT-Solution",
+        "icone": "🧩",
+        "nome_completo": "ESP-IoT-Solution Driver & Peripheral Suite",
+        "descricao": "Coleção oficial da Espressif com dezenas de drivers, componentes de periféricos, telas touch, sensores e protocolos de barramento prontos para produção.",
+        "linguagem": "C / C++",
+        "tipo": "Biblioteca de Periféricos & Drivers",
+        "funcao_principal": "Acelerar a integração de componentes de hardware (telas LCD/OLED, sensores ambientais/IMU, botões inteligentes, barramentos I2C/SPI/Modbus)",
+        "caracteristicas": [
+            "Drivers completos de sensores (temperatura, umidade, pressão, acelerômetros, luz)",
+            "Gerenciamento avançado de botões físicos, matrizes touch e encoders rotativos",
+            "Drivers para displays LCD e OLED (ST7789, ILI9341, SSD1306) e controladores touch (FT6X36, GT911)",
+            "Pilha industrial Modbus (Master e Slave sobre RS-485 ou TCP)",
+            "Controle de motores de passo e drivers de LED endereçável (WS2812/SK6812)",
+            "Totalmente modularizado no ESP Component Registry"
+        ],
+        "casos_uso": [
+            "Interfaces homem-máquina (IHM / HMI) com telas e botões capacitivos",
+            "Estações meteorológicas e monitoramento de sensores industriais",
+            "Equipamentos de automação industrial integrados via RS-485 Modbus",
+            "Projetos com fitas e matrizes de LED RGB complexas"
+        ],
+        "exemplo": "/exemplos/esp-iot-solution.c",
+        "exemplos": "https://github.com/espressif/esp-iot-solution/tree/master/examples",
+        "documentacao": "https://docs.espressif.com/projects/esp-iot-solution/en/latest/",
+        "repositorio": "https://github.com/espressif/esp-iot-solution",
+        "cor": "#10B981"
+    },
+    "ESP-NOW": {
+        "nome": "ESP-NOW & Mesh",
+        "icone": "📡",
+        "nome_completo": "ESP-NOW Protocol & Mesh-Lite",
+        "descricao": "Protocolo de comunicação sem fio de ultra-baixa latência desenvolvido pela Espressif, operando na faixa de 2.4 GHz sem a necessidade de um roteador Wi-Fi tradicional.",
+        "linguagem": "C / C++",
+        "tipo": "Protocolo de Rede & Mesh",
+        "funcao_principal": "Troca de mensagens ponto-a-ponto, broadcast e formação de redes em malha leves entre dezenas de placas ESP32",
+        "caracteristicas": [
+            "Comunicação direta sem roteador ou ponto de acesso (AP)",
+            "Latência de transmissão de milissegundos e conexão instantânea",
+            "Criptografia nativa com chaves de chaveamento AES-128",
+            "Extremamente econômico em energia, ideal para nós alimentados por bateria",
+            "Capacidade de emparelhamento por controle remoto e broadcast para múltiplos nós",
+            "Suporte ao Mesh-Lite para roteamento em malha com salto IP"
+        ],
+        "casos_uso": [
+            "Controles remotos sem fio e interruptores de parede a bateria",
+            "Redes de sensores agrícolas distribuídas no campo",
+            "Sincronização em tempo real de iluminação cênica e drones",
+            "Alarmes e botões de pânico residenciais"
+        ],
+        "exemplo": "/exemplos/esp-now.c",
+        "exemplos": "https://github.com/espressif/esp-now/tree/master/examples",
+        "documentacao": "https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-reference/network/esp_now.html",
+        "repositorio": "https://github.com/espressif/esp-now",
+        "cor": "#8B5CF6"
+    },
+    "ESP-Zigbee-SDK": {
+        "nome": "ESP-Zigbee-SDK",
+        "icone": "🐝",
+        "nome_completo": "ESP Zigbee SDK (ZCL & ZBOSS)",
+        "descricao": "SDK oficial para desenvolvimento de nós, roteadores e coordenadores Zigbee 3.0 nos SoCs ESP32 com suporte ao rádio 802.15.4 (como ESP32-H2 e ESP32-C6).",
+        "linguagem": "C / C++",
+        "tipo": "Smart Home & Mesh",
+        "funcao_principal": "Construção de redes de automação predial ultraleves e de baixíssimo consumo energético baseadas no padrão Zigbee 3.0",
+        "caracteristicas": [
+            "Implementação certificada Zigbee 3.0 baseada na stack ZBOSS",
+            "Suporte a papéis de Coordenador (ZC), Roteador (ZR) e Dispositivo Final (ZED / Sleepy End Device)",
+            "Biblioteca rica de clusters ZCL (On/Off, Nível, Cor, Temperatura, Medição de Energia)",
+            "Consumo em microampères durante sono profundo para sensores operando por anos a bateria",
+            "Compatibilidade nativa com pontes Zigbee (Home Assistant ZHA/Zigbee2MQTT, Philips Hue)"
+        ],
+        "casos_uso": [
+            "Sensores de presença, porta/janela e vazamento operando a pilha botão",
+            "Lâmpadas e tomadas inteligentes na rede Zigbee 3.0",
+            "Gateways e pontes Zigbee-para-Wi-Fi ou Zigbee-para-Ethernet",
+            "Automação predial comercial com alta densidade de nós"
+        ],
+        "exemplo": "/exemplos/esp-zigbee.c",
+        "exemplos": "https://github.com/espressif/esp-zigbee-sdk/tree/main/examples",
+        "documentacao": "https://docs.espressif.com/projects/esp-zigbee-sdk/en/latest/",
+        "repositorio": "https://github.com/espressif/esp-zigbee-sdk",
+        "cor": "#EC4899"
+    },
+    "ESP-WHO": {
+        "nome": "ESP-WHO",
+        "icone": "📷",
+        "nome_completo": "ESP Image Processing & Vision Framework",
+        "descricao": "Framework da Espressif para processamento de imagens e visão computacional na borda (Edge Vision) com câmeras conectadas ao ESP32.",
+        "linguagem": "C / C++",
+        "tipo": "Visão Computacional & IA",
+        "funcao_principal": "Detecção de rostos, identificação biométrica, detecção de pessoas e processamento de stream de vídeo",
+        "caracteristicas": [
+            "Detecção de faces em tempo real e extração de marcos faciais (Landmarks)",
+            "Reconhecimento facial local com banco de dados de usuários cadastrados",
+            "Detecção de presença humana e contagem de pessoas (Human Detection)",
+            "Otimizado para ESP32-S3 e ESP32-P4 com instruções vetoriais de IA",
+            "Suporte a sensores de câmera DVP e MIPI-CSI (OV2640, OV3660, OV5640, SC030IOT)"
+        ],
+        "casos_uso": [
+            "Controle de acesso por biometria facial",
+            "Campainhas e câmeras de segurança inteligentes (Smart Doorbells)",
+            "Sensores inteligentes de ocupação de salas e escritórios",
+            "Robôs seguidores de pessoas e brinquedos interativos"
+        ],
+        "exemplo": "/exemplos/esp-who.c",
+        "exemplos": "https://github.com/espressif/esp-who/tree/master/examples",
+        "documentacao": "https://github.com/espressif/esp-who",
+        "repositorio": "https://github.com/espressif/esp-who",
+        "cor": "#F97316"
+    },
+    "ESP-NN": {
+        "nome": "ESP-NN",
+        "icone": "🧠",
+        "nome_completo": "ESP Neural Network Acceleration Library",
+        "descricao": "Biblioteca de kernels e operações de redes neurais altamente otimizada para as arquiteturas Xtensa e RISC-V dos chips ESP32.",
+        "linguagem": "C / C++",
+        "tipo": "Biblioteca Especializada de IA",
+        "funcao_principal": "Aceleração de inferência de redes neurais profundas com quantização INT8 e INT16 aproveitando as instruções SIMD vetoriais",
+        "caracteristicas": [
+            "Operações otimizadas: Convolução 2D, Depthwise Conv, Fully Connected e Pooling",
+            "Backend acelerador oficial integrado ao TensorFlow Lite for Microcontrollers (TFLM)",
+            "Quantização eficiente de 8 e 16 bits para redução drástica de uso de RAM e Flash",
+            "Aceleração extrema no ESP32-S3 e ESP32-P4 usando instruções vetoriais dedicadas",
+            "Execução sem overhead de sistema operacional em tempo real"
+        ],
+        "casos_uso": [
+            "Classificação de áudio e sinais de vibração industrial (manutenção preditiva)",
+            "Detecção de anomalias em sensores por modelos TinyML",
+            "Reconhecimento de gestos por IMU",
+            "Visão computacional ultraleve em microcontroladores"
+        ],
+        "exemplo": "/exemplos/esp-nn.c",
+        "exemplos": "https://github.com/espressif/esp-nn/tree/master/test_app",
+        "documentacao": "https://github.com/espressif/esp-nn",
+        "repositorio": "https://github.com/espressif/esp-nn",
+        "cor": "#14B8A6"
+    },
+    "ESP-DSP": {
+        "nome": "ESP-DSP",
+        "icone": "📊",
+        "nome_completo": "ESP Digital Signal Processing Library",
+        "descricao": "Biblioteca oficial de processamento digital de sinais para a família ESP32, fornecendo algoritmos matemáticos acelerados em hardware.",
+        "linguagem": "C / C++",
+        "tipo": "Biblioteca Especializada de Sinais",
+        "funcao_principal": "Execução de cálculos matemáticos pesados como FFT, transformadas, filtragem digital e operações matriciais com máxima velocidade",
+        "caracteristicas": [
+            "Transformadas Rápidas de Fourier (FFT real e complexa) otimizadas em Assembly",
+            "Filtros digitais IIR, FIR e estimadores de Kalman",
+            "Operações com matrizes, vetores e produtos escalares",
+            "Suporte a números de ponto flutuante e ponto fixo (Radix-2 e Radix-4)",
+            "Otimizações personalizadas para arquiteturas Xtensa Dual-Core e RISC-V"
+        ],
+        "casos_uso": [
+            "Análise espectral de áudio e vibrações em tempo real",
+            "Filtros anti-ruído para sensores biomédicos (ECG/EMG) e industriais",
+            "Controle de motores de alta precisão e algoritmos FOC",
+            "Compressão e codificação de dados na borda"
+        ],
+        "exemplo": "/exemplos/esp-dsp.c",
+        "exemplos": "https://github.com/espressif/esp-dsp/tree/master/examples",
+        "documentacao": "https://docs.espressif.com/projects/esp-dsp/en/latest/",
+        "repositorio": "https://github.com/espressif/esp-dsp",
+        "cor": "#A855F7"
+    },
+    "Rust-ESP": {
+        "nome": "Rust on ESP32",
+        "icone": "🦀",
+        "nome_completo": "ESP-RS Rust Ecosystem for ESP32",
+        "descricao": "Ecossistema moderno de desenvolvimento em linguagem Rust para a família ESP32, combinando segurança de memória (Memory Safety), concorrência robusta e alto desempenho.",
+        "linguagem": "Rust",
+        "tipo": "Linguagem & Framework Moderno",
+        "funcao_principal": "Desenvolvimento de firmware seguro e de alta performance tanto em modo bare-metal (no_std via esp-hal) quanto com a pilha completa (std via esp-idf-svc)",
+        "caracteristicas": [
+            "Modo Bare-Metal `no_std` com a biblioteca `esp-hal`: controle total sem RTOS e boot ultrarrápido",
+            "Modo `std` com `esp-idf-svc`: acesso à biblioteca padrão do Rust, Wi-Fi, BLE, HTTP, MQTT e threads",
+            "Prevenção garantida em tempo de compilação contra corrupção de memória e Data Races",
+            "Suporte a targets Xtensa (ESP32, S2, S3) e RISC-V nativo (C2, C3, C6, H2, P4)",
+            "Integração com ecossistema de crates `embedded-hal` e async/await com `embassy`",
+            "Ferramentas oficiais: `espflash` para gravação e monitor serial e `esp-generate` para templates"
+        ],
+        "casos_uso": [
+            "Sistemas críticos onde falhas de memória (Null Pointer, Buffer Overflow) são inaceitáveis",
+            "Aplicações IoT modernas com concorrência assíncrona limpa",
+            "Dispositivos industriais que exigem segurança de alto nível",
+            "Projetos modernos de robótica e instrumentação"
+        ],
+        "exemplo": "/exemplos/rust-esp.rs",
+        "exemplos": "https://github.com/esp-rs/esp-hal/tree/main/examples",
+        "documentacao": "https://esp-rs.github.io/book/",
+        "repositorio": "https://github.com/esp-rs",
+        "cor": "#E44D26"
+    },
+    "Arduino": {
+        "nome": "Arduino Core",
+        "icone": "🛠️",
+        "nome_completo": "Arduino Core for ESP32",
+        "descricao": "Implementação oficial do framework Arduino sobre o ESP-IDF (versões 3.x+ baseadas em ESP-IDF v5.1+), combinando extrema facilidade com os recursos avançados do ESP32.",
+        "linguagem": "C++",
+        "tipo": "Framework Alternativo Popular",
+        "funcao_principal": "Prototipagem rápida, projetos educacionais e desenvolvimento acelerado aproveitando o vasto ecossistema de bibliotecas Arduino",
+        "caracteristicas": [
+            "Sintaxe clássica `setup()` e `loop()` com centenas de milhares de bibliotecas compatíveis",
+            "Execução como uma tarefa FreeRTOS sobre o ESP-IDF oficial",
+            "Suporte completo a Wi-Fi, Bluetooth Classic/BLE, WebServer e WebSockets",
+            "Compatibilidade com Arduino IDE 2.x, PlatformIO e VS Code",
+            "Suporte atualizado a todos os SoCs populares (ESP32, S2, S3, C3, C6)",
+            "Acesso a funções nativas do ESP-IDF quando necessário"
+        ],
+        "casos_uso": [
+            "Prototipagem rápida e validação de conceitos (PoC)",
+            "Projetos educacionais, makers e acadêmicos",
+            "Sistemas IoT simples com dashboards (Blynk, Adafruit IO, ThingSpeak)",
+            "Robótica amadora e automação residencial faça-você-mesmo (DIY)"
         ],
         "exemplo": "/exemplos/arduino.ino",
         "exemplos": "https://github.com/espressif/arduino-esp32/tree/master/docs/en/tutorials",
-        "documentacao": "https://docs.espressif.com/projects/arduino-esp32/",
+        "documentacao": "https://docs.espressif.com/projects/arduino-esp32/en/latest/",
         "repositorio": "https://github.com/espressif/arduino-esp32",
         "cor": "#00979D"
     },
@@ -218,26 +368,22 @@
         "nome": "MicroPython",
         "icone": "🐍",
         "nome_completo": "MicroPython for ESP32",
-        "descricao": "Implementação do Python 3 otimizada para microcontroladores ESP32",
+        "descricao": "Implementação enxuta e eficiente da linguagem Python 3 otimizada para rodar diretamente na CPU do ESP32 com interpretador em tempo real.",
         "linguagem": "Python",
-        "tipo": "Framework Alternativo",
-        "funcao_principal": "Desenvolvimento em Python para prototipagem rápida e scripting",
+        "tipo": "Linguagem & Interpretador Dinâmico",
+        "funcao_principal": "Desenvolvimento interativo e prototipagem ágil em Python com console REPL interativo e manipulação instantânea de hardware",
         "caracteristicas": [
-            "Sintaxe Python 3",
-            "REPL interativo",
-            "Desenvolvimento iterativo",
-            "Bibliotecas padrão Python",
-            "Suporte a Wi-Fi e Bluetooth",
-            "Sistema de arquivos integrado",
-            "Ideal para educação e prototipagem"
+            "Interpretador Python 3 completo com compilação para bytecode em RAM",
+            "Console interativo REPL via porta serial e WebREPL via Wi-Fi",
+            "Sistema de arquivos integrado (LittleFS / FAT) com upload de scripts `.py` sem recompilar",
+            "Módulos nativos `machine`, `network`, `bluetooth`, `espnow` e `asyncio`",
+            "Excelente para ensinar programação e algoritmos com hardware real"
         ],
         "casos_uso": [
-            "Prototipagem rápida",
-            "Educação e ensino",
-            "Scripts de automação",
-            "IoT experimental",
-            "Projetos de ciência de dados embarcados",
-            "Testes e validação"
+            "Ensino de computação física e laboratórios universitários",
+            "Prototipagem ágil e testes rápidos de sensores em bancada",
+            "Scripts de automação de testes de bancada",
+            "Aplicações experimentais de coleta de dados IoT"
         ],
         "exemplo": "/exemplos/micropython.py",
         "exemplos": "https://github.com/micropython/micropython/tree/master/examples",
@@ -246,4 +392,3 @@
         "cor": "#2B2B2B"
     }
 }
-

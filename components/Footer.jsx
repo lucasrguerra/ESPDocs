@@ -49,6 +49,14 @@ export default function Footer() {
 						<ul className="space-y-3 text-sm">
 							<li>
 								<Link
+									href="/componentes"
+									className="hover:text-purple-600 dark:hover:text-purple-400 transition-colors flex items-center gap-1.5 font-medium"
+								>
+									<span>ESP Component Registry</span>
+								</Link>
+							</li>
+							<li>
+								<Link
 									href="/diagnostico"
 									className="hover:text-purple-600 dark:hover:text-purple-400 transition-colors flex items-center gap-1.5 font-medium"
 								>

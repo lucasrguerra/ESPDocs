@@ -24,7 +24,8 @@ import {
 	ArrowRight,
 	ExternalLink,
 	Compass,
-	Layers
+	Layers,
+	Box
 } from "lucide-react";
 
 export default function Header() {
@@ -291,7 +292,7 @@ export default function Header() {
 								setToolsDropdown(false);
 							}}
 							className={`flex items-center gap-1.5 px-3 py-2 rounded-xl font-semibold text-sm transition-all duration-200 cursor-pointer ${
-								isActive("/frameworks") || isActive("/glossario") || isActive("/sobre")
+								isActive("/frameworks") || isActive("/componentes") || isActive("/glossario") || isActive("/sobre")
 									? "bg-purple-50 dark:bg-purple-950/40 text-purple-600 dark:text-purple-400"
 									: "text-slate-650 dark:text-slate-350 hover:bg-slate-100/70 dark:hover:bg-slate-800/60 hover:text-slate-850 dark:hover:text-slate-100"
 							}`}
@@ -303,7 +304,7 @@ export default function Header() {
 						</button>
 
 						{docsDropdown && (
-							<div className="absolute left-0 mt-2 w-72 bg-white dark:bg-slate-900 rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-800 p-3 z-50 animate-fadeIn">
+							<div className="absolute left-0 mt-2 w-80 bg-white dark:bg-slate-900 rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-800 p-3 z-50 animate-fadeIn">
 								<div className="space-y-1">
 									<Link
 										href="/frameworks"
@@ -316,7 +317,22 @@ export default function Header() {
 											<div className="font-bold text-sm text-slate-850 dark:text-slate-100 group-hover:text-purple-600 dark:group-hover:text-purple-400">
 												Frameworks & SDKs
 											</div>
-											<div className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">ESP-IDF, Arduino, MicroPython e mais</div>
+											<div className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">ESP-IDF, Arduino, Rust, RainMaker e mais</div>
+										</div>
+									</Link>
+
+									<Link
+										href="/componentes"
+										className="flex items-start gap-3 p-2.5 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800/70 transition-colors group"
+									>
+										<div className="p-2 rounded-lg bg-purple-50 dark:bg-purple-950/40 text-purple-600 dark:text-purple-400 shrink-0">
+											<Box className="w-4 h-4" />
+										</div>
+										<div>
+											<div className="font-bold text-sm text-slate-850 dark:text-slate-100 group-hover:text-purple-600 dark:group-hover:text-purple-400">
+												Component Registry
+											</div>
+											<div className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Catálogo de drivers e gerador idf_component.yml</div>
 										</div>
 									</Link>
 
@@ -582,6 +598,19 @@ export default function Header() {
 									>
 										<Terminal className="w-4 h-4 text-teal-600 dark:text-teal-400" />
 										<span>Frameworks & SDKs</span>
+									</Link>
+
+									<Link
+										href="/componentes"
+										onClick={() => setDrawerOpen(false)}
+										className={`flex items-center gap-2.5 p-2.5 rounded-xl font-medium text-sm transition-colors ${
+											isActive("/componentes")
+												? "bg-purple-50 dark:bg-purple-950/40 text-purple-600 dark:text-purple-400 font-bold"
+												: "text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800/60"
+										}`}
+									>
+										<Box className="w-4 h-4 text-purple-600 dark:text-purple-400" />
+										<span>Component Registry</span>
 									</Link>
 
 									<Link
