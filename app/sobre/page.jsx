@@ -1,4 +1,4 @@
-import { paginaMeta } from "@/lib/seo";
+import { paginaMeta, jsonLd } from "@/lib/seo";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Link from "next/link";
@@ -38,6 +38,23 @@ export default function Sobre() {
 
 	return (
 		<div className="bg-gradient-to-br from-slate-100 via-slate-50 to-purple-100/40 dark:from-slate-950 dark:via-slate-950 dark:to-slate-900 min-h-screen text-slate-900 dark:text-slate-100 transition-colors duration-300">
+			{/* Metadados E-E-A-T de autoria e organização para o Google */}
+			<script
+				type="application/ld+json"
+				dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd.paginaSobre()) }}
+			/>
+			<script
+				type="application/ld+json"
+				dangerouslySetInnerHTML={{
+					__html: JSON.stringify(
+						jsonLd.trilha([
+							{ nome: "Início", caminho: "/" },
+							{ nome: "Sobre o Projeto", caminho: "/sobre" },
+						])
+					),
+				}}
+			/>
+
 			<a href="#conteudo" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:bg-white focus:px-4 focus:py-2 focus:rounded-md focus:shadow focus:ring-2 focus:ring-purple-500">
 				Ir para o conteúdo
 			</a>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Link from "next/link";
@@ -31,148 +31,373 @@ import {
 	ExternalLink,
 	ShoppingBag,
 	BookOpen,
-	Compass,
-	Smartphone,
 	ShieldCheck,
 	KeyRound,
-	Lock
+	Lock,
+	Radio,
+	Layers,
+	Microchip,
+	Activity,
+	Flame,
+	Check,
+	X,
+	AlertTriangle,
+	Gauge,
+	Volume2,
+	Tv,
+	HardDrive,
+	Filter,
+	ArrowRight,
+	Lightbulb,
+	Info
 } from "lucide-react";
 
-// Dynamic icon mapper to convert choices to sleek Lucide vectors
+// Dynamic icon mapper for options and presets
 const iconMap = {
-	// Categoria
-	"category_wearable": <Battery className="w-6 h-6 text-green-500" />,
-	"category_smarthome": <HomeIcon className="w-6 h-6 text-amber-500" />,
-	"category_multimedia": <Monitor className="w-6 h-6 text-cyan-500" />,
-	"category_industrial": <Cpu className="w-6 h-6 text-purple-500" />,
-	
+	// Categorias
+	"category_smarthome": <HomeIcon className="w-5 h-5 text-amber-500" />,
+	"category_multimedia": <Monitor className="w-5 h-5 text-cyan-500" />,
+	"category_ai_edge": <Bot className="w-5 h-5 text-pink-500" />,
+	"category_wearable": <Battery className="w-5 h-5 text-green-500" />,
+	"category_industrial": <Cpu className="w-5 h-5 text-purple-500" />,
+	"category_basic_iot": <Sparkles className="w-5 h-5 text-emerald-500" />,
+
 	// Conectividade
-	"connectivity_wifi-ble": <Wifi className="w-6 h-6 text-blue-500" />,
-	"connectivity_mesh": <Network className="w-6 h-6 text-orange-500" />,
-	"connectivity_ethernet": <Cable className="w-6 h-6 text-emerald-500" />,
-	"connectivity_none": <Ban className="w-6 h-6 text-slate-500 dark:text-slate-450" />,
-	
-	// Alimentacao
-	"power_battery": <Battery className="w-6 h-6 text-green-500" />,
-	"power_always-on": <Zap className="w-6 h-6 text-yellow-500 animate-pulse" />,
-	
-	// Hardware
-	"hardware_display-camera": (
+	"connectivity_wifi6_dualband": <Wifi className="w-5 h-5 text-indigo-500" />,
+	"connectivity_wifi6_mesh": <Network className="w-5 h-5 text-teal-500" />,
+	"connectivity_mesh_only": <Radio className="w-5 h-5 text-amber-500" />,
+	"connectivity_wifi_ble": <Wifi className="w-5 h-5 text-blue-500" />,
+	"connectivity_bt_classic_audio": <Volume2 className="w-5 h-5 text-pink-500" />,
+	"connectivity_ethernet": <Cable className="w-5 h-5 text-emerald-500" />,
+	"connectivity_none_local": <Ban className="w-5 h-5 text-slate-400" />,
+
+	// Alimentação
+	"power_battery_critical": <Battery className="w-5 h-5 text-green-500" />,
+	"power_ulp_coprocessor": <Activity className="w-5 h-5 text-sky-500" />,
+	"power_always_on": <Zap className="w-5 h-5 text-yellow-500" />,
+
+	// Periféricos / Hardware
+	"hardware_mipi_multimedia": (
 		<div className="flex gap-1 text-cyan-500 shrink-0">
-			<Monitor className="w-5 h-5" />
-			<Camera className="w-5 h-5" />
+			<Monitor className="w-4 h-4" />
+			<Camera className="w-4 h-4" />
 		</div>
 	),
-	"hardware_usb-native": <Cable className="w-6 h-6 text-teal-500" />,
-	"hardware_many-gpios": <Sliders className="w-6 h-6 text-sky-500" />,
-	"hardware_basic": <HelpCircle className="w-6 h-6 text-slate-500 dark:text-slate-400" />,
-	
+	"hardware_usb_otg": <Cable className="w-5 h-5 text-teal-500" />,
+	"hardware_can_twai": <Sliders className="w-5 h-5 text-orange-500" />,
+	"hardware_dac_audio": <Volume2 className="w-5 h-5 text-pink-500" />,
+	"hardware_many_gpios": <SlidersHorizontal className="w-5 h-5 text-sky-500" />,
+	"hardware_standard_sensors": <Cpu className="w-5 h-5 text-slate-400" />,
+
+	// Memória
+	"memory_heavy_psram": <HardDrive className="w-5 h-5 text-purple-500" />,
+	"memory_moderate_sram": <Layers className="w-5 h-5 text-blue-500" />,
+	"memory_minimal_cost": <Sparkles className="w-5 h-5 text-emerald-500" />,
+
 	// IA
-	"ai_ai-ml": <Bot className="w-6 h-6 text-pink-500" />,
-	"ai_standard": <Ban className="w-6 h-6 text-slate-500 dark:text-slate-400" />,
+	"ai_ai_vector": <Bot className="w-5 h-5 text-pink-500" />,
+	"ai_standard": <Ban className="w-5 h-5 text-slate-400" />,
 
 	// Segurança
-	"security_critical": <ShieldCheck className="w-6 h-6 text-teal-500" />,
-	"security_standard": <HelpCircle className="w-6 h-6 text-slate-500 dark:text-slate-400" />,
+	"security_key_manager_dpa": <KeyRound className="w-5 h-5 text-red-500" />,
+	"security_matter_ecdsa": <ShieldCheck className="w-5 h-5 text-teal-500" />,
+	"security_secure_boot": <Lock className="w-5 h-5 text-amber-500" />,
+	"security_standard_tls": <HelpCircle className="w-5 h-5 text-slate-400" />,
+
+	// Ecossistema
+	"ecosystem_arduino_ready": <CheckCircle className="w-5 h-5 text-emerald-500" />,
+	"ecosystem_advanced_idf": <Cpu className="w-5 h-5 text-purple-500" />,
 };
 
 const getOptionIcon = (questionId, value) => {
 	const key = `${questionId}_${value}`;
-	return iconMap[key] || <HelpCircle className="w-6 h-6 text-slate-400" />;
+	return iconMap[key] || <HelpCircle className="w-5 h-5 text-slate-400" />;
 };
 
+// 7 Preset Configurations for 1-click recommendations
+const PRESETS = [
+	{
+		id: "preset_smarthome",
+		title: "Smart Home & Matter",
+		icon: "🏠",
+		badge: "Automação 802.15.4",
+		color: "from-teal-500/20 to-emerald-500/10 border-teal-500/30 text-teal-700 dark:text-teal-300",
+		description: "Wi-Fi 6, Thread/Zigbee e baixo consumo",
+		answers: {
+			category: "smarthome",
+			connectivity: "wifi6_mesh",
+			power: "ulp_coprocessor",
+			hardware: "standard_sensors",
+			memory: "moderate_sram",
+			ai: "standard",
+			security: "matter_ecdsa",
+			ecosystem: "arduino_ready",
+		}
+	},
+	{
+		id: "preset_hmi",
+		title: "Painel Touch & Telas",
+		icon: "🎨",
+		badge: "Display / Câmera",
+		color: "from-cyan-500/20 to-blue-500/10 border-cyan-500/30 text-cyan-700 dark:text-cyan-300",
+		description: "Display LCD/MIPI, PSRAM e alta taxa de quadros",
+		answers: {
+			category: "multimedia",
+			connectivity: "wifi_ble",
+			power: "always_on",
+			hardware: "mipi_multimedia",
+			memory: "heavy_psram",
+			ai: "standard",
+			security: "secure_boot",
+			ecosystem: "arduino_ready",
+		}
+	},
+	{
+		id: "preset_ai",
+		title: "Edge AI & Visão",
+		icon: "🧠",
+		badge: "Aceleração Vetorial",
+		color: "from-pink-500/20 to-purple-500/10 border-pink-500/30 text-pink-700 dark:text-pink-300",
+		description: "Acelerador neural, câmera e alta memória",
+		answers: {
+			category: "ai_edge",
+			connectivity: "wifi_ble",
+			power: "always_on",
+			hardware: "mipi_multimedia",
+			memory: "heavy_psram",
+			ai: "ai_vector",
+			security: "secure_boot",
+			ecosystem: "arduino_ready",
+		}
+	},
+	{
+		id: "preset_wearable",
+		title: "Wearable a Bateria",
+		icon: "🔋",
+		badge: "Deep Sleep <10µA",
+		color: "from-green-500/20 to-emerald-500/10 border-green-500/30 text-green-700 dark:text-green-300",
+		description: "Eficiência extrema e rádio Bluetooth LE",
+		answers: {
+			category: "wearable",
+			connectivity: "wifi_ble",
+			power: "battery_critical",
+			hardware: "standard_sensors",
+			memory: "minimal_cost",
+			ai: "standard",
+			security: "standard_tls",
+			ecosystem: "arduino_ready",
+		}
+	},
+	{
+		id: "preset_wifi6_5ghz",
+		title: "Wi-Fi 6 Dual-Band (5GHz)",
+		icon: "📶",
+		badge: "2.4 & 5 GHz",
+		color: "from-indigo-500/20 to-blue-500/10 border-indigo-500/30 text-indigo-700 dark:text-indigo-300",
+		description: "Banda de 5 GHz com menor interferência de RF",
+		answers: {
+			category: "smarthome",
+			connectivity: "wifi6_dualband",
+			power: "always_on",
+			hardware: "standard_sensors",
+			memory: "moderate_sram",
+			ai: "standard",
+			security: "key_manager_dpa",
+			ecosystem: "arduino_ready",
+		}
+	},
+	{
+		id: "preset_industrial",
+		title: "Industrial / CAN & Rede",
+		icon: "🏭",
+		badge: "Ethernet & TWAI",
+		color: "from-amber-500/20 to-orange-500/10 border-amber-500/30 text-amber-700 dark:text-amber-300",
+		description: "Barramento CAN/TWAI, Ethernet e alta robustez",
+		answers: {
+			category: "industrial",
+			connectivity: "ethernet",
+			power: "always_on",
+			hardware: "can_twai",
+			memory: "moderate_sram",
+			ai: "standard",
+			security: "secure_boot",
+			ecosystem: "arduino_ready",
+		}
+	},
+	{
+		id: "preset_budget",
+		title: "IoT Básico de Baixo Custo",
+		icon: "💸",
+		badge: "Ultra-Econômico",
+		color: "from-emerald-500/20 to-teal-500/10 border-emerald-500/30 text-emerald-700 dark:text-emerald-300",
+		description: "Menor custo por unidade para sensores simples",
+		answers: {
+			category: "basic_iot",
+			connectivity: "wifi_ble",
+			power: "battery_critical",
+			hardware: "standard_sensors",
+			memory: "minimal_cost",
+			ai: "standard",
+			security: "standard_tls",
+			ecosystem: "arduino_ready",
+		}
+	}
+];
+
 export default function Seletor() {
+	const [mode, setMode] = useState("wizard"); // "wizard" | "filter"
 	const [currentStep, setCurrentStep] = useState(0);
 	const [currentAnswer, setCurrentAnswer] = useState(null);
+	const [activePreset, setActivePreset] = useState(null);
+
 	const [answers, setAnswers] = useState({
 		category: null,
 		connectivity: null,
 		power: null,
 		hardware: null,
+		memory: null,
 		ai: null,
 		security: null,
+		ecosystem: null,
 	});
+
 	const [showResults, setShowResults] = useState(false);
 	const [showSummary, setShowSummary] = useState(false);
+
+	// Direct Parametric Filter State (for "filter" mode)
+	const [filters, setFilters] = useState({
+		wifi6: false,
+		wifi5ghz: false,
+		bluetoothClassic: false,
+		leAudio: false,
+		matter: false,
+		ethernet: false,
+		aiAccel: false,
+		psram: false,
+		mipiDisplayCamera: false,
+		usbOTG: false,
+		canBus: false,
+		dac: false,
+		touch: false,
+		arduinoReady: false,
+		keyManager: false,
+	});
 
 	const questions = [
 		{
 			id: "category",
-			question: "Qual é o foco principal ou aplicação do seu projeto?",
-			description: "Categorizar seu projeto nos ajuda a equilibrar fatores de tamanho físico, consumo de energia e poder computacional do chip.",
+			question: "1. Qual é o foco principal ou aplicação do seu projeto?",
+			description: "Categorizar sua aplicação ajuda a equilibrar formato físico, custo por unidade, barramentos de mídia e poder computacional.",
 			options: [
-				{ value: "wearable", label: "Dispositivo Portátil ou Vestível (Wearable)", icon: "category_wearable" },
-				{ value: "smarthome", label: "Automação / Smart Home / IoT Conectado", icon: "category_smarthome" },
-				{ value: "multimedia", label: "Interface Multimídia (Telas / Câmeras / HMI)", icon: "category_multimedia" },
-				{ value: "industrial", label: "Industrial / Robótica / Alto Desempenho", icon: "category_industrial" },
+				{ value: "smarthome", label: "Automação / Smart Home / Dispositivos Conectados", icon: "category_smarthome" },
+				{ value: "multimedia", label: "Interfaces Gráficas (Telas LCD/MIPI / Câmeras / IHM)", icon: "category_multimedia" },
+				{ value: "ai_edge", label: "Inteligência Artificial na Borda (Visão / Áudio / TinyML)", icon: "category_ai_edge" },
+				{ value: "wearable", label: "Dispositivo Portátil / Vestível (Alimentado a Bateria)", icon: "category_wearable" },
+				{ value: "industrial", label: "Industrial / Robótica / Redes de Campo e Automação", icon: "category_industrial" },
+				{ value: "basic_iot", label: "IoT Básico / Sensor Conectado de Ultra-Baixo Custo", icon: "category_basic_iot" },
 			]
 		},
 		{
 			id: "connectivity",
-			question: "Qual tecnologia de rede sem fio (RF) você precisa?",
-			description: "O ecossistema ESP32 oferece desde rádios Wi-Fi tradicionais até controladores industriais cabeados ou rádio Mesh 802.15.4.",
+			question: "2. Qual tecnologia de rede sem fio ou cabeada você precisa?",
+			description: "O ecossistema ESP32 oferece desde rádios Wi-Fi 6 Dual-Band (2.4/5GHz), Bluetooth 6 e Mesh 802.15.4 até Ethernet cabeada e Bluetooth Clássico.",
 			options: [
-				{ value: "wifi-ble", label: "Wi-Fi + Bluetooth BLE (IoT Tradicional)", icon: "connectivity_wifi-ble" },
-				{ value: "mesh", label: "Matter / Zigbee / Thread (Redes Mesh)", icon: "connectivity_mesh" },
-				{ value: "ethernet", label: "Rede Cabeada Industrial (Ethernet)", icon: "connectivity_ethernet" },
-				{ value: "none", label: "Apenas Local / Sem Conexão Sem Fio", icon: "connectivity_none" },
+				{ value: "wifi6_dualband", label: "Wi-Fi 6 Dual-Band (2.4 GHz e 5 GHz) + Bluetooth 6.0", icon: "connectivity_wifi6_dualband" },
+				{ value: "wifi6_mesh", label: "Wi-Fi 6 + Matter / Zigbee 3.0 / Thread (802.15.4)", icon: "connectivity_wifi6_mesh" },
+				{ value: "mesh_only", label: "Apenas Rádio Mesh (Zigbee / Thread / Matter) + BLE (Sem Wi-Fi)", icon: "connectivity_mesh_only" },
+				{ value: "wifi_ble", label: "Wi-Fi 4 Tradicional (2.4 GHz) + Bluetooth LE", icon: "connectivity_wifi_ble" },
+				{ value: "bt_classic_audio", label: "Bluetooth Clássico (Áudio A2DP/SPP) ou LE Audio", icon: "connectivity_bt_classic_audio" },
+				{ value: "ethernet", label: "Rede Cabeada Industrial (Ethernet MAC integrado)", icon: "connectivity_ethernet" },
+				{ value: "none_local", label: "Apenas Processamento Local / Sem Conexão Sem Fio", icon: "connectivity_none_local" },
 			]
 		},
 		{
 			id: "power",
-			question: "Como o dispositivo será alimentado eletricamente?",
-			description: "A escolha da fonte de energia determina a importância de blocos internos de silício de consumo ultra-baixo (Deep Sleep).",
+			question: "3. Como o dispositivo será alimentado eletricamente?",
+			description: "A escolha da fonte define a importância de modos de Deep Sleep ultra-baixos (<10µA) e coprocessadores ULP para monitoramento contínuo.",
 			options: [
-				{ value: "battery", label: "Bateria ou Painel Solar (Consumo Ultra-Baixo)", icon: "power_battery" },
-				{ value: "always-on", label: "Tomada, Fonte Externa ou USB (Sempre Ativo)", icon: "power_always-on" },
+				{ value: "battery_critical", label: "Bateria / Solar (Consumo Ultra-Baixo em Deep Sleep <10µA)", icon: "power_battery_critical" },
+				{ value: "ulp_coprocessor", label: "Misto / Monitorar sensores em background via Coprocessador ULP", icon: "power_ulp_coprocessor" },
+				{ value: "always_on", label: "Tomada, Fonte Externa ou USB (Sempre Ativo / Alto Desempenho)", icon: "power_always_on" },
 			]
 		},
 		{
 			id: "hardware",
-			question: "Quais periféricos físicos ou barramentos serão conectados?",
-			description: "Determinados módulos requerem interfaces dedicadas no silício, como barramento LCD, USB nativo ou alta quantidade de GPIOs.",
+			question: "4. Quais periféricos ou barramentos físicos especiais você vai usar?",
+			description: "Algumas funcionalidades exigem blocos de silício dedicados, como interfaces de vídeo MIPI/RGB, barramento CAN industrial ou USB nativo.",
 			options: [
-				{ value: "display-camera", label: "Displays Gráficos LCD ou Câmeras", icon: "hardware_display-camera" },
-				{ value: "usb-native", label: "Conexão USB Nativa (Emular Teclado/Disco)", icon: "hardware_usb-native" },
-				{ value: "many-gpios", label: "Muitos Atuadores / Pinos (Mais de 30 GPIOs)", icon: "hardware_many-gpios" },
-				{ value: "basic", label: "Básico (Poucos sensores com I2C, SPI ou UART)", icon: "hardware_basic" },
+				{ value: "mipi_multimedia", label: "Display Gráfico LCD (RGB/MIPI DSI) ou Câmeras (DVP/MIPI CSI)", icon: "hardware_mipi_multimedia" },
+				{ value: "usb_otg", label: "USB Nativo OTG (Emular teclado, mouse, disco ou modo Host)", icon: "hardware_usb_otg" },
+				{ value: "can_twai", label: "Barramento Automotivo / Industrial CAN (TWAI ou CAN-FD)", icon: "hardware_can_twai" },
+				{ value: "dac_audio", label: "Áudio Analógico com DAC integrado ou múltiplos I2S", icon: "hardware_dac_audio" },
+				{ value: "many_gpios", label: "Muitos pinos livres de expansão (Mais de 35 GPIOs físicos)", icon: "hardware_many_gpios" },
+				{ value: "standard_sensors", label: "Sensores comuns com barramentos tradicionais (I2C, SPI, UART, PWM)", icon: "hardware_standard_sensors" },
+			]
+		},
+		{
+			id: "memory",
+			question: "5. Qual o volume de memória RAM / PSRAM necessário?",
+			description: "Projetos gráficos (LVGL), visão computacional, áudio ou pilhas pesadas exigem suporte a PSRAM externa ou integrada de alta densidade.",
+			options: [
+				{ value: "heavy_psram", label: "Alta Densidade de PSRAM (>4 MB a 64 MB para buffers de vídeo, IA ou LVGL)", icon: "memory_heavy_psram" },
+				{ value: "moderate_sram", label: "SRAM interna equilibrada (320 KB a 512 KB) com ou sem PSRAM leve", icon: "memory_moderate_sram" },
+				{ value: "minimal_cost", label: "Memória compacta e econômica (firmware enxuto de baixo custo)", icon: "memory_minimal_cost" },
 			]
 		},
 		{
 			id: "ai",
-			question: "Seu projeto usará Inteligência Artificial local (Edge AI)?",
-			description: "Aceleração por hardware permite rodar redes neurais, reconhecimento de voz ou visão computacional na borda em milissegundos.",
+			question: "6. Seu projeto usará Inteligência Artificial local (Edge AI / TinyML)?",
+			description: "Instruções vetoriais e aceleradores neurais dedicados em hardware reduzem o tempo de inferência de redes neurais de segundos para milissegundos.",
 			options: [
-				{ value: "ai-ml", label: "Sim, preciso rodar modelos de IA localmente", icon: "ai_ai-ml" },
-				{ value: "standard", label: "Não, processamento lógico comum é suficiente", icon: "ai_standard" },
+				{ value: "ai_vector", label: "Sim, preciso de acelerador vetorial de IA em hardware (TinyML / Visão)", icon: "ai_ai_vector" },
+				{ value: "standard", label: "Não, processamento lógico e matemático comum é suficiente", icon: "ai_standard" },
 			]
 		},
 		{
 			id: "security",
-			question: "Qual requisito de segurança o produto precisa atender?",
-			description: "As séries diferem bastante aqui: nem todas têm curvas elípticas (ECC), ECDSA em hardware ou Key Manager, e duas delas sequer têm acelerador AES. Escolha o requisito mais forte do seu projeto.",
+			question: "7. Qual nível de segurança e criptografia por hardware o produto exige?",
+			description: "As séries diferem em suporte a Key Manager, proteção contra ataques de canal lateral (DPA), curvas elípticas (ECC/ECDSA) e aceleradores AES.",
 			options: [
-				{ value: "matter", label: "Atestado de dispositivo para Matter ou assinatura digital (ECDSA)", icon: "security_matter" },
-				{ value: "chaves", label: "Chave privada que nunca pode ser lida pelo firmware (Key Manager)", icon: "security_chaves" },
-				{ value: "boot", label: "Boot seguro e flash criptografada contra cópia do firmware", icon: "security_boot" },
-				{ value: "tls", label: "Só TLS/HTTPS comum, sem requisito regulatório", icon: "security_tls" },
+				{ value: "key_manager_dpa", label: "Proteção Máxima: Key Manager (chave inacessível ao firmware) e Proteção DPA", icon: "security_key_manager_dpa" },
+				{ value: "matter_ecdsa", label: "Atestado Matter ou Assinatura Digital por hardware (ECDSA / ECC)", icon: "security_matter_ecdsa" },
+				{ value: "secure_boot", label: "Boot Seguro V2 e Criptografia de Flash (XTS-AES) contra cópia do firmware", icon: "security_secure_boot" },
+				{ value: "standard_tls", label: "Comunicação TLS/HTTPS comum ou sem requisito regulatório crítico", icon: "security_standard_tls" },
+			]
+		},
+		{
+			id: "ecosystem",
+			question: "8. Qual é a sua preferência de ambiente de desenvolvimento?",
+			description: "Chips mais maduros têm amplo suporte oficial no Arduino Core com centenas de bibliotecas prontas, enquanto chips preliminares utilizam ESP-IDF.",
+			options: [
+				{ value: "arduino_ready", label: "Pronto para Arduino IDE (suporte maduro com vasta coleção de bibliotecas)", icon: "ecosystem_arduino_ready" },
+				{ value: "advanced_idf", label: "ESP-IDF profissional ou aberto a silícios de última geração (S31, H4, etc.)", icon: "ecosystem_advanced_idf" },
 			]
 		}
 	];
 
 	const handleAnswer = (questionId, value) => {
 		setCurrentAnswer(value);
-		setAnswers({ ...answers, [questionId]: value });
+		setAnswers(prev => ({ ...prev, [questionId]: value }));
+		setActivePreset(null);
 	};
 
 	const handleNext = () => {
 		if (currentAnswer !== null) {
 			if (currentStep < questions.length - 1) {
-				setCurrentStep(currentStep + 1);
-				setCurrentAnswer(answers[questions[currentStep + 1].id] || null);
+				const nextStep = currentStep + 1;
+				setCurrentStep(nextStep);
+				setCurrentAnswer(answers[questions[nextStep].id] || null);
 			} else {
 				setShowSummary(true);
 			}
+		}
+	};
+
+	const goBack = () => {
+		if (currentStep > 0) {
+			const prevStep = currentStep - 1;
+			setCurrentStep(prevStep);
+			setCurrentAnswer(answers[questions[prevStep].id] || null);
 		}
 	};
 
@@ -181,273 +406,477 @@ export default function Seletor() {
 		setCurrentAnswer(null);
 		setShowResults(false);
 		setShowSummary(false);
+		setActivePreset(null);
 		setAnswers({
 			category: null,
 			connectivity: null,
 			power: null,
 			hardware: null,
+			memory: null,
 			ai: null,
 			security: null,
+			ecosystem: null,
 		});
 	};
 
-	const goBack = () => {
-		if (currentStep > 0) {
-			setCurrentStep(currentStep - 1);
-			setCurrentAnswer(answers[questions[currentStep - 1].id] || null);
-		}
+	const applyPreset = (preset) => {
+		setAnswers(preset.answers);
+		setActivePreset(preset.id);
+		setCurrentStep(questions.length - 1);
+		setCurrentAnswer(preset.answers.ecosystem);
+		setShowSummary(false);
+		setShowResults(true);
 	};
 
+	// Comprehensive Multi-Criteria Scoring Engine based on series.json
 	const calculateRecommendations = () => {
 		const scores = {};
 		const reasons = {};
-		
+		const alerts = {};
+
 		Object.keys(seriesData).forEach(key => {
 			scores[key] = 0;
 			reasons[key] = [];
+			alerts[key] = [];
 			const serie = seriesData[key];
-			
-			// 1. CATEGORIA DO PROJETO (category)
-			if (answers.category === "wearable") {
-				if (serie.bluetooth !== "Não") {
-					scores[key] += 10;
-					reasons[key].push("Suporte de rádio Bluetooth de alta eficiência para pareamento");
+			const seg = serie.seguranca || {};
+
+			// 1. CATEGORIA (category)
+			if (answers.category === "smarthome") {
+				if (serie.matter === "Sim") {
+					scores[key] += 20;
+					reasons[key].push("Suporte nativo a Matter para interoperabilidade residencial inteligente");
 				}
-				const sleep = serie.consumo_energia?.deep_sleep;
-				if (sleep) {
-					const uaMatch = sleep.match(/(\d+)\s*µA/);
-					if (uaMatch && parseInt(uaMatch[1]) <= 10) {
-						scores[key] += 15;
-						reasons[key].push(`Modo standby ultra-eficiente (${sleep}) conserva baterias comerciais`);
-					}
+				if (serie.zigbee_thread && serie.zigbee_thread !== "Não") {
+					scores[key] += 15;
+					reasons[key].push("Rádio 802.15.4 integrado compatível com Zigbee 3.0 e Thread");
 				}
-				if (key === "ESP32-C2" || key === "ESP32-C3") {
-					scores[key] += 6;
-					reasons[key].push("Footprint de tamanho reduzido ideal para dispositivos ultra-compactos");
-				}
-			} else if (answers.category === "smarthome") {
 				if (serie.wifi && !String(serie.wifi).includes("Não")) {
 					scores[key] += 10;
-					reasons[key].push("Cadeia RF Wi-Fi robusta integrada para integração residencial");
-				}
-				if (serie.matter === "Sim") {
-					scores[key] += 15;
-					reasons[key].push("Suporte oficial a Matter para alta interoperabilidade inteligente");
+					reasons[key].push("Rádio Wi-Fi integrado para conexão direta ao roteador");
 				}
 			} else if (answers.category === "multimedia") {
-				if (serie.lcd || serie.mipi_dsi) {
-					scores[key] += 15;
-					reasons[key].push("Barramentos dedicados no silício para controle de telas coloridas");
-				}
-				if (serie.camera || serie.mipi_csi) {
-					scores[key] += 15;
-					reasons[key].push("Linhas dedicadas para conexão de câmeras de vídeo");
-				}
-				if (serie.psram_externa && serie.psram_externa !== "Não") {
-					scores[key] += 10;
-					reasons[key].push("Suporte a PSRAM externa de alta densidade para buffers e quadros");
-				}
-			} else if (answers.category === "industrial") {
-				if (serie.nucleos.includes("2")) {
-					scores[key] += 12;
-					reasons[key].push("Arquitetura Dual-Core ideal para loops síncronos e processamento paralelo");
-				}
-				if (parseInt(serie.gpio) >= 30) {
-					scores[key] += 10;
-					reasons[key].push(`Grande número de portas digitais (${serie.gpio} GPIOs)`);
-				}
-				if (serie.aceleradores_ia) {
-					scores[key] += 10;
-					reasons[key].push("Acelerador neural de silício ideal para controle de feedback preditivo");
-				}
-			}
-
-			// 2. CONECTIVIDADE SEM FIO (connectivity)
-			if (answers.connectivity === "wifi-ble") {
-				if (serie.wifi && !String(serie.wifi).includes("Não") && serie.bluetooth !== "Não") {
+				if (serie.mipi_dsi || serie.mipi_csi) {
+					scores[key] += 30;
+					reasons[key].push("Barramentos avançados de alta velocidade MIPI DSI (telas) e MIPI CSI (câmeras)");
+				} else if (serie.lcd || serie.camera) {
 					scores[key] += 20;
-					reasons[key].push(`Conexão de rádio integrada Wi-Fi (${serie.wifi}) e Bluetooth (${serie.bluetooth})`);
-				} else if (serie.wifi && !String(serie.wifi).includes("Não")) {
-					scores[key] += 8;
-					reasons[key].push("Possui conexão Wi-Fi ativa, mas carece de Bluetooth");
+					reasons[key].push("Interfaces dedicadas em hardware para telas LCD RGB e câmeras DVP");
 				} else {
-					scores[key] -= 80;
-					reasons[key].push("Incompatível: Necessita de rádio Wi-Fi ou Bluetooth");
+					scores[key] -= 35;
+					alerts[key].push("Sem barramentos dedicados para telas coloridas ou câmeras (apenas SPI/I2C simples)");
 				}
-			} else if (answers.connectivity === "mesh") {
-				if (serie.matter === "Sim") {
-					scores[key] += 25;
-					reasons[key].push("Rádio 802.15.4 integrado de alto alcance para barramentos Mesh (Zigbee/Thread)");
-				} else {
-					scores[key] -= 15;
-					reasons[key].push("Sem rádio mesh 802.15.4 integrado no chip");
-				}
-			} else if (answers.connectivity === "ethernet") {
-				if (serie.ethernet === "Sim" || serie.ethernet_mac === "Sim") {
-					scores[key] += 25;
-					reasons[key].push("Controlador MAC Ethernet cabeado para conexões imunes a ruídos RF");
-				} else {
-					scores[key] -= 10;
-					reasons[key].push("Requer shield ou controlador externo para conexão de rede cabeada");
-				}
-			} else if (answers.connectivity === "none") {
-				if (serie.wifi === "Não" || serie.bluetooth === "Não" || key === "ESP32-H2" || key === "ESP32-C2") {
-					scores[key] += 15;
-					reasons[key].push("Microcontrolador focado em baixo custo e alta eficiência para circuitos locais");
-				} else {
-					scores[key] += 5;
-				}
-			}
 
-			// 3. FONTE DE ALIMENTAÇÃO & CONSUMO (power)
-			if (answers.power === "battery") {
+				if (serie.psram_externa && serie.psram_externa !== "Não") {
+					scores[key] += 15;
+					reasons[key].push("Suporte a PSRAM de alta capacidade para framebuffers gráficos e processamento de imagem");
+				}
+			} else if (answers.category === "ai_edge") {
+				if (serie.aceleradores_ia) {
+					scores[key] += 35;
+					reasons[key].push(`Aceleração neural e instruções vetoriais dedicadas (${serie.aceleradores_ia})`);
+				} else {
+					scores[key] -= 25;
+					alerts[key].push("Sem aceleradores neurais dedicados (inferência por software)");
+				}
+				if (serie.nucleos && serie.nucleos.includes("2")) {
+					scores[key] += 10;
+					reasons[key].push("Processador Dual-Core para pipeline paralelo de captura e inferência");
+				}
+			} else if (answers.category === "wearable") {
 				const sleep = serie.consumo_energia?.deep_sleep;
 				if (sleep) {
 					const uaMatch = sleep.match(/(\d+)\s*µA/);
 					if (uaMatch && parseInt(uaMatch[1]) <= 10) {
 						scores[key] += 20;
-						reasons[key].push(`Standby em Deep Sleep de apenas ${sleep} maximiza fontes recarregáveis`);
-					} else {
-						scores[key] += 10;
-						reasons[key].push(`Gerenciamento térmico e modo de suspensão em ${sleep}`);
+						reasons[key].push(`Consumo em Deep Sleep ultrabaixo de apenas ${sleep} preserva baterias compactas`);
 					}
-				} else {
-					scores[key] -= 10;
-					reasons[key].push("Standby de energia menos otimizado para longos ciclos de bateria");
 				}
-			} else if (answers.power === "always-on") {
-				if (serie.nucleos.includes("2")) {
-					scores[key] += 10;
-					reasons[key].push("Desempenho multitarefa constante garantido por núcleos redundantes");
+				if (serie.bluetooth && serie.bluetooth !== "Não") {
+					scores[key] += 15;
+					reasons[key].push("Rádio Bluetooth de alta eficiência energética para pareamento contínuo");
 				}
-				if (parseInt(serie.frequencia) >= 240) {
+				if (key === "ESP32-C2" || key === "ESP32-C3" || key === "ESP32-H2") {
 					scores[key] += 10;
-					reasons[key].push(`Velocidade de cálculo mantida em clock máximo de ${serie.frequencia}`);
+					reasons[key].push("Encapsulamento compacto QFN reduz o footprint na placa");
+				}
+			} else if (answers.category === "industrial") {
+				if (serie.ethernet || serie.ethernet_mac) {
+					scores[key] += 25;
+					reasons[key].push("Controlador MAC Ethernet integrado para conexões cabeadas industriais imunes a ruídos de RF");
+				}
+				if (serie.can) {
+					scores[key] += 20;
+					reasons[key].push(`Interface de barramento industrial ${serie.can}`);
+				}
+				if (parseInt(serie.gpio) >= 30) {
+					scores[key] += 10;
+					reasons[key].push(`Ampla contagem de portas digitais (${serie.gpio} GPIOs) para relés e atuadores`);
+				}
+			} else if (answers.category === "basic_iot") {
+				if (key === "ESP32-C2" || key === "ESP32-C3" || key === "ESP32-C61") {
+					scores[key] += 25;
+					reasons[key].push("Excelente relação custo-benefício para sensores e atuadores conectados em escala");
+				}
+				if (serie.wifi && !String(serie.wifi).includes("Não") && serie.bluetooth !== "Não") {
+					scores[key] += 15;
+					reasons[key].push("Wi-Fi + BLE integrados em módulo econômico");
 				}
 			}
 
-			// 4. INTERFACE E PERIFÉRICOS (hardware)
-			if (answers.hardware === "display-camera") {
-				if ((serie.lcd || serie.mipi_dsi) && (serie.camera || serie.mipi_csi)) {
-					scores[key] += 25;
-					reasons[key].push("Possui barramento flexível LCD e câmera digital rodando simultaneamente");
-				} else if (serie.lcd || serie.mipi_dsi || serie.camera || serie.mipi_csi) {
+			// 2. CONECTIVIDADE (connectivity)
+			if (answers.connectivity === "wifi6_dualband") {
+				if (String(serie.wifi).includes("5 GHz") || String(serie.wifi).includes("dual-band")) {
+					scores[key] += 40;
+					reasons[key].push("Exclusivo Wi-Fi 6 Dual-Band (2.4 GHz e 5 GHz) para ambientes com alto ruído de 2.4 GHz");
+				} else if (String(serie.wifi).includes("Wi-Fi 6")) {
 					scores[key] += 15;
-					reasons[key].push("Suporte para telas gráficas ou interfaces de captura de imagem");
-				} else {
-					scores[key] -= 50;
-					reasons[key].push("Incompatível: Sem barramentos físicos dedicados para telas e câmeras");
-				}
-			} else if (answers.hardware === "usb-native") {
-				if (serie.usb && serie.usb !== "Não") {
-					scores[key] += 25;
-					reasons[key].push(`Interface física USB OTG integrada (${serie.usb}) para depuração direta`);
+					reasons[key].push("Wi-Fi 6 (802.11ax), porém operando apenas na faixa de 2.4 GHz");
 				} else {
 					scores[key] -= 35;
-					reasons[key].push("Incompatível: Requer depurador USB-Serial de placa externa");
+					alerts[key].push("Não possui suporte a Wi-Fi na banda de 5 GHz");
 				}
-			} else if (answers.hardware === "many-gpios") {
-				const gpios = parseInt(serie.gpio);
-				if (gpios >= 35) {
-					scores[key] += 20;
-					reasons[key].push(`Grade extensiva de portas de expansão com ${gpios} pinos GPIO livres`);
-				} else if (gpios >= 22) {
-					scores[key] += 10;
-					reasons[key].push(`Portas GPIO moderadas (${gpios} pinos)`);
+			} else if (answers.connectivity === "wifi6_mesh") {
+				if (String(serie.wifi).includes("Wi-Fi 6") && serie.matter === "Sim") {
+					scores[key] += 30;
+					reasons[key].push("Wi-Fi 6 (802.11ax) somado a rádio 802.15.4 para Thread/Zigbee/Matter");
+				} else if (serie.matter === "Sim") {
+					scores[key] += 15;
+					reasons[key].push("Suporte a Matter/Thread, mas rádio Wi-Fi em padrão Wi-Fi 4 ou ausente");
 				} else {
 					scores[key] -= 20;
-					reasons[key].push(`Grade de pinagem física restrita (${gpios} GPIOs)`);
+					alerts[key].push("Sem rádio 802.15.4 integrado para Thread/Zigbee");
 				}
-			} else if (answers.hardware === "basic") {
+			} else if (answers.connectivity === "mesh_only") {
+				if ((serie.wifi === "Não" || !serie.wifi) && serie.matter === "Sim") {
+					scores[key] += 35;
+					reasons[key].push("Foco 100% em 802.15.4 (Zigbee/Thread/Matter) sem o consumo do rádio Wi-Fi");
+				} else if (serie.matter === "Sim") {
+					scores[key] += 20;
+					reasons[key].push("Suporta redes Mesh (Zigbee/Thread), mas inclui rádio Wi-Fi adicional");
+				} else {
+					scores[key] -= 30;
+					alerts[key].push("Sem rádio 802.15.4 para protocolo Thread ou Zigbee");
+				}
+			} else if (answers.connectivity === "wifi_ble") {
+				if (serie.wifi && !String(serie.wifi).includes("Não") && serie.bluetooth && serie.bluetooth !== "Não") {
+					scores[key] += 25;
+					reasons[key].push(`Pilha completa com Wi-Fi (${serie.wifi}) e Bluetooth (${serie.bluetooth})`);
+				} else if (serie.wifi && !String(serie.wifi).includes("Não")) {
+					scores[key] += 10;
+					alerts[key].push("Possui Wi-Fi, mas não possui rádio Bluetooth integrado");
+				} else {
+					scores[key] -= 60;
+					alerts[key].push("Incompatível: Não possui rádio Wi-Fi integrado");
+				}
+			} else if (answers.connectivity === "bt_classic_audio") {
+				if (String(serie.bluetooth).includes("Classic") || String(serie.bluetooth).includes("Clássico")) {
+					scores[key] += 35;
+					reasons[key].push("Suporte a Bluetooth Clássico (BR/EDR) com perfis A2DP de áudio e SPP serial");
+				} else if (String(serie.bluetooth).includes("LE Audio")) {
+					scores[key] += 35;
+					reasons[key].push("Suporte a Bluetooth LE Audio de última geração (canais isócronos BIS/CIS)");
+				} else if (serie.bluetooth && serie.bluetooth !== "Não") {
+					scores[key] += 5;
+					alerts[key].push("Suporta apenas Bluetooth LE (BLE), sem perfis tradicionais de áudio clássico A2DP");
+				} else {
+					scores[key] -= 40;
+					alerts[key].push("Não possui rádio Bluetooth");
+				}
+			} else if (answers.connectivity === "ethernet") {
+				if (serie.ethernet || serie.ethernet_mac) {
+					scores[key] += 35;
+					reasons[key].push("Controlador MAC Ethernet nativo integrado (requer apenas transceiver PHY)");
+				} else {
+					scores[key] -= 25;
+					alerts[key].push("Sem MAC Ethernet interno (necessita de módulo SPI Ethernet externo como W5500)");
+				}
+			} else if (answers.connectivity === "none_local") {
+				if (serie.wifi === "Não" || serie.bluetooth === "Não" || key === "ESP32-P4") {
+					scores[key] += 25;
+					reasons[key].push("Arquitetura orientada a processamento local dedicado sem custo de transceivers de rádio");
+				} else {
+					scores[key] += 10;
+				}
+			}
+
+			// 3. ALIMENTAÇÃO (power)
+			if (answers.power === "battery_critical") {
+				const sleep = serie.consumo_energia?.deep_sleep;
+				if (sleep) {
+					const uaMatch = sleep.match(/(\d+)\s*µA/);
+					if (uaMatch && parseInt(uaMatch[1]) <= 10) {
+						scores[key] += 25;
+						reasons[key].push(`Consumo de suspensão de ${sleep} permite operação por meses em bateria`);
+					} else {
+						scores[key] += 10;
+						reasons[key].push(`Modo de baixo consumo de ${sleep}`);
+					}
+				}
+				if (serie.coprocessador_ulp && serie.coprocessador_ulp !== "Não") {
+					scores[key] += 10;
+					reasons[key].push("Coprocessador ULP permite checar pinos sem despertar a CPU principal");
+				}
+			} else if (answers.power === "ulp_coprocessor") {
+				if (serie.coprocessador_ulp && serie.coprocessador_ulp !== "Não") {
+					scores[key] += 30;
+					reasons[key].push(`Coprocessador ULP / CPU de Baixo Consumo (${serie.coprocessador_ulp})`);
+				} else {
+					scores[key] -= 15;
+					alerts[key].push("Sem coprocessador ULP dedicado");
+				}
+			} else if (answers.power === "always_on") {
+				if (serie.nucleos && serie.nucleos.includes("2")) {
+					scores[key] += 15;
+					reasons[key].push("Processador Dual-Core para multitarefa paralela contínua");
+				}
+				const freqMatch = serie.frequencia?.match(/(\d+)\s*MHz/);
+				if (freqMatch && parseInt(freqMatch[1]) >= 240) {
+					scores[key] += 15;
+					reasons[key].push(`Frequência de clock de alto desempenho (${serie.frequencia})`);
+				}
+			}
+
+			// 4. HARDWARE & PERIFÉRICOS (hardware)
+			if (answers.hardware === "mipi_multimedia") {
+				if (serie.mipi_dsi || serie.mipi_csi) {
+					scores[key] += 35;
+					reasons[key].push("Interface MIPI DSI (telas) e MIPI CSI (câmeras) com alto throughput");
+				} else if (serie.lcd || serie.camera) {
+					scores[key] += 20;
+					reasons[key].push("Interfaces paralelas para LCD RGB e câmeras DVP de 8/16 bits");
+				} else {
+					scores[key] -= 45;
+					alerts[key].push("Sem interfaces dedicadas de tela/câmera (limitado a barramento SPI)");
+				}
+			} else if (answers.hardware === "usb_otg") {
+				if (serie.usb && String(serie.usb).includes("OTG 2.0")) {
+					scores[key] += 35;
+					reasons[key].push(`Porta USB 2.0 High-Speed OTG (${serie.usb}) para transferência ultrarrápida`);
+				} else if (serie.usb && String(serie.usb).includes("OTG")) {
+					scores[key] += 25;
+					reasons[key].push(`Interface USB OTG 1.1 integrada (${serie.usb}) para emulação HID e Host`);
+				} else if (serie.usb && String(serie.usb).includes("Serial/JTAG")) {
+					scores[key] += 10;
+					alerts[key].push("USB integrado apenas para Serial/JTAG (não suporta emulação de teclado/mouse HID nativo)");
+				} else {
+					scores[key] -= 30;
+					alerts[key].push("Sem USB nativo (requer chip conversor USB-UART externo)");
+				}
+			} else if (answers.hardware === "can_twai") {
+				if (serie.can && String(serie.can).includes("CAN FD")) {
+					scores[key] += 35;
+					reasons[key].push("Controlador avançado CAN-FD (Flexible Data-Rate) para alta largura de banda automotiva");
+				} else if (serie.can) {
+					scores[key] += 25;
+					reasons[key].push(`Controlador de barramento industrial ${serie.can}`);
+				} else {
+					scores[key] -= 25;
+					alerts[key].push("Sem controlador de barramento CAN / TWAI nativo");
+				}
+			} else if (answers.hardware === "dac_audio") {
+				if (serie.dac && serie.dac !== "Não") {
+					scores[key] += 30;
+					reasons[key].push(`Conversores Digital-Analógico embutidos (${serie.dac}) para geração de som sem DAC externo`);
+				} else if (serie.i2s && parseInt(serie.i2s) >= 2) {
+					scores[key] += 15;
+					reasons[key].push(`Múltiplos barramentos I2S (${serie.i2s} interfaces) para codecs de áudio`);
+				} else {
+					scores[key] += 5;
+					alerts[key].push("Não possui conversor DAC interno de áudio (requer codec I2S ou PWM)");
+				}
+			} else if (answers.hardware === "many_gpios") {
+				const gpios = parseInt(serie.gpio) || 0;
+				if (gpios >= 40) {
+					scores[key] += 30;
+					reasons[key].push(`Excepcional número de pinos disponíveis (${gpios} GPIOs)`);
+				} else if (gpios >= 28) {
+					scores[key] += 15;
+					reasons[key].push(`Quantidade moderada de portas (${gpios} GPIOs)`);
+				} else {
+					scores[key] -= 20;
+					alerts[key].push(`Contagem restrita de pinos (${gpios} GPIOs)`);
+				}
+			} else if (answers.hardware === "standard_sensors") {
 				scores[key] += 10;
 			}
 
-			// 5. INTELIGÊNCIA ARTIFICIAL (ai)
-			if (answers.ai === "ai-ml") {
-				if (serie.aceleradores_ia) {
-					scores[key] += 30;
-					reasons[key].push("Acelerador vetorial neural de silício dedicado (inferências Edge AI ultra-rápidas)");
+			// 5. MEMÓRIA & PSRAM (memory)
+			if (answers.memory === "heavy_psram") {
+				if (serie.psram_externa && (String(serie.psram_externa).includes("64 MB") || String(serie.psram_externa).includes("1 GB"))) {
+					scores[key] += 35;
+					reasons[key].push(`Expansão massiva de memória PSRAM (${serie.psram_externa})`);
+				} else if (serie.psram_externa && serie.psram_externa !== "Não") {
+					scores[key] += 20;
+					reasons[key].push(`Suporte a memória PSRAM externa (${serie.psram_externa})`);
 				} else {
-					scores[key] -= 25;
-					reasons[key].push("Desempenho de IA limitado por falta de aceleração nativa em hardware");
+					scores[key] -= 35;
+					alerts[key].push("Sem suporte a memória PSRAM externa ou integrada");
+				}
+			} else if (answers.memory === "moderate_sram") {
+				const sramMatch = serie.memoria_sram?.match(/(\d+)\s*KB/);
+				if (sramMatch && parseInt(sramMatch[1]) >= 380) {
+					scores[key] += 15;
+					reasons[key].push(`SRAM interna confortável (${serie.memoria_sram})`);
+				} else {
+					scores[key] += 8;
+				}
+			} else if (answers.memory === "minimal_cost") {
+				if (key === "ESP32-C2" || key === "ESP32-C3" || key === "ESP32-H2") {
+					scores[key] += 20;
+					reasons[key].push("Memória enxuta e silício compacto para menor custo unitário");
+				} else {
+					scores[key] += 5;
+				}
+			}
+
+			// 6. INTELIGÊNCIA ARTIFICIAL (ai)
+			if (answers.ai === "ai_vector") {
+				if (serie.aceleradores_ia) {
+					scores[key] += 35;
+					reasons[key].push("Acelerador neural de silício e instruções vetoriais para processamento de matrizes e tensores");
+				} else {
+					scores[key] -= 30;
+					alerts[key].push("Sem aceleração vetorial por hardware para IA na borda");
 				}
 			} else if (answers.ai === "standard") {
 				scores[key] += 5;
 			}
 
-			// 6. SEGURANÇA CRIPTOGRÁFICA (security)
-			// Agora lê os campos destrinchados, então cada requisito pontua o
-			// bloco de hardware que realmente o atende.
-			const seg = serie.seguranca || {};
+			// 7. SEGURANÇA (security)
 			const temECDSA = String(seg.ecdsa).startsWith("Sim");
 			const temECC = String(seg.ecc).startsWith("Sim");
 			const temAES = String(seg.aes).startsWith("AES");
+			const temKeyManager = seg.key_manager === "Sim";
+			const temDPA = seg.protecao_dpa === "Sim";
 
-			if (answers.security === "matter") {
-				if (temECDSA) {
-					scores[key] += 30;
-					reasons[key].push(`ECDSA em hardware (${seg.ecc}): atestado de dispositivo Matter assinado sem custo de CPU`);
-				} else if (temECC) {
-					scores[key] += 10;
-					reasons[key].push(`Tem ECC (${seg.ecc}) mas não o periférico ECDSA: a assinatura roda parcialmente em software`);
+			if (answers.security === "key_manager_dpa") {
+				if (temKeyManager && temDPA) {
+					scores[key] += 35;
+					reasons[key].push("Key Manager (chaves nunca expostas à CPU) e proteção física contra ataques de canal lateral DPA");
+				} else if (temKeyManager) {
+					scores[key] += 25;
+					reasons[key].push("Periférico Key Manager integrado para isolamento total de chaves criptográficas");
+				} else if (temDPA) {
+					scores[key] += 20;
+					reasons[key].push("Proteção DPA em hardware contra análise diferencial de consumo de energia");
 				} else {
 					scores[key] -= 25;
-					reasons[key].push("Sem curvas elípticas em hardware: assinatura ECDSA inteiramente por software, lenta no provisionamento");
+					alerts[key].push("Sem periférico Key Manager nem proteção DPA");
 				}
-			} else if (answers.security === "chaves") {
-				if (seg.key_manager === "Sim") {
+			} else if (answers.security === "matter_ecdsa") {
+				if (temECDSA) {
 					scores[key] += 30;
-					reasons[key].push("Key Manager: a chave é provisionada e usada sem nunca ficar legível para o firmware");
-				} else if (seg.assinatura_digital === "Sim") {
+					reasons[key].push(`Acelerador de assinatura digital ECDSA determinístico em hardware (${seg.ecc})`);
+				} else if (temECC) {
 					scores[key] += 15;
-					reasons[key].push("Periférico Digital Signature protege a chave RSA via eFuse, mas sem Key Manager para as demais");
+					reasons[key].push(`Coprocessador de curvas elípticas ECC (${seg.ecc})`);
 				} else {
-					scores[key] -= 20;
-					reasons[key].push("Sem Key Manager nem Digital Signature: a chave privada fica exposta na memória do firmware");
+					scores[key] -= 25;
+					alerts[key].push("Sem acelerador de curvas elípticas (ECC) em hardware (assinatura por software mais lenta)");
 				}
-			} else if (answers.security === "boot") {
+			} else if (answers.security === "secure_boot") {
 				if (String(seg.secure_boot).includes("V2")) {
 					scores[key] += 20;
 					reasons[key].push(`Secure Boot ${seg.secure_boot} com criptografia de flash ${seg.criptografia_flash}`);
 				} else if (String(seg.secure_boot).includes("V1")) {
 					scores[key] += 5;
-					reasons[key].push("Secure Boot apenas na versão V1 (legada), sem as proteções do esquema V2");
+					alerts[key].push("Secure Boot em esquema V1 (legado com limitações de segurança)");
 				} else {
 					scores[key] -= 20;
-					reasons[key].push(`Secure Boot indisponível: ${seg.secure_boot}`);
+					alerts[key].push("Sem Secure Boot V2 estável");
 				}
-			} else if (answers.security === "tls") {
+			} else if (answers.security === "standard_tls") {
 				if (temAES) {
-					scores[key] += 10;
-					reasons[key].push(`Handshake e tráfego TLS acelerados por hardware (${seg.aes}, ${seg.sha})`);
+					scores[key] += 15;
+					reasons[key].push(`Criptografia de tráfego TLS acelerada por hardware (${seg.aes})`);
 				} else {
-					scores[key] -= 10;
-					reasons[key].push(`Sem acelerador AES (só ${seg.sha}): o tráfego TLS é cifrado pela CPU e pesa no desempenho`);
+					scores[key] -= 5;
+					alerts[key].push(`Sem acelerador AES por hardware (a criptografia TLS é executada pela CPU)`);
 				}
 			}
+
+			// 8. ECOSSISTEMA (ecosystem)
+			if (answers.ecosystem === "arduino_ready") {
+				if (String(serie.arduino_core).startsWith("Sim")) {
+					const countMatch = serie.arduino_core.match(/(\d+)\s*definições/);
+					const count = countMatch ? parseInt(countMatch[1]) : 1;
+					if (count >= 20) {
+						scores[key] += 25;
+						reasons[key].push(`Excelente maturidade e suporte no core oficial Arduino (${count} variantes de placas)`);
+					} else {
+						scores[key] += 15;
+						reasons[key].push(`Suporte no core oficial Arduino (${count} placa registrada)`);
+					}
+				} else {
+					scores[key] -= 35;
+					alerts[key].push("Ainda não suportado no core oficial do Arduino (desenvolvimento restrito ao ESP-IDF)");
+				}
+			} else if (answers.ecosystem === "advanced_idf") {
+				scores[key] += 15;
+			}
 		});
-		
-		return { scores, reasons };
+
+		return { scores, reasons, alerts };
 	};
 
-	const { scores: allScores, reasons: allReasons } = (showResults && Object.values(answers).every(a => a !== null))
-		? calculateRecommendations()
-		: { scores: {}, reasons: {} };
+	// Parametric Direct Filter Matcher
+	const filteredChips = useMemo(() => {
+		if (mode !== "filter") return [];
 
-	const recommendations = Object.entries(allScores)
-		.filter(([_, score]) => score > 0)
-		.sort(([, a], [, b]) => b - a);
+		return Object.entries(seriesData).filter(([key, serie]) => {
+			const seg = serie.seguranca || {};
 
-	// Rearrange podium for premium visual styling: 2nd Place | 1st Place | 3rd Place
-	const getPodiumOrder = (topThree) => {
-		if (topThree.length < 2) return topThree;
-		if (topThree.length === 2) return [topThree[1], topThree[0]]; 
-		return [topThree[1], topThree[0], topThree[2]]; 
-	};
+			if (filters.wifi6 && !String(serie.wifi).includes("Wi-Fi 6") && !String(serie.wifi).includes("802.11ax")) return false;
+			if (filters.wifi5ghz && (!serie.wifi || !String(serie.wifi).includes("5 GHz"))) return false;
+			if (filters.bluetoothClassic && (!serie.bluetooth || (!String(serie.bluetooth).includes("Classic") && !String(serie.bluetooth).includes("Clássico")))) return false;
+			if (filters.leAudio && (!serie.bluetooth || !String(serie.bluetooth).includes("LE Audio"))) return false;
+			if (filters.matter && serie.matter !== "Sim") return false;
+			if (filters.ethernet && !serie.ethernet && !serie.ethernet_mac) return false;
+			if (filters.aiAccel && !serie.aceleradores_ia) return false;
+			if (filters.psram && (!serie.psram_externa || serie.psram_externa === "Não")) return false;
+			if (filters.mipiDisplayCamera && !serie.mipi_dsi && !serie.mipi_csi && !serie.lcd && !serie.camera) return false;
+			if (filters.usbOTG && (!serie.usb || !String(serie.usb).includes("OTG"))) return false;
+			if (filters.canBus && !serie.can) return false;
+			if (filters.dac && (!serie.dac || serie.dac === "Não")) return false;
+			if (filters.touch && (!serie.touch || serie.touch === "Não")) return false;
+			if (filters.arduinoReady && (!serie.arduino_core || !String(serie.arduino_core).startsWith("Sim"))) return false;
+			if (filters.keyManager && seg.key_manager !== "Sim") return false;
+
+			return true;
+		});
+	}, [mode, filters]);
+
+	const { scores: allScores, reasons: allReasons, alerts: allAlerts } = useMemo(() => {
+		if (showResults && Object.values(answers).every(a => a !== null)) {
+			return calculateRecommendations();
+		}
+		return { scores: {}, reasons: {}, alerts: {} };
+	}, [showResults, answers]);
+
+	const recommendations = useMemo(() => {
+		const entries = Object.entries(allScores)
+			.filter(([_, score]) => score > 0)
+			.sort(([, a], [, b]) => b - a);
+
+		const maxScore = entries.length > 0 ? entries[0][1] : 1;
+
+		return entries.map(([key, score]) => ({
+			key,
+			score,
+			percentage: Math.min(100, Math.round((score / maxScore) * 100)),
+		}));
+	}, [allScores]);
 
 	const topThree = recommendations.slice(0, 3);
-	const desktopPodium = getPodiumOrder(topThree);
 	const otherRecommendations = recommendations.slice(3);
+
+	// Rearrange podium for premium visual styling: 2nd Place | 1st Place | 3rd Place
+	const desktopPodium = useMemo(() => {
+		if (topThree.length < 2) return topThree;
+		if (topThree.length === 2) return [topThree[1], topThree[0]];
+		return [topThree[1], topThree[0], topThree[2]];
+	}, [topThree]);
 
 	const progress = ((currentStep + 1) / questions.length) * 100;
 
@@ -455,83 +884,153 @@ export default function Seletor() {
 		<div className="bg-gradient-to-br from-slate-100 via-slate-50 to-purple-100/40 dark:from-slate-950 dark:via-slate-950 dark:to-slate-900 min-h-screen text-slate-900 dark:text-slate-100 transition-colors duration-300">
 			<Header />
 
-			<main id="conteudo" className="px-6 pt-16 pb-24 max-w-7xl mx-auto">
-				
-				{/* Top Header Section */}
-				<section className="text-center mb-12 max-w-4xl mx-auto">
-					<div className="inline-flex items-center gap-2 bg-purple-500/10 text-purple-600 dark:text-purple-400 px-4 py-2 rounded-full mb-6 border border-purple-500/20 text-xs font-bold tracking-widest uppercase select-none">
-						🎯 Seletor IoT Inteligente
+			<main id="conteudo" className="px-4 sm:px-6 pt-12 pb-24 max-w-7xl mx-auto">
+
+				{/* Top Hero Section */}
+				<section className="text-center mb-10 max-w-4xl mx-auto">
+					<div className="inline-flex items-center gap-2 bg-purple-500/10 text-purple-600 dark:text-purple-400 px-4 py-1.5 rounded-full mb-4 border border-purple-500/20 text-xs font-bold tracking-widest uppercase select-none shadow-xs">
+						🎯 Seletor IoT Inteligente Espressif
 					</div>
-					
-					<h1 className="text-4xl md:text-6xl font-display font-extrabold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 dark:from-blue-400 dark:via-purple-400 dark:to-pink-400 bg-clip-text text-transparent mb-6 leading-tight tracking-tight">
-						Seletor Inteligente ESP32
+
+					<h1 className="text-3xl sm:text-5xl md:text-6xl font-display font-extrabold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 dark:from-blue-400 dark:via-purple-400 dark:to-pink-400 bg-clip-text text-transparent mb-4 leading-tight tracking-tight">
+						Qual ESP32 Escolher?
 					</h1>
-					
-					<p className="text-sm md:text-base text-slate-500 dark:text-slate-400 leading-relaxed max-w-2xl mx-auto">
-						Responda a **6 perguntas simples** sobre o propósito, conexões de hardware, alimentação e segurança do seu projeto e encontre instantaneamente o silício Espressif perfeito para sua bancada.
+
+					<p className="text-sm md:text-base text-slate-600 dark:text-slate-400 leading-relaxed max-w-2xl mx-auto">
+						Descubra o modelo ideal de ESP32 para o seu projeto com base em conectividade (Wi-Fi 6, Dual-Band, Thread/Matter), periféricos, segurança e consumo elétrico.
 					</p>
+
+					{/* Mode Switcher: Wizard vs Direct Parametric Filter */}
+					<div className="inline-flex p-1 bg-slate-200/80 dark:bg-slate-900 rounded-2xl mt-6 border border-slate-300 dark:border-slate-800 shadow-inner">
+						<button
+							onClick={() => { setMode("wizard"); }}
+							className={`flex items-center gap-2 px-5 py-2 rounded-xl text-xs font-extrabold tracking-wide uppercase transition-all duration-300 cursor-pointer ${
+								mode === "wizard"
+									? "bg-white dark:bg-slate-800 text-purple-600 dark:text-purple-350 shadow-md scale-[1.02]"
+									: "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
+							}`}
+						>
+							<Sparkles className="w-4 h-4" />
+							<span>Assistente Guiado</span>
+						</button>
+
+						<button
+							onClick={() => { setMode("filter"); }}
+							className={`flex items-center gap-2 px-5 py-2 rounded-xl text-xs font-extrabold tracking-wide uppercase transition-all duration-300 cursor-pointer ${
+								mode === "filter"
+									? "bg-white dark:bg-slate-800 text-purple-600 dark:text-purple-350 shadow-md scale-[1.02]"
+									: "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
+							}`}
+						>
+							<Filter className="w-4 h-4" />
+							<span>Filtro Paramétrico</span>
+						</button>
+					</div>
 				</section>
 
-				{/* Wizard Progress Bar */}
-				{!showResults && !showSummary && (
-					<div className="max-w-2xl mx-auto mb-10">
-						<div className="flex justify-between items-center mb-3">
+				{/* 1-CLICK PRESETS BAR */}
+				{mode === "wizard" && !showResults && (
+					<section className="mb-10 max-w-5xl mx-auto">
+						<div className="flex items-center gap-2 mb-3">
+							<Lightbulb className="w-4 h-4 text-amber-500" />
+							<h2 className="text-xs font-extrabold text-slate-600 dark:text-slate-400 uppercase tracking-wider">
+								Atalhos Rápidos por Aplicação (1 Clique)
+							</h2>
+						</div>
+
+						<div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-7 gap-2.5">
+							{PRESETS.map((preset) => {
+								const isSelected = activePreset === preset.id;
+								return (
+									<button
+										key={preset.id}
+										onClick={() => applyPreset(preset)}
+										className={`p-3 rounded-2xl border text-left transition-all duration-300 cursor-pointer hover:shadow-md active:scale-95 flex flex-col justify-between ${
+											isSelected
+												? "bg-purple-500/15 border-purple-500 shadow-sm"
+												: "bg-white/80 dark:bg-slate-900/40 hover:bg-slate-50 dark:hover:bg-slate-900/80 border-slate-200 dark:border-slate-800/80"
+										}`}
+									>
+										<div>
+											<div className="text-2xl mb-1.5">{preset.icon}</div>
+											<h3 className="text-xs font-extrabold text-slate-800 dark:text-slate-200 line-clamp-1 leading-snug">
+												{preset.title}
+											</h3>
+											<p className="text-[10px] text-slate-500 dark:text-slate-400 line-clamp-2 mt-0.5 leading-tight">
+												{preset.badge}
+											</p>
+										</div>
+										<div className="mt-2 flex items-center text-[9px] font-bold text-purple-600 dark:text-purple-400">
+											<span>Aplicar</span>
+											<ArrowRight className="w-2.5 h-2.5 ml-0.5" />
+										</div>
+									</button>
+								);
+							})}
+						</div>
+					</section>
+				)}
+
+				{/* WIZARD MODE: PROGRESS BAR */}
+				{mode === "wizard" && !showResults && !showSummary && (
+					<div className="max-w-2xl mx-auto mb-8">
+						<div className="flex justify-between items-center mb-2">
 							<span className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest">
-								Etapa {currentStep + 1} de {questions.length}
+								Etapa {currentStep + 1} de {questions.length} • {questions[currentStep].id.toUpperCase()}
 							</span>
 							<span className="text-xs font-extrabold text-purple-600 dark:text-purple-400">
 								{Math.round(progress)}% Concluído
 							</span>
 						</div>
 						<div className="w-full bg-slate-200 dark:bg-slate-800/80 rounded-full h-2 overflow-hidden shadow-inner">
-							<div 
+							<div
 								className="bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 h-full rounded-full transition-all duration-500 ease-out"
-								style={{ 
+								style={{
 									width: `${progress}%`,
-									boxShadow: "0 0 10px rgba(139, 92, 246, 0.3)"
+									boxShadow: "0 0 10px rgba(139, 92, 246, 0.4)"
 								}}
 							></div>
 						</div>
 					</div>
 				)}
 
-				{/* STEP 1: Quiz Card Interface */}
-				{currentStep < questions.length && !showResults && !showSummary && (
-					<div className="bg-white dark:bg-slate-900/40 backdrop-blur-xl rounded-3xl border border-slate-300 dark:border-slate-800/80 p-6 md:p-10 max-w-2xl mx-auto shadow-2xl transition-all duration-300">
+				{/* WIZARD STEP 1: Question Card */}
+				{mode === "wizard" && currentStep < questions.length && !showResults && !showSummary && (
+					<div className="bg-white/90 dark:bg-slate-900/60 backdrop-blur-xl rounded-3xl border border-slate-300 dark:border-slate-800/80 p-6 md:p-10 max-w-2xl mx-auto shadow-2xl transition-all duration-300">
 						<div className="text-center mb-8">
-							<h2 className="text-xl md:text-2xl font-display font-extrabold text-slate-850 dark:text-slate-100 mb-3 leading-snug">
+							<h2 className="text-xl md:text-2xl font-display font-extrabold text-slate-900 dark:text-slate-100 mb-3 leading-snug">
 								{questions[currentStep].question}
 							</h2>
-							<p className="text-xs md:text-sm text-slate-500 dark:text-slate-400 max-w-xl mx-auto leading-relaxed">
+							<p className="text-xs md:text-sm text-slate-600 dark:text-slate-400 max-w-xl mx-auto leading-relaxed">
 								{questions[currentStep].description}
 							</p>
 						</div>
 
-						<div className="grid grid-cols-1 gap-3 max-w-xl mx-auto">
+						<div className="grid grid-cols-1 gap-2.5 max-w-xl mx-auto">
 							{questions[currentStep].options.map((option) => {
 								const isSelected = currentAnswer === option.value;
 								return (
 									<button
 										key={option.value}
 										onClick={() => handleAnswer(questions[currentStep].id, option.value)}
-										className={`group flex items-center gap-4 text-left border rounded-2xl p-4 transition-all duration-300 cursor-pointer hover:shadow-md active:scale-[0.99] ${
+										className={`group flex items-center gap-3.5 text-left border rounded-2xl p-3.5 sm:p-4 transition-all duration-300 cursor-pointer hover:shadow-md active:scale-[0.99] ${
 											isSelected
-												? 'bg-purple-500/10 dark:bg-purple-400/10 border-purple-500 dark:border-purple-400 shadow-xs'
-												: 'bg-slate-50/50 dark:bg-slate-900/20 hover:bg-purple-500/5 dark:hover:bg-purple-400/5 border-slate-300 dark:border-slate-800/80 hover:border-purple-400/50'
+												? "bg-purple-500/10 dark:bg-purple-400/10 border-purple-500 dark:border-purple-400 shadow-sm"
+												: "bg-slate-50/70 dark:bg-slate-900/30 hover:bg-purple-500/5 dark:hover:bg-purple-400/5 border-slate-300 dark:border-slate-800/80 hover:border-purple-400/50"
 										}`}
 									>
 										{/* Icon Badge */}
 										<div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 shadow-xs transition-transform duration-300 group-hover:scale-105 ${
-											isSelected ? 'bg-purple-500/20' : 'bg-slate-100 dark:bg-slate-800'
+											isSelected ? "bg-purple-500/20" : "bg-slate-100 dark:bg-slate-800"
 										}`}>
 											{getOptionIcon(questions[currentStep].id, option.value)}
 										</div>
 
 										{/* Label */}
-										<span className={`text-xs md:text-sm font-bold transition-colors grow ${
+										<span className={`text-xs md:text-sm font-bold transition-colors grow leading-snug ${
 											isSelected
-												? 'text-purple-700 dark:text-purple-400'
-												: 'text-slate-700 dark:text-slate-350 group-hover:text-purple-600 dark:group-hover:text-purple-400'
+												? "text-purple-700 dark:text-purple-350"
+												: "text-slate-700 dark:text-slate-300 group-hover:text-purple-600 dark:group-hover:text-purple-400"
 										}`}>
 											{option.label}
 										</span>
@@ -548,14 +1047,14 @@ export default function Seletor() {
 						</div>
 
 						{/* Bottom Navigation Buttons */}
-						<div className="flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-3 mt-8 pt-6 border-t border-slate-300 dark:border-slate-800/60">
+						<div className="flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-3 mt-8 pt-6 border-t border-slate-200 dark:border-slate-800/60">
 							<button
 								onClick={goBack}
 								disabled={currentStep === 0}
 								className={`inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition-all duration-300 cursor-pointer ${
 									currentStep === 0
-										? 'bg-slate-100 dark:bg-slate-900 text-slate-500 dark:text-slate-400 cursor-not-allowed border border-transparent'
-										: 'bg-slate-200/60 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-250 dark:hover:bg-slate-700 hover:shadow-xs'
+										? "bg-slate-100 dark:bg-slate-900 text-slate-500 dark:text-slate-450 cursor-not-allowed border border-transparent"
+										: "bg-slate-200/70 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-slate-700"
 								}`}
 							>
 								<ChevronLeft className="w-4 h-4" />
@@ -564,7 +1063,7 @@ export default function Seletor() {
 
 							<button
 								onClick={resetQuiz}
-								className="text-slate-500 dark:text-slate-400 hover:text-slate-850 dark:hover:text-white font-bold transition-colors text-xs py-2.5 cursor-pointer flex items-center gap-1.5 justify-center"
+								className="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white font-bold transition-colors text-xs py-2.5 cursor-pointer flex items-center gap-1.5 justify-center"
 							>
 								<RotateCcw className="w-3.5 h-3.5" />
 								<span>Reiniciar</span>
@@ -575,29 +1074,29 @@ export default function Seletor() {
 								disabled={currentAnswer === null}
 								className={`inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition-all duration-300 cursor-pointer ${
 									currentAnswer === null
-										? 'bg-slate-100 dark:bg-slate-900 text-slate-500 dark:text-slate-400 cursor-not-allowed border border-transparent'
-										: 'bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white hover:shadow-lg transform hover:-translate-y-0.5 active:translate-y-0'
+										? "bg-slate-100 dark:bg-slate-900 text-slate-500 dark:text-slate-450 cursor-not-allowed border border-transparent"
+										: "bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white hover:shadow-lg transform hover:-translate-y-0.5 active:translate-y-0"
 								}`}
 							>
-								<span>{currentStep === questions.length - 1 ? 'Revisar' : 'Avançar'}</span>
+								<span>{currentStep === questions.length - 1 ? "Revisar" : "Avançar"}</span>
 								<ChevronRight className="w-4 h-4" />
 							</button>
 						</div>
 					</div>
 				)}
 
-				{/* STEP 2: Choice Summary */}
-				{showSummary && !showResults && (
-					<div className="bg-white dark:bg-slate-900/40 backdrop-blur-xl rounded-3xl border border-slate-300 dark:border-slate-800/80 p-6 md:p-10 max-w-3xl mx-auto shadow-2xl transition-all duration-300">
+				{/* WIZARD STEP 2: Review Summary */}
+				{mode === "wizard" && showSummary && !showResults && (
+					<div className="bg-white/90 dark:bg-slate-900/60 backdrop-blur-xl rounded-3xl border border-slate-300 dark:border-slate-800/80 p-6 md:p-10 max-w-3xl mx-auto shadow-2xl transition-all duration-300">
 						<div className="text-center mb-8">
 							<div className="inline-flex items-center justify-center w-14 h-14 bg-purple-500/10 text-purple-600 dark:text-purple-400 rounded-full mb-4 border border-purple-500/20">
 								<Award className="w-6 h-6" />
 							</div>
-							<h2 className="text-xl md:text-2xl font-display font-extrabold text-slate-850 dark:text-slate-100 mb-2">
-								Resumo das suas Configurações
+							<h2 className="text-xl md:text-2xl font-display font-extrabold text-slate-900 dark:text-slate-100 mb-2">
+								Resumo das Especificações do Projeto
 							</h2>
 							<p className="text-xs text-slate-500 dark:text-slate-400 max-w-xl mx-auto leading-relaxed">
-								Revise suas escolhas de arquitetura abaixo. Você pode ajustar qualquer especificação individual antes de processar as recomendações.
+								Revise suas escolhas abaixo antes de calcular o ranking de compatibilidade com os dados do catálogo de silício.
 							</p>
 						</div>
 
@@ -606,19 +1105,19 @@ export default function Seletor() {
 							{questions.map((question) => {
 								const answer = answers[question.id];
 								const selectedOption = question.options.find(opt => opt.value === answer);
-								
+
 								return (
-									<div key={question.id} className="bg-slate-50/50 dark:bg-slate-900/20 rounded-xl p-4 border border-slate-300 dark:border-slate-800/80 hover:shadow-xs transition-all flex justify-between items-center gap-3">
+									<div key={question.id} className="bg-slate-50/80 dark:bg-slate-900/30 rounded-xl p-3.5 border border-slate-300 dark:border-slate-800/80 flex justify-between items-center gap-3">
 										<div className="flex-1 min-w-0">
-											<h3 className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-1 truncate select-none">
-												{question.id.replace('connectivity', 'conectividade').replace('hardware', 'periféricos').replace('power', 'alimentação').toUpperCase()}
+											<h3 className="text-[9px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-1 truncate select-none">
+												{question.id.toUpperCase()}
 											</h3>
 											{selectedOption && (
 												<div className="flex items-center gap-2">
 													<div className="w-7 h-7 rounded-lg bg-purple-500/10 dark:bg-purple-400/10 flex items-center justify-center shrink-0">
 														{getOptionIcon(question.id, answer)}
 													</div>
-													<span className="text-xs font-extrabold text-purple-700 dark:text-purple-450 truncate">
+													<span className="text-xs font-bold text-purple-700 dark:text-purple-300 truncate">
 														{selectedOption.label}
 													</span>
 												</div>
@@ -631,7 +1130,7 @@ export default function Seletor() {
 												setCurrentAnswer(answers[question.id]);
 												setShowSummary(false);
 											}}
-											className="p-2 border border-slate-300 dark:border-slate-800 hover:border-purple-500 dark:hover:border-purple-400 bg-white dark:bg-slate-900 hover:bg-purple-50 dark:hover:bg-purple-950/20 rounded-lg text-slate-400 hover:text-purple-650 dark:hover:text-purple-400 transition-all cursor-pointer shrink-0"
+											className="p-2 border border-slate-300 dark:border-slate-800 hover:border-purple-500 bg-white dark:bg-slate-900 rounded-lg text-slate-400 hover:text-purple-600 transition-all cursor-pointer shrink-0"
 											title="Editar esta resposta"
 										>
 											<Edit2 className="w-3.5 h-3.5" />
@@ -641,14 +1140,14 @@ export default function Seletor() {
 							})}
 						</div>
 
-						<div className="flex flex-col sm:flex-row gap-3 justify-center items-stretch sm:items-center border-t border-slate-300 dark:border-slate-800/60 pt-6">
+						<div className="flex flex-col sm:flex-row gap-3 justify-center items-stretch sm:items-center border-t border-slate-200 dark:border-slate-800/60 pt-6">
 							<button
 								onClick={() => {
 									setCurrentStep(questions.length - 1);
 									setCurrentAnswer(answers[questions[questions.length - 1].id]);
 									setShowSummary(false);
 								}}
-								className="inline-flex items-center justify-center gap-2 bg-slate-200/60 dark:bg-slate-800 text-slate-700 dark:text-slate-300 px-5 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider hover:bg-slate-250 transition-all duration-300 cursor-pointer"
+								className="inline-flex items-center justify-center gap-2 bg-slate-200/70 dark:bg-slate-800 text-slate-700 dark:text-slate-300 px-5 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider hover:bg-slate-300 transition-all duration-300 cursor-pointer"
 							>
 								<ChevronLeft className="w-4 h-4" />
 								<span>Voltar</span>
@@ -665,102 +1164,165 @@ export default function Seletor() {
 					</div>
 				)}
 
-				{/* STEP 3: Premium Podium & Results */}
-				{showResults && recommendations.length > 0 && (
+				{/* WIZARD STEP 3: Results Podium & Detailed Cards */}
+				{mode === "wizard" && showResults && recommendations.length > 0 && (
 					<div className="space-y-12 animate-fadeIn">
-						
+
+						{/* Top Banner with Reset / Re-edit Action */}
+						<div className="flex flex-col sm:flex-row justify-between items-center gap-4 bg-white/70 dark:bg-slate-900/40 p-4 sm:px-6 rounded-2xl border border-slate-300 dark:border-slate-800/80 max-w-6xl mx-auto backdrop-blur-md">
+							<div className="flex items-center gap-3">
+								<div className="w-9 h-9 rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0">
+									<CheckCircle className="w-5 h-5" />
+								</div>
+								<div>
+									<h2 className="text-sm font-bold text-slate-900 dark:text-slate-100">
+										Recomendações Geradas com Sucesso
+									</h2>
+									<p className="text-xs text-slate-500 dark:text-slate-400">
+										{recommendations.length} modelos compatíveis encontrados no catálogo
+									</p>
+								</div>
+							</div>
+
+							<div className="flex items-center gap-2 w-full sm:w-auto">
+								<button
+									onClick={() => {
+										setShowResults(false);
+										setShowSummary(true);
+									}}
+									className="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 transition-colors cursor-pointer"
+								>
+									<Edit2 className="w-3.5 h-3.5" />
+									<span>Ajustar Respostas</span>
+								</button>
+
+								<button
+									onClick={resetQuiz}
+									className="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold bg-purple-50 dark:bg-purple-950/30 text-purple-700 dark:text-purple-300 hover:bg-purple-100 dark:hover:bg-purple-900/40 transition-colors cursor-pointer"
+								>
+									<RotateCcw className="w-3.5 h-3.5" />
+									<span>Novo Quiz</span>
+								</button>
+							</div>
+						</div>
+
 						{/* Desktop Podium Layout */}
 						<div className="hidden lg:block">
-							<div className="grid grid-cols-3 gap-6 items-end max-w-6xl mx-auto pt-8 pb-6">
-								
-								{desktopPodium.map((recommendation) => {
-									const [seriesKey, score] = recommendation;
+							<div className="grid grid-cols-3 gap-6 items-end max-w-6xl mx-auto pt-6 pb-6">
+
+								{desktopPodium.map((rec) => {
+									const seriesKey = rec.key;
 									const serie = seriesData[seriesKey];
 									const matchReasons = allReasons[seriesKey] || [];
-									const rankIdx = topThree.findIndex(([key]) => key === seriesKey);
-									
+									const chipAlerts = allAlerts[seriesKey] || [];
+									const rankIdx = topThree.findIndex(item => item.key === seriesKey);
+
 									const rankConfig = [
 										{
 											badge: "🥇 1º Recomendado",
-											cardClass: "border-amber-500/80 dark:border-amber-400 bg-linear-to-b from-amber-500/5 to-transparent shadow-[0_0_40px_rgba(245,158,11,0.25)] min-h-[580px] z-10 scale-[1.03]",
-											badgeClass: "text-amber-700 bg-amber-500/10 border-amber-500/20 dark:text-amber-400 dark:bg-amber-500/10",
+											cardClass: "border-amber-500/80 dark:border-amber-400 bg-linear-to-b from-amber-500/10 via-white dark:via-slate-900 to-transparent shadow-[0_0_40px_rgba(245,158,11,0.2)] min-h-[620px] z-10 scale-[1.03]",
+											badgeClass: "text-amber-800 bg-amber-500/15 border-amber-500/30 dark:text-amber-300 dark:bg-amber-500/20",
 											scoreClass: "text-amber-600 dark:text-amber-400"
 										},
 										{
 											badge: "🥈 2º Recomendado",
-											cardClass: "border-slate-300 dark:border-slate-800 bg-linear-to-b from-slate-500/5 to-transparent min-h-[540px] opacity-95 hover:opacity-100",
-											badgeClass: "text-slate-650 bg-slate-500/10 border-slate-500/20 dark:text-slate-350 dark:bg-slate-850",
-											scoreClass: "text-slate-500 dark:text-slate-300"
+											cardClass: "border-slate-300 dark:border-slate-800 bg-linear-to-b from-slate-500/10 via-white dark:via-slate-900 to-transparent min-h-[580px] opacity-95 hover:opacity-100",
+											badgeClass: "text-slate-700 bg-slate-500/15 border-slate-500/30 dark:text-slate-300 dark:bg-slate-800",
+											scoreClass: "text-slate-600 dark:text-slate-300"
 										},
 										{
 											badge: "🥉 3º Recomendado",
-											cardClass: "border-amber-800/40 dark:border-slate-850/80 bg-linear-to-b from-amber-800/5 to-transparent min-h-[540px] opacity-95 hover:opacity-100",
-											badgeClass: "text-amber-800 bg-amber-800/10 border-amber-800/20 dark:text-amber-450 dark:bg-slate-850",
-											scoreClass: "text-amber-700 dark:text-amber-500"
+											cardClass: "border-amber-800/30 dark:border-slate-800 bg-linear-to-b from-amber-800/10 via-white dark:via-slate-900 to-transparent min-h-[580px] opacity-95 hover:opacity-100",
+											badgeClass: "text-amber-900 bg-amber-800/15 border-amber-800/30 dark:text-amber-400 dark:bg-slate-800",
+											scoreClass: "text-amber-700 dark:text-amber-450"
 										}
 									][rankIdx];
 
 									return (
 										<div
 											key={seriesKey}
-											className={`relative flex flex-col bg-white dark:bg-slate-900/40 backdrop-blur-xl border rounded-3xl overflow-hidden transition-all duration-500 hover:scale-[1.05] hover:shadow-2xl hover:z-20 ${rankConfig.cardClass}`}
+											className={`relative flex flex-col bg-white dark:bg-slate-900/60 backdrop-blur-xl border rounded-3xl overflow-hidden transition-all duration-500 hover:scale-[1.04] hover:shadow-2xl hover:z-20 ${rankConfig.cardClass}`}
 										>
-											{/* Top Color Band */}
-											<div className="h-1 w-full shrink-0" style={{ backgroundColor: serie.cor }} />
+											{/* Top Color Accent Line */}
+											<div className="h-1.5 w-full shrink-0" style={{ backgroundColor: serie.cor }} />
 
 											<div className="p-6 pb-0 flex-1 flex flex-col justify-between">
 												<div>
-													<div className="text-center mb-4 select-none">
+													<div className="text-center mb-3 select-none">
 														<span className={`inline-block px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider border ${rankConfig.badgeClass}`}>
 															{rankConfig.badge}
 														</span>
 													</div>
 
-													<div className="text-center mb-6">
-														<div className="text-5xl mb-3 transform hover:rotate-6 transition-transform select-none">{serie.icone}</div>
-														<h3 className="text-xl font-display font-extrabold text-slate-850 dark:text-slate-100 mb-1 leading-none">
+													<div className="text-center mb-5">
+														<div className="text-5xl mb-2.5 transform hover:rotate-6 transition-transform select-none">{serie.icone}</div>
+														<h3 className="text-xl font-display font-extrabold text-slate-900 dark:text-slate-100 mb-0.5 leading-none">
 															{seriesKey}
 														</h3>
 														<p className="text-[10px] text-slate-500 dark:text-slate-400 font-semibold uppercase tracking-wider truncate">
 															{serie.nome_completo}
 														</p>
-														
-														<div className="mt-3.5 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 shadow-xs">
-															<span className="text-[9px] font-bold text-slate-450 uppercase tracking-wider">Afinidade:</span>
-															<span className={`text-xs font-extrabold ${rankConfig.scoreClass}`}>
-																{score} pts
+
+														<div className="mt-3 inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 shadow-xs">
+															<span className="text-[9px] font-bold text-slate-400 uppercase tracking-wider">Afinidade:</span>
+															<span className={`text-xs font-black ${rankConfig.scoreClass}`}>
+																{rec.percentage}% ({rec.score} pts)
 															</span>
 														</div>
 													</div>
 
-													{/* Specifications Checklist */}
-													<div className="space-y-2 border-t border-slate-300 dark:border-slate-850/60 pt-4 mb-6 select-none">
-														<h4 className="text-[9px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-2.5">Principais Vantagens</h4>
-														<ul className="space-y-2">
+													{/* Match Advantages */}
+													<div className="space-y-2 border-t border-slate-200 dark:border-slate-800/60 pt-4 mb-4 select-none">
+														<h4 className="text-[9px] font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-widest mb-2 flex items-center gap-1">
+															<Check className="w-3 h-3" />
+															<span>Vantagens para seu Projeto</span>
+														</h4>
+														<ul className="space-y-1.5">
 															{matchReasons.slice(0, 3).map((reason, idx) => (
-																<li key={idx} className="flex items-start gap-2 text-xs leading-normal text-slate-600 dark:text-slate-350">
-																	<CheckCircle className="w-3.5 h-3.5 text-emerald-500 dark:text-emerald-450 mt-0.5 shrink-0" />
+																<li key={idx} className="flex items-start gap-1.5 text-xs leading-normal text-slate-700 dark:text-slate-300">
+																	<CheckCircle className="w-3.5 h-3.5 text-emerald-500 mt-0.5 shrink-0" />
 																	<span>{reason}</span>
 																</li>
 															))}
-															{matchReasons.length > 3 && (
-																<li className="text-[10px] text-slate-500 dark:text-slate-400 italic pl-5.5">
-																	+{matchReasons.length - 3} outros requisitos atendidos
-																</li>
-															)}
 														</ul>
 													</div>
+
+													{/* Alerts / Limitations */}
+													{chipAlerts.length > 0 && (
+														<div className="space-y-1 border-t border-slate-100 dark:border-slate-800/40 pt-3 mb-4 select-none">
+															<h4 className="text-[9px] font-bold text-amber-600 dark:text-amber-400 uppercase tracking-widest mb-1.5 flex items-center gap-1">
+																<AlertTriangle className="w-3 h-3" />
+																<span>Pontos de Atenção</span>
+															</h4>
+															<ul className="space-y-1">
+																{chipAlerts.slice(0, 2).map((alert, idx) => (
+																	<li key={idx} className="flex items-start gap-1.5 text-[11px] leading-snug text-slate-500 dark:text-slate-400">
+																		<span className="text-amber-500 shrink-0">•</span>
+																		<span>{alert}</span>
+																	</li>
+																))}
+															</ul>
+														</div>
+													)}
 												</div>
 
-												{/* Spec Mini Badges */}
-												<div className="grid grid-cols-2 gap-2 bg-slate-50/50 dark:bg-slate-950/40 p-2.5 rounded-xl border border-slate-200 dark:border-slate-800/40 mb-4 select-none">
-													<div className="flex flex-col">
-														<span className="text-[8px] font-bold uppercase text-slate-400 tracking-wider">Frequência</span>
-														<span className="text-xs font-extrabold text-slate-700 dark:text-slate-200 truncate">{serie.frequencia}</span>
+												{/* Quick Spec Badges */}
+												<div className="grid grid-cols-2 gap-1.5 bg-slate-50 dark:bg-slate-950/60 p-2.5 rounded-xl border border-slate-200 dark:border-slate-800/60 mb-4 select-none text-[10px]">
+													<div>
+														<span className="text-[8px] font-bold uppercase text-slate-400 block">Arquitetura</span>
+														<span className="font-bold text-slate-800 dark:text-slate-200 truncate block">{serie.arquitetura.split(" ")[0]} ({serie.nucleos})</span>
 													</div>
-													<div className="flex flex-col">
-														<span className="text-[8px] font-bold uppercase text-slate-400 tracking-wider">GPIOs Físicas</span>
-														<span className="text-xs font-extrabold text-slate-700 dark:text-slate-200 truncate">{serie.gpio} pinos</span>
+													<div>
+														<span className="text-[8px] font-bold uppercase text-slate-400 block">Clock Máximo</span>
+														<span className="font-bold text-slate-800 dark:text-slate-200 truncate block">{serie.frequencia}</span>
+													</div>
+													<div>
+														<span className="text-[8px] font-bold uppercase text-slate-400 block">GPIOs</span>
+														<span className="font-bold text-slate-800 dark:text-slate-200 truncate block">{serie.gpio} pinos</span>
+													</div>
+													<div>
+														<span className="text-[8px] font-bold uppercase text-slate-400 block">Memória SRAM</span>
+														<span className="font-bold text-slate-800 dark:text-slate-200 truncate block">{serie.memoria_sram}</span>
 													</div>
 												</div>
 											</div>
@@ -772,7 +1334,7 @@ export default function Seletor() {
 													className="flex items-center justify-center gap-1.5 w-full text-center py-3 rounded-xl font-bold text-white text-xs uppercase tracking-wider hover:shadow-lg transition-all duration-300 active:scale-[0.98]"
 													style={{ backgroundColor: serie.cor }}
 												>
-													<span>Ver Documentação</span>
+													<span>Ver Documentação Completa</span>
 													<ExternalLink className="w-3.5 h-3.5" />
 												</Link>
 											</div>
@@ -782,50 +1344,70 @@ export default function Seletor() {
 							</div>
 						</div>
 
-						{/* Stacked Layout for mobile */}
-						<div className="lg:hidden space-y-6 max-w-xl mx-auto">
-							<h3 className="text-sm font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest text-center select-none mb-1">Grade de Resultados</h3>
-							{topThree.map(([seriesKey, score], index) => {
+						{/* Mobile Stacked Podium Layout */}
+						<div className="lg:hidden space-y-5 max-w-xl mx-auto">
+							<h3 className="text-xs font-extrabold text-slate-500 dark:text-slate-400 uppercase tracking-widest text-center select-none">
+								Ranking dos Modelos Recomendados
+							</h3>
+
+							{topThree.map((rec, index) => {
+								const seriesKey = rec.key;
 								const serie = seriesData[seriesKey];
 								const matchReasons = allReasons[seriesKey] || [];
+								const chipAlerts = allAlerts[seriesKey] || [];
 								const mobileBadges = ["🥇 1ª Recomendação", "🥈 2ª Recomendação", "🥉 3ª Recomendação"];
 								const isFirst = index === 0;
 
 								return (
 									<div
 										key={seriesKey}
-										className={`bg-white dark:bg-slate-900/40 backdrop-blur-xl border rounded-3xl overflow-hidden shadow-xl flex flex-col ${
-											isFirst ? "border-amber-500 dark:border-amber-400" : "border-slate-300 dark:border-slate-800"
+										className={`bg-white dark:bg-slate-900/60 backdrop-blur-xl border rounded-3xl overflow-hidden shadow-xl flex flex-col ${
+											isFirst ? "border-amber-500 dark:border-amber-400 ring-2 ring-amber-500/20" : "border-slate-300 dark:border-slate-800"
 										}`}
 									>
+										<div className="h-1.5 w-full shrink-0" style={{ backgroundColor: serie.cor }} />
+
 										<div className="p-5 flex-1">
-											<div className="flex justify-between items-center mb-3.5">
+											<div className="flex justify-between items-center mb-3">
 												<span className={`px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${
-													isFirst 
-														? "text-amber-700 bg-amber-500/10 dark:text-amber-400 border border-amber-500/20" 
-														: "text-slate-650 bg-slate-500/10 dark:text-slate-350 dark:bg-slate-850 border border-transparent"
+													isFirst
+														? "text-amber-800 bg-amber-500/15 dark:text-amber-300 border border-amber-500/30"
+														: "text-slate-700 bg-slate-500/15 dark:text-slate-300 dark:bg-slate-800 border border-transparent"
 												}`}>
 													{mobileBadges[index]}
 												</span>
-												<span className="text-[10px] font-bold text-slate-450">Score: <strong className="text-xs text-purple-650 dark:text-purple-400 font-extrabold">{score} pts</strong></span>
+												<span className="text-[10px] font-bold text-slate-500">
+													Afinidade: <strong className="text-xs text-purple-600 dark:text-purple-400 font-extrabold">{rec.percentage}%</strong>
+												</span>
 											</div>
 
-											<div className="flex gap-4 items-start mb-4">
+											<div className="flex gap-3.5 items-start mb-4">
 												<span className="text-4xl select-none shrink-0">{serie.icone}</span>
 												<div>
-													<h4 className="text-base font-bold text-slate-850 dark:text-slate-100 leading-tight">{seriesKey}</h4>
-													<p className="text-xs text-slate-500 dark:text-slate-400 leading-snug line-clamp-2 mt-1">{serie.descricao}</p>
+													<h4 className="text-base font-bold text-slate-900 dark:text-slate-100 leading-tight">{seriesKey}</h4>
+													<p className="text-xs text-slate-500 dark:text-slate-400 leading-snug line-clamp-2 mt-0.5">{serie.descricao}</p>
 												</div>
 											</div>
 
-											<div className="space-y-1.5 border-t border-slate-150 dark:border-slate-850/60 pt-3 select-none">
+											<div className="space-y-1.5 border-t border-slate-200 dark:border-slate-800/60 pt-3 select-none">
 												{matchReasons.slice(0, 3).map((reason, idx) => (
-													<div key={idx} className="flex gap-2 items-start text-xs text-slate-600 dark:text-slate-350">
-														<CheckCircle className="w-3.5 h-3.5 text-emerald-500 dark:text-emerald-450 mt-0.5 shrink-0" />
+													<div key={idx} className="flex gap-2 items-start text-xs text-slate-700 dark:text-slate-300">
+														<CheckCircle className="w-3.5 h-3.5 text-emerald-500 mt-0.5 shrink-0" />
 														<span>{reason}</span>
 													</div>
 												))}
 											</div>
+
+											{chipAlerts.length > 0 && (
+												<div className="space-y-1 border-t border-slate-100 dark:border-slate-800/40 pt-2.5 mt-2.5 select-none">
+													{chipAlerts.slice(0, 2).map((alert, idx) => (
+														<div key={idx} className="flex gap-1.5 items-start text-[11px] text-slate-500">
+															<AlertTriangle className="w-3 h-3 text-amber-500 mt-0.5 shrink-0" />
+															<span>{alert}</span>
+														</div>
+													))}
+												</div>
+											)}
 										</div>
 
 										<Link
@@ -840,14 +1422,102 @@ export default function Seletor() {
 							})}
 						</div>
 
-						{/* Other options */}
+						{/* Side-by-Side Comparison of Top Recommendations */}
+						<div className="bg-white/90 dark:bg-slate-900/40 backdrop-blur-xl rounded-3xl p-6 md:p-8 border border-slate-300 dark:border-slate-800/80 max-w-6xl mx-auto shadow-xl">
+							<div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+								<div>
+									<h3 className="text-lg font-display font-extrabold text-slate-900 dark:text-slate-100">
+										Comparativo Rápido dos Finalistas
+									</h3>
+									<p className="text-xs text-slate-500 dark:text-slate-400">
+										Compare as principais especificações técnicas lado a lado
+									</p>
+								</div>
+
+								<Link
+									href={`/comparacao?chips=${topThree.map(t => t.key).join(",")}`}
+									className="inline-flex items-center gap-1.5 text-xs font-bold text-purple-600 dark:text-purple-400 hover:text-purple-700 underline"
+								>
+									<span>Abrir Comparador Completo</span>
+									<ArrowRight className="w-3.5 h-3.5" />
+								</Link>
+							</div>
+
+							<div className="overflow-x-auto">
+								<table className="w-full text-xs text-left border-collapse">
+									<thead>
+										<tr className="border-b border-slate-200 dark:border-slate-800">
+											<th className="py-3 px-3 font-bold text-slate-400 uppercase text-[10px]">Parâmetro</th>
+											{topThree.map(rec => (
+												<th key={rec.key} className="py-3 px-3 font-bold text-slate-900 dark:text-slate-100 text-sm">
+													{rec.key}
+												</th>
+											))}
+										</tr>
+									</thead>
+									<tbody className="divide-y divide-slate-100 dark:divide-slate-800/60 text-slate-700 dark:text-slate-300">
+										<tr>
+											<td className="py-2.5 px-3 font-semibold text-slate-400">Arquitetura</td>
+											{topThree.map(rec => (
+												<td key={rec.key} className="py-2.5 px-3">{seriesData[rec.key].arquitetura}</td>
+											))}
+										</tr>
+										<tr>
+											<td className="py-2.5 px-3 font-semibold text-slate-400">Clock</td>
+											{topThree.map(rec => (
+												<td key={rec.key} className="py-2.5 px-3 font-bold">{seriesData[rec.key].frequencia}</td>
+											))}
+										</tr>
+										<tr>
+											<td className="py-2.5 px-3 font-semibold text-slate-400">Wi-Fi</td>
+											{topThree.map(rec => (
+												<td key={rec.key} className="py-2.5 px-3">{seriesData[rec.key].wifi}</td>
+											))}
+										</tr>
+										<tr>
+											<td className="py-2.5 px-3 font-semibold text-slate-400">Bluetooth</td>
+											{topThree.map(rec => (
+												<td key={rec.key} className="py-2.5 px-3">{seriesData[rec.key].bluetooth}</td>
+											))}
+										</tr>
+										<tr>
+											<td className="py-2.5 px-3 font-semibold text-slate-400">Matter / 802.15.4</td>
+											{topThree.map(rec => (
+												<td key={rec.key} className="py-2.5 px-3">{seriesData[rec.key].matter === "Sim" ? "✅ Sim" : "❌ Não"}</td>
+											))}
+										</tr>
+										<tr>
+											<td className="py-2.5 px-3 font-semibold text-slate-400">Aceleração IA</td>
+											{topThree.map(rec => (
+												<td key={rec.key} className="py-2.5 px-3">{seriesData[rec.key].aceleradores_ia ? "⚡ Vetorial" : "—"}</td>
+											))}
+										</tr>
+										<tr>
+											<td className="py-2.5 px-3 font-semibold text-slate-400">PSRAM Externa</td>
+											{topThree.map(rec => (
+												<td key={rec.key} className="py-2.5 px-3">{seriesData[rec.key].psram_externa || "Não"}</td>
+											))}
+										</tr>
+										<tr>
+											<td className="py-2.5 px-3 font-semibold text-slate-400">Arduino Core</td>
+											{topThree.map(rec => (
+												<td key={rec.key} className="py-2.5 px-3">{String(seriesData[rec.key].arduino_core).startsWith("Sim") ? "✅ Suportado" : "⚠️ Apenas ESP-IDF"}</td>
+											))}
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+
+						{/* Other Options Grid */}
 						{otherRecommendations.length > 0 && (
-							<div className="bg-slate-50/50 dark:bg-slate-900/10 backdrop-blur-xl rounded-3xl p-6 md:p-8 border border-slate-300 dark:border-slate-850/50 max-w-6xl mx-auto shadow-inner">
-								<h3 className="text-lg font-display font-extrabold text-slate-850 dark:text-slate-150 mb-6 text-center select-none">
-									Outras Opções Compatíveis
+							<div className="bg-slate-50/70 dark:bg-slate-900/20 backdrop-blur-xl rounded-3xl p-6 md:p-8 border border-slate-300 dark:border-slate-800/60 max-w-6xl mx-auto shadow-inner">
+								<h3 className="text-base font-display font-extrabold text-slate-900 dark:text-slate-100 mb-6 text-center select-none">
+									Outras Alternativas Avaliadas
 								</h3>
 								<div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-									{otherRecommendations.map(([seriesKey, score]) => {
+									{otherRecommendations.map((rec) => {
+										const seriesKey = rec.key;
 										const serie = seriesData[seriesKey];
 										return (
 											<div
@@ -856,12 +1526,12 @@ export default function Seletor() {
 											>
 												<div className="text-center mb-4">
 													<div className="text-3xl mb-2 select-none">{serie.icone}</div>
-													<h4 className="text-xs font-bold text-slate-850 dark:text-slate-250 truncate leading-none">{seriesKey}</h4>
-													<span className="text-[10px] text-slate-500 dark:text-slate-450 font-semibold">Afinidade: {score} pts</span>
+													<h4 className="text-xs font-bold text-slate-900 dark:text-slate-100 truncate leading-none mb-1">{seriesKey}</h4>
+													<span className="text-[10px] text-slate-500 font-semibold">Afinidade: {rec.percentage}%</span>
 												</div>
 												<Link
 													href={`/series/${seriesKey}`}
-													className="block w-full text-center py-2.5 rounded-xl font-bold text-white text-[10px] uppercase tracking-wider transition-all duration-300 hover:shadow-xs active:scale-95"
+													className="block w-full text-center py-2 rounded-xl font-bold text-white text-[10px] uppercase tracking-wider transition-all duration-300 hover:shadow-xs active:scale-95"
 													style={{ backgroundColor: serie.cor }}
 												>
 													Ver Detalhes
@@ -873,128 +1543,275 @@ export default function Seletor() {
 							</div>
 						)}
 
-						{/* Bottom navigation buttons */}
-						<div className="flex flex-col sm:flex-row gap-3 justify-center items-center max-w-2xl mx-auto border-t border-slate-300 dark:border-slate-850/60 pt-8 select-none">
+						{/* Navigation Actions */}
+						<div className="flex flex-col sm:flex-row gap-3 justify-center items-center max-w-2xl mx-auto border-t border-slate-300 dark:border-slate-800/60 pt-8 select-none">
 							<Link
 								href="/comparacao"
-								className="inline-flex items-center justify-center gap-2 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 px-6 py-3 rounded-xl font-bold text-xs uppercase tracking-wider shadow-xs border border-slate-300 dark:border-slate-800 hover:border-purple-500 dark:hover:border-purple-400 hover:text-purple-600 dark:hover:text-purple-400 hover:-translate-y-0.5 transition-all duration-300 cursor-pointer w-full sm:w-auto"
+								className="inline-flex items-center justify-center gap-2 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 px-6 py-3 rounded-xl font-bold text-xs uppercase tracking-wider shadow-xs border border-slate-300 dark:border-slate-800 hover:border-purple-500 hover:text-purple-600 hover:-translate-y-0.5 transition-all duration-300 cursor-pointer w-full sm:w-auto"
 							>
 								<SlidersHorizontal className="w-3.5 h-3.5" />
-								<span>Comparar Lado a Lado</span>
+								<span>Comparador Completo</span>
 							</Link>
 
 							<button
 								onClick={resetQuiz}
-								className="inline-flex items-center justify-center gap-2 bg-slate-200/60 dark:bg-slate-800 text-slate-700 dark:text-slate-300 px-6 py-3 rounded-xl font-bold text-xs uppercase tracking-wider hover:bg-slate-250 hover:-translate-y-0.5 transition-all duration-300 cursor-pointer active:scale-95 w-full sm:w-auto"
+								className="inline-flex items-center justify-center gap-2 bg-slate-200/70 dark:bg-slate-800 text-slate-700 dark:text-slate-300 px-6 py-3 rounded-xl font-bold text-xs uppercase tracking-wider hover:bg-slate-300 hover:-translate-y-0.5 transition-all duration-300 cursor-pointer active:scale-95 w-full sm:w-auto"
 							>
 								<RotateCcw className="w-3.5 h-3.5" />
-								<span>Refazer Quiz</span>
+								<span>Refazer com Outros Critérios</span>
 							</button>
 						</div>
-
-						{/* Secondary showcase tools */}
-						<div className="bg-white dark:bg-slate-900/40 backdrop-blur-xl border border-slate-300 dark:border-slate-800/80 rounded-3xl p-6 md:p-8 max-w-6xl mx-auto shadow-2xl">
-							<h3 className="text-lg font-display font-extrabold text-slate-850 dark:text-slate-100 mb-6 text-center select-none">
-								Próximos Passos de Desenvolvimento
-							</h3>
-							<div className="grid md:grid-cols-3 gap-6">
-								<Link
-									href="/catalogo"
-									className="group bg-blue-500/5 dark:bg-blue-950/10 border border-blue-500/10 dark:border-blue-500/20 hover:border-blue-500/40 dark:hover:border-blue-400/40 rounded-2xl p-5 hover:shadow-lg transition-all duration-300"
-								>
-									<div className="w-9 h-9 rounded-xl bg-blue-500/10 dark:bg-blue-400/15 text-blue-500 dark:text-blue-400 flex items-center justify-center mb-4 shrink-0 shadow-xs select-none">
-										<ShoppingBag className="w-4 h-4" />
-									</div>
-									<h4 className="text-sm font-bold text-slate-850 dark:text-slate-200 mb-1.5 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-										Catálogo de Placas
-									</h4>
-									<p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
-										Explore placas de desenvolvimento oficiais e módulos contendo o silício recomendado com links seguros de compra.
-									</p>
-								</Link>
-
-								<Link
-									href="/frameworks"
-									className="group bg-purple-500/5 dark:bg-purple-950/10 border border-purple-500/10 dark:border-purple-500/20 hover:border-purple-500/40 dark:hover:border-purple-400/40 rounded-2xl p-5 hover:shadow-lg transition-all duration-300"
-								>
-									<div className="w-9 h-9 rounded-xl bg-purple-500/10 dark:bg-purple-400/15 text-purple-500 dark:text-purple-400 flex items-center justify-center mb-4 shrink-0 shadow-xs select-none">
-										<Cpu className="w-4 h-4" />
-									</div>
-									<h4 className="text-sm font-bold text-slate-850 dark:text-slate-200 mb-1.5 group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">
-										Explorar SDKs & Frameworks
-									</h4>
-									<p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
-										Descubra qual SDK oficial da Espressif (ESP-IDF, Arduino Core, MicroPython) oferece a melhor pilha de drivers.
-									</p>
-								</Link>
-
-								<Link
-									href="/glossario"
-									className="group bg-pink-500/5 dark:bg-pink-950/10 border border-pink-500/10 dark:border-pink-500/20 hover:border-pink-500/40 dark:hover:border-pink-400/40 rounded-2xl p-5 hover:shadow-lg transition-all duration-300"
-								>
-									<div className="w-9 h-9 rounded-xl bg-pink-500/10 dark:bg-pink-400/15 text-pink-500 dark:text-pink-400 flex items-center justify-center mb-4 shrink-0 shadow-xs select-none">
-										<BookOpen className="w-4 h-4" />
-									</div>
-									<h4 className="text-sm font-bold text-slate-850 dark:text-slate-200 mb-1.5 group-hover:text-pink-600 dark:group-hover:text-pink-400 transition-colors">
-										Glossário de Parâmetros
-									</h4>
-									<p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
-										Ficou em dúvida sobre termos de hardware como ULP, SRAM RTC, JTAG ou Matter? Consulte definições rápidas de engenharia.
-									</p>
-								</Link>
-							</div>
-						</div>
 					</div>
 				)}
 
-				{/* STEP 3B: No Results Found */}
-				{showResults && recommendations.length === 0 && (
-					<div className="bg-white dark:bg-slate-900/40 backdrop-blur-xl rounded-3xl border border-slate-300 dark:border-slate-800/80 p-8 md:p-10 max-w-2xl mx-auto shadow-2xl transition-all duration-300">
-						<div className="text-center mb-8">
-							<div className="inline-flex items-center justify-center w-16 h-16 bg-amber-500/10 text-amber-600 dark:text-amber-400 rounded-full mb-4 border border-amber-500/20">
-								<HelpCircle className="w-8 h-8" />
-							</div>
-							<h2 className="text-xl md:text-2xl font-display font-extrabold text-slate-850 dark:text-slate-100 mb-3">
-								Sem Correspondência Exata
-							</h2>
-							<p className="text-xs text-slate-500 dark:text-slate-400 max-w-xl mx-auto mb-6 leading-relaxed">
-								Não foi possível encontrar um único microcontrolador ESP32 que atenda simultaneamente a todos os critérios. Isso ocorre quando requisitamos combinações extremas (ex: Ethernet industrial cabeada + BLE portátil com economia de bateria ultra-baixa).
-							</p>
+				{/* WIZARD NO MATCH */}
+				{mode === "wizard" && showResults && recommendations.length === 0 && (
+					<div className="bg-white/90 dark:bg-slate-900/40 backdrop-blur-xl rounded-3xl border border-slate-300 dark:border-slate-800/80 p-8 md:p-10 max-w-2xl mx-auto shadow-2xl text-center">
+						<div className="inline-flex items-center justify-center w-16 h-16 bg-amber-500/10 text-amber-600 rounded-full mb-4 border border-amber-500/20">
+							<HelpCircle className="w-8 h-8" />
+						</div>
+						<h2 className="text-xl md:text-2xl font-display font-extrabold text-slate-900 dark:text-slate-100 mb-3">
+							Combinação Extremamente Específica
+						</h2>
+						<p className="text-xs text-slate-600 dark:text-slate-400 max-w-xl mx-auto mb-6 leading-relaxed">
+							Não foi possível encontrar um único microcontrolador ESP32 que atenda simultaneamente a todos os requisitos conflitantes. Tente flexibilizar um dos parâmetros ou refazer a seleção.
+						</p>
 
-							<div className="bg-slate-50/50 dark:bg-slate-950/40 border border-slate-300 dark:border-slate-850 p-5 rounded-2xl max-w-xl mx-auto mb-6 text-left select-none">
-								<h3 className="text-xs font-bold text-slate-800 dark:text-slate-200 mb-2">💡 Dicas Rápidas de Seleção:</h3>
-								<ul className="space-y-2 text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
-									<li className="flex items-start gap-2">
-										<span className="text-purple-500 font-extrabold">•</span>
-										<span>Reconsidere os barramentos mais pesados (USB Nativo ou Display/Câmera) e veja se podem ser depurados via Serial UART comum.</span>
-									</li>
-									<li className="flex items-start gap-2">
-										<span className="text-purple-500 font-extrabold">•</span>
-										<span>Se o foco principal for Inteligência Artificial e capturar imagens pesadas, a série recomendada primária é a **ESP32-S3**.</span>
-									</li>
-								</ul>
-							</div>
-							
-							<div className="flex flex-col sm:flex-row gap-3 justify-center items-stretch sm:items-center">
+						<button
+							onClick={resetQuiz}
+							className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white px-6 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer active:scale-95"
+						>
+							<RotateCcw className="w-4 h-4" />
+							<span>Refazer Quiz</span>
+						</button>
+					</div>
+				)}
+
+				{/* DIRECT PARAMETRIC FILTER MODE */}
+				{mode === "filter" && (
+					<div className="space-y-8 animate-fadeIn max-w-6xl mx-auto">
+						{/* Filter Controls Box */}
+						<div className="bg-white/90 dark:bg-slate-900/60 backdrop-blur-xl rounded-3xl p-6 md:p-8 border border-slate-300 dark:border-slate-800/80 shadow-xl">
+							<div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+								<div>
+									<h2 className="text-lg font-display font-extrabold text-slate-900 dark:text-slate-100 flex items-center gap-2">
+										<Filter className="w-5 h-5 text-purple-500" />
+										<span>Filtro Direto por Recursos de Hardware</span>
+									</h2>
+									<p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
+										Marque os blocos de silício obrigatórios para visualizar instantaneamente os modelos compatíveis.
+									</p>
+								</div>
+
 								<button
-									onClick={resetQuiz}
-									className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white px-6 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer active:scale-95"
+									onClick={() => {
+										setFilters({
+											wifi6: false,
+											wifi5ghz: false,
+											bluetoothClassic: false,
+											leAudio: false,
+											matter: false,
+											ethernet: false,
+											aiAccel: false,
+											psram: false,
+											mipiDisplayCamera: false,
+											usbOTG: false,
+											canBus: false,
+											dac: false,
+											touch: false,
+											arduinoReady: false,
+											keyManager: false,
+										});
+									}}
+									className="text-xs font-bold text-slate-500 hover:text-purple-600 flex items-center gap-1 cursor-pointer"
 								>
-									<RotateCcw className="w-4 h-4" />
-									<span>Refazer Quiz</span>
+									<RotateCcw className="w-3.5 h-3.5" />
+									<span>Limpar Filtros</span>
 								</button>
-								
-								<Link
-									href="/comparacao"
-									className="inline-flex items-center justify-center gap-2 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-350 px-6 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider border border-slate-300 dark:border-slate-800 hover:border-purple-500 dark:hover:border-purple-400 hover:text-purple-600 dark:hover:text-purple-400 transition-all duration-300 cursor-pointer"
-								>
-									<SlidersHorizontal className="w-4 h-4" />
-									<span>Ver Grade Completa</span>
-								</Link>
 							</div>
+
+							{/* Filter Chips Grid */}
+							<div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2.5">
+								{[
+									{ key: "wifi6", label: "Wi-Fi 6 (802.11ax)", icon: <Wifi className="w-4 h-4 text-teal-500" /> },
+									{ key: "wifi5ghz", label: "Wi-Fi Dual-Band (5 GHz)", icon: <Wifi className="w-4 h-4 text-indigo-500" /> },
+									{ key: "bluetoothClassic", label: "Bluetooth Clássico (A2DP)", icon: <Volume2 className="w-4 h-4 text-pink-500" /> },
+									{ key: "leAudio", label: "Bluetooth LE Audio", icon: <Volume2 className="w-4 h-4 text-purple-500" /> },
+									{ key: "matter", label: "Matter / 802.15.4", icon: <Network className="w-4 h-4 text-amber-500" /> },
+									{ key: "ethernet", label: "Ethernet MAC", icon: <Cable className="w-4 h-4 text-emerald-500" /> },
+									{ key: "aiAccel", label: "Aceleração Vetorial IA", icon: <Bot className="w-4 h-4 text-pink-500" /> },
+									{ key: "psram", label: "Suporte a PSRAM", icon: <HardDrive className="w-4 h-4 text-blue-500" /> },
+									{ key: "mipiDisplayCamera", label: "Telas / Câmeras (MIPI/RGB)", icon: <Monitor className="w-4 h-4 text-cyan-500" /> },
+									{ key: "usbOTG", label: "USB Nativo OTG", icon: <Cable className="w-4 h-4 text-teal-500" /> },
+									{ key: "canBus", label: "Barramento CAN / TWAI", icon: <Sliders className="w-4 h-4 text-orange-500" /> },
+									{ key: "dac", label: "Conversor DAC", icon: <Volume2 className="w-4 h-4 text-pink-500" /> },
+									{ key: "touch", label: "Touch Capacitivo", icon: <Activity className="w-4 h-4 text-sky-500" /> },
+									{ key: "arduinoReady", label: "Suporte Arduino Core", icon: <CheckCircle className="w-4 h-4 text-emerald-500" /> },
+									{ key: "keyManager", label: "Key Manager Hardware", icon: <KeyRound className="w-4 h-4 text-red-500" /> },
+								].map(({ key, label, icon }) => {
+									const isActive = filters[key];
+									return (
+										<button
+											key={key}
+											onClick={() => setFilters(prev => ({ ...prev, [key]: !prev[key] }))}
+											className={`flex items-center gap-2 p-2.5 rounded-xl border text-left text-xs font-bold transition-all duration-200 cursor-pointer ${
+												isActive
+													? "bg-purple-500/15 border-purple-500 text-purple-700 dark:text-purple-300 shadow-xs"
+													: "bg-slate-50 dark:bg-slate-900/40 border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:border-slate-400"
+											}`}
+										>
+											{icon}
+											<span className="truncate">{label}</span>
+											{isActive && <Check className="w-3.5 h-3.5 ml-auto text-purple-600 shrink-0" />}
+										</button>
+									);
+								})}
+							</div>
+						</div>
+
+						{/* Results Grid */}
+						<div>
+							<div className="flex justify-between items-center mb-4">
+								<h3 className="text-sm font-extrabold text-slate-600 dark:text-slate-400 uppercase tracking-wider">
+									Modelos Compatíveis ({filteredChips.length} de {Object.keys(seriesData).length})
+								</h3>
+							</div>
+
+							{filteredChips.length > 0 ? (
+								<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+									{filteredChips.map(([seriesKey, serie]) => (
+										<div
+											key={seriesKey}
+											className="bg-white dark:bg-slate-900/60 backdrop-blur-xl border border-slate-300 dark:border-slate-800/80 rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 flex flex-col justify-between"
+										>
+											<div className="h-1.5 w-full shrink-0" style={{ backgroundColor: serie.cor }} />
+
+											<div className="p-6">
+												<div className="flex items-start justify-between gap-4 mb-4">
+													<div className="flex items-center gap-3">
+														<span className="text-4xl select-none">{serie.icone}</span>
+														<div>
+															<h4 className="text-lg font-display font-extrabold text-slate-900 dark:text-slate-100 leading-tight">
+																{seriesKey}
+															</h4>
+															<p className="text-[10px] text-slate-500 uppercase font-semibold">
+																{serie.nome_completo}
+															</p>
+														</div>
+													</div>
+												</div>
+
+												<p className="text-xs text-slate-600 dark:text-slate-400 mb-4 leading-relaxed line-clamp-2">
+													{serie.descricao}
+												</p>
+
+												{/* Badges */}
+												<div className="space-y-1.5 text-xs text-slate-700 dark:text-slate-300 border-t border-slate-200 dark:border-slate-800/60 pt-3">
+													<div className="flex justify-between py-0.5">
+														<span className="text-slate-400 text-[11px]">Wi-Fi / BT:</span>
+														<span className="font-semibold text-right truncate max-w-[180px]">{serie.wifi}</span>
+													</div>
+													<div className="flex justify-between py-0.5">
+														<span className="text-slate-400 text-[11px]">Matter/Thread:</span>
+														<span className="font-semibold">{serie.matter === "Sim" ? "✅ Sim" : "❌ Não"}</span>
+													</div>
+													<div className="flex justify-between py-0.5">
+														<span className="text-slate-400 text-[11px]">Clock:</span>
+														<span className="font-semibold">{serie.frequencia}</span>
+													</div>
+													<div className="flex justify-between py-0.5">
+														<span className="text-slate-400 text-[11px]">GPIOs:</span>
+														<span className="font-semibold">{serie.gpio} pinos</span>
+													</div>
+													<div className="flex justify-between py-0.5">
+														<span className="text-slate-400 text-[11px]">PSRAM:</span>
+														<span className="font-semibold truncate max-w-[180px]">{serie.psram_externa || "Não"}</span>
+													</div>
+												</div>
+											</div>
+
+											<div className="px-6 pb-6">
+												<Link
+													href={`/series/${seriesKey}`}
+													className="flex items-center justify-center gap-1.5 w-full text-center py-2.5 rounded-xl font-bold text-white text-xs uppercase tracking-wider hover:shadow-lg transition-all duration-300"
+													style={{ backgroundColor: serie.cor }}
+												>
+													<span>Ver Detalhes do Chip</span>
+													<ExternalLink className="w-3.5 h-3.5" />
+												</Link>
+											</div>
+										</div>
+									))}
+								</div>
+							) : (
+								<div className="bg-white/90 dark:bg-slate-900/40 backdrop-blur-xl rounded-3xl p-10 border border-slate-300 dark:border-slate-800/80 text-center">
+									<div className="inline-flex items-center justify-center w-12 h-12 bg-amber-500/10 text-amber-600 rounded-full mb-3">
+										<HelpCircle className="w-6 h-6" />
+									</div>
+									<h4 className="text-base font-bold text-slate-900 dark:text-slate-100 mb-1">
+										Nenhum modelo atende a todos os filtros selecionados
+									</h4>
+									<p className="text-xs text-slate-500 max-w-md mx-auto mb-4">
+										Experimente desmarcar alguns dos filtros mais restritivos (ex: Wi-Fi 5 GHz + Ethernet MAC ao mesmo tempo).
+									</p>
+								</div>
+							)}
 						</div>
 					</div>
 				)}
+
+				{/* FOOTER LINKS / NEXT STEPS */}
+				<section className="mt-16 bg-white/80 dark:bg-slate-900/40 backdrop-blur-xl border border-slate-300 dark:border-slate-800/80 rounded-3xl p-6 md:p-8 max-w-6xl mx-auto shadow-2xl">
+					<h3 className="text-lg font-display font-extrabold text-slate-900 dark:text-slate-100 mb-6 text-center select-none">
+						Próximos Passos de Desenvolvimento
+					</h3>
+					<div className="grid md:grid-cols-3 gap-6">
+						<Link
+							href="/catalogo"
+							className="group bg-blue-500/5 dark:bg-blue-950/10 border border-blue-500/10 dark:border-blue-500/20 hover:border-blue-500/40 dark:hover:border-blue-400/40 rounded-2xl p-5 hover:shadow-lg transition-all duration-300"
+						>
+							<div className="w-9 h-9 rounded-xl bg-blue-500/10 dark:bg-blue-400/15 text-blue-500 dark:text-blue-400 flex items-center justify-center mb-4 shrink-0 shadow-xs select-none">
+								<ShoppingBag className="w-4 h-4" />
+							</div>
+							<h4 className="text-sm font-bold text-slate-900 dark:text-slate-200 mb-1.5 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+								Catálogo de Placas
+							</h4>
+							<p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+								Explore placas de desenvolvimento oficiais (DevKit, NodeMCU) e módulos com links seguros e pinouts.
+							</p>
+						</Link>
+
+						<Link
+							href="/comparacao"
+							className="group bg-purple-500/5 dark:bg-purple-950/10 border border-purple-500/10 dark:border-purple-500/20 hover:border-purple-500/40 dark:hover:border-purple-400/40 rounded-2xl p-5 hover:shadow-lg transition-all duration-300"
+						>
+							<div className="w-9 h-9 rounded-xl bg-purple-500/10 dark:bg-purple-400/15 text-purple-500 dark:text-purple-400 flex items-center justify-center mb-4 shrink-0 shadow-xs select-none">
+								<SlidersHorizontal className="w-4 h-4" />
+							</div>
+							<h4 className="text-sm font-bold text-slate-900 dark:text-slate-200 mb-1.5 group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">
+								Comparador Lado a Lado
+							</h4>
+							<p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+								Compare lado a lado matrizes completas de frequência, GPIOs, canais ADC/DAC, consumos e pinouts.
+							</p>
+						</Link>
+
+						<Link
+							href="/glossario"
+							className="group bg-pink-500/5 dark:bg-pink-950/10 border border-pink-500/10 dark:border-pink-500/20 hover:border-pink-500/40 dark:hover:border-pink-400/40 rounded-2xl p-5 hover:shadow-lg transition-all duration-300"
+						>
+							<div className="w-9 h-9 rounded-xl bg-pink-500/10 dark:bg-pink-400/15 text-pink-500 dark:text-pink-400 flex items-center justify-center mb-4 shrink-0 shadow-xs select-none">
+								<BookOpen className="w-4 h-4" />
+							</div>
+							<h4 className="text-sm font-bold text-slate-900 dark:text-slate-200 mb-1.5 group-hover:text-pink-600 dark:group-hover:text-pink-400 transition-colors">
+								Glossário de Parâmetros
+							</h4>
+							<p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+								Ficou em dúvida sobre termos de hardware como ULP, SRAM RTC, JTAG ou Matter? Consulte definições rápidas.
+							</p>
+						</Link>
+					</div>
+				</section>
 			</main>
 
 			<Footer />

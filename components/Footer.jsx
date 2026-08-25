@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { ExternalLink } from "lucide-react";
 
 export default function Footer() {
@@ -46,6 +47,14 @@ export default function Footer() {
 							Recursos
 						</h4>
 						<ul className="space-y-3 text-sm">
+							<li>
+								<Link
+									href="/diagnostico"
+									className="hover:text-purple-600 dark:hover:text-purple-400 transition-colors flex items-center gap-1.5 font-medium"
+								>
+									<span>Guia de Diagnóstico & Erros</span>
+								</Link>
+							</li>
 							<li>
 								<a
 									href="https://github.com/lucasrguerra/ESPDocs"

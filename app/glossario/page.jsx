@@ -1,534 +1,577 @@
-import { paginaMeta, jsonLd } from "@/lib/seo";
+"use client";
+
+import { useState, useMemo, useRef } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Link from "next/link";
+import { categoriasGlossario } from "@/lib/glossarioData";
+import {
+	BookOpen,
+	Search,
+	Cpu,
+	Database,
+	Wifi,
+	Sliders,
+	Sparkles,
+	BatteryCharging,
+	Code2,
+	Link2,
+	Check,
+	ArrowRight,
+	Lightbulb,
+	HelpCircle,
+	X,
+	SlidersHorizontal,
+	Filter,
+	RotateCcw,
+	Tag,
+	ShieldCheck,
+} from "lucide-react";
 
+export default function GlossarioPage() {
+	const [busca, setBusca] = useState("");
+	const [categoriaSelecionada, setCategoriaSelecionada] = useState("todas");
+	const [letraFiltro, setLetraFiltro] = useState(null);
+	const [copiadoSlug, setCopiadoSlug] = useState(null);
+	const searchInputRef = useRef(null);
 
-export const metadata = paginaMeta({
-    titulo: "Glossário técnico do ESP32",
-    descricao: "Mais de 40 termos do ecossistema ESP32 explicados em português: GPIO, strapping, ULP, PSRAM, eFuse, deep sleep, OTA, Secure Boot, ECDSA, TWAI, Matter e Thread.",
-    caminho: "/glossario",
-    keywords: ["glossário ESP32", "o que é GPIO", "o que é strapping", "o que é ULP", "termos ESP32"],
-});
+	// Sugestões populares para busca rápida
+	const buscasPopulares = [
+		{ rotulo: "GPIO", emoji: "🔌" },
+		{ rotulo: "ULP", emoji: "⚡" },
+		{ rotulo: "PSRAM", emoji: "💾" },
+		{ rotulo: "Strapping Pins", emoji: "🚀" },
+		{ rotulo: "Deep Sleep", emoji: "🔋" },
+		{ rotulo: "OTA", emoji: "📡" },
+		{ rotulo: "Matter", emoji: "🌐" },
+		{ rotulo: "Secure Boot", emoji: "🔒" },
+		{ rotulo: "Wi-Fi 6", emoji: "📶" },
+		{ rotulo: "MIPI", emoji: "✨" },
+	];
 
-export default function Glossario() {
-    const categorias = [
-        {
-            nome: "Processamento",
-            icone: "🧠",
-            cor: "blue",
-            termos: [
-                {
-                    termo: "Arquitetura",
-                    definicao: "Conjunto de instruções e design do processador. O ESP32 usa principalmente Xtensa (32-bit) ou RISC-V.",
-                    exemplo: "ESP32 clássico usa Xtensa LX6, enquanto ESP32-C3 usa RISC-V.",
-                },
-                {
-                    termo: "Núcleos (Cores)",
-                    definicao: "Unidades de processamento independentes. Dual-core permite executar duas tarefas simultaneamente.",
-                    exemplo: "ESP32 tem 2 núcleos (dual-core), ESP32-S2 tem 1 núcleo (single-core).",
-                },
-                {
-                    termo: "Frequência (Clock)",
-                    definicao: "Velocidade de processamento medida em MHz ou GHz. Quanto maior, mais rápido o processamento.",
-                    exemplo: "ESP32 opera de 80 MHz até 240 MHz.",
-                },
-                {
-                    termo: "ULP (Ultra Low Power) Coprocessador",
-                    definicao: "Processador secundário de baixíssimo consumo que pode operar enquanto o processador principal está em deep sleep.",
-                    exemplo: "Usado para ler sensores periodicamente sem despertar o CPU principal.",
-                },
-                {
-                    termo: "Aceleradores de IA",
-                    definicao: "Hardware dedicado para acelerar operações de inteligência artificial e redes neurais.",
-                    exemplo: "ESP32-P4 possui Vector Extension para processamento de IA.",
-                },
-                {
-                    termo: "Aceleradores Criptográficos",
-                    definicao: "Blocos de hardware dedicados que executam algoritmos de criptografia muito mais rápido e com menor consumo do que a CPU. Praticamente toda série tem algum, mas o conjunto varia bastante, por isso vale olhar item por item.",
-                    exemplo: "ESP32-C2 e ESP32-C61 não têm acelerador AES: só SHA e curvas elípticas.",
-                },
-                {
-                    termo: "ECC (Criptografia de Curvas Elípticas)",
-                    definicao: "Família de algoritmos de chave pública que atinge a mesma segurança do RSA com chaves muito menores, o que economiza memória e tempo em microcontrolador. As curvas usadas são identificadas por nome, como P-256.",
-                    exemplo: "ESP32, ESP32-S2, ESP32-S3 e ESP32-C3 não têm ECC em hardware; ESP32-C5, P4, S31 e H4 chegam à curva P-384.",
-                },
-                {
-                    termo: "ECDSA",
-                    definicao: "Algoritmo de assinatura digital baseado em curvas elípticas. Ter o periférico ECDSA no silício significa assinar e verificar sem carregar a CPU. É o que o Matter exige para o atestado de dispositivo.",
-                    exemplo: "Só ESP32-S31, C5, C61, P4, H2 e H4 têm ECDSA em hardware.",
-                },
-                {
-                    termo: "Key Manager",
-                    definicao: "Periférico que provisiona e usa chaves criptográficas sem que elas fiquem legíveis para o firmware. Mesmo que alguém extraia a imagem do firmware, a chave privada não está lá.",
-                    exemplo: "Disponível apenas no ESP32-S31, ESP32-C5 e ESP32-P4.",
-                },
-                {
-                    termo: "Secure Boot",
-                    definicao: "Verificação da assinatura do firmware durante o boot: o chip se recusa a executar código que não tenha sido assinado pela sua chave. A versão V2 usa RSA-3072 ou ECDSA; a V1, do ESP32 original, é um esquema mais antigo.",
-                    exemplo: "ESP32 tem apenas o Secure Boot V1; do ESP32-S2 em diante todos têm V2.",
-                },
-                {
-                    termo: "Criptografia de Flash",
-                    definicao: "Cifra o conteúdo da memória flash externa, impedindo que alguém leia o firmware soldando um gravador no chip de memória. O esquema atual usa XTS-AES.",
-                    exemplo: "XTS-AES-128 na maioria das séries; ESP32-S2, S3, S31, C5, P4 e H4 também suportam XTS-AES-256.",
-                },
-                {
-                    termo: "Assinatura Digital (DS)",
-                    definicao: "Periférico que assina dados usando uma chave RSA guardada em eFuse de forma que o firmware nunca a enxerga. É o antecessor mais simples do Key Manager.",
-                    exemplo: "Ausente no ESP32 original, no C2, no C61 e no H4.",
-                },
-                {
-                    termo: "Proteção contra DPA",
-                    definicao: "Defesa contra Differential Power Analysis, ataque que deduz a chave secreta medindo variações no consumo de energia do chip durante a operação criptográfica. Exige acesso físico ao dispositivo.",
-                    exemplo: "Presente no ESP32-C5, C6, C61 e H2.",
-                },
-            ],
-        },
-        {
-            nome: "Memória",
-            icone: "💾",
-            cor: "purple",
-            termos: [
-                {
-                    termo: "SRAM (Static RAM)",
-                    definicao: "Memória volátil rápida usada para armazenar variáveis e stack do programa durante execução. Perde dados ao desligar.",
-                    exemplo: "ESP32 tem 520 KB de SRAM interna.",
-                },
-                {
-                    termo: "ROM (Read-Only Memory)",
-                    definicao: "Memória não-volátil com bootloader e funções básicas gravadas pela Espressif. Não pode ser alterada.",
-                    exemplo: "ESP32 tem 448 KB de ROM com código de boot.",
-                },
-                {
-                    termo: "Flash",
-                    definicao: "Memória não-volátil externa onde o firmware é armazenado. Mantém dados mesmo sem energia.",
-                    exemplo: "Placas comuns vêm com 4 MB ou 16 MB de Flash.",
-                },
-                {
-                    termo: "PSRAM (Pseudo-Static RAM)",
-                    definicao: "Memória RAM externa adicional para aplicações que precisam de mais memória (imagens, buffers grandes).",
-                    exemplo: "ESP32-CAM usa PSRAM de 4 MB ou 8 MB para armazenar frames de câmera.",
-                },
-                {
-                    termo: "RTC Memory",
-                    definicao: "Pequena quantidade de SRAM que mantém dados durante deep sleep, alimentada pelo RTC.",
-                    exemplo: "Usar RTC memory para guardar contador entre deep sleeps.",
-                },
-            ],
-        },
-        {
-            nome: "Conectividade",
-            icone: "📡",
-            cor: "green",
-            termos: [
-                {
-                    termo: "Wi-Fi",
-                    definicao: "Comunicação sem fio padrão IEEE 802.11. ESP32 suporta 2.4 GHz (b/g/n), algumas séries suportam 5 GHz.",
-                    exemplo: "Conectar ESP32 à rede doméstica para IoT.",
-                },
-                {
-                    termo: "Bluetooth Classic",
-                    definicao: "Protocolo Bluetooth para transmissão de áudio e dados. Maior consumo que BLE.",
-                    exemplo: "Caixas de som Bluetooth, transmissão de áudio.",
-                },
-                {
-                    termo: "BLE (Bluetooth Low Energy)",
-                    definicao: "Versão de baixo consumo do Bluetooth, ideal para sensores e wearables.",
-                    exemplo: "Rastreadores, sensores de temperatura, smartwatches.",
-                },
-                {
-                    termo: "Zigbee",
-                    definicao: "Protocolo de mesh network de baixo consumo para automação residencial (IEEE 802.15.4).",
-                    exemplo: "Redes de sensores domésticos, lâmpadas inteligentes.",
-                },
-                {
-                    termo: "Thread",
-                    definicao: "Protocolo de mesh network baseado em IPv6 para dispositivos IoT.",
-                    exemplo: "Smart home devices com Matter.",
-                },
-                {
-                    termo: "Matter",
-                    definicao: "Padrão universal de smart home que funciona sobre Thread ou Wi-Fi, compatível com Alexa, Google Home, Apple Home.",
-                    exemplo: "Tomadas, lâmpadas e sensores compatíveis com todos os assistentes.",
-                },
-            ],
-        },
-        {
-            nome: "Periféricos",
-            icone: "🔌",
-            cor: "orange",
-            termos: [
-                {
-                    termo: "GPIO (General Purpose Input/Output)",
-                    definicao: "Pinos configuráveis como entrada ou saída digital para conectar LEDs, botões, sensores.",
-                    exemplo: "GPIO2 geralmente é usado para LED onboard.",
-                },
-                {
-                    termo: "ADC (Analog-to-Digital Converter)",
-                    definicao: "Converte sinais analógicos (0-3.3V) em valores digitais para leitura de sensores analógicos.",
-                    exemplo: "Ler potenciômetro, sensor de luz LDR, tensão de bateria.",
-                },
-                {
-                    termo: "DAC (Digital-to-Analog Converter)",
-                    definicao: "Converte valores digitais em voltagem analógica (0-3.3V).",
-                    exemplo: "Gerar ondas de áudio, controle analógico de motores.",
-                },
-                {
-                    termo: "PWM (Pulse Width Modulation)",
-                    definicao: "Técnica para simular saída analógica variando a largura de pulsos digitais. Controla brilho, velocidade, etc.",
-                    exemplo: "Controlar brilho de LED, velocidade de motor DC.",
-                },
-                {
-                    termo: "Touch Capacitivo",
-                    definicao: "Sensores que detectam toque humano por mudança de capacitância, sem necessidade de botões físicos.",
-                    exemplo: "Botões touch, sliders, controles sensíveis ao toque.",
-                },
-                {
-                    termo: "UART (Universal Asynchronous Receiver/Transmitter)",
-                    definicao: "Comunicação serial assíncrona para trocar dados com módulos GPS, sensores, debug serial.",
-                    exemplo: "Monitor Serial da Arduino IDE usa UART.",
-                },
-                {
-                    termo: "SPI (Serial Peripheral Interface)",
-                    definicao: "Barramento serial síncrono de alta velocidade para displays, cartões SD, sensores.",
-                    exemplo: "Display TFT, módulo SD Card, sensor BME280.",
-                },
-                {
-                    termo: "I²C (Inter-Integrated Circuit)",
-                    definicao: "Barramento serial de 2 fios para conectar múltiplos dispositivos com endereços únicos.",
-                    exemplo: "Sensores BME280, displays OLED, RTC DS3231.",
-                },
-                {
-                    termo: "I²S (Inter-IC Sound)",
-                    definicao: "Interface para transmissão de áudio digital entre circuitos integrados.",
-                    exemplo: "Módulos de áudio MAX98357, microfones MEMS.",
-                },
-            ],
-        },
-        {
-            nome: "Interfaces Especiais",
-            icone: "✨",
-            cor: "pink",
-            termos: [
-                {
-                    termo: "USB OTG (On-The-Go)",
-                    definicao: "Permite que ESP32 funcione como dispositivo USB (teclado, mouse, pen drive) ou host USB.",
-                    exemplo: "ESP32-S3 pode emular teclado USB ou ler pen drive.",
-                },
-                {
-                    termo: "JTAG",
-                    definicao: "Interface de debug e programação de baixo nível para desenvolvimento profissional.",
-                    exemplo: "Debug passo-a-passo com ESP-Prog ou J-Link.",
-                },
-                {
-                    termo: "SDIO (Secure Digital Input Output)",
-                    definicao: "Interface para cartões SD em modo de 4 bits de alta velocidade.",
-                    exemplo: "Gravar logs, armazenar fotos de câmera.",
-                },
-                {
-                    termo: "Ethernet MAC",
-                    definicao: "Controlador de rede Ethernet embutido. Requer PHY externo (chip LAN8720).",
-                    exemplo: "ESP32 com conexão Ethernet cabeada para IoT industrial.",
-                },
-                {
-                    termo: "Camera Interface",
-                    definicao: "Interface paralela para conectar câmeras (geralmente OV2640, OV5640).",
-                    exemplo: "ESP32-CAM, projetos de visão computacional.",
-                },
-                {
-                    termo: "LCD Interface",
-                    definicao: "Interface paralela RGB para displays LCD de alta resolução.",
-                    exemplo: "ESP32-S3 com display TFT 480x320 RGB.",
-                },
-                {
-                    termo: "MIPI CSI/DSI",
-                    definicao: "Interfaces de alta velocidade para câmeras (CSI) e displays (DSI) em aplicações avançadas.",
-                    exemplo: "ESP32-P4 com câmera MIPI de alta resolução.",
-                },
-            ],
-        },
-        {
-            nome: "Gerenciamento de Energia",
-            icone: "🔋",
-            cor: "yellow",
-            termos: [
-                {
-                    termo: "Active Mode",
-                    definicao: "Modo de operação normal com CPU e periféricos funcionando. Maior consumo de energia.",
-                    exemplo: "ESP32 processando dados Wi-Fi: ~160-260 mA.",
-                },
-                {
-                    termo: "Modem Sleep",
-                    definicao: "CPU ativo mas Wi-Fi/Bluetooth desligados quando não há transmissão. Economia moderada.",
-                    exemplo: "Aplicações com comunicação intermitente.",
-                },
-                {
-                    termo: "Light Sleep",
-                    definicao: "CPU pausado mas RAM e RTC mantidos. Acorda rapidamente por timer ou GPIO.",
-                    exemplo: "Sensor que verifica dados a cada 1 segundo: ~0.8 mA.",
-                },
-                {
-                    termo: "Deep Sleep",
-                    definicao: "Tudo desligado exceto RTC e ULP. Consumo ultra baixo (~10 μA). Perde variáveis da RAM.",
-                    exemplo: "Sensor que envia dados a cada 1 hora e dorme entre envios.",
-                },
-                {
-                    termo: "Hibernation",
-                    definicao: "Modo mais profundo que deep sleep, desliga até RTC. Apenas timer ou reset externo acordam.",
-                    exemplo: "Dispositivo sazonal que acorda 1x por dia: ~5 μA.",
-                },
-                {
-                    termo: "Brownout Detector",
-                    definicao: "Circuito que reseta o ESP32 se a tensão cair abaixo de nível seguro (~2.8V) para evitar corrupção.",
-                    exemplo: "Proteção contra queda de tensão da fonte/bateria.",
-                },
-            ],
-        },
-        {
-            nome: "Boot e Programação",
-            icone: "🚀",
-            cor: "red",
-            termos: [
-                {
-                    termo: "Bootloader",
-                    definicao: "Programa na ROM que inicia ao ligar e carrega o firmware da Flash para execução.",
-                    exemplo: "Primeiro código que roda ao dar power-on no ESP32.",
-                },
-                {
-                    termo: "Strapping Pins",
-                    definicao: "GPIOs lidos durante boot para definir modo de operação (flash, boot normal, etc). Cuidado ao usar!",
-                    exemplo: "GPIO0=LOW entra em modo flash. GPIO2, GPIO12, GPIO15 também são strapping pins.",
-                },
-                {
-                    termo: "Flash Mode",
-                    definicao: "Modo especial onde ESP32 aguarda upload de firmware via UART. Ativado por GPIO0=LOW + Reset.",
-                    exemplo: "Pressionar botão BOOT durante upload na Arduino IDE.",
-                },
-                {
-                    termo: "OTA (Over-The-Air)",
-                    definicao: "Atualização de firmware sem fio via Wi-Fi, sem necessidade de cabo USB.",
-                    exemplo: "Atualizar firmware de dispositivo instalado no teto.",
-                },
-                {
-                    termo: "Partições",
-                    definicao: "Divisões da Flash para armazenar bootloader, app, OTA, SPIFFS, NVS.",
-                    exemplo: "Partição de 3 MB para app, 1 MB para SPIFFS (sistema de arquivos).",
-                },
-                {
-                    termo: "NVS (Non-Volatile Storage)",
-                    definicao: "Área da Flash para armazenar configurações persistentes em formato chave-valor.",
-                    exemplo: "Salvar SSID e senha do Wi-Fi para reconectar após reboot.",
-                },
-                {
-                    termo: "SPIFFS / LittleFS",
-                    definicao: "Sistemas de arquivos para Flash, permitem armazenar arquivos (HTML, configs, logs).",
-                    exemplo: "Armazenar páginas HTML de servidor web no ESP32.",
-                },
-            ],
-        },
-        {
-            nome: "Conceitos de Hardware",
-            icone: "⚙️",
-            cor: "gray",
-            termos: [
-                {
-                    termo: "Module vs Chip",
-                    definicao: "Chip é o processador ESP32 puro. Module inclui chip + Flash + antena em PCB certificado (ESP32-WROOM-32).",
-                    exemplo: "Comprar módulo WROOM é mais fácil que soldar chip ESP32 bruto.",
-                },
-                {
-                    termo: "DevKit / Development Board",
-                    definicao: "Placa com módulo ESP32 + conversor USB-Serial + regulador de tensão + pinos expostos para prototipagem.",
-                    exemplo: "ESP32-DevKitC, NodeMCU-32S.",
-                },
-                {
-                    termo: "Pinout",
-                    definicao: "Diagrama mostrando função de cada pino físico do chip/módulo.",
-                    exemplo: "Ver pinout para saber qual GPIO suporta ADC.",
-                },
-                {
-                    termo: "Pull-up / Pull-down",
-                    definicao: "Resistores internos que mantém GPIO em nível HIGH (pull-up) ou LOW (pull-down) quando não conectado.",
-                    exemplo: "GPIO com pull-up para botão que conecta ao GND.",
-                },
-                {
-                    termo: "Input-Only GPIO",
-                    definicao: "Alguns GPIOs (34-39 no ESP32 clássico) só funcionam como entrada, não como saída.",
-                    exemplo: "GPIO36 (VP) pode ler ADC mas não controlar LED.",
-                },
-                {
-                    termo: "Certificação (FCC/CE)",
-                    definicao: "Aprovação regulatória para vender produtos com rádio. Módulos pré-certificados simplificam o processo.",
-                    exemplo: "Usar ESP32-WROOM-32 (certificado) facilita venda comercial.",
-                },
-            ],
-        },
-    ];
+	// Mapeamento de ícones por nome
+	const iconMap = {
+		Cpu: <Cpu className="w-4 h-4" />,
+		Database: <Database className="w-4 h-4" />,
+		Wifi: <Wifi className="w-4 h-4" />,
+		Sliders: <Sliders className="w-4 h-4" />,
+		Sparkles: <Sparkles className="w-4 h-4" />,
+		BatteryCharging: <BatteryCharging className="w-4 h-4" />,
+		Code2: <Code2 className="w-4 h-4" />,
+		ShieldCheck: <ShieldCheck className="w-4 h-4" />,
+	};
 
-    return (
-        <div className="min-h-screen bg-linear-to-br from-slate-100 via-slate-50 to-purple-100/40 dark:from-slate-950 dark:via-slate-950 dark:to-slate-900 transition-colors">
-            {/* Cada verbete vira um DefinedTerm: ajuda o Google a responder
-                buscas do tipo "o que é strapping ESP32" apontando para cá. */}
-            <script
-                type="application/ld+json"
-                dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd.glossario(categorias)) }}
-            />
-            <script
-                type="application/ld+json"
-                dangerouslySetInnerHTML={{
-                    __html: JSON.stringify(jsonLd.trilha([
-                        { nome: "Início", caminho: "/" },
-                        { nome: "Glossário", caminho: "/glossario" },
-                    ])),
-                }}
-            />
+	// Lista de todos os termos com metadados de categoria
+	const todosOsTermos = useMemo(() => {
+		return categoriasGlossario.flatMap((cat) =>
+			cat.termos.map((t) => ({
+				...t,
+				categoriaId: cat.id,
+				categoriaNome: cat.nome,
+				categoriaCor: cat.cor,
+				categoriaIcone: cat.icone,
+				categoriaEmoji: cat.emoji,
+				slug: t.termo.toLowerCase().replace(/[\s()/²]+/g, "-"),
+				primeiraLetra: t.termo.charAt(0).toUpperCase(),
+			}))
+		);
+	}, []);
 
-            <Header />
+	// Todas as letras do alfabeto de A a Z com indicador de existência de termos
+	const alfabeto = useMemo(() => {
+		const letras = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+		const setDisponivel = new Set(
+			todosOsTermos.map((t) => t.termo.charAt(0).toUpperCase())
+		);
+		return letras.map((letra) => ({
+			letra,
+			temTermos: setDisponivel.has(letra),
+		}));
+	}, [todosOsTermos]);
 
-            <main id="conteudo" className="px-4 pt-16 pb-20 max-w-7xl mx-auto">
-                {/* Hero Section */}
-                <section className="text-center mb-16">
-                    <div className="inline-flex items-center gap-2 bg-white dark:bg-slate-900 px-4 py-2 rounded-full mb-6 border border-purple-200 dark:border-purple-500/30 shadow-sm">
-                        <span className="text-xl">📖</span>
-                        <span className="text-sm font-semibold text-slate-700 dark:text-slate-300">Aprenda os Conceitos</span>
-                    </div>
-                    
-                    <h1 className="text-5xl md:text-7xl font-black mb-6 bg-clip-text text-transparent bg-linear-to-r from-blue-600 via-purple-600 to-pink-600 leading-tight tracking-tight">
-                        Glossário Técnico
-                    </h1>
+	// Filtragem dinâmica
+	const termosFiltrados = useMemo(() => {
+		const termoBusca = busca.toLowerCase().trim();
+		return todosOsTermos.filter((item) => {
+			const matchCategoria =
+				categoriaSelecionada === "todas" ||
+				item.categoriaId === categoriaSelecionada;
+			const matchLetra = !letraFiltro || item.primeiraLetra === letraFiltro;
+			const matchBusca =
+				!termoBusca ||
+				item.termo.toLowerCase().includes(termoBusca) ||
+				item.definicao.toLowerCase().includes(termoBusca) ||
+				item.exemplo.toLowerCase().includes(termoBusca) ||
+				item.categoriaNome.toLowerCase().includes(termoBusca);
 
-                    <p className="text-lg md:text-xl text-slate-600 dark:text-slate-400 max-w-3xl mx-auto leading-relaxed">
-                        Entenda termos e conceitos do ecossistema ESP32 explicados em português,
-                        do básico ao avançado.
-                    </p>
-                </section>
+			return matchCategoria && matchLetra && matchBusca;
+		});
+	}, [todosOsTermos, categoriaSelecionada, letraFiltro, busca]);
 
-                {/* Navegação Rápida */}
-                <section className="mb-12">
-                    <div className="bg-white dark:bg-slate-900/40 rounded-3xl shadow-lg p-8 border-2 border-slate-200 dark:border-slate-800/80">
-                        <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-6 text-center">
-                            Navegação Rápida
-                        </h2>
-                        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                            {categorias.map((cat) => (
-                                <a
-                                    key={cat.nome}
-                                    href={`#${cat.nome.toLowerCase().replace(/\s+/g, '-')}`}
-                                    className="flex flex-col items-center gap-2 p-4 rounded-xl bg-slate-50 dark:bg-slate-950/40 border-2 border-slate-200 dark:border-slate-800/60 hover:border-purple-300 dark:hover:border-purple-500/50 hover:shadow-md transition-all"
-                                >
-                                    <span className="text-4xl">{cat.icone}</span>
-                                    <span className="text-sm font-bold text-slate-800 dark:text-slate-200 text-center">
-                                        {cat.nome}
-                                    </span>
-                                </a>
-                            ))}
-                        </div>
-                    </div>
-                </section>
+	const temFiltroAtivo =
+		busca.trim() !== "" ||
+		categoriaSelecionada !== "todas" ||
+		letraFiltro !== null;
 
-                {/* Categorias de Termos */}
-                <div className="space-y-12">
-                    {categorias.map((categoria) => (
-                        <section
-                            key={categoria.nome}
-                            id={categoria.nome.toLowerCase().replace(/\s+/g, '-')}
-                            className="scroll-mt-20"
-                        >
-                            <div className="bg-white dark:bg-slate-900/40 rounded-3xl shadow-xl p-8 border-2 border-slate-200 dark:border-slate-800/80">
-                                {/* Header da Categoria */}
-                                <div className="flex items-center gap-4 mb-8 pb-6 border-b-2 border-slate-200 dark:border-slate-800/80">
-                                    <div className={`w-16 h-16 bg-linear-to-br from-${categoria.cor}-500 to-${categoria.cor}-600 rounded-2xl flex items-center justify-center shadow-lg`}>
-                                        <span className="text-3xl">{categoria.icone}</span>
-                                    </div>
-                                    <h2 className="text-3xl font-black text-slate-900 dark:text-slate-100">
-                                        {categoria.nome}
-                                    </h2>
-                                </div>
+	const limparTodosFiltros = () => {
+		setBusca("");
+		setCategoriaSelecionada("todas");
+		setLetraFiltro(null);
+		searchInputRef.current?.focus();
+	};
 
-                                {/* Lista de Termos */}
-                                <div className="space-y-6">
-                                    {categoria.termos.map((item, idx) => (
-                                        <article
-                                            key={idx}
-                                            className="bg-slate-50 dark:bg-slate-950/40 p-6 rounded-2xl border-2 border-slate-200 dark:border-slate-800/60 hover:border-purple-200 dark:hover:border-purple-500/40 transition-colors"
-                                        >
-                                            <h3 className="text-xl font-bold text-slate-900 dark:text-slate-100 mb-3">
-                                                {item.termo}
-                                            </h3>
-                                            <p className="text-slate-700 dark:text-slate-300 leading-relaxed mb-4">
-                                                {item.definicao}
-                                            </p>
-                                            <div className="bg-blue-50 dark:bg-blue-950/30 border-l-4 border-blue-500 p-4 rounded-lg">
-                                                <div className="flex items-start gap-2">
-                                                    <span className="text-blue-700 dark:text-blue-400 font-bold text-sm shrink-0 mt-0.5">
-                                                        💡 Exemplo:
-                                                    </span>
-                                                    <p className="text-blue-900 dark:text-blue-200 text-sm leading-relaxed">
-                                                        {item.exemplo}
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </article>
-                                    ))}
-                                </div>
-                            </div>
-                        </section>
-                    ))}
-                </div>
+	const copiarLinkTermo = (slug) => {
+		const url = `${window.location.origin}/glossario#${slug}`;
+		navigator.clipboard.writeText(url);
+		setCopiadoSlug(slug);
+		setTimeout(() => setCopiadoSlug(null), 2000);
+	};
 
-                {/* Call to Action */}
-                <section className="mt-16 bg-linear-to-br from-blue-600 via-purple-600 to-pink-600 rounded-3xl shadow-2xl p-10 text-white border-2 border-purple-400">
-                    <div className="text-center max-w-3xl mx-auto">
-                        <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full mb-4 border border-white/30">
-                            <span className="text-xl">🎯</span>
-                            <span className="text-sm font-semibold">Próximo Passo</span>
-                        </div>
-                        <h3 className="text-3xl md:text-4xl font-black mb-4">
-                            Pronto para Explorar?
-                        </h3>
-                        <p className="text-lg text-white/90 leading-relaxed mb-8">
-                            Agora que você conhece os conceitos, explore as séries ESP32 e compare
-                            especificações para encontrar a ideal para seu projeto.
-                        </p>
-                        <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                            <Link
-                                href="/series"
-                                className="inline-flex items-center justify-center gap-2 bg-white text-purple-700 px-8 py-4 rounded-xl font-bold text-lg shadow-xl hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300 group"
-                            >
-                                <span className="text-xl">⚡</span>
-                                <span>Ver Séries ESP32</span>
-                                <svg 
-                                    className="w-5 h-5 transition-transform group-hover:translate-x-1" 
-                                    fill="none" 
-                                    stroke="currentColor" 
-                                    viewBox="0 0 24 24"
-                                >
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                                </svg>
-                            </Link>
+	const catAtivaInfo = categoriasGlossario.find(
+		(c) => c.id === categoriaSelecionada
+	);
 
-                            <Link
-                                href="/frameworks"
-                                className="inline-flex items-center justify-center gap-2 bg-white/10 backdrop-blur-sm border-2 border-white/30 text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-white/20 transition-all duration-300 group"
-                            >
-                                <span className="text-xl">🛠️</span>
-                                <span>Ver Frameworks</span>
-                                <svg 
-                                    className="w-5 h-5 transition-transform group-hover:translate-x-1" 
-                                    fill="none" 
-                                    stroke="currentColor" 
-                                    viewBox="0 0 24 24"
-                                >
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                                </svg>
-                            </Link>
-                        </div>
-                    </div>
-                </section>
-            </main>
+	return (
+		<div className="bg-gradient-to-br from-slate-100 via-slate-50 to-purple-100/30 dark:from-slate-950 dark:via-slate-950 dark:to-slate-900 min-h-screen text-slate-900 dark:text-slate-100 transition-colors duration-300">
+			<Header />
 
-            <Footer />
-        </div>
-    );
+			<main id="conteudo" className="px-4 sm:px-6 pt-12 pb-24 max-w-7xl mx-auto">
+				{/* Hero Section */}
+				<section className="text-center mb-10 select-none">
+					<div className="inline-flex items-center gap-2 bg-white dark:bg-slate-900/60 backdrop-blur-md px-4 py-2 rounded-full mb-5 border border-slate-250 dark:border-slate-800/80 shadow-xs">
+						<BookOpen className="w-4 h-4 text-purple-600 dark:text-purple-400" />
+						<span className="text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider">
+							Enciclopédia & Conceitos do ESP32
+						</span>
+					</div>
+
+					<h1 className="text-3xl sm:text-5xl md:text-6xl font-display font-extrabold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 dark:from-blue-400 dark:via-purple-400 dark:to-pink-400 bg-clip-text text-transparent mb-4 leading-tight tracking-tight">
+						Glossário Técnico
+					</h1>
+
+					<p className="text-sm sm:text-base text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed font-normal">
+						Consulte definições diretas, parâmetros de hardware e exemplos práticos dos termos fundamentais do ecossistema ESP32.
+					</p>
+				</section>
+
+				{/* 1. PAINEL INTEGRADO DE BUSCA & FILTRAGEM (REDESIGN COMPLETO) */}
+				<section className="mb-10 bg-white/90 dark:bg-slate-900/90 backdrop-blur-xl rounded-3xl border border-slate-200 dark:border-slate-800 p-5 sm:p-7 shadow-sm transition-all">
+					{/* Barra de Pesquisa Principal */}
+					<div className="relative mb-5">
+						<div className="absolute left-4 top-1/2 -translate-y-1/2 p-1.5 rounded-xl bg-purple-50 dark:bg-purple-950/50 text-purple-600 dark:text-purple-400 pointer-events-none">
+							<Search className="w-4 h-4 sm:w-5 sm:h-5" />
+						</div>
+
+						<input
+							ref={searchInputRef}
+							type="text"
+							value={busca}
+							onChange={(e) => setBusca(e.target.value)}
+							placeholder="Pesquisar por termo, sigla ou conceito (ex: GPIO, ULP, PSRAM, OTA, Deep Sleep)..."
+							className="w-full bg-slate-50 dark:bg-slate-950/70 pl-13 sm:pl-14 pr-24 sm:pr-28 py-3.5 sm:py-4 rounded-2xl border border-slate-250 dark:border-slate-800 text-sm sm:text-base font-medium placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all shadow-inner"
+						/>
+
+						{/* Lado Direito da Barra de Pesquisa: Botão Limpar ou Tag de Contagem */}
+						<div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-2">
+							{busca ? (
+								<button
+									type="button"
+									onClick={() => {
+										setBusca("");
+										searchInputRef.current?.focus();
+									}}
+									className="text-xs px-2.5 py-1 rounded-xl bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-slate-700 font-semibold flex items-center gap-1 transition-colors cursor-pointer"
+								>
+									<X className="w-3.5 h-3.5" />
+									<span>Limpar</span>
+								</button>
+							) : (
+								<span className="hidden sm:inline-flex text-[11px] font-bold text-slate-500 dark:text-slate-400 bg-slate-200/60 dark:bg-slate-800/80 px-2.5 py-1 rounded-lg border border-slate-250 dark:border-slate-700">
+									{termosFiltrados.length} {termosFiltrados.length === 1 ? "termo" : "termos"}
+								</span>
+							)}
+						</div>
+					</div>
+
+					{/* Atalhos de Pesquisa Rápida (Tags Populares) */}
+					<div className="flex items-center gap-2 mb-6 overflow-x-auto pb-1.5 scrollbar-none text-xs">
+						<span className="text-slate-500 dark:text-slate-400 font-bold shrink-0 flex items-center gap-1 text-[11px] uppercase tracking-wider">
+							<Tag className="w-3 h-3" />
+							Populares:
+						</span>
+						{buscasPopulares.map((item) => (
+							<button
+								key={item.rotulo}
+								type="button"
+								onClick={() => setBusca(item.rotulo)}
+								className={`px-2.5 py-1 rounded-lg font-medium transition-all shrink-0 cursor-pointer border ${
+									busca.toLowerCase() === item.rotulo.toLowerCase()
+										? "bg-purple-600 text-white border-purple-600 shadow-xs"
+										: "bg-slate-100/80 dark:bg-slate-800/60 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-750 hover:bg-purple-50 dark:hover:bg-purple-950/40 hover:border-purple-300 dark:hover:border-purple-800"
+								}`}
+							>
+								<span className="mr-1">{item.emoji}</span>
+								<span>{item.rotulo}</span>
+							</button>
+						))}
+					</div>
+
+					{/* Seletor de Categorias em Grid/Flex Moderno */}
+					<div className="space-y-2 mb-5">
+						<div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400 font-bold uppercase tracking-wider">
+							<span className="flex items-center gap-1.5">
+								<Filter className="w-3.5 h-3.5 text-purple-500" />
+								Filtrar por Categoria
+							</span>
+							{categoriaSelecionada !== "todas" && (
+								<button
+									type="button"
+									onClick={() => setCategoriaSelecionada("todas")}
+									className="text-purple-600 dark:text-purple-400 hover:underline cursor-pointer lowercase first-letter:uppercase text-[11px]"
+								>
+									Ver todas ({todosOsTermos.length})
+								</button>
+							)}
+						</div>
+
+						<div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-9 gap-2">
+							{/* Botão Todas */}
+							<button
+								type="button"
+								onClick={() => setCategoriaSelecionada("todas")}
+								className={`p-2.5 rounded-xl text-xs font-bold transition-all text-left flex flex-col justify-between gap-1 cursor-pointer border ${
+									categoriaSelecionada === "todas"
+										? "bg-purple-600 text-white border-purple-600 shadow-sm ring-2 ring-purple-500/20"
+										: "bg-slate-50 dark:bg-slate-950/60 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-800 hover:border-purple-300 dark:hover:border-purple-700"
+								}`}
+							>
+								<span className="text-base">✨</span>
+								<div className="flex items-center justify-between w-full">
+									<span className="truncate">Todas</span>
+									<span
+										className={`text-[10px] px-1.5 py-0.2 rounded-full font-bold ${
+											categoriaSelecionada === "todas"
+												? "bg-white/20 text-white"
+												: "bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400"
+										}`}
+									>
+										{todosOsTermos.length}
+									</span>
+								</div>
+							</button>
+
+							{/* Categorias Individuais */}
+							{categoriasGlossario.map((cat) => {
+								const ativa = categoriaSelecionada === cat.id;
+								return (
+									<button
+										key={cat.id}
+										type="button"
+										onClick={() => setCategoriaSelecionada(cat.id)}
+										className={`p-2.5 rounded-xl text-xs font-bold transition-all text-left flex flex-col justify-between gap-1 cursor-pointer border ${
+											ativa
+												? "bg-purple-600 text-white border-purple-600 shadow-sm ring-2 ring-purple-500/20"
+												: "bg-slate-50 dark:bg-slate-950/60 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-800 hover:border-purple-300 dark:hover:border-purple-700"
+										}`}
+									>
+										<span className="text-base">{cat.emoji}</span>
+										<div className="flex items-center justify-between w-full">
+											<span className="truncate">{cat.nome.split(" ")[0]}</span>
+											<span
+												className={`text-[10px] px-1.5 py-0.2 rounded-full font-bold ${
+													ativa
+														? "bg-white/20 text-white"
+														: "bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400"
+												}`}
+											>
+												{cat.termos.length}
+											</span>
+										</div>
+									</button>
+								);
+							})}
+						</div>
+					</div>
+
+					{/* Scrubber de Índice Alfabético (A-Z) */}
+					<div className="pt-3 border-t border-slate-150 dark:border-slate-800/80 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+						<div className="flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400 font-bold uppercase tracking-wider shrink-0">
+							<span className="text-[11px]">Índice A-Z:</span>
+						</div>
+
+						<div className="flex items-center gap-1 overflow-x-auto pb-1 scrollbar-none flex-1 justify-start sm:justify-end">
+							<button
+								type="button"
+								onClick={() => setLetraFiltro(null)}
+								className={`px-2.5 py-1 rounded-lg text-[11px] font-bold cursor-pointer transition-all shrink-0 ${
+									letraFiltro === null
+										? "bg-purple-600 text-white shadow-xs"
+										: "text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800"
+								}`}
+							>
+								Todos
+							</button>
+
+							{alfabeto.map(({ letra, temTermos }) => {
+								const ativo = letraFiltro === letra;
+								if (!temTermos) {
+									return (
+										<span
+											key={letra}
+											className="w-6 h-6 flex items-center justify-center text-[11px] font-semibold text-slate-500 dark:text-slate-450 select-none shrink-0"
+										>
+											{letra}
+										</span>
+									);
+								}
+								return (
+									<button
+										key={letra}
+										type="button"
+										onClick={() => setLetraFiltro(ativo ? null : letra)}
+										className={`w-6 h-6 rounded-md flex items-center justify-center text-[11px] font-bold cursor-pointer transition-all shrink-0 ${
+											ativo
+												? "bg-purple-600 text-white scale-110 shadow-xs"
+												: "text-slate-700 dark:text-slate-300 hover:bg-purple-100 dark:hover:bg-purple-950/60"
+										}`}
+									>
+										{letra}
+									</button>
+								);
+							})}
+						</div>
+					</div>
+
+					{/* Fita de Filtros Ativos (Aparece quando algum filtro está ativo) */}
+					{temFiltroAtivo && (
+						<div className="mt-4 pt-3 border-t border-slate-150 dark:border-slate-800/80 flex flex-wrap items-center justify-between gap-2">
+							<div className="flex flex-wrap items-center gap-1.5 text-xs">
+								<span className="text-slate-500 dark:text-slate-400 font-semibold mr-1">
+									Filtros ativos:
+								</span>
+
+								{busca && (
+									<span className="inline-flex items-center gap-1 bg-purple-50 dark:bg-purple-950/50 text-purple-700 dark:text-purple-300 px-2.5 py-0.5 rounded-full border border-purple-200 dark:border-purple-800 font-medium">
+										Busca: <strong>"{busca}"</strong>
+										<button
+											type="button"
+											onClick={() => setBusca("")}
+											className="hover:text-purple-900 dark:hover:text-purple-100"
+										>
+											<X className="w-3 h-3" />
+										</button>
+									</span>
+								)}
+
+								{categoriaSelecionada !== "todas" && (
+									<span className="inline-flex items-center gap-1 bg-purple-50 dark:bg-purple-950/50 text-purple-700 dark:text-purple-300 px-2.5 py-0.5 rounded-full border border-purple-200 dark:border-purple-800 font-medium">
+										Categoria: <strong>{catAtivaInfo?.nome}</strong>
+										<button
+											type="button"
+											onClick={() => setCategoriaSelecionada("todas")}
+											className="hover:text-purple-900 dark:hover:text-purple-100"
+										>
+											<X className="w-3 h-3" />
+										</button>
+									</span>
+								)}
+
+								{letraFiltro && (
+									<span className="inline-flex items-center gap-1 bg-purple-50 dark:bg-purple-950/50 text-purple-700 dark:text-purple-300 px-2.5 py-0.5 rounded-full border border-purple-200 dark:border-purple-800 font-medium">
+										Letra: <strong>{letraFiltro}</strong>
+										<button
+											type="button"
+											onClick={() => setLetraFiltro(null)}
+											className="hover:text-purple-900 dark:hover:text-purple-100"
+										>
+											<X className="w-3 h-3" />
+										</button>
+									</span>
+								)}
+							</div>
+
+							<button
+								type="button"
+								onClick={limparTodosFiltros}
+								className="text-xs font-semibold text-red-600 dark:text-red-400 hover:underline flex items-center gap-1 cursor-pointer"
+							>
+								<RotateCcw className="w-3 h-3" />
+								<span>Redefinir filtros</span>
+							</button>
+						</div>
+					)}
+				</section>
+
+				{/* 2. GRID DE CARDS DO GLOSSÁRIO */}
+				<section>
+					{termosFiltrados.length === 0 ? (
+						<div className="text-center py-16 bg-white dark:bg-slate-900 rounded-3xl border border-slate-250 dark:border-slate-800 shadow-sm p-8">
+							<HelpCircle className="w-12 h-12 text-slate-400 mx-auto mb-3" />
+							<h3 className="text-lg font-bold text-slate-700 dark:text-slate-300">
+								Nenhum termo encontrado
+							</h3>
+							<p className="text-sm text-slate-500 dark:text-slate-400 mt-1 max-w-md mx-auto">
+								Não encontramos resultados para sua pesquisa com os filtros selecionados.
+							</p>
+							<button
+								type="button"
+								onClick={limparTodosFiltros}
+								className="mt-4 px-4 py-2 bg-purple-600 text-white rounded-xl text-xs font-bold hover:bg-purple-700 cursor-pointer shadow-xs inline-flex items-center gap-1.5"
+							>
+								<RotateCcw className="w-3.5 h-3.5" />
+								<span>Limpar todos os filtros</span>
+							</button>
+						</div>
+					) : (
+						<div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+							{termosFiltrados.map((item) => {
+								return (
+									<article
+										key={item.slug}
+										id={item.slug}
+										className="bg-white dark:bg-slate-900/90 rounded-2xl border border-slate-250 dark:border-slate-800 hover:border-purple-300 dark:hover:border-purple-500/40 p-5 sm:p-6 transition-all duration-200 shadow-xs flex flex-col justify-between scroll-mt-24 group"
+									>
+										<div className="space-y-3">
+											{/* Header do Card */}
+											<div className="flex items-center justify-between gap-2">
+												<span className="inline-flex items-center gap-1.5 text-xs px-2.5 py-0.5 rounded-full font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700">
+													<span>{item.categoriaEmoji}</span>
+													<span>{item.categoriaNome}</span>
+												</span>
+
+												<button
+													type="button"
+													onClick={() => copiarLinkTermo(item.slug)}
+													title="Copiar link direto para este termo"
+													className="text-xs text-slate-400 hover:text-purple-600 dark:hover:text-purple-400 inline-flex items-center gap-1 p-1 rounded hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
+												>
+													{copiadoSlug === item.slug ? (
+														<>
+															<Check className="w-3.5 h-3.5 text-emerald-500" />
+															<span className="text-emerald-500 font-semibold text-[11px]">
+																Copiado!
+															</span>
+														</>
+													) : (
+														<Link2 className="w-3.5 h-3.5" />
+													)}
+												</button>
+											</div>
+
+											{/* Título do Termo */}
+											<h2 className="text-lg sm:text-xl font-bold text-slate-900 dark:text-slate-100 group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">
+												{item.termo}
+											</h2>
+
+											{/* Definição */}
+											<p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed font-normal">
+												<TextoComLinks texto={item.definicao} />
+											</p>
+										</div>
+
+										{/* Caixa de Exemplo Prático */}
+										<div className="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800/80">
+											<div className="p-3.5 rounded-xl bg-purple-50/70 dark:bg-purple-950/20 border border-purple-100 dark:border-purple-900/30 text-xs leading-relaxed space-y-1">
+												<span className="font-bold text-purple-700 dark:text-purple-400 flex items-center gap-1.5 uppercase tracking-wider text-[10px]">
+													<Lightbulb className="w-3.5 h-3.5" />
+													Exemplo Prático
+												</span>
+												<p className="text-slate-700 dark:text-slate-300">
+													<TextoComLinks texto={item.exemplo} />
+												</p>
+											</div>
+										</div>
+									</article>
+								);
+							})}
+						</div>
+					)}
+				</section>
+
+				{/* 3. CTA & PRÓXIMOS PASSOS */}
+				<section className="mt-16 bg-gradient-to-br from-slate-900 to-slate-950 text-white rounded-3xl p-6 sm:p-10 border border-slate-800 shadow-xl">
+					<div className="text-center max-w-2xl mx-auto space-y-4">
+						<div className="inline-flex items-center gap-2 bg-purple-500/20 text-purple-400 border border-purple-500/30 px-3.5 py-1.5 rounded-full text-xs font-bold">
+							<Sparkles className="w-4 h-4" />
+							<span>Continue Explorando</span>
+						</div>
+
+						<h2 className="text-2xl sm:text-3xl font-display font-extrabold">
+							Pronto para aplicar na prática?
+						</h2>
+
+						<p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
+							Agora que você domina os conceitos técnicos, compare as especificações das séries ou use o seletor inteligente para encontrar o microcontrolador ideal para seu projeto.
+						</p>
+
+						<div className="flex flex-wrap items-center justify-center gap-3 pt-2">
+							<Link
+								href="/series"
+								className="px-5 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white text-xs font-bold transition-all shadow-md hover:shadow-lg inline-flex items-center gap-2"
+							>
+								<span>Explorar Séries ESP32</span>
+								<ArrowRight className="w-4 h-4" />
+							</Link>
+							<Link
+								href="/seletor"
+								className="px-5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold border border-slate-700 transition-all inline-flex items-center gap-2"
+							>
+								<span>Seletor Inteligente</span>
+							</Link>
+							<Link
+								href="/diagnostico"
+								className="px-5 py-2.5 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 text-xs font-bold border border-amber-500/40 transition-all inline-flex items-center gap-2"
+							>
+								<span>Guia de Diagnóstico & Erros</span>
+							</Link>
+						</div>
+					</div>
+				</section>
+			</main>
+
+			<Footer />
+		</div>
+	);
+}
+
+/**
+ * Função utilitária que detecta nomes de séries do ESP32 dentro do texto e os converte em links clicáveis.
+ */
+function TextoComLinks({ texto }) {
+	if (!texto) return null;
+	const seriesKeys = [
+		"ESP32-S31",
+		"ESP32-C61",
+		"ESP32-S2",
+		"ESP32-S3",
+		"ESP32-C2",
+		"ESP32-C3",
+		"ESP32-C5",
+		"ESP32-C6",
+		"ESP32-P4",
+		"ESP32-H2",
+		"ESP32-H4",
+		"ESP32",
+	];
+	const regex = new RegExp(`\\b(${seriesKeys.join("|")})\\b`, "g");
+	const partes = texto.split(regex);
+
+	return (
+		<>
+			{partes.map((parte, i) => {
+				if (seriesKeys.includes(parte)) {
+					return (
+						<Link
+							key={i}
+							href={`/series/${parte}`}
+							className="font-bold text-purple-600 dark:text-purple-400 hover:underline inline-flex items-center mx-0.5"
+						>
+							{parte}
+						</Link>
+					);
+				}
+				return parte;
+			})}
+		</>
+	);
 }
