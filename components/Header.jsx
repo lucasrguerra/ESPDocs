@@ -89,10 +89,10 @@ export default function Header() {
 	}
 
 	const popularChips = [
-		{ name: "ESP32", desc: "Clássico Dual-Core", href: "/series/esp32" },
-		{ name: "ESP32-S3", desc: "IA & USB Nativo", href: "/series/esp32-s3" },
-		{ name: "ESP32-C6", desc: "Wi-Fi 6 + Zigbee/Thread", href: "/series/esp32-c6" },
-		{ name: "ESP32-P4", desc: "Alto Desempenho 400MHz", href: "/series/esp32-p4" },
+		{ name: "ESP32", desc: "Clássico Dual-Core", href: "/series/ESP32" },
+		{ name: "ESP32-S3", desc: "IA & USB Nativo", href: "/series/ESP32-S3" },
+		{ name: "ESP32-C6", desc: "Wi-Fi 6 + Zigbee/Thread", href: "/series/ESP32-C6" },
+		{ name: "ESP32-P4", desc: "Alto Desempenho 400MHz", href: "/series/ESP32-P4" },
 	];
 
 	return (

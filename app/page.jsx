@@ -132,7 +132,7 @@ export default function Home() {
 	const featuredChips = [
 		{
 			name: "ESP32",
-			slug: "esp32",
+			slug: "ESP32",
 			badge: "Padrão da Indústria",
 			arch: "Xtensa LX6 Dual-Core @ 240 MHz",
 			wireless: "Wi-Fi 4 (802.11 b/g/n) + BLE 4.2 / Clássico",
@@ -141,7 +141,7 @@ export default function Home() {
 		},
 		{
 			name: "ESP32-S3",
-			slug: "esp32-s3",
+			slug: "ESP32-S3",
 			badge: "IA & USB Nativo",
 			arch: "Xtensa LX7 Dual-Core @ 240 MHz",
 			wireless: "Wi-Fi 4 + BLE 5.0 (Long Range)",
@@ -150,7 +150,7 @@ export default function Home() {
 		},
 		{
 			name: "ESP32-C6",
-			slug: "esp32-c6",
+			slug: "ESP32-C6",
 			badge: "Wi-Fi 6 + Zigbee/Matter",
 			arch: "RISC-V 32-bit Single-Core @ 160 MHz + LP Core",
 			wireless: "Wi-Fi 6 (ax) + BLE 5.3 + Zigbee 3.0 & Thread (802.15.4)",
@@ -159,7 +159,7 @@ export default function Home() {
 		},
 		{
 			name: "ESP32-C3",
-			slug: "esp32-c3",
+			slug: "ESP32-C3",
 			badge: "Custo-Benefício RISC-V",
 			arch: "RISC-V 32-bit Single-Core @ 160 MHz",
 			wireless: "Wi-Fi 4 + BLE 5.0 (Mesh & Long Range)",
@@ -168,7 +168,7 @@ export default function Home() {
 		},
 		{
 			name: "ESP32-P4",
-			slug: "esp32-p4",
+			slug: "ESP32-P4",
 			badge: "Superprocessador 400MHz",
 			arch: "Dual-Core RISC-V HP @ 400 MHz + LP Core @ 40 MHz",
 			wireless: "Sem rádio interno (Focado em processamento multimídia)",
@@ -177,7 +177,7 @@ export default function Home() {
 		},
 		{
 			name: "ESP32-H2",
-			slug: "esp32-h2",
+			slug: "ESP32-H2",
 			badge: "Zigbee & Thread",
 			arch: "RISC-V 32-bit Single-Core @ 96 MHz",
 			wireless: "IEEE 802.15.4 (Zigbee 3.0, Thread) + BLE 5.3",

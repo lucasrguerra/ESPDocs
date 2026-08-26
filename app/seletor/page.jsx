@@ -77,12 +77,7 @@ const iconMap = {
 	"power_always_on": <Zap className="w-5 h-5 text-yellow-500" />,
 
 	// Periféricos / Hardware
-	"hardware_mipi_multimedia": (
-		<div className="flex gap-1 text-cyan-500 shrink-0">
-			<Monitor className="w-4 h-4" />
-			<Camera className="w-4 h-4" />
-		</div>
-	),
+	"hardware_mipi_multimedia": <Monitor className="w-5 h-5 text-cyan-500" />,
 	"hardware_usb_otg": <Cable className="w-5 h-5 text-teal-500" />,
 	"hardware_can_twai": <Sliders className="w-5 h-5 text-orange-500" />,
 	"hardware_dac_audio": <Volume2 className="w-5 h-5 text-pink-500" />,
@@ -100,6 +95,7 @@ const iconMap = {
 
 	// Segurança
 	"security_key_manager_dpa": <KeyRound className="w-5 h-5 text-red-500" />,
+	"security_hardware_ecc_ecdsa": <ShieldCheck className="w-5 h-5 text-teal-500" />,
 	"security_matter_ecdsa": <ShieldCheck className="w-5 h-5 text-teal-500" />,
 	"security_secure_boot": <Lock className="w-5 h-5 text-amber-500" />,
 	"security_standard_tls": <HelpCircle className="w-5 h-5 text-slate-400" />,
@@ -130,7 +126,7 @@ const PRESETS = [
 			hardware: "standard_sensors",
 			memory: "moderate_sram",
 			ai: "standard",
-			security: "matter_ecdsa",
+			security: "hardware_ecc_ecdsa",
 			ecosystem: "arduino_ready",
 		}
 	},
@@ -281,6 +277,9 @@ export default function Seletor() {
 		touch: false,
 		arduinoReady: false,
 		keyManager: false,
+		eccHardware: false,
+		ecdsaHardware: false,
+		secureBootV2: false,
 	});
 
 	const questions = [
@@ -303,10 +302,10 @@ export default function Seletor() {
 			description: "O ecossistema ESP32 oferece desde rádios Wi-Fi 6 Dual-Band (2.4/5GHz), Bluetooth 6 e Mesh 802.15.4 até Ethernet cabeada e Bluetooth Clássico.",
 			options: [
 				{ value: "wifi6_dualband", label: "Wi-Fi 6 Dual-Band (2.4 GHz e 5 GHz) + Bluetooth 6.0", icon: "connectivity_wifi6_dualband" },
-				{ value: "wifi6_mesh", label: "Wi-Fi 6 + Matter / Zigbee 3.0 / Thread (802.15.4)", icon: "connectivity_wifi6_mesh" },
+				{ value: "wifi6_mesh", label: "Wi-Fi 6 (2.4 GHz) + Matter / Zigbee 3.0 / Thread (802.15.4)", icon: "connectivity_wifi6_mesh" },
 				{ value: "mesh_only", label: "Apenas Rádio Mesh (Zigbee / Thread / Matter) + BLE (Sem Wi-Fi)", icon: "connectivity_mesh_only" },
 				{ value: "wifi_ble", label: "Wi-Fi 4 Tradicional (2.4 GHz) + Bluetooth LE", icon: "connectivity_wifi_ble" },
-				{ value: "bt_classic_audio", label: "Bluetooth Clássico (Áudio A2DP/SPP) ou LE Audio", icon: "connectivity_bt_classic_audio" },
+				{ value: "bt_classic_audio", label: "Bluetooth Clássico BR/EDR (Áudio A2DP / SPP Serial)", icon: "connectivity_bt_classic_audio" },
 				{ value: "ethernet", label: "Rede Cabeada Industrial (Ethernet MAC integrado)", icon: "connectivity_ethernet" },
 				{ value: "none_local", label: "Apenas Processamento Local / Sem Conexão Sem Fio", icon: "connectivity_none_local" },
 			]
@@ -327,9 +326,9 @@ export default function Seletor() {
 			description: "Algumas funcionalidades exigem blocos de silício dedicados, como interfaces de vídeo MIPI/RGB, barramento CAN industrial ou USB nativo.",
 			options: [
 				{ value: "mipi_multimedia", label: "Display Gráfico LCD (RGB/MIPI DSI) ou Câmeras (DVP/MIPI CSI)", icon: "hardware_mipi_multimedia" },
-				{ value: "usb_otg", label: "USB Nativo OTG (Emular teclado, mouse, disco ou modo Host)", icon: "hardware_usb_otg" },
+				{ value: "usb_otg", label: "USB Nativo OTG / Host (Emular teclado/mouse HID, CDC ou modo Host)", icon: "hardware_usb_otg" },
 				{ value: "can_twai", label: "Barramento Automotivo / Industrial CAN (TWAI ou CAN-FD)", icon: "hardware_can_twai" },
-				{ value: "dac_audio", label: "Áudio Analógico com DAC integrado ou múltiplos I2S", icon: "hardware_dac_audio" },
+				{ value: "dac_audio", label: "Áudio Analógico com DAC integrado (saída direta de som)", icon: "hardware_dac_audio" },
 				{ value: "many_gpios", label: "Muitos pinos livres de expansão (Mais de 35 GPIOs físicos)", icon: "hardware_many_gpios" },
 				{ value: "standard_sensors", label: "Sensores comuns com barramentos tradicionais (I2C, SPI, UART, PWM)", icon: "hardware_standard_sensors" },
 			]
@@ -358,10 +357,10 @@ export default function Seletor() {
 			question: "7. Qual nível de segurança e criptografia por hardware o produto exige?",
 			description: "As séries diferem em suporte a Key Manager, proteção contra ataques de canal lateral (DPA), curvas elípticas (ECC/ECDSA) e aceleradores AES.",
 			options: [
-				{ value: "key_manager_dpa", label: "Proteção Máxima: Key Manager (chave inacessível ao firmware) e Proteção DPA", icon: "security_key_manager_dpa" },
-				{ value: "matter_ecdsa", label: "Atestado Matter ou Assinatura Digital por hardware (ECDSA / ECC)", icon: "security_matter_ecdsa" },
+				{ value: "key_manager_dpa", label: "Proteção Máxima: Key Manager em hardware (chave isolada da CPU) e Proteção DPA", icon: "security_key_manager_dpa" },
+				{ value: "hardware_ecc_ecdsa", label: "Acelerador de Curvas Elípticas (ECC) e Assinatura Digital ECDSA por hardware", icon: "security_hardware_ecc_ecdsa" },
 				{ value: "secure_boot", label: "Boot Seguro V2 e Criptografia de Flash (XTS-AES) contra cópia do firmware", icon: "security_secure_boot" },
-				{ value: "standard_tls", label: "Comunicação TLS/HTTPS comum ou sem requisito regulatório crítico", icon: "security_standard_tls" },
+				{ value: "standard_tls", label: "Comunicação TLS/HTTPS comum (Aceleradores AES e SHA por hardware)", icon: "security_standard_tls" },
 			]
 		},
 		{
@@ -444,11 +443,11 @@ export default function Seletor() {
 			// 1. CATEGORIA (category)
 			if (answers.category === "smarthome") {
 				if (serie.matter === "Sim") {
-					scores[key] += 20;
+					scores[key] += 25;
 					reasons[key].push("Suporte nativo a Matter para interoperabilidade residencial inteligente");
 				}
 				if (serie.zigbee_thread && serie.zigbee_thread !== "Não") {
-					scores[key] += 15;
+					scores[key] += 20;
 					reasons[key].push("Rádio 802.15.4 integrado compatível com Zigbee 3.0 e Thread");
 				}
 				if (serie.wifi && !String(serie.wifi).includes("Não")) {
@@ -457,27 +456,27 @@ export default function Seletor() {
 				}
 			} else if (answers.category === "multimedia") {
 				if (serie.mipi_dsi || serie.mipi_csi) {
-					scores[key] += 30;
+					scores[key] += 35;
 					reasons[key].push("Barramentos avançados de alta velocidade MIPI DSI (telas) e MIPI CSI (câmeras)");
 				} else if (serie.lcd || serie.camera) {
-					scores[key] += 20;
+					scores[key] += 25;
 					reasons[key].push("Interfaces dedicadas em hardware para telas LCD RGB e câmeras DVP");
 				} else {
-					scores[key] -= 35;
+					scores[key] -= 40;
 					alerts[key].push("Sem barramentos dedicados para telas coloridas ou câmeras (apenas SPI/I2C simples)");
 				}
 
 				if (serie.psram_externa && serie.psram_externa !== "Não") {
-					scores[key] += 15;
+					scores[key] += 20;
 					reasons[key].push("Suporte a PSRAM de alta capacidade para framebuffers gráficos e processamento de imagem");
 				}
 			} else if (answers.category === "ai_edge") {
 				if (serie.aceleradores_ia) {
-					scores[key] += 35;
+					scores[key] += 40;
 					reasons[key].push(`Aceleração neural e instruções vetoriais dedicadas (${serie.aceleradores_ia})`);
 				} else {
-					scores[key] -= 25;
-					alerts[key].push("Sem aceleradores neurais dedicados (inferência por software)");
+					scores[key] -= 50;
+					alerts[key].push("Sem aceleradores neurais dedicados em hardware");
 				}
 				if (serie.nucleos && serie.nucleos.includes("2")) {
 					scores[key] += 10;
@@ -488,7 +487,7 @@ export default function Seletor() {
 				if (sleep) {
 					const uaMatch = sleep.match(/(\d+)\s*µA/);
 					if (uaMatch && parseInt(uaMatch[1]) <= 10) {
-						scores[key] += 20;
+						scores[key] += 25;
 						reasons[key].push(`Consumo em Deep Sleep ultrabaixo de apenas ${sleep} preserva baterias compactas`);
 					}
 				}
@@ -502,11 +501,11 @@ export default function Seletor() {
 				}
 			} else if (answers.category === "industrial") {
 				if (serie.ethernet || serie.ethernet_mac) {
-					scores[key] += 25;
+					scores[key] += 30;
 					reasons[key].push("Controlador MAC Ethernet integrado para conexões cabeadas industriais imunes a ruídos de RF");
 				}
 				if (serie.can) {
-					scores[key] += 20;
+					scores[key] += 25;
 					reasons[key].push(`Interface de barramento industrial ${serie.can}`);
 				}
 				if (parseInt(serie.gpio) >= 30) {
@@ -515,7 +514,7 @@ export default function Seletor() {
 				}
 			} else if (answers.category === "basic_iot") {
 				if (key === "ESP32-C2" || key === "ESP32-C3" || key === "ESP32-C61") {
-					scores[key] += 25;
+					scores[key] += 30;
 					reasons[key].push("Excelente relação custo-benefício para sensores e atuadores conectados em escala");
 				}
 				if (serie.wifi && !String(serie.wifi).includes("Não") && serie.bluetooth !== "Não") {
@@ -527,73 +526,64 @@ export default function Seletor() {
 			// 2. CONECTIVIDADE (connectivity)
 			if (answers.connectivity === "wifi6_dualband") {
 				if (String(serie.wifi).includes("5 GHz") || String(serie.wifi).includes("dual-band")) {
-					scores[key] += 40;
-					reasons[key].push("Exclusivo Wi-Fi 6 Dual-Band (2.4 GHz e 5 GHz) para ambientes com alto ruído de 2.4 GHz");
-				} else if (String(serie.wifi).includes("Wi-Fi 6")) {
-					scores[key] += 15;
-					reasons[key].push("Wi-Fi 6 (802.11ax), porém operando apenas na faixa de 2.4 GHz");
+					scores[key] += 50;
+					reasons[key].push("Exclusivo Wi-Fi 6 Dual-Band (2.4 GHz e 5 GHz) para ambientes com alto ruído de RF");
 				} else {
-					scores[key] -= 35;
-					alerts[key].push("Não possui suporte a Wi-Fi na banda de 5 GHz");
+					scores[key] -= 250;
+					alerts[key].push("Incompatível: Não possui rádio Wi-Fi na faixa de 5 GHz");
 				}
 			} else if (answers.connectivity === "wifi6_mesh") {
 				if (String(serie.wifi).includes("Wi-Fi 6") && serie.matter === "Sim") {
-					scores[key] += 30;
+					scores[key] += 40;
 					reasons[key].push("Wi-Fi 6 (802.11ax) somado a rádio 802.15.4 para Thread/Zigbee/Matter");
 				} else if (serie.matter === "Sim") {
 					scores[key] += 15;
-					reasons[key].push("Suporte a Matter/Thread, mas rádio Wi-Fi em padrão Wi-Fi 4 ou ausente");
+					reasons[key].push("Suporte a Matter/Thread, porém sem Wi-Fi 6");
 				} else {
-					scores[key] -= 20;
-					alerts[key].push("Sem rádio 802.15.4 integrado para Thread/Zigbee");
+					scores[key] -= 150;
+					alerts[key].push("Incompatível: Sem rádio 802.15.4 integrado para Thread/Zigbee");
 				}
 			} else if (answers.connectivity === "mesh_only") {
 				if ((serie.wifi === "Não" || !serie.wifi) && serie.matter === "Sim") {
-					scores[key] += 35;
-					reasons[key].push("Foco 100% em 802.15.4 (Zigbee/Thread/Matter) sem o consumo do rádio Wi-Fi");
+					scores[key] += 45;
+					reasons[key].push("Foco 100% em 802.15.4 (Zigbee/Thread/Matter) com baixo consumo e sem rádio Wi-Fi");
 				} else if (serie.matter === "Sim") {
 					scores[key] += 20;
 					reasons[key].push("Suporta redes Mesh (Zigbee/Thread), mas inclui rádio Wi-Fi adicional");
 				} else {
-					scores[key] -= 30;
-					alerts[key].push("Sem rádio 802.15.4 para protocolo Thread ou Zigbee");
+					scores[key] -= 180;
+					alerts[key].push("Incompatível: Sem rádio 802.15.4 para protocolo Thread ou Zigbee");
 				}
 			} else if (answers.connectivity === "wifi_ble") {
 				if (serie.wifi && !String(serie.wifi).includes("Não") && serie.bluetooth && serie.bluetooth !== "Não") {
-					scores[key] += 25;
+					scores[key] += 30;
 					reasons[key].push(`Pilha completa com Wi-Fi (${serie.wifi}) e Bluetooth (${serie.bluetooth})`);
 				} else if (serie.wifi && !String(serie.wifi).includes("Não")) {
 					scores[key] += 10;
 					alerts[key].push("Possui Wi-Fi, mas não possui rádio Bluetooth integrado");
 				} else {
-					scores[key] -= 60;
+					scores[key] -= 200;
 					alerts[key].push("Incompatível: Não possui rádio Wi-Fi integrado");
 				}
 			} else if (answers.connectivity === "bt_classic_audio") {
 				if (String(serie.bluetooth).includes("Classic") || String(serie.bluetooth).includes("Clássico")) {
-					scores[key] += 35;
+					scores[key] += 50;
 					reasons[key].push("Suporte a Bluetooth Clássico (BR/EDR) com perfis A2DP de áudio e SPP serial");
-				} else if (String(serie.bluetooth).includes("LE Audio")) {
-					scores[key] += 35;
-					reasons[key].push("Suporte a Bluetooth LE Audio de última geração (canais isócronos BIS/CIS)");
-				} else if (serie.bluetooth && serie.bluetooth !== "Não") {
-					scores[key] += 5;
-					alerts[key].push("Suporta apenas Bluetooth LE (BLE), sem perfis tradicionais de áudio clássico A2DP");
 				} else {
-					scores[key] -= 40;
-					alerts[key].push("Não possui rádio Bluetooth");
+					scores[key] -= 250;
+					alerts[key].push("Incompatível: Não possui Bluetooth Clássico (apenas BLE, incompatível com áudio A2DP legado)");
 				}
 			} else if (answers.connectivity === "ethernet") {
 				if (serie.ethernet || serie.ethernet_mac) {
-					scores[key] += 35;
+					scores[key] += 45;
 					reasons[key].push("Controlador MAC Ethernet nativo integrado (requer apenas transceiver PHY)");
 				} else {
-					scores[key] -= 25;
+					scores[key] -= 180;
 					alerts[key].push("Sem MAC Ethernet interno (necessita de módulo SPI Ethernet externo como W5500)");
 				}
 			} else if (answers.connectivity === "none_local") {
 				if (serie.wifi === "Não" || serie.bluetooth === "Não" || key === "ESP32-P4") {
-					scores[key] += 25;
+					scores[key] += 35;
 					reasons[key].push("Arquitetura orientada a processamento local dedicado sem custo de transceivers de rádio");
 				} else {
 					scores[key] += 10;
@@ -607,7 +597,7 @@ export default function Seletor() {
 					const uaMatch = sleep.match(/(\d+)\s*µA/);
 					if (uaMatch && parseInt(uaMatch[1]) <= 10) {
 						scores[key] += 25;
-						reasons[key].push(`Consumo de suspensão de ${sleep} permite operação por meses em bateria`);
+						reasons[key].push(`Consumo de suspensão de ${sleep} permite operação prolongada por bateria`);
 					} else {
 						scores[key] += 10;
 						reasons[key].push(`Modo de baixo consumo de ${sleep}`);
@@ -619,10 +609,10 @@ export default function Seletor() {
 				}
 			} else if (answers.power === "ulp_coprocessor") {
 				if (serie.coprocessador_ulp && serie.coprocessador_ulp !== "Não") {
-					scores[key] += 30;
+					scores[key] += 35;
 					reasons[key].push(`Coprocessador ULP / CPU de Baixo Consumo (${serie.coprocessador_ulp})`);
 				} else {
-					scores[key] -= 15;
+					scores[key] -= 30;
 					alerts[key].push("Sem coprocessador ULP dedicado");
 				}
 			} else if (answers.power === "always_on") {
@@ -640,61 +630,55 @@ export default function Seletor() {
 			// 4. HARDWARE & PERIFÉRICOS (hardware)
 			if (answers.hardware === "mipi_multimedia") {
 				if (serie.mipi_dsi || serie.mipi_csi) {
-					scores[key] += 35;
-					reasons[key].push("Interface MIPI DSI (telas) e MIPI CSI (câmeras) com alto throughput");
+					scores[key] += 40;
+					reasons[key].push("Interface MIPI DSI (telas) e MIPI CSI (câmeras) de altíssima taxa de transferência");
 				} else if (serie.lcd || serie.camera) {
-					scores[key] += 20;
+					scores[key] += 25;
 					reasons[key].push("Interfaces paralelas para LCD RGB e câmeras DVP de 8/16 bits");
 				} else {
-					scores[key] -= 45;
-					alerts[key].push("Sem interfaces dedicadas de tela/câmera (limitado a barramento SPI)");
+					scores[key] -= 180;
+					alerts[key].push("Incompatível: Sem interfaces dedicadas de tela/câmera (limitado a barramento SPI/I2C)");
 				}
 			} else if (answers.hardware === "usb_otg") {
 				if (serie.usb && String(serie.usb).includes("OTG 2.0")) {
-					scores[key] += 35;
-					reasons[key].push(`Porta USB 2.0 High-Speed OTG (${serie.usb}) para transferência ultrarrápida`);
+					scores[key] += 40;
+					reasons[key].push(`Porta USB 2.0 High-Speed OTG (${serie.usb}) para emulação HID, CDC e modo Host`);
 				} else if (serie.usb && String(serie.usb).includes("OTG")) {
-					scores[key] += 25;
+					scores[key] += 30;
 					reasons[key].push(`Interface USB OTG 1.1 integrada (${serie.usb}) para emulação HID e Host`);
-				} else if (serie.usb && String(serie.usb).includes("Serial/JTAG")) {
-					scores[key] += 10;
-					alerts[key].push("USB integrado apenas para Serial/JTAG (não suporta emulação de teclado/mouse HID nativo)");
 				} else {
-					scores[key] -= 30;
-					alerts[key].push("Sem USB nativo (requer chip conversor USB-UART externo)");
+					scores[key] -= 160;
+					alerts[key].push("Incompatível: Sem USB OTG nativo (USB Serial/JTAG não suporta modo Host ou HID customizado)");
 				}
 			} else if (answers.hardware === "can_twai") {
 				if (serie.can && String(serie.can).includes("CAN FD")) {
-					scores[key] += 35;
+					scores[key] += 40;
 					reasons[key].push("Controlador avançado CAN-FD (Flexible Data-Rate) para alta largura de banda automotiva");
 				} else if (serie.can) {
-					scores[key] += 25;
+					scores[key] += 30;
 					reasons[key].push(`Controlador de barramento industrial ${serie.can}`);
 				} else {
-					scores[key] -= 25;
-					alerts[key].push("Sem controlador de barramento CAN / TWAI nativo");
+					scores[key] -= 150;
+					alerts[key].push("Incompatível: Sem controlador de barramento CAN / TWAI nativo");
 				}
 			} else if (answers.hardware === "dac_audio") {
 				if (serie.dac && serie.dac !== "Não") {
-					scores[key] += 30;
-					reasons[key].push(`Conversores Digital-Analógico embutidos (${serie.dac}) para geração de som sem DAC externo`);
-				} else if (serie.i2s && parseInt(serie.i2s) >= 2) {
-					scores[key] += 15;
-					reasons[key].push(`Múltiplos barramentos I2S (${serie.i2s} interfaces) para codecs de áudio`);
+					scores[key] += 45;
+					reasons[key].push(`Conversores Digital-Analógico embutidos (${serie.dac}) para saída de áudio direta sem DAC externo`);
 				} else {
-					scores[key] += 5;
-					alerts[key].push("Não possui conversor DAC interno de áudio (requer codec I2S ou PWM)");
+					scores[key] -= 150;
+					alerts[key].push("Incompatível: Não possui conversor DAC interno de áudio (requer codec I2S externo)");
 				}
 			} else if (answers.hardware === "many_gpios") {
 				const gpios = parseInt(serie.gpio) || 0;
 				if (gpios >= 40) {
-					scores[key] += 30;
+					scores[key] += 35;
 					reasons[key].push(`Excepcional número de pinos disponíveis (${gpios} GPIOs)`);
 				} else if (gpios >= 28) {
 					scores[key] += 15;
 					reasons[key].push(`Quantidade moderada de portas (${gpios} GPIOs)`);
 				} else {
-					scores[key] -= 20;
+					scores[key] -= 60;
 					alerts[key].push(`Contagem restrita de pinos (${gpios} GPIOs)`);
 				}
 			} else if (answers.hardware === "standard_sensors") {
@@ -704,14 +688,14 @@ export default function Seletor() {
 			// 5. MEMÓRIA & PSRAM (memory)
 			if (answers.memory === "heavy_psram") {
 				if (serie.psram_externa && (String(serie.psram_externa).includes("64 MB") || String(serie.psram_externa).includes("1 GB"))) {
-					scores[key] += 35;
+					scores[key] += 40;
 					reasons[key].push(`Expansão massiva de memória PSRAM (${serie.psram_externa})`);
 				} else if (serie.psram_externa && serie.psram_externa !== "Não") {
-					scores[key] += 20;
+					scores[key] += 25;
 					reasons[key].push(`Suporte a memória PSRAM externa (${serie.psram_externa})`);
 				} else {
-					scores[key] -= 35;
-					alerts[key].push("Sem suporte a memória PSRAM externa ou integrada");
+					scores[key] -= 180;
+					alerts[key].push("Incompatível: Sem suporte a memória PSRAM externa ou integrada");
 				}
 			} else if (answers.memory === "moderate_sram") {
 				const sramMatch = serie.memoria_sram?.match(/(\d+)\s*KB/);
@@ -723,7 +707,7 @@ export default function Seletor() {
 				}
 			} else if (answers.memory === "minimal_cost") {
 				if (key === "ESP32-C2" || key === "ESP32-C3" || key === "ESP32-H2") {
-					scores[key] += 20;
+					scores[key] += 25;
 					reasons[key].push("Memória enxuta e silício compacto para menor custo unitário");
 				} else {
 					scores[key] += 5;
@@ -733,11 +717,11 @@ export default function Seletor() {
 			// 6. INTELIGÊNCIA ARTIFICIAL (ai)
 			if (answers.ai === "ai_vector") {
 				if (serie.aceleradores_ia) {
-					scores[key] += 35;
-					reasons[key].push("Acelerador neural de silício e instruções vetoriais para processamento de matrizes e tensores");
+					scores[key] += 45;
+					reasons[key].push("Acelerador neural de silício e instruções vetoriais para inferência veloz");
 				} else {
-					scores[key] -= 30;
-					alerts[key].push("Sem aceleração vetorial por hardware para IA na borda");
+					scores[key] -= 180;
+					alerts[key].push("Incompatível: Sem aceleração vetorial por hardware para IA na borda");
 				}
 			} else if (answers.ai === "standard") {
 				scores[key] += 5;
@@ -752,38 +736,38 @@ export default function Seletor() {
 
 			if (answers.security === "key_manager_dpa") {
 				if (temKeyManager && temDPA) {
-					scores[key] += 35;
-					reasons[key].push("Key Manager (chaves nunca expostas à CPU) e proteção física contra ataques de canal lateral DPA");
+					scores[key] += 45;
+					reasons[key].push("Key Manager em silício (chaves isoladas da CPU) e proteção contra análise de consumo DPA");
 				} else if (temKeyManager) {
-					scores[key] += 25;
-					reasons[key].push("Periférico Key Manager integrado para isolamento total de chaves criptográficas");
+					scores[key] += 35;
+					reasons[key].push("Periférico Key Manager integrado para isolamento total de chaves privadas");
 				} else if (temDPA) {
 					scores[key] += 20;
-					reasons[key].push("Proteção DPA em hardware contra análise diferencial de consumo de energia");
+					reasons[key].push("Proteção física DPA em hardware contra ataques de canal lateral");
 				} else {
-					scores[key] -= 25;
-					alerts[key].push("Sem periférico Key Manager nem proteção DPA");
+					scores[key] -= 160;
+					alerts[key].push("Incompatível: Sem Key Manager nem proteção física contra DPA");
 				}
-			} else if (answers.security === "matter_ecdsa") {
+			} else if (answers.security === "hardware_ecc_ecdsa") {
 				if (temECDSA) {
-					scores[key] += 30;
+					scores[key] += 40;
 					reasons[key].push(`Acelerador de assinatura digital ECDSA determinístico em hardware (${seg.ecc})`);
 				} else if (temECC) {
-					scores[key] += 15;
-					reasons[key].push(`Coprocessador de curvas elípticas ECC (${seg.ecc})`);
+					scores[key] += 30;
+					reasons[key].push(`Coprocessador de curvas elípticas ECC em hardware (${seg.ecc})`);
 				} else {
-					scores[key] -= 25;
-					alerts[key].push("Sem acelerador de curvas elípticas (ECC) em hardware (assinatura por software mais lenta)");
+					scores[key] -= 220;
+					alerts[key].push("Incompatível: Não possui acelerador de hardware para curvas elípticas (ECC/ECDSA)");
 				}
 			} else if (answers.security === "secure_boot") {
 				if (String(seg.secure_boot).includes("V2")) {
-					scores[key] += 20;
+					scores[key] += 25;
 					reasons[key].push(`Secure Boot ${seg.secure_boot} com criptografia de flash ${seg.criptografia_flash}`);
 				} else if (String(seg.secure_boot).includes("V1")) {
 					scores[key] += 5;
 					alerts[key].push("Secure Boot em esquema V1 (legado com limitações de segurança)");
 				} else {
-					scores[key] -= 20;
+					scores[key] -= 80;
 					alerts[key].push("Sem Secure Boot V2 estável");
 				}
 			} else if (answers.security === "standard_tls") {
@@ -791,8 +775,7 @@ export default function Seletor() {
 					scores[key] += 15;
 					reasons[key].push(`Criptografia de tráfego TLS acelerada por hardware (${seg.aes})`);
 				} else {
-					scores[key] -= 5;
-					alerts[key].push(`Sem acelerador AES por hardware (a criptografia TLS é executada pela CPU)`);
+					scores[key] += 5;
 				}
 			}
 
@@ -803,14 +786,14 @@ export default function Seletor() {
 					const count = countMatch ? parseInt(countMatch[1]) : 1;
 					if (count >= 20) {
 						scores[key] += 25;
-						reasons[key].push(`Excelente maturidade e suporte no core oficial Arduino (${count} variantes de placas)`);
+						reasons[key].push(`Excelente maturidade no core oficial Arduino (${count} variantes de placas)`);
 					} else {
 						scores[key] += 15;
 						reasons[key].push(`Suporte no core oficial Arduino (${count} placa registrada)`);
 					}
 				} else {
-					scores[key] -= 35;
-					alerts[key].push("Ainda não suportado no core oficial do Arduino (desenvolvimento restrito ao ESP-IDF)");
+					scores[key] -= 200;
+					alerts[key].push("Incompatível: Ainda não suportado no core oficial do Arduino (desenvolvimento restrito ao ESP-IDF)");
 				}
 			} else if (answers.ecosystem === "advanced_idf") {
 				scores[key] += 15;
@@ -842,6 +825,9 @@ export default function Seletor() {
 			if (filters.touch && (!serie.touch || serie.touch === "Não")) return false;
 			if (filters.arduinoReady && (!serie.arduino_core || !String(serie.arduino_core).startsWith("Sim"))) return false;
 			if (filters.keyManager && seg.key_manager !== "Sim") return false;
+			if (filters.eccHardware && (!seg.ecc || seg.ecc === "Não")) return false;
+			if (filters.ecdsaHardware && (!seg.ecdsa || !String(seg.ecdsa).startsWith("Sim"))) return false;
+			if (filters.secureBootV2 && (!seg.secure_boot || !String(seg.secure_boot).includes("V2"))) return false;
 
 			return true;
 		});
@@ -1087,37 +1073,37 @@ export default function Seletor() {
 
 				{/* WIZARD STEP 2: Review Summary */}
 				{mode === "wizard" && showSummary && !showResults && (
-					<div className="bg-white/90 dark:bg-slate-900/60 backdrop-blur-xl rounded-3xl border border-slate-300 dark:border-slate-800/80 p-6 md:p-10 max-w-3xl mx-auto shadow-2xl transition-all duration-300">
-						<div className="text-center mb-8">
-							<div className="inline-flex items-center justify-center w-14 h-14 bg-purple-500/10 text-purple-600 dark:text-purple-400 rounded-full mb-4 border border-purple-500/20">
+					<div className="bg-white/90 dark:bg-slate-900/60 backdrop-blur-xl rounded-3xl border border-slate-300 dark:border-slate-800/80 p-4 sm:p-6 md:p-10 max-w-3xl mx-auto shadow-2xl transition-all duration-300 w-full min-w-0">
+						<div className="text-center mb-6 sm:mb-8">
+							<div className="inline-flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 bg-purple-500/10 text-purple-600 dark:text-purple-400 rounded-full mb-3 sm:mb-4 border border-purple-500/20">
 								<Award className="w-6 h-6" />
 							</div>
-							<h2 className="text-xl md:text-2xl font-display font-extrabold text-slate-900 dark:text-slate-100 mb-2">
+							<h2 className="text-lg sm:text-xl md:text-2xl font-display font-extrabold text-slate-900 dark:text-slate-100 mb-2">
 								Resumo das Especificações do Projeto
 							</h2>
-							<p className="text-xs text-slate-500 dark:text-slate-400 max-w-xl mx-auto leading-relaxed">
+							<p className="text-xs text-slate-500 dark:text-slate-400 max-w-xl mx-auto leading-relaxed px-2">
 								Revise suas escolhas abaixo antes de calcular o ranking de compatibilidade com os dados do catálogo de silício.
 							</p>
 						</div>
 
 						{/* Double Column summary cards */}
-						<div className="grid md:grid-cols-2 gap-3 mb-8 max-w-2xl mx-auto">
+						<div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-6 sm:mb-8 max-w-2xl mx-auto w-full min-w-0">
 							{questions.map((question) => {
 								const answer = answers[question.id];
 								const selectedOption = question.options.find(opt => opt.value === answer);
 
 								return (
-									<div key={question.id} className="bg-slate-50/80 dark:bg-slate-900/30 rounded-xl p-3.5 border border-slate-300 dark:border-slate-800/80 flex justify-between items-center gap-3">
+									<div key={question.id} className="bg-slate-50/80 dark:bg-slate-900/30 rounded-xl p-3 sm:p-3.5 border border-slate-300 dark:border-slate-800/80 flex justify-between items-center gap-2.5 sm:gap-3 w-full min-w-0 overflow-hidden">
 										<div className="flex-1 min-w-0">
 											<h3 className="text-[9px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-1 truncate select-none">
 												{question.id.toUpperCase()}
 											</h3>
 											{selectedOption && (
-												<div className="flex items-center gap-2">
+												<div className="flex items-center gap-2 min-w-0">
 													<div className="w-7 h-7 rounded-lg bg-purple-500/10 dark:bg-purple-400/10 flex items-center justify-center shrink-0">
 														{getOptionIcon(question.id, answer)}
 													</div>
-													<span className="text-xs font-bold text-purple-700 dark:text-purple-300 truncate">
+													<span className="text-xs font-bold text-purple-700 dark:text-purple-300 leading-snug break-words line-clamp-2 min-w-0">
 														{selectedOption.label}
 													</span>
 												</div>
@@ -1140,7 +1126,7 @@ export default function Seletor() {
 							})}
 						</div>
 
-						<div className="flex flex-col sm:flex-row gap-3 justify-center items-stretch sm:items-center border-t border-slate-200 dark:border-slate-800/60 pt-6">
+						<div className="flex flex-col sm:flex-row gap-3 justify-center items-stretch sm:items-center border-t border-slate-200 dark:border-slate-800/60 pt-6 w-full">
 							<button
 								onClick={() => {
 									setCurrentStep(questions.length - 1);
@@ -1621,6 +1607,9 @@ export default function Seletor() {
 											touch: false,
 											arduinoReady: false,
 											keyManager: false,
+											eccHardware: false,
+											ecdsaHardware: false,
+											secureBootV2: false,
 										});
 									}}
 									className="text-xs font-bold text-slate-500 hover:text-purple-600 flex items-center gap-1 cursor-pointer"
@@ -1631,7 +1620,7 @@ export default function Seletor() {
 							</div>
 
 							{/* Filter Chips Grid */}
-							<div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2.5">
+							<div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-2.5">
 								{[
 									{ key: "wifi6", label: "Wi-Fi 6 (802.11ax)", icon: <Wifi className="w-4 h-4 text-teal-500" /> },
 									{ key: "wifi5ghz", label: "Wi-Fi Dual-Band (5 GHz)", icon: <Wifi className="w-4 h-4 text-indigo-500" /> },
@@ -1647,7 +1636,10 @@ export default function Seletor() {
 									{ key: "dac", label: "Conversor DAC", icon: <Volume2 className="w-4 h-4 text-pink-500" /> },
 									{ key: "touch", label: "Touch Capacitivo", icon: <Activity className="w-4 h-4 text-sky-500" /> },
 									{ key: "arduinoReady", label: "Suporte Arduino Core", icon: <CheckCircle className="w-4 h-4 text-emerald-500" /> },
+									{ key: "eccHardware", label: "Curvas Elípticas ECC", icon: <ShieldCheck className="w-4 h-4 text-teal-500" /> },
+									{ key: "ecdsaHardware", label: "Assinatura ECDSA Hardware", icon: <ShieldCheck className="w-4 h-4 text-emerald-500" /> },
 									{ key: "keyManager", label: "Key Manager Hardware", icon: <KeyRound className="w-4 h-4 text-red-500" /> },
+									{ key: "secureBootV2", label: "Secure Boot V2", icon: <Lock className="w-4 h-4 text-amber-500" /> },
 								].map(({ key, label, icon }) => {
 									const isActive = filters[key];
 									return (
