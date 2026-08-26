@@ -5,8 +5,8 @@
     "semantic_hash": ""
   },
   "app/catalogo/layout.jsx": {
-    "mtime": 1787681388.184724,
-    "ast_hash": "5e68bb4c5b0020e762a15068aac011b6",
+    "mtime": 1787492776.0956094,
+    "ast_hash": "f228a345868fa3e409f80133c29aa737",
     "semantic_hash": ""
   },
   "app/catalogo/page.jsx": {
@@ -15,8 +15,8 @@
     "semantic_hash": ""
   },
   "app/comparacao/layout.jsx": {
-    "mtime": 1787681373.3635905,
-    "ast_hash": "65cac4e0ee9351535bda8c725fe763e3",
+    "mtime": 1787492776.089609,
+    "ast_hash": "288273a48c04bbdc124c62848e9d7ca9",
     "semantic_hash": ""
   },
   "app/comparacao/page.jsx": {
@@ -25,28 +25,28 @@
     "semantic_hash": ""
   },
   "app/frameworks/[key]/page.jsx": {
-    "mtime": 1787687088.4981189,
-    "ast_hash": "cfb22260bbd09209cf49c515b715add1",
+    "mtime": 1787492933.9300845,
+    "ast_hash": "a5ed16ece919880c8300d897424c49a2",
     "semantic_hash": ""
   },
   "app/frameworks/page.jsx": {
-    "mtime": 1787751018.8937,
-    "ast_hash": "aed03fb7fb0f0f87fff7fb8e6a8a91f6",
+    "mtime": 1787493006.3313804,
+    "ast_hash": "f878cabb7d4a27e83262d95b769b8dc9",
     "semantic_hash": ""
   },
   "app/glossario/page.jsx": {
-    "mtime": 1787684076.3820174,
-    "ast_hash": "2cdc6722e22b0ea4475f55ff46af6f01",
+    "mtime": 1787493006.3354793,
+    "ast_hash": "6a02ace0ab551d91794fce1a0b19c753",
     "semantic_hash": ""
   },
   "app/layout.jsx": {
-    "mtime": 1787750969.8991935,
-    "ast_hash": "d54f8e0163c77a635a1d9513bbc885ef",
+    "mtime": 1787499080.3362017,
+    "ast_hash": "78e4dcb798d3806a4a37071ecfc9ef0d",
     "semantic_hash": ""
   },
   "app/page.jsx": {
-    "mtime": 1787751011.2166204,
-    "ast_hash": "0a773ed3c6e2a6292b06b93eeddc2a27",
+    "mtime": 1787212450.023114,
+    "ast_hash": "31690989ba2c2ed800f1fb7fb78a0ed8",
     "semantic_hash": ""
   },
   "app/robots.js": {
@@ -55,13 +55,13 @@
     "semantic_hash": ""
   },
   "app/seletor/layout.jsx": {
-    "mtime": 1787683511.2768896,
-    "ast_hash": "155cd2f891526abfd9447ec4ba5aced3",
+    "mtime": 1787492776.0926092,
+    "ast_hash": "73da1dea1a6b930897053dda83e27f4f",
     "semantic_hash": ""
   },
   "app/seletor/page.jsx": {
-    "mtime": 1787747389.8416646,
-    "ast_hash": "64d49b65514b50ef0e168b2d1d89183a",
+    "mtime": 1787227734.668592,
+    "ast_hash": "4ad52df27f6742b5a6302e694593164c",
     "semantic_hash": ""
   },
   "app/series/[key]/page.jsx": {
@@ -70,8 +70,8 @@
     "semantic_hash": ""
   },
   "app/series/layout.jsx": {
-    "mtime": 1787681380.716657,
-    "ast_hash": "dbb59e963388f1fca5e8e05fb39fb26c",
+    "mtime": 1787493098.9029381,
+    "ast_hash": "eb809632a02c5731c37fba793c2c6a4a",
     "semantic_hash": ""
   },
   "app/series/page.jsx": {
@@ -80,13 +80,13 @@
     "semantic_hash": ""
   },
   "app/sitemap.js": {
-    "mtime": 1787687159.167787,
-    "ast_hash": "110753c3ee5fde3b73b6174ac0037fb8",
+    "mtime": 1787492747.5170462,
+    "ast_hash": "906d69e855c533c8937646cfe386121e",
     "semantic_hash": ""
   },
   "app/sobre/page.jsx": {
-    "mtime": 1787681407.2918966,
-    "ast_hash": "f16b62ea1519a1b3549f21f2a837eaf7",
+    "mtime": 1787493098.9036343,
+    "ast_hash": "85a3aaa744cb6b2226616bc3c88d60a4",
     "semantic_hash": ""
   },
   "components/BoardCard.jsx": {
@@ -105,13 +105,13 @@
     "semantic_hash": ""
   },
   "components/Footer.jsx": {
-    "mtime": 1787750987.458375,
-    "ast_hash": "80f215000d29dbb4495d312653336b67",
+    "mtime": 1787212419.85472,
+    "ast_hash": "bd7ffbe86c0b3815a27e5e90f56848c7",
     "semantic_hash": ""
   },
   "components/Header.jsx": {
-    "mtime": 1787750982.12232,
-    "ast_hash": "45663d4208da9f66645a9f946daa5b20",
+    "mtime": 1787493839.49114,
+    "ast_hash": "65796747b210fb0313ea5e2b41234c0a",
     "semantic_hash": ""
   },
   "components/PinRestrictions.jsx": {
@@ -120,8 +120,8 @@
     "semantic_hash": ""
   },
   "components/Providers.jsx": {
-    "mtime": 1787750974.858245,
-    "ast_hash": "80e656806f8fcc50fbccc758150d2bca",
+    "mtime": 1787208875.111169,
+    "ast_hash": "d31db26b58629a807b7df4c4a3189772",
     "semantic_hash": ""
   },
   "components/SeriesTabMenu.jsx": {
@@ -130,8 +130,8 @@
     "semantic_hash": ""
   },
   "eslint.config.mjs": {
-    "mtime": 1787750947.1099582,
-    "ast_hash": "e405b31a0baf4c27c35d2b08130d0a7d",
+    "mtime": 1787208875.111688,
+    "ast_hash": "cd28c192684b52caf16d8d1df068e272",
     "semantic_hash": ""
   },
   "jsconfig.json": {
@@ -140,18 +140,18 @@
     "semantic_hash": ""
   },
   "lib/seo.js": {
-    "mtime": 1787748552.2057533,
-    "ast_hash": "346b706375bd470b2229a1f0fbeb71df",
+    "mtime": 1787492722.9508429,
+    "ast_hash": "12b829f0078d3fb18cb20f832f498c17",
     "semantic_hash": ""
   },
   "next.config.mjs": {
-    "mtime": 1787750953.3390224,
-    "ast_hash": "b70c1b95f25a2d201c583152020a0cdb",
+    "mtime": 1787208875.115688,
+    "ast_hash": "21958f5752add43cc47ab0ff5172cd46",
     "semantic_hash": ""
   },
   "package.json": {
-    "mtime": 1787750958.7870789,
-    "ast_hash": "979aab7512ac076c283cb70ddfddc4fe",
+    "mtime": 1787577906.3179622,
+    "ast_hash": "4224d3570f8164a9291a49197c690114",
     "semantic_hash": ""
   },
   "postcss.config.mjs": {
@@ -225,8 +225,8 @@
     "semantic_hash": ""
   },
   "public/exemplos/esp-idf.c": {
-    "mtime": 1787687002.6863074,
-    "ast_hash": "adcde98ec45bf3880a7d44f864841455",
+    "mtime": 1787208875.1497247,
+    "ast_hash": "28d7cf987af6c5d3a54ad1fe06571e91",
     "semantic_hash": ""
   },
   "public/exemplos/esp-matter.c": {
@@ -255,8 +255,8 @@
     "semantic_hash": ""
   },
   "public/frameworks.json": {
-    "mtime": 1787686949.0378003,
-    "ast_hash": "7fee3fc9ff2fc51e4fa586fb2f996df0",
+    "mtime": 1787208875.1497247,
+    "ast_hash": "3595f7219f3fcfd1b8d59ea741fab869",
     "semantic_hash": ""
   },
   "public/series.json": {
@@ -469,119 +469,9 @@
     "ast_hash": "dbf8509a3083d40582dce9d8b29956a9",
     "semantic_hash": ""
   },
-  "app/componentes/layout.jsx": {
-    "mtime": 1787687058.2038324,
-    "ast_hash": "3c67d0688957fc7b7691a43d90bb0386",
-    "semantic_hash": ""
-  },
-  "app/componentes/page.jsx": {
-    "mtime": 1787687433.89741,
-    "ast_hash": "299ea4ffc6a45c84d637c798980266be",
-    "semantic_hash": ""
-  },
-  "app/diagnostico/layout.jsx": {
-    "mtime": 1787682030.3465166,
-    "ast_hash": "88703349e19bcb0a5fdc8b445677049c",
-    "semantic_hash": ""
-  },
-  "app/diagnostico/page.jsx": {
-    "mtime": 1787751083.1233635,
-    "ast_hash": "02d99cbb95167634b3c20b2f5f447834",
-    "semantic_hash": ""
-  },
-  "app/frameworks/layout.jsx": {
-    "mtime": 1787748686.6371284,
-    "ast_hash": "47ccfddb1c9c595799d55af02d429e90",
-    "semantic_hash": ""
-  },
-  "app/glossario/layout.jsx": {
-    "mtime": 1787682600.281657,
-    "ast_hash": "d5de510e2584f86cd5cffcaab97d0090",
-    "semantic_hash": ""
-  },
-  "lib/componentRegistryData.js": {
-    "mtime": 1787687021.9374895,
-    "ast_hash": "893b27c29c6f65898615e69161703cd8",
-    "semantic_hash": ""
-  },
-  "lib/diagnosticoData.js": {
-    "mtime": 1787686239.1010916,
-    "ast_hash": "198f814cb391d7d3d28841603486cf0e",
-    "semantic_hash": ""
-  },
-  "lib/glossarioData.js": {
-    "mtime": 1787683052.2727337,
-    "ast_hash": "cdac67307443c2bb2d5ceb7b494ebef9",
-    "semantic_hash": ""
-  },
-  "public/exemplos/esp-iot-solution.c": {
-    "mtime": 1787686970.809006,
-    "ast_hash": "10edea93f349f04f6bdb34a192051686",
-    "semantic_hash": ""
-  },
-  "public/exemplos/esp-now.c": {
-    "mtime": 1787686979.0340838,
-    "ast_hash": "2d9c373f830d97a377962eb51194fbcb",
-    "semantic_hash": ""
-  },
-  "public/exemplos/esp-rainmaker.c": {
-    "mtime": 1787686956.6098719,
-    "ast_hash": "36c464febe5ef2871011b0bba4637166",
-    "semantic_hash": ""
-  },
-  "public/exemplos/esp-sr.c": {
-    "mtime": 1787686964.3929453,
-    "ast_hash": "7dc7047ecf6a6b66b1ba06cee0e5871d",
-    "semantic_hash": ""
-  },
-  "public/exemplos/esp-zigbee.c": {
-    "mtime": 1787686987.6361651,
-    "ast_hash": "4d065e4d3c6fd8d13f15e3da3a625c2c",
-    "semantic_hash": ""
-  },
-  "public/exemplos/rust-esp.rs": {
-    "mtime": 1787686993.6814249,
-    "ast_hash": "e73d8cf18fe0e5e6d91d1eb83565d2a6",
-    "semantic_hash": ""
-  },
-  "scripts/auditar-paginas.mjs": {
-    "mtime": 1787751070.2455041,
-    "ast_hash": "caa4d175c9bc2c3751274a2ce6e9b127",
-    "semantic_hash": ""
-  },
-  "scripts/generate-favicons.mjs": {
-    "mtime": 1787680718.2466626,
-    "ast_hash": "e048547c90c428acb515d66e00f80739",
-    "semantic_hash": ""
-  },
-  "public/apple-touch-icon.png": {
-    "mtime": 1787680738.9008498,
-    "ast_hash": "6a77b4abf2978fe29cca00cd20f99905",
-    "semantic_hash": ""
-  },
-  "public/favicon-16x16.png": {
-    "mtime": 1787680738.9008498,
-    "ast_hash": "168e39aa2419fe4b4af72ff9bbececcc",
-    "semantic_hash": ""
-  },
-  "public/favicon-32x32.png": {
-    "mtime": 1787680738.9008498,
-    "ast_hash": "10014cfc9bf622afbf851983537c69e6",
-    "semantic_hash": ""
-  },
-  "public/favicon-48x48.png": {
-    "mtime": 1787680738.9008498,
-    "ast_hash": "2b2101acc9b1a99a3c659b3b65e97792",
-    "semantic_hash": ""
-  },
-  "public/icon-192.png": {
-    "mtime": 1787680738.9008498,
-    "ast_hash": "557373e141babca8a269c93a82ca499e",
-    "semantic_hash": ""
-  },
-  "public/icon-512.png": {
-    "mtime": 1787680738.9008498,
-    "ast_hash": "a51e72a9a939c44f58b7272884bbb3be",
+  "public/formacoes/1/LASER-ESP32-Modulo-1-Slides.pdf": {
+    "mtime": 1787578140.9017217,
+    "ast_hash": "fe8398321d742b36d93c72b49678b16c",
     "semantic_hash": ""
   }
 }

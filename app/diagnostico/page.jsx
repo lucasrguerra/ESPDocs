@@ -274,7 +274,7 @@ export default function DiagnosticoPage() {
 					{resultadoLog && (
 						<div className="mt-4 p-4 sm:p-5 rounded-2xl bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-900/50 transition-all">
 							<div className="flex items-start gap-3.5">
-								<div className="p-2 rounded-xl bg-amber-500 text-white shrink-0 mt-0.5 shadow-xs">
+								<div className="p-2 rounded-xl bg-amber-700 text-white shrink-0 mt-0.5 shadow-xs">
 									<ShieldAlert className="w-5 h-5" />
 								</div>
 								<div className="space-y-2 flex-1">
@@ -351,7 +351,7 @@ export default function DiagnosticoPage() {
 									onClick={() => setSintomaAtivo(ativo ? null : sintoma.id)}
 									className={`px-2.5 py-1 rounded-lg font-medium transition-all shrink-0 cursor-pointer border ${
 										ativo
-											? "bg-amber-600 text-white border-amber-600 shadow-xs font-bold"
+											? "bg-amber-700 text-white border-amber-700 shadow-xs font-bold"
 											: "bg-slate-100/80 dark:bg-slate-800/60 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-750 hover:bg-amber-50 dark:hover:bg-amber-950/40 hover:border-amber-300 dark:hover:border-amber-800"
 									}`}
 								>
@@ -386,7 +386,7 @@ export default function DiagnosticoPage() {
 								onClick={() => setCategoriaAtiva("todos")}
 								className={`p-2.5 rounded-xl text-xs font-bold transition-all text-left flex flex-col justify-between gap-1 cursor-pointer border ${
 									categoriaAtiva === "todos"
-										? "bg-amber-600 text-white border-amber-600 shadow-sm ring-2 ring-amber-500/20"
+										? "bg-amber-700 text-white border-amber-700 shadow-sm ring-2 ring-amber-600/20"
 										: "bg-slate-50 dark:bg-slate-950/60 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-800 hover:border-amber-300 dark:hover:border-amber-700"
 								}`}
 							>
@@ -418,7 +418,7 @@ export default function DiagnosticoPage() {
 										onClick={() => setCategoriaAtiva(cat.id)}
 										className={`p-2.5 rounded-xl text-xs font-bold transition-all text-left flex flex-col justify-between gap-1 cursor-pointer border ${
 											ativa
-												? "bg-amber-600 text-white border-amber-600 shadow-sm ring-2 ring-amber-500/20"
+												? "bg-amber-700 text-white border-amber-700 shadow-sm ring-2 ring-amber-600/20"
 												: "bg-slate-50 dark:bg-slate-950/60 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-800 hover:border-amber-300 dark:hover:border-amber-700"
 										}`}
 									>
@@ -515,7 +515,7 @@ export default function DiagnosticoPage() {
 							<button
 								type="button"
 								onClick={limparTodosFiltros}
-								className="mt-4 px-4 py-2 bg-amber-600 text-white rounded-xl text-xs font-bold hover:bg-amber-700 cursor-pointer shadow-xs inline-flex items-center gap-1.5"
+								className="mt-4 px-4 py-2 bg-amber-700 text-white rounded-xl text-xs font-bold hover:bg-amber-800 cursor-pointer shadow-xs inline-flex items-center gap-1.5"
 							>
 								<RotateCcw className="w-3.5 h-3.5" />
 								<span>Limpar todos os filtros</span>

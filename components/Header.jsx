@@ -96,7 +96,7 @@ export default function Header() {
 	];
 
 	return (
-		<header className="bg-white/90 dark:bg-slate-950/80 backdrop-blur-md py-3.5 px-4 md:px-8 shadow-xs border-b border-slate-200 dark:border-slate-800/60 sticky top-0 z-50 transition-colors duration-300">
+		<header className="bg-white/90 dark:bg-slate-950/80 backdrop-blur-md py-3.5 px-4 md:px-8 shadow-xs border-b border-slate-200 dark:border-slate-800/60 sticky top-0 z-50">
 			<div className="flex justify-between max-w-7xl mx-auto items-center gap-4 lg:gap-8">
 				{/* LOGO */}
 				<Link href="/" className="group shrink-0 flex items-center gap-2.5">

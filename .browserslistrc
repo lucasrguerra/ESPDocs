@@ -1,7 +1,8 @@
-chrome >= 90
-firefox >= 90
-edge >= 90
-safari >= 15
-ios_saf >= 15
-and_chr >= 90
+chrome >= 109
+firefox >= 109
+edge >= 109
+safari >= 16.4
+ios_saf >= 16.4
+and_chr >= 109
 not dead
+

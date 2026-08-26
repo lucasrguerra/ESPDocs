@@ -12,7 +12,7 @@ export default function Footer() {
 	}, []);
 
 	return (
-		<footer role="contentinfo" aria-label="Rodapé do site ESPDocs" className="bg-slate-50 dark:bg-slate-950 text-slate-600 dark:text-slate-400 mt-24 border-t border-slate-250/30 dark:border-slate-800/80 transition-all duration-300">
+		<footer role="contentinfo" aria-label="Rodapé do site ESPDocs" className="bg-slate-50 dark:bg-slate-950 text-slate-600 dark:text-slate-400 mt-24 border-t border-slate-250/30 dark:border-slate-800/80">
 			<div className="max-w-7xl mx-auto px-6 py-12 md:py-16">
 				<div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-16">
 					

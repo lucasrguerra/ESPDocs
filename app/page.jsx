@@ -211,7 +211,7 @@ export default function Home() {
 	];
 
 	return (
-		<div className="bg-gradient-to-br from-slate-100 via-slate-50 to-purple-100/40 dark:from-slate-950 dark:via-slate-950 dark:to-slate-900 min-h-screen text-slate-900 dark:text-slate-100 transition-colors duration-300">
+		<div className="bg-gradient-to-br from-slate-100 via-slate-50 to-purple-100/40 dark:from-slate-950 dark:via-slate-950 dark:to-slate-900 min-h-screen text-slate-900 dark:text-slate-100">
 			<Header />
 
 			<main className="px-4 sm:px-6 pt-10 md:pt-16 pb-24 max-w-7xl mx-auto">
@@ -249,7 +249,7 @@ export default function Home() {
 						</Link>
 
 						<Link
-							className="group inline-flex items-center gap-2.5 bg-amber-600 hover:bg-amber-700 text-white px-7 py-3.5 rounded-xl font-bold text-sm shadow-md hover:-translate-y-0.5 transition-all duration-200 cursor-pointer active:scale-95"
+							className="group inline-flex items-center gap-2.5 bg-amber-700 hover:bg-amber-800 text-white px-7 py-3.5 rounded-xl font-bold text-sm shadow-md hover:-translate-y-0.5 transition-all duration-200 cursor-pointer active:scale-95"
 							href="/diagnostico"
 						>
 							<AlertTriangle className="w-4 h-4" />
@@ -372,6 +372,7 @@ export default function Home() {
 							<Link
 								key={chip.slug}
 								href={`/series/${chip.slug}`}
+								prefetch={false}
 								className="group bg-white dark:bg-slate-900/50 backdrop-blur-md p-6 rounded-2xl border border-slate-300 dark:border-slate-800/80 hover:border-purple-500 dark:hover:border-purple-400 shadow-xs hover:shadow-lg transition-all duration-300 flex flex-col justify-between"
 							>
 								<div>
@@ -442,6 +443,7 @@ export default function Home() {
 								<Link
 									key={err.title}
 									href="/diagnostico"
+									prefetch={false}
 									className="group bg-white dark:bg-slate-900/80 p-5 rounded-2xl border border-slate-200 dark:border-slate-800 hover:border-amber-400 dark:hover:border-amber-400 transition-all duration-200 flex flex-col justify-between"
 								>
 									<div>

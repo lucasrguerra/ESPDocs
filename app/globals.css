@@ -39,7 +39,7 @@
 	}
 	
 	body {
-		@apply bg-slate-50 text-slate-900 transition-colors duration-300;
+		@apply bg-slate-50 text-slate-900;
 	}
 
 	/* next-themes aplica a classe .dark no <html>, não no <body>.

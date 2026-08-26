@@ -112,7 +112,7 @@ export default function Frameworks() {
 											>
 												{framework.linguagem}
 											</span>
-											<span className="text-[9px] font-bold text-slate-400 dark:text-slate-500">
+											<span className="text-[9px] font-bold text-slate-600 dark:text-slate-350">
 												{framework.tipo}
 											</span>
 										</div>

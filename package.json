@@ -7,16 +7,13 @@
     "build": "next build --turbopack",
     "start": "next start",
     "lint": "eslint",
+    "audit": "node scripts/auditar-paginas.mjs",
+    "check": "npm run lint && npm run auditar-temas && npm run audit",
     "favicons": "node scripts/generate-favicons.mjs",
     "auditar-temas": "node scripts/auditar-temas.mjs",
     "slides-pdf": "node scripts/slides-pdf.mjs"
   },
   "dependencies": {
-    "@emotion/react": "^11.14.0",
-    "@emotion/styled": "^11.14.1",
-    "@mui/icons-material": "^7.3.4",
-    "@mui/material": "^7.3.4",
-    "framer-motion": "^12.40.0",
     "googleapis": "^165.0.0",
     "lucide-react": "^1.16.0",
     "next": "^15.5.9",

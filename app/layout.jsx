@@ -107,7 +107,7 @@ export default function RootLayout({ children }) {
 					dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd.siteESociedade()) }}
 				/>
 			</head>
-			<body className="font-sans antialiased bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-50 transition-colors duration-300" suppressHydrationWarning>
+			<body className="font-sans antialiased bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-50" suppressHydrationWarning>
 				<Providers>
 					{children}
 				</Providers>

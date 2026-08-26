@@ -1,16 +1,16 @@
-# Graph Report - ESPDocs  (2026-08-26)
+# Graph Report - ESPDocs  (2026-08-24)
 
 ## Corpus Check
-- 76 files · ~706,036 words
+- 59 files · ~675,087 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 908 nodes · 1593 edges · 105 communities (74 shown, 31 thin omitted)
-- Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 21 edges (avg confidence: 0.54)
+- 833 nodes · 1499 edges · 82 communities (58 shown, 24 thin omitted)
+- Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 20 edges (avg confidence: 0.53)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `e347a95d`
+- Built from commit: `d5303561`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -53,6 +53,8 @@
 - getVendorPrefix
 - layout.jsx
 - layout.jsx
+- page.jsx
+- page.jsx
 - layout.jsx
 - layout.jsx
 - page.jsx
@@ -75,25 +77,6 @@
 - isSelectorValid
 - OverflowContentError
 - RenderResult
-- UndisplayedFilter
-- esp-zigbee.c
-- Hook
-- write_cb
-- ContentParser
-- componentRegistryData.js
-- esp-now.c
-- Following
-- diagnosticoData.js
-- eqStr
-- Lists
-- layout.jsx
-- layout.jsx
-- layout.jsx
-- layout.jsx
-- glossarioData.js
-- consumeRaw$4
-- dumpAtruleMapSyntax
-- requireValidateSymbol
 
 ## God Nodes (most connected - your core abstractions)
 1. `AtPage` - 39 edges
@@ -108,45 +91,57 @@
 10. `join()` - 14 edges
 
 ## Surprising Connections (you probably didn't know these)
-- `ComponentRegistryPage()` --references--> `COMPONENTES_REGISTRY`  [EXTRACTED]
-  app/componentes/page.jsx → lib/componentRegistryData.js
+- `nodeAfter()` --calls--> `nextSignificantNode()`  [EXTRACTED]
+  public/formacoes/assets/paged.polyfill.js → public/formacoes/assets/paged.polyfill.js  _Bridges community 1 → community 10_
+- `sourceFragment()` --calls--> `join()`  [EXTRACTED]
+  public/formacoes/assets/paged.polyfill.js → public/formacoes/assets/paged.polyfill.js  _Bridges community 6 → community 4_
+- `generateSequence()` --calls--> `join()`  [EXTRACTED]
+  public/formacoes/assets/paged.polyfill.js → public/formacoes/assets/paged.polyfill.js  _Bridges community 36 → community 4_
+- `peek()` --calls--> `scanString()`  [EXTRACTED]
+  public/formacoes/assets/paged.polyfill.js → public/formacoes/assets/paged.polyfill.js  _Bridges community 7 → community 9_
+- `readImplicitGroup()` --calls--> `regroupTerms()`  [EXTRACTED]
+  public/formacoes/assets/paged.polyfill.js → public/formacoes/assets/paged.polyfill.js  _Bridges community 6 → community 9_
 
 ## Import Cycles
 - None detected.
 
-## Communities (105 total, 31 thin omitted)
+## Communities (82 total, 24 thin omitted)
 
 ### Community 0 - "paged.polyfill.js"
 Cohesion: 0.02
-Nodes (23): consumeDeclaration(), consumeRawDeclaration(), NOTE: The order of the mappings is NOT guaranteed., TODO: should consume block content as Raw?, TODO: fall back to mutation observer?, TODO: not sure we should support this hack, TODO: check value is an ident, TODO: produce a node with Delim node type (+15 more)
+Nodes (25): consumeRaw$4(), consumeRule(), dumpAtruleMapSyntax(), dumpMapSyntax(), NOTE: The order of the mappings is NOT guaranteed., TODO: should consume block content as Raw?, TODO: fall back to mutation observer?, TODO: not sure we should support this hack (+17 more)
 
 ### Community 1 - "Layout"
 Cohesion: 0.06
-Nodes (25): breakInsideAvoidParentNode(), BreakToken, cloneNode(), findElement(), findRef(), Footnotes, getBoundingClientRect(), getClientRects() (+17 more)
+Nodes (27): breakInsideAvoidParentNode(), BreakToken, child(), cloneNode(), displayedElementAfter(), elementAfter(), findElement(), findRef() (+19 more)
 
 ### Community 2 - "AtPage"
 Cohesion: 0.05
-Nodes (11): append(), AtPage, createItem(), CSSValueToString(), PageCounterIncrement, PositionFixed, PrintMedia, ScriptsFilter (+3 more)
+Nodes (8): append(), AtPage, createItem(), CSSValueToString(), PageCounterIncrement, PositionFixed, PrintMedia, ScriptsFilter
 
 ### Community 3 - "Page"
-Cohesion: 0.09
-Nodes (8): ConnectionsDiagram(), FILTER_CATEGORIES, type_colors, Chunker, dump(), forEachToken(), Page, requirePolyfill()
+Cohesion: 0.06
+Nodes (14): CodeExample(), ConnectionsDiagram(), FILTER_CATEGORIES, type_colors, Chunker, dump(), forEachToken(), Page (+6 more)
 
 ### Community 4 - ".push"
 Cohesion: 0.11
-Nodes (14): collectWarning(), computeSourceURL(), Counters, createNodeStructureChecker(), isAbsolute(), join(), normalize(), number() (+6 more)
+Nodes (12): collectWarning(), computeSourceURL(), Counters, createNodeStructureChecker(), isAbsolute(), join(), normalize(), prepareTokens$1() (+4 more)
 
 ### Community 5 - "dependencies"
-Cohesion: 0.05
-Nodes (39): eslint, eslint-config-next, @eslint/eslintrc, googleapis, lucide-react, next, next-themes, dependencies (+31 more)
+Cohesion: 0.04
+Nodes (46): @emotion/react, @emotion/styled, eslint, eslint-config-next, @eslint/eslintrc, framer-motion, googleapis, lucide-react (+38 more)
 
 ### Community 6 - ".replace"
-Cohesion: 0.16
-Nodes (9): attr(), child(), cleanPseudoContent(), defer(), NthOfType, parseSourceMapInput(), querySelectorEscape(), TargetCounters (+1 more)
+Cohesion: 0.05
+Nodes (21): attr(), calc(), cleanPseudoContent(), consumeFunction(), ContentParser, customIdent(), defer(), eqStr() (+13 more)
 
 ### Community 7 - ".indexOf"
-Cohesion: 0.07
-Nodes (13): ArraySet$1(), compareByGeneratedPositionsInflated(), func(), generatedPositionAfter(), getArg(), MappingList$1(), regroupTerms(), relative() (+5 more)
+Cohesion: 0.09
+Nodes (12): ArraySet$1(), calculateSpecificity(), cleanSelector(), compareByGeneratedPositionsInflated(), generatedPositionAfter(), getArg(), MappingList$1(), relative() (+4 more)
+
+### Community 8 - "Sheet"
+Cohesion: 0.13
+Nodes (7): Handler, Hook, invokeForType(), Lists, Sheet, validate(), walk()
 
 ### Community 9 - "peek"
 Cohesion: 0.22
@@ -154,11 +149,7 @@ Nodes (18): charCode(), customPropertyName(), idSelector(), maybeMultiplied(), m
 
 ### Community 10 - "Breaks"
 Cohesion: 0.09
-Nodes (16): Breaks, CommentsFilter, displayedElementAfter(), displayedElementBefore(), elementAfter(), elementBefore(), filterTree(), getNodeWithNamedPage() (+8 more)
-
-### Community 11 - "Queue"
-Cohesion: 0.15
-Nodes (7): Queue, requireEs6Symbol(), requireIsArguments(), requireIsFunction(), requireIsImplemented(), requireIsString(), requireShim$1()
+Nodes (15): Breaks, CommentsFilter, displayedElementBefore(), elementBefore(), filterTree(), getNodeWithNamedPage(), isAllWhitespace(), isIgnorable() (+7 more)
 
 ### Community 12 - "allocateCursor"
 Cohesion: 0.21
@@ -179,10 +170,6 @@ Nodes (11): 1. Só existem os tons declarados, 2. A regra da simetria, 3. Pares 
 ### Community 16 - "internalMatch"
 Cohesion: 0.20
 Nodes (11): areStringsEqualCaseInsensitive(), buildLoc(), fromLoc(), internalMatch(), isCommaContextEnd(), isCommaContextStart(), isContextEdgeDelim(), locateMismatch() (+3 more)
-
-### Community 17 - "Previewer"
-Cohesion: 0.16
-Nodes (6): Handlers, Previewer, createIco(), run(), svgContent, svgPath
 
 ### Community 18 - "auditar-temas.mjs"
 Cohesion: 0.48
@@ -218,7 +205,7 @@ Nodes (5): assign(), requireIsImplemented$1(), requireKeys(), requireShim$4(), r
 
 ### Community 27 - "outOfRange"
 Cohesion: 0.40
-Nodes (5): dimension(), integer(), isPostfixIeHack(), outOfRange(), percentage()
+Nodes (6): dimension(), integer(), isPostfixIeHack(), number(), outOfRange(), percentage()
 
 ### Community 28 - "testNode"
 Cohesion: 0.40
@@ -229,8 +216,8 @@ Cohesion: 0.67
 Nodes (3): categoryIcons, Comparacao(), valorDe()
 
 ### Community 31 - "page.jsx"
-Cohesion: 0.50
-Nodes (4): getOptionIcon(), iconMap, PRESETS, Seletor()
+Cohesion: 0.67
+Nodes (3): getOptionIcon(), iconMap, Seletor()
 
 ### Community 34 - "consumeB$1"
 Cohesion: 0.50
@@ -264,69 +251,33 @@ Nodes (3): consumeRaw(), parentheses(), readSequence()
 Cohesion: 0.67
 Nodes (3): patchAtrules(), patchDictionary(), unpackSyntaxes()
 
-### Community 69 - "consumeDeclaration"
-Cohesion: 0.17
-Nodes (4): CodeExample(), Polisher, request(), startsWith()
-
 ### Community 70 - "consumeRaw$4"
-Cohesion: 0.49
-Nodes (13): auditarContrasteEClasses(), auditarImagens(), auditarLinksEInteracoes(), auditarPerformanceConfigs(), auditarRotasInternas(), aviso(), buscarArquivos(), CORES (+5 more)
+Cohesion: 0.29
+Nodes (6): requireEs6Symbol(), requireIsArguments(), requireIsFunction(), requireIsImplemented(), requireIsString(), requireShim$1()
 
 ### Community 72 - "dumpAtruleMapSyntax"
 Cohesion: 0.33
 Nodes (5): pastaModulo, raiz, saida, servidor, TIPOS
 
-### Community 82 - "UndisplayedFilter"
-Cohesion: 0.28
-Nodes (3): calculateSpecificity(), cleanSelector(), UndisplayedFilter
-
-### Community 83 - "esp-zigbee.c"
-Cohesion: 0.25
-Nodes (5): esp_zb_app_signal_msg_t, esp_zb_zcl_set_attr_value_message_t, esp_err_t, esp_zb_app_signal_handler(), zb_attribute_handler()
-
-### Community 84 - "Hook"
-Cohesion: 0.25
-Nodes (3): Handler, Hook, invokeForType()
-
-### Community 85 - "write_cb"
-Cohesion: 0.29
-Nodes (5): esp_rmaker_device_t, esp_rmaker_param_val_t, esp_rmaker_write_ctx_t, esp_err_t, write_cb()
-
-### Community 87 - "componentRegistryData.js"
-Cohesion: 0.33
-Nodes (4): ComponentRegistryPage(), CATEGORIAS_COMPONENTES, COMPONENTES_REGISTRY, GUIA_COMPONENT_MANAGER
-
-### Community 88 - "esp-now.c"
-Cohesion: 0.40
-Nodes (4): esp_now_recv_info_t, esp_now_send_status_t, on_data_recv(), on_data_sent()
-
-### Community 90 - "diagnosticoData.js"
-Cohesion: 0.40
-Nodes (4): categoriasDiagnostico, errosCatalogo, regrasDecodificadorLog, sintomasRapidos
-
-### Community 91 - "eqStr"
-Cohesion: 0.50
-Nodes (5): calc(), consumeFunction(), customIdent(), eqStr(), eqStrAny()
-
 ## Knowledge Gaps
-- **94 isolated node(s):** `metadata`, `metadata`, `faqs`, `categoryIcons`, `metadata` (+89 more)
+- **78 isolated node(s):** `metadata`, `metadata`, `categoryIcons`, `metadata`, `metadata` (+73 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **31 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **24 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `AtPage` connect `AtPage` to `paged.polyfill.js`, `consumeDeclaration`, `.indexOf`?**
-  _High betweenness centrality (0.037) - this node is a cross-community bridge._
+- **Why does `AtPage` connect `AtPage` to `paged.polyfill.js`, `Page`, `.push`?**
+  _High betweenness centrality (0.044) - this node is a cross-community bridge._
 - **Why does `Page` connect `Page` to `paged.polyfill.js`, `.replace`?**
-  _High betweenness centrality (0.025) - this node is a cross-community bridge._
-- **Why does `Chunker` connect `Page` to `paged.polyfill.js`, `consumeDeclaration`?**
-  _High betweenness centrality (0.019) - this node is a cross-community bridge._
-- **What connects `metadata`, `metadata`, `faqs` to the rest of the system?**
-  _94 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _High betweenness centrality (0.029) - this node is a cross-community bridge._
+- **Why does `Chunker` connect `Page` to `paged.polyfill.js`?**
+  _High betweenness centrality (0.023) - this node is a cross-community bridge._
+- **What connects `metadata`, `metadata`, `categoryIcons` to the rest of the system?**
+  _78 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `paged.polyfill.js` be split into smaller, more focused modules?**
-  _Cohesion score 0.02247191011235955 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.022216913521261348 - nodes in this community are weakly interconnected._
 - **Should `Layout` be split into smaller, more focused modules?**
-  _Cohesion score 0.05608322026232474 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.056535504296698326 - nodes in this community are weakly interconnected._
 - **Should `AtPage` be split into smaller, more focused modules?**
-  _Cohesion score 0.05238095238095238 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.05427905427905428 - nodes in this community are weakly interconnected._
