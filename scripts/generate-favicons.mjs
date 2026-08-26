@@ -2,7 +2,11 @@ import fs from 'fs';
 import path from 'path';
 import puppeteer from 'puppeteer';
 
-const svgPath = path.resolve('app/icon.svg');
+const svgPath = fs.existsSync(path.resolve('public/icon.svg'))
+	? path.resolve('public/icon.svg')
+	: fs.existsSync(path.resolve('app/icon.svg'))
+	? path.resolve('app/icon.svg')
+	: path.resolve('public/marca/espdocs-marca.svg');
 const svgContent = fs.readFileSync(svgPath, 'utf8');
 
 function createIco(pngBuffers) {
@@ -78,10 +82,9 @@ async function run() {
 		{ width: 48, height: 48, buffer: rendered[48] }
 	]);
 
-	// Write favicon.ico to public and app
+	// Write favicon.ico to public
 	fs.writeFileSync('public/favicon.ico', icoBuffer);
-	fs.writeFileSync('app/favicon.ico', icoBuffer);
-	console.log('Saved favicon.ico to public/ and app/');
+	console.log('Saved favicon.ico to public/');
 
 	// Write PNG favicons to public
 	fs.writeFileSync('public/favicon-48x48.png', rendered[48]);
