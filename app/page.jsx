@@ -30,7 +30,7 @@ export default function Home() {
 	const stats = [
 		{ value: "12", label: "Séries Documentadas", desc: "Do ESP32 clássico ao P4 e C61" },
 		{ value: "14", label: "Frameworks & SDKs", desc: "ESP-IDF, RainMaker, Rust, Matter, etc." },
-		{ value: "20+", label: "Componentes Curados", desc: "ESP Component Registry & idf_component.yml" },
+		{ value: "35+", label: "Componentes Curados", desc: "ESP Component Registry & idf_component.yml" },
 		{ value: "30+", label: "Guias de Diagnóstico", desc: "Soluções para bootloops, brownouts e WDT" },
 	];
 
