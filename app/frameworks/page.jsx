@@ -1,4 +1,3 @@
-import { paginaMeta } from "@/lib/seo";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Link from "next/link";
@@ -24,25 +23,6 @@ import {
 	ShieldCheck,
 	Mic
 } from "lucide-react";
-
-export const metadata = paginaMeta({
-	titulo: "Frameworks & SDKs para ESP32: Guia Completo e Comparativo",
-	descricao: "Guia completo de desenvolvimento: ESP-IDF, ESP-RainMaker, ESP-Matter, Rust, ESP-ADF, ESP-SR, ESP-WHO, Arduino e MicroPython com exemplos de código.",
-	caminho: "/frameworks",
-	keywords: [
-		"ESP-IDF",
-		"ESP-RainMaker",
-		"ESP-Matter",
-		"Rust ESP32",
-		"ESP-SR",
-		"ESP-ADF",
-		"ESP-IoT-Solution",
-		"Arduino ESP32",
-		"MicroPython ESP32",
-		"frameworks ESP32",
-		"programar ESP32"
-	],
-});
 
 export default function Frameworks() {
 	const frameworks = Object.entries(frameworksData);
