@@ -40,3 +40,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# livro comercial — repositório privado próprio, NUNCA publicar aqui
+/book/
+
+# memória local do OpenWolf (logs, token do dashboard, cita o livro): não publicar
+/.wolf/
