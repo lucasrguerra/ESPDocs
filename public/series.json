@@ -555,7 +555,7 @@
 		"descricao": "Alto desempenho com processador RISC-V dual-core a 400MHz, aceleradores de IA e ricas interfaces de mídia",
 		"arquitetura": "RISC-V de 32 bits dual-core de alto desempenho (HP) + single-core de baixo consumo (LP)",
 		"nucleos": "2 (Dual-core HP) + 1 (Single-core LP)",
-		"frequencia": "Até 400 MHz (HP); LP até 40 MHz",
+		"frequencia": "Até 400 MHz (HP, revisão v3.x; 360 MHz na v1.x); LP até 40 MHz",
 		"aceleradores_ia": "Sim (Vector Instructions, aceleradores de IA)",
 		"seguranca": {
 			"aes": "AES-128/256 com GCM",
@@ -578,7 +578,7 @@
 		"memoria_sram_rtc": "32 KB",
 		"memoria_rom": "128 KB (HP ROM) + 16 KB (LP ROM)",
 		"flash_externa": "Até 128 MB via QSPI/Octal SPI",
-		"psram_externa": "Suporta até 64 MB (16 MB ou 32 MB integrados no encapsulamento via OPI/HPI)",
+		"psram_externa": "16 MB ou 32 MB integrados no encapsulamento (OPI/HPI, 1,8 V)",
 		"gpio": "55",
 		"adc": "1x SAR ADC de 12 bits, até 8 canais",
 		"dac": "Não",
@@ -596,9 +596,9 @@
 		"sdio": "1 controlador SD/MMC Host (SDHOST)",
 		"sensor_temperatura": "1 (interno)",
 		"consumo_energia": {
-			"active": "50-100 mA (estimado, alto desempenho)",
-			"light_sleep": "Baixo consumo",
-			"deep_sleep": "Poucos µA"
+			"active": "15-150 mA (40 a 400 MHz, conforme a carga)",
+			"light_sleep": "75-800 µA",
+			"deep_sleep": "12 µA"
 		},
 		"temperatura_operacao": "-40°C a 85°C",
 		"temperatura_armazenamento": "-40°C a 150°C",
