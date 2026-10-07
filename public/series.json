@@ -290,8 +290,8 @@
 		"pwm": "LED PWM (até 6 canais)",
 		"sensor_temperatura": "1 (interno)",
 		"consumo_energia": {
-			"active_cpu_120mhz": "13 mA",
-			"light_sleep": "130 µA",
+			"active_cpu_120mhz": "10,7-15,6 mA (modem-sleep)",
+			"light_sleep": "140 µA",
 			"deep_sleep": "5 µA"
 		},
 		"temperatura_operacao": "-40°C a 105°C",
@@ -348,12 +348,12 @@
 		"sensor_temperatura": "1 (interno)",
 		"consumo_energia": {
 			"active_cpu_160mhz": "20 mA",
-			"active_wifi_tx_peak": "350 mA",
-			"modem_sleep_cpu_160mhz": "20 mA",
+			"active_wifi_tx_peak": "335 mA",
+			"modem_sleep_cpu_160mhz": "16-28 mA",
 			"light_sleep": "130 µA",
 			"deep_sleep": "5 µA"
 		},
-		"temperatura_operacao": "-40°C a 125°C",
+		"temperatura_operacao": "-40°C a 105°C (85°C no ESP32-C3FN4)",
 		"temperatura_armazenamento": "-40°C a 150°C",
 		"depuracao": "JTAG integrado via USB (não precisa de sonda externa)",
 		"esp_idf_minimo": "v4.3",
