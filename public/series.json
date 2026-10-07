@@ -67,7 +67,7 @@
 	"ESP32-S2": {
 		"nome_completo": "ESP32-S2",
 		"icone": "🔒",
-		"descricao": "Foco em segurança e baixo consumo, com USB nativo e ADC de 13 bits",
+		"descricao": "Foco em segurança e baixo consumo, com USB nativo e o único ADC com saída de 13 bits",
 		"arquitetura": "Xtensa® LX7 single-core de 32 bits",
 		"nucleos": "1 (Single-core)",
 		"frequencia": "Até 240 MHz",
@@ -94,7 +94,7 @@
 		"flash_externa": "Até 1 GB via QSPI",
 		"psram_externa": "Até 1 GB via QSPI/Octal SPI",
 		"gpio": "43",
-		"adc": "2x SAR ADC de 12 bits, até 20 canais",
+		"adc": "2x SAR ADC, até 20 canais: saída de 13 bits (0–8191, única da família), resolução efetiva de 12 bits a partir da revisão v1.0 (errata ADC-112)",
 		"dac": "2x DAC de 8 bits",
 		"touch": "14 canais capacitivos",
 		"uart": "2",
@@ -107,10 +107,10 @@
 		"camera": "Interface DVP de 8/16 bits",
 		"sensor_temperatura": "1 (interno)",
 		"consumo_energia": {
-			"active_wifi_tx": "190-310 mA",
-			"modem_sleep_cpu_160mhz": "15-20 mA",
-			"light_sleep": "130 µA",
-			"deep_sleep": "20-150 µA"
+			"active_wifi_tx": "160-310 mA",
+			"modem_sleep_cpu_160mhz": "14-24 mA",
+			"light_sleep": "750 µA",
+			"deep_sleep": "20-190 µA"
 		},
 		"temperatura_operacao": "-40°C a 105°C",
 		"temperatura_armazenamento": "-40°C a 150°C",
