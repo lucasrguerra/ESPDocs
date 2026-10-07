@@ -18,7 +18,7 @@
 			"key_manager": "Não",
 			"rng": "Sim (TRNG por hardware)",
 			"criptografia_flash": "Sim (AES-256, esquema legado)",
-			"secure_boot": "V1 (legado)",
+			"secure_boot": "V1 (AES, legado); V2 (RSA-3072, RSA-PSS) a partir da revisão v3.0 (ECO3)",
 			"protecao_dpa": "Não"
 		},
 		"wifi": "IEEE 802.11 b/g/n (2.4 GHz, até 150 Mbps)",
@@ -269,7 +269,7 @@
 			"key_manager": "Não",
 			"rng": "Sim (TRNG por hardware)",
 			"criptografia_flash": "XTS-AES-128",
-			"secure_boot": "V2 (ECDSA)",
+			"secure_boot": "V2 (ECDSA P-192 ou P-256)",
 			"protecao_dpa": "Não"
 		},
 		"wifi": "IEEE 802.11 b/g/n (2.4 GHz, até 72.2 Mbps)",
@@ -325,7 +325,7 @@
 			"key_manager": "Não",
 			"rng": "Sim (TRNG por hardware)",
 			"criptografia_flash": "XTS-AES-128",
-			"secure_boot": "V2 (RSA-3072)",
+			"secure_boot": "V2 (RSA-3072), a partir da revisão v0.3 (ECO3)",
 			"protecao_dpa": "Não"
 		},
 		"wifi": "IEEE 802.11 b/g/n (2.4 GHz, até 150 Mbps)",
@@ -385,7 +385,7 @@
 			"key_manager": "Sim",
 			"rng": "Sim (TRNG por hardware)",
 			"criptografia_flash": "XTS-AES-128/256",
-			"secure_boot": "V2 (RSA-3072 ou ECDSA)",
+			"secure_boot": "V2 (RSA-3072 ou ECDSA P-256/P-384)",
 			"protecao_dpa": "Sim"
 		},
 		"wifi": "Wi-Fi 6 (802.11ax) dual-band 2.4 GHz e 5 GHz",
@@ -690,7 +690,7 @@
 			"key_manager": "Não",
 			"rng": "Sim (TRNG por hardware)",
 			"criptografia_flash": "XTS-AES-128/256",
-			"secure_boot": "Ainda não habilitado no ESP-IDF (documentação preliminar)",
+			"secure_boot": "Sim no hardware; ainda não habilitado no ESP-IDF",
 			"protecao_dpa": "Não"
 		},
 		"wifi": "Não",
