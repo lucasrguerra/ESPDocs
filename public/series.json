@@ -655,9 +655,9 @@
 		"usb": "1 (USB Serial/JTAG)",
 		"sensor_temperatura": "1 (interno)",
 		"consumo_energia": {
-			"active": "30-50 mA",
-			"light_sleep": "0.8 mA",
-			"deep_sleep": "7-10 µA"
+			"active": "24-140 mA (rádio, de -24 a 20 dBm)",
+			"light_sleep": "25-85 µA",
+			"deep_sleep": "7 µA"
 		},
 		"temperatura_operacao": "-40°C a 105°C",
 		"temperatura_armazenamento": "-40°C a 150°C",
@@ -721,7 +721,7 @@
 		"temperatura_operacao": "-40°C a 105°C",
 		"temperatura_armazenamento": "Não divulgado (documentação preliminar)",
 		"depuracao": "JTAG integrado via USB (não precisa de sonda externa)",
-		"esp_idf_minimo": "Ainda sem versão estável (apenas no branch master)",
+		"esp_idf_minimo": "v6.0 em preview (sem suporte estável)",
 		"arduino_core": "Ainda não suportado pelo core arduino-esp32",
 		"encapsulamento": "QFN56 (6×6 mm)",
 		"modulos": "ESP32-H4-WROOM-1",
