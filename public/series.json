@@ -409,9 +409,9 @@
 		"usb": "1 (USB Serial/JTAG)",
 		"sensor_temperatura": "1 (interno)",
 		"consumo_energia": {
-			"active_wifi": "100-300 mA (TX)",
-			"light_sleep": "0.06 mA",
-			"deep_sleep": "7 µA"
+			"active_wifi": "até 377 mA (TX em 5 GHz)",
+			"light_sleep": "60-250 µA",
+			"deep_sleep": "12 µA"
 		},
 		"temperatura_operacao": "-40°C a 105°C",
 		"temperatura_armazenamento": "-40°C a 150°C",
@@ -425,7 +425,8 @@
 		"guia_de_programacao": "https://docs.espressif.com/projects/esp-idf/en/latest/esp32c5/get-started/index.html",
 		"placa": "/placas/esp32-c5.png",
 		"cor": "#6f42c1",
-		"sdio": "1 (SDIO Slave)"
+		"sdio": "1 (SDIO Slave, a partir da revisão v1.0)",
+		"can": "2 (CAN FD)"
 	},
 	"ESP32-C6": {
 		"nome_completo": "ESP32-C6",
@@ -471,8 +472,8 @@
 		"sdio": "1 (SDIO 2.0 Slave)",
 		"sensor_temperatura": "1 (interno)",
 		"consumo_energia": {
-			"active_wifi6": "Varia conforme perfil TX/RX",
-			"light_sleep": "0.8 mA",
+			"active_wifi6": "252-354 mA (TX)",
+			"light_sleep": "35-180 µA",
 			"deep_sleep": "7 µA"
 		},
 		"temperatura_operacao": "-40°C a 105°C",
@@ -531,9 +532,9 @@
 		"sdio": "1 (SDIO 2.0 Slave)",
 		"sensor_temperatura": "1 (interno)",
 		"consumo_energia": {
-			"active": "Baixo consumo com clock dinâmico",
-			"light_sleep": "0.1-0.8 mA",
-			"deep_sleep": "7 µA"
+			"active": "240-360 mA (TX)",
+			"light_sleep": "50-200 µA",
+			"deep_sleep": "10 µA"
 		},
 		"temperatura_operacao": "-40°C a 105°C",
 		"temperatura_armazenamento": "-40°C a 150°C",
