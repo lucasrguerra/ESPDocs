@@ -42,7 +42,7 @@
 		"can": "1 (CAN 2.0, TWAI®)",
 		"sdio": "1 (SD/SDIO/MMC Host), 1 (SDIO/SPI Slave)",
 		"sensor_hall": "1 (interno)",
-		"sensor_temperatura": "1 (interno, precisão limitada)",
+		"sensor_temperatura": "Não (retirado do datasheet em 2018; sem driver no ESP-IDF)",
 		"consumo_energia": {
 			"active_cpu_240mhz": "30-68 mA",
 			"active_wifi_tx": "180-240 mA",
@@ -580,7 +580,7 @@
 		"flash_externa": "Até 128 MB via QSPI/Octal SPI",
 		"psram_externa": "16 MB ou 32 MB integrados no encapsulamento (OPI/HPI, 1,8 V)",
 		"gpio": "55",
-		"adc": "1x SAR ADC de 12 bits, até 8 canais",
+		"adc": "2x SAR ADC de 12 bits, até 14 canais",
 		"dac": "Não",
 		"touch": "Sim (sensor de toque capacitivo)",
 		"uart": "6 (5 UART + 1 LP UART)",
