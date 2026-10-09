@@ -556,6 +556,7 @@
 		"arquitetura": "RISC-V de 32 bits dual-core de alto desempenho (HP) + single-core de baixo consumo (LP)",
 		"nucleos": "2 (Dual-core HP) + 1 (Single-core LP)",
 		"frequencia": "Até 400 MHz (HP, revisão v3.x; 360 MHz na v1.x); LP até 40 MHz",
+		"coprocessador_ulp": "Sim (RISC-V, LP CPU de 40 MHz)",
 		"aceleradores_ia": "Sim (Vector Instructions, aceleradores de IA)",
 		"seguranca": {
 			"aes": "AES-128/256 com GCM",
